@@ -25,7 +25,7 @@ public static class CSVParser
             }
             if (isEmpty) continue; //빈줄은 건너뛴다.
             Dictionary<string, string> dict = new Dictionary<string, string>(); //헤더와 값을 매핑하기위한 딕셔너리
-            for(int c = 0; c>header.Count; c++) //헤더 개수만큼 반복해서
+            for(int c = 0; c<header.Count; c++) //헤더 개수만큼 반복해서
             {
                 string key = header[c].Trim(); //헤더 이름의 앞뒤 공백을 제거하고
                 string value; //값을 담을 변수
@@ -125,7 +125,7 @@ public static class CSVParser
         }
         return fallback; //없으면 기본값을 반환한다.
     }
-    public static int Getint(Dictionary<string, string> row,string key, int fallback = 0) //정수값을 가져오는 함수
+    public static int GetInt(Dictionary<string, string> row,string key, int fallback = 0) //정수값을 가져오는 함수
     {
         int v;
         if (int.TryParse(Get(row,key), out v)) //정수로 변환을 성공하면 
@@ -150,7 +150,7 @@ public static class CSVParser
         {
             return true; //true 를 반환
         }
-        else if(s == "False" || s== "0" || s== "N" || s=="X" || s =="") //false를 지칭하는 문자들이면
+        else if(s == "FALSE" || s== "0" || s== "N" || s=="X" || s =="") //false를 지칭하는 문자들이면
         {
             return false; //false를 반환
         }

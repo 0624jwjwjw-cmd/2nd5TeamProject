@@ -46,7 +46,6 @@ public class DishData : ScriptableObject
     [SerializeField] private int donation;
     [SerializeField] private int subscribers;
     [SerializeField] private DishMaterial[] materials;
-    [SerializeField] private bool isSpecial;
     [SerializeField] private string info;
 
     public string ID => id;
@@ -56,10 +55,9 @@ public class DishData : ScriptableObject
     public int Donation => donation;
     public int Subscribers => subscribers;
     public DishMaterial[] Materials => materials;
-    public bool IsSpecial => isSpecial;
     public string Info => info;
 
-    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, DishMaterial[] materials, bool isSpecial, string info)
+    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, DishMaterial[] materials, string info)
     {
         this.id = id;
         this.dishName = dishName;
@@ -68,7 +66,6 @@ public class DishData : ScriptableObject
         this.donation = donation;
         this.subscribers = subscribers;
         this.materials = materials;
-        this.isSpecial = isSpecial;
         this.info = info;
     }
 }
