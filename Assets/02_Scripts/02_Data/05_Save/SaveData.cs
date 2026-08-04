@@ -7,8 +7,6 @@ public class SaveData
     public int gold;
     public int heart;
     public int subscriber;
-    // 진행 중이던 시간
-    public float heartTimer;
     // 마지막 하트 회복 시간
     public long lastHeartRecoverTime;
 
