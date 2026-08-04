@@ -2,10 +2,9 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Material
+public class DishMaterial
 {
     [SerializeField] private IngredientData ingredientData;
-    [SerializeField] private DishData dishData;
     [SerializeField] private int amount;
     public string GetID()
     {
@@ -13,26 +12,20 @@ public class Material
         {
             return ingredientData.ID;
         }
-        else if(dishData != null)
-        {
-            return dishData.ID;
-        }
         else
         {
             return null;
         }
     }
-    public Material() { }
-    public Material(IngredientData ingredientData, DishData dishData, int amount)
+    public DishMaterial() { }
+    public DishMaterial(IngredientData ingredientData, int amount)
     {
-        if (ingredientData == null && dishData == null) return;
+        if (ingredientData == null) return;
         this.ingredientData = ingredientData;
-        this.dishData = dishData;
         this.amount = amount;
     }
     public string MaterialID => GetID();
     public IngredientData IngredientData => ingredientData;
-    public DishData DishData => dishData;
     public int Amount => amount;    
 }
 
@@ -45,8 +38,7 @@ public class DishData : ScriptableObject
     [SerializeField] private int cost;
     [SerializeField] private int donation;
     [SerializeField] private int subscribers;
-    [SerializeField] private Material[] materials;
-    [SerializeField] private bool isSpecial;
+    [SerializeField] private DishMaterial[] materials;
     [SerializeField] private string info;
 
     public string ID => id;
@@ -55,11 +47,10 @@ public class DishData : ScriptableObject
     public int Cost => cost;
     public int Donation => donation;
     public int Subscribers => subscribers;
-    public Material[] Materials => materials;
-    public bool IsSpecial => isSpecial;
+    public DishMaterial[] Materials => materials;
     public string Info => info;
 
-    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, Material[] materials, bool isSpecial, string info)
+    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, DishMaterial[] materials, string info)
     {
         this.id = id;
         this.dishName = dishName;
@@ -68,7 +59,6 @@ public class DishData : ScriptableObject
         this.donation = donation;
         this.subscribers = subscribers;
         this.materials = materials;
-        this.isSpecial = isSpecial;
         this.info = info;
     }
 }

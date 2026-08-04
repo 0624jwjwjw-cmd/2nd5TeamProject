@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc856d9c7cb7d444ca13d1c1a0c70be1, type: 3}
+  m_Name: RE_25
+  m_EditorClassIdentifier: Assembly-CSharp::ReciepePurchaseData
+  id: RE_25
+  reciepeName: "\uB808\uC2DC\uD53C : \uC170\uD504 \uC2A4\uD398\uC15C \uD50C\uB798\uD130"
+  foodID: DS_25
+  grade: "\uC170\uD504"
+  price: 0
+  info: "\uC170\uD504 \uC2DC\uADF8\uB2C8\uCC98 \uBC84\uAC70x1 + \uC170\uD504 \uC2A4\uD398\uC15C
+    \uC815\uC2DDx1 + \uC170\uD504 \uB514\uB7ED\uC2A4 \uD30C\uC2A4\uD0C0x1"
