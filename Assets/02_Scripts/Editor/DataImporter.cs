@@ -22,11 +22,12 @@ public class DataImporter : EditorWindow
 
     //에셋이 저장될 폴더 경로
     private string IngredientAssetFolder = "Assets/04_Data/01_Ingredient";
-    private string DishAssetFolder = "Assets/04_Data/02_Dish";
+    private string DishAssetFolder = "Assets/04_Data/02_Dish/01_Dish";
+    private string SpecialDishAssetFolder = "Assets/04_Data/02_Dish/02_SpecialDish";
     private string GradeAssetFolder = "Assets/04_Data/03_Grade";
-    private string ReciepePurchaseAssetFolder = "Assets/04_Data/04_Upgrade";
-    private string StudioUpgradeAssetFolder = "Assets/04_Data/04_Upgrade";
-    private string KitchenUpgradeAssetFolder = "Assets/04_Data/04_Upgrade";
+    private string ReciepePurchaseAssetFolder = "Assets/04_Data/04_Upgrade/01_Reciepe";
+    private string StudioUpgradeAssetFolder = "Assets/04_Data/04_Upgrade/02_Studio";
+    private string KitchenUpgradeAssetFolder = "Assets/04_Data/04_Upgrade/03_Kitchen";
 
     private static string DishMaterialSeparator = "+";
     private static char DishMaterialAmountSeparator = 'x';
@@ -175,14 +176,14 @@ public class DataImporter : EditorWindow
     }
     private void ImportDishes() //음식과 특별한음식 CSV읽어와서 Dish
     {
-        ImportDishSheet(dishCsv); //일반음식 csv 임포트 하기
-        ImportDishSheet(specialDishCsv); //특별한음식 csv 임포트 하기
+        ImportDishSheet(dishCsv, DishAssetFolder); //일반음식 csv 임포트 하기
+        ImportDishSheet(specialDishCsv, SpecialDishAssetFolder); //특별한음식 csv 임포트 하기
 
         AssetDatabase.SaveAssets(); //에셋 저장
         AssetDatabase.Refresh(); //에셋 갱신
 
     }
-    private void ImportDishSheet(string csvFileName) //음식 csv 읽어와서 dishdata 생성
+    private void ImportDishSheet(string csvFileName, string dishAssetFolder) //음식 csv 읽어와서 dishdata 생성
     {
         string path = CsvPath(csvFileName); //csv 파일경로
         if (!File.Exists(path)) //파일이 없으면
@@ -203,7 +204,7 @@ public class DataImporter : EditorWindow
             }
 
             DishMaterial[] materials = ParseMaterialsByName(CSVParser.Get(row,"레시피"), ingredientDatas); //material의 배열만들기
-            DishData data = FindOrCreateAsset<DishData>(DishAssetFolder, id); //데이터 생성
+            DishData data = FindOrCreateAsset<DishData>(dishAssetFolder, id); //데이터 생성
             data.SetData(CSVParser.Get(row, "ID"), CSVParser.Get(row, "이름"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "원가"), CSVParser.GetInt(row, "후원금"), CSVParser.GetInt(row, "구독자"), materials, CSVParser.Get(row, "요리설명")); //데이터 넣어주기
             EditorUtility.SetDirty(data); //데이터 갱신알림
         }
