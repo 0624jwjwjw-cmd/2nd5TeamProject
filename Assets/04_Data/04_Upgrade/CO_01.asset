@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d36934e542f8fc4a81487e67f9a9e32, type: 3}
   m_Name: CO_01
   m_EditorClassIdentifier: Assembly-CSharp::KitchenUpgradeData
-  id: 
-  level: 0
+  id: CO_01
+  level: 1
   price: 0
-  specialFoodRate: 0
+  specialFoodRate: 15

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0046c0d0acd7bf74aae8c253f4805298, type: 3}
   m_Name: ST_03
   m_EditorClassIdentifier: Assembly-CSharp::StudioUpgradeData
-  id: 
-  level: 0
-  price: 0
-  subscriberBonus: 0
+  id: ST_03
+  level: 3
+  price: 25000
+  subscriberBonus: 1.25

@@ -18,5 +18,11 @@ MonoBehaviour:
   cost: 480
   donation: 1500
   subscribers: 260
-  materials: []
+  materials:
+  - ingredientData: {fileID: 11400000, guid: e444eb47700ab7546b791f0bdf438011, type: 2}
+    amount: 2
+  - ingredientData: {fileID: 11400000, guid: 1305bb01beb4cef4ca6b1a14ef54f7d7, type: 2}
+    amount: 2
+  - ingredientData: {fileID: 11400000, guid: cc5ab264038c4394f9daf3f641734ba4, type: 2}
+    amount: 1
   info: 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5dc4aa11d5ae72d4c9ce5db96540e209, type: 3}
   m_Name: BT_04
   m_EditorClassIdentifier: Assembly-CSharp::GradeData
-  id: 
-  gradeName: 
-  requiredSubscribers: 0
-  donationBonus: 0
+  id: BT_04
+  gradeName: "\uB2E4\uC774\uC544"
+  requiredSubscribers: 150000
+  donationBonus: 1.5

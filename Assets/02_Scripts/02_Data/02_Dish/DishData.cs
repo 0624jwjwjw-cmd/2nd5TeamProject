@@ -5,7 +5,6 @@ using UnityEngine;
 public class DishMaterial
 {
     [SerializeField] private IngredientData ingredientData;
-    [SerializeField] private DishData dishData;
     [SerializeField] private int amount;
     public string GetID()
     {
@@ -13,26 +12,20 @@ public class DishMaterial
         {
             return ingredientData.ID;
         }
-        else if(dishData != null)
-        {
-            return dishData.ID;
-        }
         else
         {
             return null;
         }
     }
     public DishMaterial() { }
-    public DishMaterial(IngredientData ingredientData, DishData dishData, int amount)
+    public DishMaterial(IngredientData ingredientData, int amount)
     {
-        if (ingredientData == null && dishData == null) return;
+        if (ingredientData == null) return;
         this.ingredientData = ingredientData;
-        this.dishData = dishData;
         this.amount = amount;
     }
     public string MaterialID => GetID();
     public IngredientData IngredientData => ingredientData;
-    public DishData DishData => dishData;
     public int Amount => amount;    
 }
 

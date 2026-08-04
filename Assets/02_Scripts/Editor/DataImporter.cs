@@ -175,33 +175,14 @@ public class DataImporter : EditorWindow
     }
     private void ImportDishes() //음식과 특별한음식 CSV읽어와서 Dish
     {
-        List<IngredientData> ingredientList = LoadAllAssets<IngredientData>(IngredientAssetFolder); //모든 ingredientdata 가져오기
-        Dictionary<string, IngredientData> ingredientLookup = new Dictionary<string, IngredientData>(); //이름을 기준으로 딕셔너리 만들기
-
-        foreach(IngredientData ingredient in ingredientList) //리스트를 돌면서
-        {
-            string name = ingredient.IngredientName; //재료 이름을 가져오고
-            if (!ingredientLookup.ContainsKey(name)) //아직 등록되어있지 않으면
-            {
-                ingredientLookup[name] = ingredient; //이름에 재료를 매핑한다
-            }
-        }
-
-        if(ingredientLookup.Count == 0) //재료가 하나도 없으면
-        {
-            return; //함수를 종료하고
-        }
-
-        Dictionary<string, DishData> dishLookup = new Dictionary<string, DishData>(); //음식이름을 dishdata 매핑할 딕셔너리 생성
-
-        ImportDishSheet(dishCsv, ingredientLookup, dishLookup); //일반음식 csv 임포트 하기
-        ImportDishSheet(specialDishCsv, ingredientLookup, dishLookup); //특별한음식 csv 임포트 하기
+        ImportDishSheet(dishCsv); //일반음식 csv 임포트 하기
+        ImportDishSheet(specialDishCsv); //특별한음식 csv 임포트 하기
 
         AssetDatabase.SaveAssets(); //에셋 저장
         AssetDatabase.Refresh(); //에셋 갱신
 
     }
-    private void ImportDishSheet(string csvFileName, Dictionary<string, IngredientData> ingredientLookup, Dictionary<string, DishData> dishLookup) //음식 csv 읽어와서 dishdata 생성
+    private void ImportDishSheet(string csvFileName) //음식 csv 읽어와서 dishdata 생성
     {
         string path = CsvPath(csvFileName); //csv 파일경로
         if (!File.Exists(path)) //파일이 없으면
@@ -210,91 +191,87 @@ public class DataImporter : EditorWindow
         }
 
         List<Dictionary<string, string>> rows = CSVParser.ParseWithHeader(path); //CSV 파싱
-        List<KeyValuePair<Dictionary<string, string>, DishData>> created = new List<KeyValuePair<Dictionary<string, string>, DishData>>(); //생성된 행가 에셋을 저장할 리스트
-        foreach(Dictionary<string, string> row in rows) //행을돌면서
+
+        List<IngredientData> ingredientDatas = LoadAllAssets<IngredientData>(IngredientAssetFolder); //전체 재료데이터 가져오기
+
+        foreach(Dictionary<string, string> row in rows) //행을 돌면서
         {
-            string id = CSVParser.Get(row, "ID"); //id가져오고
-            if(string.IsNullOrEmpty(id)) //없으면
+            string id = CSVParser.Get(row, "ID"); //아이디를 가져오고
+            if(string.IsNullOrEmpty(id)) //아이디가없으면
             {
-                continue; //건너뛴다
+                continue; //건너뛰고
             }
 
-            DishData data = FindOrCreateAsset<DishData>(DishAssetFolder, id); //에셋을 찾거나 생성해서
-            string dishName = CSVParser.Get(row, "이름"); //이름을 가져온다
-
-            dishLookup[dishName] = data; //음식이름과 dishdata를 매핑하고
-            created.Add(new KeyValuePair<Dictionary<string, string>, DishData>(row, data)); //행과 에셋을 리스트에 넣는다
-        }
-
-        foreach(KeyValuePair<Dictionary<string, string>, DishData> pair in created) //행과 에셋을 넣은 리스트를 돌면서
-        {
-            Dictionary<string, string> row = pair.Key; //CSV 행
-            DishData data = pair.Value; //Dishdata 에셋
-
-            DishMaterial[] materials = ParseMaterialsByName(CSVParser.Get(row, "레시피"), ingredientLookup, dishLookup); //레시피 문자열을 파싱해서 materials 배열 생성
-
+            DishMaterial[] materials = ParseMaterialsByName(CSVParser.Get(row,"레시피"), ingredientDatas); //material의 배열만들기
+            DishData data = FindOrCreateAsset<DishData>(DishAssetFolder, id); //데이터 생성
             data.SetData(CSVParser.Get(row, "ID"), CSVParser.Get(row, "이름"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "원가"), CSVParser.GetInt(row, "후원금"), CSVParser.GetInt(row, "구독자"), materials, CSVParser.Get(row, "요리설명")); //데이터 넣어주기
-
-            EditorUtility.SetDirty(data); //변경표시
+            EditorUtility.SetDirty(data); //데이터 갱신알림
         }
     }
-    private static DishMaterial[] ParseMaterialsByName(string raw, Dictionary<string, IngredientData> ingredientLookup, Dictionary<string, DishData> dishNameLookup) //레시피 배열을 만들어줌
+    private static DishMaterial[] ParseMaterialsByName(string raw, List<IngredientData> ingredientDatas) //레시피를 찾아서 재료 배열로 만들기
     {
-        if (string.IsNullOrWhiteSpace(raw)) //레시피 문자열이 비어있거나 공백이면
+        if (string.IsNullOrWhiteSpace(raw)) //없으면
         {
-            return new DishMaterial[0]; //빈 배열을 반환하고
+            return new DishMaterial[0]; //빈 배열 반환
         }
 
         List<DishMaterial> list = new List<DishMaterial>(); //결과를 저장할 리스트
-        string[] entries = raw.Split(new[] { DishMaterialSeparator }, System.StringSplitOptions.None); //DishMaterialSeparator를 기준으로 분할하겟다
-        foreach(string entry in entries) //각 항목을 반복해서
+        string[] entries = raw.Split(new string[] { DishMaterialSeparator }, System.StringSplitOptions.None); //+를 기준으로 분할한다
+
+        foreach (string entry in entries) //행을 반복하며
         {
-            string trimmed = entry.Trim(); //앞뒤의 공백을 제거하고
-            if (trimmed.Length == 0) //빈 항목이면
-            {
-                continue; //건뛰
-            }
+            string trimmed = entry.Trim(); //앞뒤 공백 제거
+            if (trimmed.Length == 0) continue; //빈 항목이면 건너뜀
 
-            int sepIndex = trimmed.LastIndexOf(DishMaterialAmountSeparator); // 'x' 문자의 마지막 위치를 찾고
-            string name; //재료와 음식의 이름
-            string amoutStr; //수량
+            int sepIndex = trimmed.LastIndexOf(DishMaterialAmountSeparator); //x의 위치를 찾고
+            string name; //재료 이름 텍스트 선언
+            string amountStr; //재료 숫자 선언
 
-            if(sepIndex >= 0) // 'x'가 있으면
+            if (sepIndex >= 0) //x가 있으면
             {
                 name = trimmed.Substring(0, sepIndex).Trim(); //앞부분은 이름
-                amoutStr = trimmed.Substring(sepIndex + 1).Trim(); //뒷부분은 수량
+                amountStr = trimmed.Substring(sepIndex + 1).Trim(); //뒷부분은 수량
             }
-            else //x 가 없으면
+            else //x가 없으면
             {
-                name = trimmed; //전체 이름을 사용하고
-                amoutStr = "1"; //기본수량은 1
+                name = trimmed; //전체가 이름
+                amountStr = "1"; //기본 수량은 1
             }
 
-            int amount; //실제 수량 인트값
-            bool parsed = int.TryParse(amoutStr, out amount); //수량 문자열을 정수로 변환
-            if(!parsed) //변환 실패시
+            int amount; // 문자열 타입인 숫자를 인트값으로 변환하기위한 변수
+
+            bool isParsed = int.TryParse(amountStr, out amount); //숫자로 변환해보고
+            if(!isParsed) //안되면
             {
-                amount = 1; //기본값
+                amount = 1; //1로
             }
 
-            IngredientData ingredient; //재료 데이터 저장 변수
-            DishData dish; //음식 데이터 저장 변수
+            IngredientData ingredient = null; //재료 데이터 저장용 변수
 
-            if(ingredientLookup.TryGetValue(name, out ingredient)) //재료딕셔너리에서 이름이 있으면
+            foreach (IngredientData i in ingredientDatas) //재료데이터를 돌면서
             {
-                list.Add(new DishMaterial(ingredient, null, amount)); //리스트에 해당 재료의 데이터와 수량을 넣고
+                if (i.IngredientName == name) //재료데이터에 있는 이름이 있으면
+                {
+                    ingredient = i; //ingredient에 저장
+                    break; //찾았으니 break
+                }
             }
-            else if(dishNameLookup.TryGetValue(name, out dish)) //음식딕셔너리에서 이름이 있으면
+            if(ingredient != null) //재료가 있으면
             {
-                list.Add(new DishMaterial(null, dish, amount)); //리스트에 해당 음식의 데이터와 수량을 넣고
+                list.Add(new DishMaterial(ingredient, amount)); //리스트에 저장
             }
-            else //둘다 없으면
+            else //없으면
             {
-                return null; //이상한거니까 하지말자
+                continue; //건너뛰기
             }
+
+            
+            
         }
-        return list.ToArray(); //리스트를 배열로 변환해서 반환하자
+
+        return list.ToArray(); // 리스트를 배열로 바꿔서 반환
     }
+
     private void ImportGrades() //등급 csv를 읽어와서 에셋 생성 및 갱신
     {
         string path = CsvPath(gradeCsv); //csv 파일경로 생성
@@ -347,7 +324,7 @@ public class DataImporter : EditorWindow
             }
 
             ReciepePurchaseData data = FindOrCreateAsset<ReciepePurchaseData>(ReciepePurchaseAssetFolder, id); //데이터를 만들고
-            data.SetData(id, CSVParser.Get(row, "이름"), CSVParser.Get(row, "음식ID"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "가격"), CSVParser.Get(row, "레시피 설명")); //데이터값을 넣어준다
+            data.SetData(id, CSVParser.Get(row, "이름"), CSVParser.Get(row, "음식ID"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "가격"), CSVParser.Get(row, "레시피설명")); //데이터값을 넣어준다
 
             EditorUtility.SetDirty(data); //에셋이 변경되었다고 표시해주고
         }

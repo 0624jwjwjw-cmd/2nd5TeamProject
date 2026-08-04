@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc856d9c7cb7d444ca13d1c1a0c70be1, type: 3}
   m_Name: RE_05
   m_EditorClassIdentifier: Assembly-CSharp::ReciepePurchaseData
-  id: 
-  reciepeName: 
-  foodID: 
-  grade: 
-  price: 0
-  info: 
+  id: RE_05
+  reciepeName: "\uB808\uC2DC\uD53C : \uAC10\uC790\uD280\uAE40"
+  foodID: DS_05
+  grade: "\uCD08\uAE09"
+  price: 500
+  info: "\uAC10\uC790x2 + \uBC84\uD130x1"
