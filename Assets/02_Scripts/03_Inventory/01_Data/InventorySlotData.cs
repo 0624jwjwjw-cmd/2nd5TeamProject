@@ -1,4 +1,4 @@
-//인벤토리 슬롯 데이터
+//**인벤토리 슬롯 데이터**
 using System;
 using UnityEngine;
 
@@ -18,8 +18,8 @@ public sealed class InventorySlotData
     public int AcquiredOrder => acquiredOrder;
     //아이템 ID가 없거나 수량이 0 이하라면 현재 슬롯을 빈 슬롯으로 판정
     public bool IsEmpty => string.IsNullOrWhiteSpace(itemId) || amount <= 0;
-
-    //직렬화 또는 저장 데이터 복원 과정에서 사용할 수 있는 기본 생성자
+    
+    //[직렬화 또는 저장 데이터 복원 과정에서 사용할 수 있는 기본 생성자]
     public InventorySlotData()
     {
         itemId = string.Empty;  //새로 생성된 빈 슬롯이므로 아이템 ID를 빈 문자열로 설정
@@ -27,7 +27,7 @@ public sealed class InventorySlotData
         acquiredOrder = 0;      //아직 획득 못했으므로 획득 순서 0으로 설정
     }
 
-    //새로운 인벤토리 슬롯을 생성할 때 사용하는 생성자
+    //[새로운 인벤토리 슬롯을 생성할 때 사용하는 생성자]
     //InventoryManager에서 아이템을 처음 획득했을 때 호출
     public InventorySlotData(string itemId, int amount, int acquiredOrder)
     {
@@ -66,7 +66,7 @@ public sealed class InventorySlotData
         this.acquiredOrder = acquiredOrder; //전달받은 획득 순서를 현재 슬롯에 저장
     }
 
-    //이 슬롯이 전달받은 아이템 ID와 같은 아이템인지 검사
+    //[이 슬롯이 전달받은 아이템 ID와 같은 아이템인지 검사 하는 메서드]
     //InventoryManager가 동일 아이템 슬롯을 찾을 때 사용
     public bool IsSameItem(string targetItemId)
     {
@@ -75,7 +75,7 @@ public sealed class InventorySlotData
         return string.Equals(itemId, targetItemId, StringComparison.Ordinal);
     }
 
-    //현재 슬롯의 아이템 수량을 증가시키는 메서드
+    //[현재 슬롯의 아이템 수량을 증가시키는 메서드]
     //동일 아이템 추가시 InventoryManager가 호출
     public void AddAmount(int value)
     {
@@ -93,7 +93,7 @@ public sealed class InventorySlotData
         amount += value;
     }
 
-    //현재 슬롯에서 아이템을 제거하는 메서드
+    //[현재 슬롯에서 아이템을 제거하는 메서드]
     //제거 성공 여부 bool로 반환
     public bool TryRemoveAmount(int value)
     {
@@ -121,7 +121,7 @@ public sealed class InventorySlotData
         return true;        //제거에 성공했으므로 true 반환
     }
 
-    //현재 수량을 지정한 값으로 변경하기 위한 메서드
+    //[현재 수량을 지정한 값으로 변경하기 위한 메서드]
     //저장데이터 불러오거나 디버그 기능 만들 때 사용
     public void SetAmount(int value)
     {
@@ -136,7 +136,7 @@ public sealed class InventorySlotData
         amount = value;
     }
 
-    //아이템 수량이 0이 된 슬롯을 완전히 비우는 메서드
+    //[아이템 수량이 0이 된 슬롯을 완전히 비우는 메서드]
     //InventoryManager가 빈 슬롯을 정리할 때 사용 가능
     public void Clear()
     {
