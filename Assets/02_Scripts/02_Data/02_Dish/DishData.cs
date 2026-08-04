@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class Material
+public class DishMaterial
 {
     [SerializeField] private IngredientData ingredientData;
     [SerializeField] private DishData dishData;
@@ -22,8 +22,8 @@ public class Material
             return null;
         }
     }
-    public Material() { }
-    public Material(IngredientData ingredientData, DishData dishData, int amount)
+    public DishMaterial() { }
+    public DishMaterial(IngredientData ingredientData, DishData dishData, int amount)
     {
         if (ingredientData == null && dishData == null) return;
         this.ingredientData = ingredientData;
@@ -45,7 +45,7 @@ public class DishData : ScriptableObject
     [SerializeField] private int cost;
     [SerializeField] private int donation;
     [SerializeField] private int subscribers;
-    [SerializeField] private Material[] materials;
+    [SerializeField] private DishMaterial[] materials;
     [SerializeField] private bool isSpecial;
     [SerializeField] private string info;
 
@@ -55,11 +55,11 @@ public class DishData : ScriptableObject
     public int Cost => cost;
     public int Donation => donation;
     public int Subscribers => subscribers;
-    public Material[] Materials => materials;
+    public DishMaterial[] Materials => materials;
     public bool IsSpecial => isSpecial;
     public string Info => info;
 
-    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, Material[] materials, bool isSpecial, string info)
+    public void SetData(string id, string dishName, string reciepeGrade, int cost, int donation, int subscribers, DishMaterial[] materials, bool isSpecial, string info)
     {
         this.id = id;
         this.dishName = dishName;
