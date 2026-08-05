@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SaveLoadManager : MonoBehaviour
+public class SaveLoadManager : MonoBehaviour, IInitializable
 {
     public static SaveLoadManager Instance;
 
@@ -20,7 +20,24 @@ public class SaveLoadManager : MonoBehaviour
 
     private float saveDelay = 10f;
 
+    //순서 구현
+    public int Priority => 50;
+    public void Initialize()
+    {
+        var objects = FindObjectsByType<MonoBehaviour>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None)
+            .OfType<ISaveable>();
 
+        foreach (ISaveable obj in objects)
+        {
+            Register(obj);
+        }
+
+        Debug.Log($"저장 가능한 개수 : {saveables.Count}");
+
+        LoadGame();
+    }
 
     private void Awake()
     {
@@ -41,21 +58,6 @@ public class SaveLoadManager : MonoBehaviour
     }
 
 
-
-    private void Start()
-    {
-        var objects = FindObjectsOfType<MonoBehaviour>()
-       .OfType<ISaveable>();
-
-
-        foreach (ISaveable obj in objects)
-        {
-            Register(obj);
-        }
-
-        Debug.Log($"저장 가능한 개수 : {saveables.Count}");
-        LoadGame();
-    }
 
 
 
@@ -78,17 +80,12 @@ public class SaveLoadManager : MonoBehaviour
     }
 
 
-
+    //저장 필요해지면 10초뒤에 변경
     public void SetDirty()
     {
         isDirty = true;
-
-        // 새 변경이 생기면 타이머 초기화
         timer = 0;
     }
-
-
-
     public void Register(ISaveable saveable)
     {
         if (!saveables.Contains(saveable))
@@ -166,5 +163,29 @@ public class SaveLoadManager : MonoBehaviour
         {
             SaveGame();
         }
+    }
+
+    public void ResetGame()
+    {
+        // 저장 파일 삭제
+        if (File.Exists(savePath))
+        {
+            File.Delete(savePath);
+            Debug.Log("저장 파일 삭제");
+        }
+
+        // 기본 데이터 생성
+        SaveData data = new SaveData();
+
+        // 모든 매니저를 기본값으로 변경
+        foreach (ISaveable saveable in saveables)
+        {
+            saveable.Load(data);
+        }
+
+        // 변경된 데이터를 즉시 저장
+        SaveGame();
+
+        Debug.Log("초기화 완료");
     }
 }

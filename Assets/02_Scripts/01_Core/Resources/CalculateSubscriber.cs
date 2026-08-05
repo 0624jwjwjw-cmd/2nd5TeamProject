@@ -16,6 +16,6 @@ public static class CalculateSubscriber
         int donation = Mathf.RoundToInt(
             foodCost * youtubeMultiplier[youtubeGrade]);
 
-        CurrencyManager.Instance.AddGold(donation);
+        CurrencyManager.Instance.AddSubscriber(donation);
     }
 }

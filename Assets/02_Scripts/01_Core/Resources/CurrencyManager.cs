@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public class CurrencyManager : MonoBehaviour, ISaveable
+using System;
+public class CurrencyManager : MonoBehaviour, ISaveable, IInitializable
 {
     public static CurrencyManager Instance { get; private set; }
 
@@ -15,7 +15,15 @@ public class CurrencyManager : MonoBehaviour, ISaveable
     public int Subscriber => subscriber;
     public int Heart => heart;
 
-
+    public event Action OnRevenueChanged;//후원금이랑 구독자 변경될때마다 보고용
+    public event Action OnHeartChanged;//하트 변경될때마다 보고용
+    
+    //순서 구현
+    public int Priority => 0;
+    public void Initialize()
+    {
+        Debug.Log("CurrencyManager 가동");
+    }
 
     private void Awake()
     {
@@ -36,19 +44,19 @@ public class CurrencyManager : MonoBehaviour, ISaveable
     public void AddGold(int amount)
     {
         gold += amount;
-
+        OnRevenueChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
     }
     public void AddSubscriber(int amount)
     {
         subscriber += amount;
-
+        OnRevenueChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
     }
     public void AddHeart(int amount)
     {
         heart += amount;
-
+        OnHeartChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
     }
 
@@ -60,6 +68,7 @@ public class CurrencyManager : MonoBehaviour, ISaveable
         if (gold < amount)
             return false;
         gold -= amount;
+        OnRevenueChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
         return true;
     }
@@ -69,7 +78,7 @@ public class CurrencyManager : MonoBehaviour, ISaveable
             return false;
 
         heart -= amount;
-
+        OnHeartChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
 
         return true;
@@ -88,6 +97,10 @@ public class CurrencyManager : MonoBehaviour, ISaveable
         gold = data.gold;
         subscriber = data.subscriber;
         heart = data.heart;
+
+        OnRevenueChanged?.Invoke();
+        OnHeartChanged?.Invoke();
+
         Debug.Log($"Load CurrencyManager: gold={gold}, subscriber={subscriber}, heart={heart}");
     }
 }

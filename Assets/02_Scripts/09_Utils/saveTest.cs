@@ -4,13 +4,13 @@ public class SaveTest : MonoBehaviour
 {
     public void AddGold()
     {
-        CalculateGold.GetDonation(100, 2);
+        CalculateGold.GetDonation(4500, 2);
     }
 
 
     public void SpendGold()
     {
-        CurrencyManager.Instance.SpendGold(100);
+        CurrencyManager.Instance.SpendGold(5000);
     }
 
 
@@ -28,6 +28,7 @@ public class SaveTest : MonoBehaviour
 
     public void AddSubscriber()
     {
-        CurrencyManager.Instance.AddSubscriber(100);
+        CalculateSubscriber.GetDonation(6700, 3);
+        
     }
 }
