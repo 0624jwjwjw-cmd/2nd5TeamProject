@@ -1,16 +1,13 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CollectionManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<DishData> collections;
+    [SerializeField] private DishData[] dishes;
+    [SerializeField] private DishData[] specialDishes;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private bool isDS_01Unlocked;
+    [SerializeField] private bool isDS_02Unlocked;
+
 }

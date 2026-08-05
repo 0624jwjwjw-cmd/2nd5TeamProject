@@ -11,6 +11,7 @@ public class ReciepePurchaseData : ScriptableObject
     [SerializeField] private int price;
     [SerializeField] private string info;
     [SerializeField] private string reciepeInfo;
+    [SerializeField] private bool isUnlocked;
 
     public string ID => id;
     public string ReciepeName => reciepeName;
@@ -19,6 +20,7 @@ public class ReciepePurchaseData : ScriptableObject
     public int Price => price;
     public string Info => info;
     public string ReciepeInfo => reciepeInfo;
+    public bool IsUnlocked => isUnlocked;
 
     public void SetData(string id, string reciepeName, string foodID, string grade, int price, string info, string reciepeInfo)
     {
@@ -29,6 +31,10 @@ public class ReciepePurchaseData : ScriptableObject
         this.price = price;
         this.info = info;
         this.reciepeInfo = reciepeInfo;
+    }
+    public void UnlockReciepe(bool isUnlocked)
+    {
+        this.isUnlocked = isUnlocked;
     }
 
 }
