@@ -10,6 +10,7 @@ public class ReciepePurchaseData : ScriptableObject
     [SerializeField] private string grade;
     [SerializeField] private int price;
     [SerializeField] private string info;
+    [SerializeField] private string reciepeInfo;
 
     public string ID => id;
     public string ReciepeName => reciepeName;
@@ -17,8 +18,9 @@ public class ReciepePurchaseData : ScriptableObject
     public string Grade => grade;
     public int Price => price;
     public string Info => info;
+    public string ReciepeInfo => reciepeInfo;
 
-    public void SetData(string id, string reciepeName, string foodID, string grade, int price, string info)
+    public void SetData(string id, string reciepeName, string foodID, string grade, int price, string info, string reciepeInfo)
     {
         this.id = id;
         this.reciepeName = reciepeName;
@@ -26,6 +28,7 @@ public class ReciepePurchaseData : ScriptableObject
         this.grade = grade;
         this.price = price;
         this.info = info;
+        this.reciepeInfo = reciepeInfo;
     }
 
 }
