@@ -379,3 +379,24 @@ public class InventoryManager : MonoBehaviour
         OnInventoryChanged?.Invoke();
     }
 }
+
+/*
+ *메서드별 정리*
+ [InventoryManager.cs] 인벤토리 전체를 관리
+    모든 슬롯을 보관하고, 아이템 추가ㆍ제거ㆍ조회ㆍ정렬ㆍ최대 수량 검사ㆍUI 갱신 이벤트를 담당
+ 
+ PrepareInventoryData()             : 빈 슬롯과 잘못된 슬롯을 제거하고 인벤토리 데이터 정리
+ RecalculateAcquiredOrderCounter()  : 현재 슬롯 중 가장 큰 획득 순서를 찾아 다음 획득 순서 준비
+ AddItem()                          : 인벤토리에 아이템 추가 또는 기존 슬롯의 수량 증가
+ CanAddItem()                       : 최대 스택 수를 넘지 않고 아이템을 추가할 수 있는지 확인
+ RemoveItem()                       : 인벤토리에서 지정한 아이템을 원하는 수량만큼 제거
+ HasItem()                          : 특정 아이템을 필요한 수량만큼 보유하고 있는지 확인
+ GetItemCount()                     : 특정 아이템의 현재 보유 수량을 가져옴
+ GetRemainingStackSpace()           : 해당 아이템을 현재 슬롯에 몇 개 더 추가할 수 있는지 계산
+ SortByItemId()                     : 인벤토리 슬롯을 아이템 ID 기준으로 정렬
+ ClearInventory()                   : 인벤토리에 들어 있는 모든 아이템을 제거
+ FindSlot()                         : 전달받은 아이템 ID와 같은 슬롯을 인벤토리에서 찾음
+ SortSlotsByItemId()                : 실제 슬롯 리스트를 아이템 ID 기준으로 정렬
+ CompareSlotsByItemId()             : 두 슬롯의 아이템 ID를 비교해 정렬 순서를 결정
+ NotifyInventoryChanged()           : 인벤토리가 변경됐다는 사실을 UI 등 다른 스크립트에 알림
+ */
