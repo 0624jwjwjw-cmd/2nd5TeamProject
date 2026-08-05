@@ -33,9 +33,6 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         {
             Register(obj);
         }
-
-        Debug.Log($"저장 가능한 개수 : {saveables.Count}");
-
         LoadGame();
     }
 
@@ -105,16 +102,9 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         {
             saveable.Save(data);
         }
-
-
         string json =
         JsonUtility.ToJson(data, true);
-
-
         File.WriteAllText(savePath, json);
-
-
-        Debug.Log("전체 저장 완료");
     }
 
 
@@ -127,24 +117,14 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
             Debug.Log("저장 데이터 없음");
             return;
         }
-
-
         string json =
         File.ReadAllText(savePath);
-
-
         SaveData data =
         JsonUtility.FromJson<SaveData>(json);
-
-
-
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
         }
-
-
-        Debug.Log("전체 불러오기 완료");
     }
 
 
@@ -171,7 +151,6 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         if (File.Exists(savePath))
         {
             File.Delete(savePath);
-            Debug.Log("저장 파일 삭제");
         }
 
         // 기본 데이터 생성
@@ -186,6 +165,5 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         // 변경된 데이터를 즉시 저장
         SaveGame();
 
-        Debug.Log("초기화 완료");
     }
 }

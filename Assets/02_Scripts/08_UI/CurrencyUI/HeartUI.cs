@@ -9,7 +9,7 @@ public class HeartUI : MonoBehaviour
     [SerializeField] private TMP_Text extraHeartText;
 
     //구독알림설정
-    private void OnEnable()
+    private void Start()
     {
         if (CurrencyManager.Instance == null)
         {
@@ -17,6 +17,7 @@ public class HeartUI : MonoBehaviour
             return;
         }
         CurrencyManager.Instance.OnHeartChanged += RefreshUI;
+        RefreshUI();
     }
     private void OnDisable()
     {
@@ -26,11 +27,6 @@ public class HeartUI : MonoBehaviour
         }
     }
 
-
-    private void Start()
-    {
-        RefreshUI();
-    }
     private void RefreshUI()
     {
         ClearHeart();

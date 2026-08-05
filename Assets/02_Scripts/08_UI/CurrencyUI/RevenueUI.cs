@@ -7,7 +7,7 @@ public class RevenueUI : MonoBehaviour
     [SerializeField] private TMP_Text subscriberText;
 
     //이벤트 보고용
-    private void OnEnable()
+    private void Start()
     {
         if (CurrencyManager.Instance == null)
         {
@@ -15,6 +15,7 @@ public class RevenueUI : MonoBehaviour
             return;
         }
         CurrencyManager.Instance.OnRevenueChanged += RefreshUI;
+        RefreshUI();
     }
     private void OnDisable()
     {
@@ -22,11 +23,6 @@ public class RevenueUI : MonoBehaviour
         {
             CurrencyManager.Instance.OnRevenueChanged -= RefreshUI;
         }
-    }
-
-    private void Start()
-    {
-        RefreshUI();
     }
     private void RefreshUI()
     {

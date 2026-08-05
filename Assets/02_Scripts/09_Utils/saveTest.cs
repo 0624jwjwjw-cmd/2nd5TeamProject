@@ -22,7 +22,7 @@ public class SaveTest : MonoBehaviour
 
     public void SpendHeart()
     {
-        CurrencyManager.Instance.SpendHeart(1);
+        HeartManager.Instance.UseHeart();
     }
 
 

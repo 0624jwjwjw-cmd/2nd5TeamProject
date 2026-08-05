@@ -22,7 +22,6 @@ public class CurrencyManager : MonoBehaviour, ISaveable, IInitializable
     public int Priority => 0;
     public void Initialize()
     {
-        Debug.Log("CurrencyManager °¡µ¿");
     }
 
     private void Awake()
@@ -100,7 +99,5 @@ public class CurrencyManager : MonoBehaviour, ISaveable, IInitializable
 
         OnRevenueChanged?.Invoke();
         OnHeartChanged?.Invoke();
-
-        Debug.Log($"Load CurrencyManager: gold={gold}, subscriber={subscriber}, heart={heart}");
     }
 }

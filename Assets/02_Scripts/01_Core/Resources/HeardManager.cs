@@ -16,8 +16,11 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
     public int Priority => 10;
     public void Initialize()
     {
-        Debug.Log("HeartManager 가동");
+        RecoverOfflineHeart();
+
+        StartCoroutine(HeartRecoveryRoutine());
     }
+
     private void Awake()
     {
         if (Instance == null)
@@ -29,14 +32,6 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
         {
             Destroy(gameObject);
         }
-    }
-    private void Start()
-    {
-        // 게임 종료 후 지난 시간 계산
-        RecoverOfflineHeart();
-
-        // 게임 실행 중 회복 체크
-        StartCoroutine(HeartRecoveryRoutine());
     }
 
     //초단위로 코루틴 가동
@@ -92,6 +87,19 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
         }
         SaveLoadManager.Instance.SetDirty();
         return true;
+    }
+    //5분 타이머 전달용
+    public int GetRemainingRecoverTime()
+    {
+        // 하트 최대면 타이머 필요 없음
+        if (CurrencyManager.Instance.Heart >= maxHeart)
+            return 0;
+
+        TimeSpan elapsed = DateTime.UtcNow - new DateTime(lastHeartRecoverTime);
+
+        int remaining = Mathf.CeilToInt(recoverTime - (float)elapsed.TotalSeconds);
+
+        return Mathf.Max(remaining, 0);
     }
 
     public void Save(SaveData data)
