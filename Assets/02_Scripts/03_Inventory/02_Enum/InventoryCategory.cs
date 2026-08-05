@@ -1,16 +1,7 @@
-using UnityEngine;
-
-public class InventoryCategory : MonoBehaviour
+//**인벤토리 종류**
+public enum InventoryCategory
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    All,            //전체
+    Ingredient,     //재료
+    Dish            //음식
 }

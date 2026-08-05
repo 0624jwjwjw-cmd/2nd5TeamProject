@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e017ddb1ca15f914988dc6d63b60fa25
+guid: b9d13cfeed2520847861f54f512eb535
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2146729348547153230
-    second: 12_Icon_Sausage_0
+      213: 657098535914720231
+    second: 02_Button_Cancel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 12_Icon_Sausage_0
+      name: 02_Button_Cancel_0
       rect:
         serializedVersion: 2
-        x: 86
-        y: 88
-        width: 936
-        height: 931
+        x: 329
+        y: 412
+        width: 878
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e4d0f09f7f6bacd10800000000000000
-      internalID: 2146729348547153230
+      spriteID: 7eb40af03ab7e1900800000000000000
+      internalID: 657098535914720231
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      12_Icon_Sausage_0: 2146729348547153230
+      02_Button_Cancel_0: 657098535914720231
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,11 +6,11 @@ using UnityEngine;
 public sealed class InventoryManagerTest : MonoBehaviour
 {
     [Header("테스트용 재료 ID")]
-    [SerializeField] private string breadIngredientId = "IG_01";    //재료 빵 테스트
-    [SerializeField] private string eggIngredientId = "IG_04";      //재료 계란 테스트
+    [SerializeField] private string breadIngredientId = "IG_01";        //재료 빵 테스트
+    [SerializeField] private string eggIngredientId = "IG_04";          //재료 계란 테스트
 
     [Header("테스트용 음식 ID")]
-    [SerializeField] private string whiteBreadDishId = "FD_01";          //요리 식빵 테스트
+    [SerializeField] private string whiteBreadDishId = "FD_01";         //요리 식빵 테스트
 
     private InventoryManager inventoryManager;
 
