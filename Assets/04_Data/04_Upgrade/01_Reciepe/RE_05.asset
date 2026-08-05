@@ -17,4 +17,5 @@ MonoBehaviour:
   foodID: DS_05
   grade: "\uCD08\uAE09"
   price: 500
-  info: "\uAC10\uC790x2 + \uBC84\uD130x1"
+  info: "\uAD6C\uB9E4\uC2DC '\uAC10\uC790\uD280\uAE40' \uC81C\uC791 \uAC00\uB2A5"
+  reciepeInfo: "\uAC10\uC790x2 + \uBC84\uD130x1"

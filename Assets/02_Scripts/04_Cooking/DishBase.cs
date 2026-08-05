@@ -11,6 +11,15 @@ public class DishBase : MonoBehaviour
     [SerializeField] private int subscribers;
     [SerializeField] private DishMaterial[] materials;
     [SerializeField] private string info;
+    public DishData Data => data;
+    public string ID => id;
+    public string DishName => dishName;
+    public string ReciepeGrade => reciepeGrade;
+    public int Cost => cost;
+    public int Donation => donation;
+    public int Subscribers => subscribers;
+    public DishMaterial[] Materials => materials;
+    public string Info => info;
 
     private void Awake()
     {
