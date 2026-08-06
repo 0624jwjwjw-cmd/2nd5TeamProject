@@ -11,7 +11,7 @@ public class RevenueUI : MonoBehaviour
     {
         if (CurrencyManager.Instance == null)
         {
-            Debug.LogError("CurrencyManager가 아직 생성되지 않음");
+            Debug.LogError("CurrencyManager없엉");
             return;
         }
         CurrencyManager.Instance.OnRevenueChanged += RefreshUI;
