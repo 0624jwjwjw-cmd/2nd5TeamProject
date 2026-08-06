@@ -7,20 +7,13 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
 {
     public static SaveLoadManager Instance;
 
-
     private List<ISaveable> saveables = new();
-
-
     private string savePath;
-
-
     private bool isDirty;
-
     private float timer;
-
     private float saveDelay = 10f;
 
-    //순서 구현
+    //게임 시작 순서 구현
     public int Priority => 50;
     public void Initialize()
     {
@@ -47,36 +40,20 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         {
             Destroy(gameObject);
         }
-
-
-        savePath =
-        Path.Combine(Application.persistentDataPath,
-        "SaveData.json");
+        savePath =Path.Combine(Application.persistentDataPath,"SaveData.json");
     }
-
-
-
-
 
     private void Update()
     {
-        if (!isDirty)
-            return;
-
-
+        if (!isDirty)return;
         timer += Time.deltaTime;
-
-
         if (timer >= saveDelay)
         {
             SaveGame();
-
             timer = 0;
             isDirty = false;
         }
     }
-
-
     //저장 필요해지면 10초뒤에 변경
     public void SetDirty()
     {
@@ -91,24 +68,16 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         }
     }
 
-
-
     public void SaveGame()
     {
         SaveData data = new SaveData();
-
-
         foreach (ISaveable saveable in saveables)
         {
             saveable.Save(data);
         }
-        string json =
-        JsonUtility.ToJson(data, true);
+        string json =JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, json);
     }
-
-
-
 
     public void LoadGame()
     {
@@ -117,10 +86,8 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
             Debug.Log("저장 데이터 없음");
             return;
         }
-        string json =
-        File.ReadAllText(savePath);
-        SaveData data =
-        JsonUtility.FromJson<SaveData>(json);
+        string json = File.ReadAllText(savePath);
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
@@ -128,15 +95,11 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
     }
 
 
-
     // 앱 종료 / 백그라운드 대비
-
     private void OnApplicationQuit()
     {
         SaveGame();
     }
-
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)
@@ -152,16 +115,13 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
         {
             File.Delete(savePath);
         }
-
         // 기본 데이터 생성
         SaveData data = new SaveData();
-
         // 모든 매니저를 기본값으로 변경
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
         }
-
         // 변경된 데이터를 즉시 저장
         SaveGame();
 
