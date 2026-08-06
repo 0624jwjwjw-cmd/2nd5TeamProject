@@ -64,12 +64,18 @@ public class LiveChat : MonoBehaviour
 
     private void OnEnable()
     {
+        if (_liveManager == null)
+            return;
+
         _liveManager.OnLiveStarted += StartChat;
         _liveManager.OnLiveEnded += StopChat;
     }
 
     private void OnDisable()
     {
+        if (_liveManager == null)
+            return;
+
         _liveManager.OnLiveStarted -= StartChat;
         _liveManager.OnLiveEnded -= StopChat;
     }
