@@ -21,4 +21,5 @@ MonoBehaviour:
   materials:
   - ingredientData: {fileID: 11400000, guid: 2992c157dd578d842b37705bbf21ae24, type: 2}
     amount: 1
-  info: 
+  info: "\uC724\uAE30 \uB098\uB294 \uB530\uB73B\uD55C \uD770\uC300\uBC25, \uB4E0\uB4E0\uD55C
+    \uD55C \uB07C\uC758 \uC2DC\uC791\uC774\uB2E4"

@@ -325,7 +325,7 @@ public class DataImporter : EditorWindow
             }
 
             ReciepePurchaseData data = FindOrCreateAsset<ReciepePurchaseData>(ReciepePurchaseAssetFolder, id); //데이터를 만들고
-            data.SetData(id, CSVParser.Get(row, "이름"), CSVParser.Get(row, "음식ID"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "가격"), CSVParser.Get(row, "레시피설명")); //데이터값을 넣어준다
+            data.SetData(id, CSVParser.Get(row, "이름"), CSVParser.Get(row, "음식ID"), CSVParser.Get(row, "등급"), CSVParser.GetInt(row, "가격"), CSVParser.Get(row, "설명"), CSVParser.Get(row, "레시피")); //데이터값을 넣어준다
 
             EditorUtility.SetDirty(data); //에셋이 변경되었다고 표시해주고
         }
