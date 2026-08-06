@@ -22,7 +22,7 @@ public sealed class InventorySlotUI : MonoBehaviour
 
     [Header("선택 표시")]
     [SerializeField] private GameObject selectedFrame;  //현재 선택된 슬롯임을 표시하는 테두리 오브젝트
-    private string itemId = string.Empty;               //현재 이 슬롯에 연결된 아이템 ID (예: IG_01, FD_03 등)
+    private string itemId = string.Empty;               //현재 이 슬롯에 연결된 아이템 ID (예: IG_01, DS_03 등)
     private Action<string> onClickCallback;             //슬롯이 클릭됐을 때 실행할 외부 메서드 저장
 
     //프로퍼티
