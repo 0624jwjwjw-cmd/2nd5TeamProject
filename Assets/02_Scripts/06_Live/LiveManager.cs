@@ -5,11 +5,14 @@ public class LiveManager : MonoBehaviour
 {
     [SerializeField] private float _liveDuration = 20f;
 
-    private float _currentTime;
+    private float _elapsedTime;
     private bool _isLive;
 
+    // 마지막으로 UI에 전달한 초
+    private int _lastSecond;
+
     public bool IsLive => _isLive;
-    public float CurrentTime => _currentTime;
+    public float ElapsedTime => _elapsedTime;
 
     public event Action OnLiveStarted;
     public event Action OnLiveEnded;
@@ -17,7 +20,8 @@ public class LiveManager : MonoBehaviour
 
     private void Awake()
     {
-        _currentTime = _liveDuration;
+        _elapsedTime = 0f;
+        _lastSecond = 0;
     }
 
     private void Update()
@@ -38,12 +42,12 @@ public class LiveManager : MonoBehaviour
         }
 
         _isLive = true;
-        _currentTime = _liveDuration;
+        _elapsedTime = 0f;
+        _lastSecond = 0;
 
         Debug.Log("라이브 시작!");
 
         OnLiveStarted?.Invoke();
-        OnLiveTimeChanged?.Invoke(_currentTime);
     }
 
     public void EndLive()
@@ -60,13 +64,20 @@ public class LiveManager : MonoBehaviour
         OnLiveEnded?.Invoke();
     }
 
+    // 1초마다 이벤트 발생
     private void UpdateLiveTimer()
     {
-        _currentTime -= Time.deltaTime;
+        _elapsedTime += Time.deltaTime;
 
-        OnLiveTimeChanged?.Invoke(_currentTime);
+        int currentSecond = Mathf.FloorToInt(_elapsedTime);
 
-        if (_currentTime <= 0f)
+        if (currentSecond > _lastSecond)
+        {
+            _lastSecond = currentSecond;
+            OnLiveTimeChanged?.Invoke(currentSecond);
+        }
+
+        if (_elapsedTime >= _liveDuration)
         {
             EndLive();
         }

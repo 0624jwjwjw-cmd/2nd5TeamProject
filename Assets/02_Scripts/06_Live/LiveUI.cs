@@ -11,12 +11,14 @@ public class LiveUI : MonoBehaviour
     [SerializeField] private TMP_Text _liveStatusText;
     [SerializeField] private TMP_Text _liveTimerText;
 
+    [SerializeField] private TMP_Text _viewerText;
+    [SerializeField] private TMP_Text _subscriberText;
+    [SerializeField] private TMP_Text _donationText;
+
     private void Awake()
     {
         _liveStatusText.text = "LIVE OFF";
-        _liveTimerText.text = FormatTime(_liveManager.CurrentTime);
-
-        _startButton.onClick.AddListener(_liveManager.StartLive);
+        _liveTimerText.text = FormatTime(_liveManager.ElapsedTime);
     }
 
     private void OnEnable()
@@ -32,7 +34,10 @@ public class LiveUI : MonoBehaviour
         _liveManager.OnLiveEnded -= ShowLiveEnded;
         _liveManager.OnLiveTimeChanged -= UpdateTimer;
     }
-
+    private void OnDestroy()
+    {
+        _startButton.onClick.RemoveListener(_liveManager.StartLive);
+    }
     private void ShowLiveStarted()
     {
         _liveStatusText.text = "LIVE ON";
@@ -41,18 +46,15 @@ public class LiveUI : MonoBehaviour
     private void ShowLiveEnded()
     {
         _liveStatusText.text = "LIVE OFF";
-        _liveTimerText.text = "00:00";
     }
 
-    private void UpdateTimer(float currentTime)
+    private void UpdateTimer(float currentSecond)
     {
-        _liveTimerText.text = FormatTime(currentTime);
+        _liveTimerText.text = FormatTime(currentSecond);
     }
 
-    private string FormatTime(float time)
+    private string FormatTime(float currentSecond)
     {
-        int seconds = Mathf.Max(0, Mathf.CeilToInt(time));
-
-        return $"00:{seconds:00}";
+        return $"00:{(int)currentSecond:00}";
     }
 }
