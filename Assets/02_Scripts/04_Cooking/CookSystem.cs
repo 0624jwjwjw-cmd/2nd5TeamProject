@@ -9,21 +9,22 @@ public class CookSystem : MonoBehaviour
 {
     [SerializeField] private DishBase[] dishes;
     [SerializeField] private DishBase[] specialDishes;
-    [SerializeField] private DishBase trash;
+    [SerializeField] private DishBase trashfood;
     [SerializeField] private CookSlots cookSlots;
 
     [SerializeField] private int specialRate;
 
     [SerializeField] private Transform cookResult;
 
+    public List<GameObject> madeDish = new List<GameObject>();
     public void StartCook()
     {
         DishBase resultDish = FindMatchingDish(dishes);
 
         if (resultDish == null)
         {
-            Instantiate(trash, cookResult.transform.position, Quaternion.identity);
-            cookSlots.ClearSlots();
+            DishBase trash = Instantiate(trashfood, cookResult.transform.position, Quaternion.identity);
+            madeDish.Add(trash.gameObject);
         }
         else
         {
@@ -31,14 +32,20 @@ public class CookSystem : MonoBehaviour
             {
                 int index = System.Array.IndexOf(dishes, resultDish);
                 DishBase specialDish = specialDishes[index];
-                Instantiate(specialDish, cookResult.transform.position, Quaternion.identity);
+                DishBase madeSpecialDish = Instantiate(specialDish, cookResult.transform.position, Quaternion.identity);
+                madeDish.Add(madeSpecialDish.gameObject);
             }
             else
             {
-                Instantiate(resultDish, cookResult.transform.position, Quaternion.identity);
+                DishBase dish = Instantiate(resultDish, cookResult.transform.position, Quaternion.identity);
+                madeDish.Add(dish.gameObject);
             }
         }
         cookSlots.ClearSlots();
+        for(int i=0;i<cookSlots.slotUIs.Length;i++)
+        {
+            cookSlots.slotUIs[i].Clear();
+        }
     }
     private DishBase FindMatchingDish(DishBase[] dishBases)
     {
@@ -84,5 +91,16 @@ public class CookSystem : MonoBehaviour
             }
         }
         return null;
+    }
+    public void ClearDish()
+    {
+        foreach (GameObject dish in madeDish)
+        {
+            if (dish != null)
+            {
+                Destroy(dish);
+            }
+        }
+        madeDish.Clear();
     }
 }

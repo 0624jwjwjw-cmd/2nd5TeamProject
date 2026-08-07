@@ -9,7 +9,7 @@ public class IngredientBase : MonoBehaviour
     [SerializeField] private int donation;
     [SerializeField] private int subscribers;
 
-    public bool isSlot = false;
+    public SpriteRenderer spriteRenderer;
     public IngredientData Data => data;
     public string ID => id;
     public string IngredientName => ingredientName;
@@ -24,6 +24,8 @@ public class IngredientBase : MonoBehaviour
         {
             return;
         }
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
         Initialize(data);
     }
     private void Initialize(IngredientData data)

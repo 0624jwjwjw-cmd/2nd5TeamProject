@@ -1,24 +1,72 @@
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
+
 public class CookSlotUI : MonoBehaviour
 {
-    [SerializeField] private Image iconImage;
-    [SerializeField] private TMP_Text count;
-
-    private CookSlotItem slot;
-    private CookSlots slots;
-
-    public void Initialize(CookSlots slots)
+    [SerializeField] private CookSlots cookSlots;
+    public Image image;
+    public TMP_Text count;
+    private void Awake()
     {
-        this.slots = slots;
+        image = GetComponent<Image>();
     }
-
-    public void SetSlot(CookSlotItem slot)
+    public void SetIngredient(IngredientBase ingredient)
     {
-        this.slot = slot;
-        gameObject.SetActive(true);
-        iconImage.sprite = slot.ingredient.Data.Icon;
+        foreach(CookSlotItem cookSlotItem in cookSlots.slots)
+        {
+            if(cookSlotItem.ingredient.Data.ID == ingredient.ID)
+            {
+                gameObject.SetActive(true);
+                image.sprite = ingredient.spriteRenderer.sprite;
+                count.text = cookSlotItem.count.ToString();
+            }
+        }
+    }
+    public void AddIngredient(IngredientBase ingredient)
+    {
+        foreach(CookSlotItem cookSlotItem in cookSlots.slots)
+        {
+            if(cookSlotItem.ingredient.Data.ID == ingredient.ID)
+            {
+                int number = int.Parse(count.text);
+                number++;
+                count.text = number.ToString();
+            }
+        }
+    }
+    public void RemoveIngredient()
+    {
+        CookSlotItem targetSlot = null;
+
+        foreach (CookSlotItem cookSlotItem in cookSlots.slots)
+        {
+            if (cookSlotItem.ingredient != null &&
+                cookSlotItem.ingredient.spriteRenderer.sprite == image.sprite)
+            {
+                targetSlot = cookSlotItem;
+                break;
+            }
+        }
+
+        if (targetSlot == null) return;
+
+        if (targetSlot.count > 1)
+        {
+            targetSlot.count--;
+            count.text = targetSlot.count.ToString();
+        }
+        else
+        {
+            cookSlots.slots.Remove(targetSlot);
+            Clear();
+        }
+    }
+    public void Clear()
+    {
+        image.sprite = null;
+        count.text = "";
+        gameObject.SetActive(false);
     }
 }

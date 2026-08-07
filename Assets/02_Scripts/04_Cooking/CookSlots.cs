@@ -14,7 +14,7 @@ public class CookSlotItem
 public class CookSlots : MonoBehaviour
 {
     [SerializeField] private int maxSlot = 3;
-
+    [SerializeField] public CookSlotUI[] slotUIs;
     [SerializeField] public List<CookSlotItem> slots = new List<CookSlotItem>();
     private void Update()
     {
@@ -34,7 +34,7 @@ public class CookSlots : MonoBehaviour
             {
                 AddIngredient(ingredient); 
             }
-            //
+            
         }
     }
     private void AddIngredient(IngredientBase ingredient)
@@ -44,32 +44,66 @@ public class CookSlots : MonoBehaviour
             return;
         }
 
-        foreach(CookSlotItem slot in slots)
+        foreach (CookSlotItem slot in slots)
         {
-            if(slot.ingredient.Data.ID == ingredient.Data.ID)
+            if (slot.ingredient != null && slot.ingredient.Data != null &&
+                slot.ingredient.Data.ID == ingredient.Data.ID)
             {
                 slot.count++;
-                Debug.Log($"{ingredient.Data.ID} 수량 증가: {slot.count}");
+
+                CookSlotUI sameSlot = FindSameIngredient(ingredient);
+                if (sameSlot != null)
+                {
+                    sameSlot.AddIngredient(ingredient);
+                }
+                else
+                {
+                }
                 return;
             }
         }
 
-        if(slots.Count >= maxSlot)
+        if (slots.Count >= maxSlot)
         {
-            Debug.Log("더 추가 불가");
             return;
         }
 
         slots.Add(new CookSlotItem(ingredient, 1));
-        Debug.Log($"{ingredient.ID} 추가완료");
-        for(int i= 0; i<slots.Count; i++)
+
+        CookSlotUI emptySlot = FindEmptySlot();
+        if (emptySlot == null)
         {
-            Debug.Log($"{i}번째 안에 있는 아이템 : {slots[i].ingredient.ID}, {slots[i].count}");
+            return;
         }
-        return;
+
+        emptySlot.SetIngredient(ingredient);
     }
+
     public void ClearSlots()
     {
         slots.Clear();
+    }
+    public CookSlotUI FindEmptySlot()
+    {
+        foreach(CookSlotUI slotUI in slotUIs)
+        {
+            if(slotUI.gameObject.activeSelf)
+            {
+                continue;
+            }
+            return slotUI;
+        }
+        return null;        
+    }
+    public CookSlotUI FindSameIngredient(IngredientBase ingredient)
+    {
+        foreach(CookSlotUI slotUI in slotUIs)
+        {
+            if(slotUI.image.sprite == ingredient.spriteRenderer.sprite)
+            {
+                return slotUI;
+            }
+        }
+        return null;
     }
 }
