@@ -145,3 +145,17 @@ public sealed class InventorySlotData
         acquiredOrder = 0;      //획득 순서도 초기값인 0으로 변경
     }
 }
+
+/*
+ *메서드별 정리*
+ [InventorySlotData.cs] 인벤토리 슬롯 한 칸을 관리
+    해당 슬롯의 아이템 ID, 보유 수량, 획득 순서를 저장하고 수량 증가ㆍ감소ㆍ초기화를 담당
+ 
+ InventorySlotData()                                : 빈 인벤토리 슬롯 데이터를 만듦
+ InventorySlotData(itemId, amount, acquiredOrder)   : 아이템 ID, 수량, 획득 순서를 가진 새 슬롯을 만듦
+ IsSameItem()                                       : 현재 슬롯과 전달받은 아이템이 같은 아이템인지 확인
+ AddAmount()                                        : 현재 슬롯의 아이템 수량을 증가
+ TryRemoveAmount()                                  : 현재 슬롯에서 아이템 수량을 제거하고, 제거 성공 여부를 반환
+ SetAmount()                                        : 저장 데이터 복원이나 테스트 시 슬롯 수량을 직접 변경
+ Clear()                                            : 슬롯의 아이템 ID, 수량, 획득 순서를 전부 초기화
+ */
