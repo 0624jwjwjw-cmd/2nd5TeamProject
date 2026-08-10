@@ -1,0 +1,8 @@
+using UnityEditor.Overlays;
+using UnityEngine;
+
+public interface ISaveable
+{
+    void Save(SaveData data);
+    void Load(SaveData data);
+}

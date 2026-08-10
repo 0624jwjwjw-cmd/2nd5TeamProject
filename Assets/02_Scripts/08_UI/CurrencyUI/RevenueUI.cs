@@ -26,18 +26,18 @@ public class RevenueUI : MonoBehaviour
     }
     private void RefreshUI()
     {
-        goldText.text = $"Gold : {CurrencyManager.Instance.Gold:N0}Won";
+        goldText.text = $"후원금 : {CurrencyManager.Instance.Gold:N0}원";
 
-        subscriberText.text = $"Subscriber : {FormatSubscriber(CurrencyManager.Instance.Subscriber)} people";
+        subscriberText.text = $"구독자 : {FormatSubscriber(CurrencyManager.Instance.Subscriber)} 명";
     }
 
     private string FormatSubscriber(int value)
     {
-        if (value >= 1000)
+        if (value >= 10000)
         {
-            float man = value / 1000f;
+            float man = value / 10000f;
 
-            return $"{man:0.0}K";
+            return $"{man:0.0}만";
         }
 
         return value.ToString();

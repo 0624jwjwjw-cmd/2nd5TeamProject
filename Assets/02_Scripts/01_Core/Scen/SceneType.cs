@@ -4,5 +4,6 @@ public enum SceneType
     Main,
     Studio,
     Kitchen,
-    Shop
+    Shop,
+    Test
 }
