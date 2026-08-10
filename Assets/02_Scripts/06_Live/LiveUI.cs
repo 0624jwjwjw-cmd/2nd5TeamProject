@@ -26,6 +26,8 @@ public class LiveUI : MonoBehaviour
         _liveManager.OnLiveStarted += ShowLiveStarted;
         _liveManager.OnLiveEnded += ShowLiveEnded;
         _liveManager.OnLiveTimeChanged += UpdateTimer;
+
+        //_startButton.onClick.AddListener(_liveManager.StartLive);
     }
 
     private void OnDisable()
@@ -33,11 +35,10 @@ public class LiveUI : MonoBehaviour
         _liveManager.OnLiveStarted -= ShowLiveStarted;
         _liveManager.OnLiveEnded -= ShowLiveEnded;
         _liveManager.OnLiveTimeChanged -= UpdateTimer;
-    }
-    private void OnDestroy()
-    {
+
         _startButton.onClick.RemoveListener(_liveManager.StartLive);
     }
+
     private void ShowLiveStarted()
     {
         _liveStatusText.text = "LIVE ON";

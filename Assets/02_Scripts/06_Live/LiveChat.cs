@@ -128,6 +128,6 @@ public class LiveChat : MonoBehaviour
 
     private void UpdateChatUI()
     {
-        _chatText.text = string.Join("\n\n", _currentChats);
+        _chatText.text = string.Join("\n", _currentChats);
     }
 }
