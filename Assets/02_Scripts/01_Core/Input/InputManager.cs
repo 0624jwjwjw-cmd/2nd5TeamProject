@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
@@ -17,7 +18,10 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
             Destroy(gameObject);
     }
@@ -26,75 +30,63 @@ public class InputManager : MonoBehaviour
     {
         // 매 프레임 초기화
         IsTap = false;
-
-#if UNITY_EDITOR || UNITY_STANDALONE
-
-        HandleMouse();
-
-#else
-
-        HandleTouch();
-
-#endif
+        HandlePointer();
     }
 
-    private void HandleMouse()
+    private void HandlePointer()
     {
-        PointerPosition = Input.mousePosition;
-
-        if (Input.GetMouseButtonDown(0))
+        // 마우스 입력
+        if (Mouse.current != null)
         {
-            pointerDown = true;
-            DragStartPosition = PointerPosition;
-        }
-
-        if (pointerDown)
-        {
-            if (Vector2.Distance(DragStartPosition, PointerPosition) > dragThreshold)
+            PointerPosition = Mouse.current.position.ReadValue();
+            if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                IsDragging = true;
-            }
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            if (!IsDragging)
-                IsTap = true;
-
-            pointerDown = false;
-            IsDragging = false;
-        }
-    }
-
-    private void HandleTouch()
-    {
-        if (Input.touchCount == 0)
-            return;
-
-        Touch touch = Input.GetTouch(0);
-        PointerPosition = touch.position;
-
-        switch (touch.phase)
-        {
-            case TouchPhase.Began:
                 pointerDown = true;
                 DragStartPosition = PointerPosition;
-                break;
-
-            case TouchPhase.Moved:
+            }
+            if (pointerDown)
+            {
                 if (Vector2.Distance(DragStartPosition, PointerPosition) > dragThreshold)
+                {
                     IsDragging = true;
-                break;
-
-            case TouchPhase.Ended:
-            case TouchPhase.Canceled:
-
+                }
+            }
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
                 if (!IsDragging)
                     IsTap = true;
 
                 pointerDown = false;
                 IsDragging = false;
-                break;
+            }
+        }
+
+        // 모바일 터치 입력
+        if (Touchscreen.current != null)
+        {
+            var touch = Touchscreen.current.primaryTouch;
+            if (!touch.press.isPressed) return;
+            PointerPosition = touch.position.ReadValue();
+            if (touch.press.wasPressedThisFrame)
+            {
+                pointerDown = true;
+                DragStartPosition = PointerPosition;
+            }
+            if (pointerDown)
+            {
+                if (Vector2.Distance(DragStartPosition, PointerPosition) > dragThreshold)
+                {
+                    IsDragging = true;
+                }
+            }
+            if (touch.press.wasReleasedThisFrame)
+            {
+                if (!IsDragging)
+                    IsTap = true;
+
+                pointerDown = false;
+                IsDragging = false;
+            }
         }
     }
 }
