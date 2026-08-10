@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DishBase : MonoBehaviour
 {
+    [Header("Data")]
     [SerializeField] private DishData data;
     [SerializeField] private string id;
     [SerializeField] private string dishName;
@@ -11,6 +12,9 @@ public class DishBase : MonoBehaviour
     [SerializeField] private int subscribers;
     [SerializeField] private DishMaterial[] materials;
     [SerializeField] private string info;
+    [Header("")]
+    [SerializeField] public bool isUnlocked = false;
+    [SerializeField] public SpriteRenderer spriteRenderer;
     public DishData Data => data;
     public string ID => id;
     public string DishName => dishName;
@@ -28,6 +32,8 @@ public class DishBase : MonoBehaviour
             return;
         }
         Initialize(data);
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Initialize(DishData data)
     {
@@ -39,5 +45,9 @@ public class DishBase : MonoBehaviour
         subscribers = data.Subscribers;
         materials = data.Materials;
         info = data.Info;
+    }
+    public void Unlock()
+    {
+        isUnlocked = true;
     }
 }
