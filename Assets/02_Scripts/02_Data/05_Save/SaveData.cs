@@ -10,6 +10,10 @@ public class SaveData
     // 마지막 하트 회복 시간
     public long lastHeartRecoverTime = 0;
 
+    // 사운드 볼륨
+    public float bgmVolume = 1f;
+    public float sfxVolume = 0.5f;
+
     // 업그레이드
     public int kitchenLevel= 0;
     public int studioLevel = 0;

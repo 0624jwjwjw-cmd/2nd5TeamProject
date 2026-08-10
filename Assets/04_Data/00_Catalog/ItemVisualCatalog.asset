@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41defedbabb9bd64fb557d5cb8e762d7, type: 3}
+  m_Name: ItemVisualCatalog
+  m_EditorClassIdentifier: Assembly-CSharp::ItemVisualCatalog
+  ingredientPrefabs:
+  - {fileID: 7273295262140737207, guid: a68b49580e3efb348b580ebcb8dcdafc, type: 3}
+  - {fileID: 90240675364509058, guid: a367a01a3ad8f2145ab43e631f6e1be9, type: 3}
+  dishPrefabs:
+  - {fileID: 7378677004785162881, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
+  specialDishPrefabs:
+  - {fileID: 2545853720008457659, guid: d7649aa537250d94f9da533580865cd6, type: 3}
