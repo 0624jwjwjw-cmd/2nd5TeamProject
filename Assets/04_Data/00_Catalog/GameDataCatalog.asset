@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb35ac99e1fdca4f81707828a4355d7, type: 3}
   m_Name: GameDataCatalog
   m_EditorClassIdentifier: Assembly-CSharp::GameDataCatalog
-  ingredients: []
-  dishes: []
-  specialDishes: []
+  ingredients:
+  - {fileID: 11400000, guid: 7324ab50d08ad2840a862ebf3da234d7, type: 2}
+  - {fileID: 11400000, guid: e069799b44d1db94bb5f6fb44b14f919, type: 2}
+  dishes:
+  - {fileID: 11400000, guid: 94f5def28de934b4299bf62db0837d50, type: 2}
+  specialDishes:
+  - {fileID: 11400000, guid: c8250fa8c9c326e459816f090fb2fc9a, type: 2}
