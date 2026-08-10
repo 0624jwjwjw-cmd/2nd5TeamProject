@@ -46,6 +46,9 @@ public class SceneLoader : MonoBehaviour
             case SceneType.Shop:
                 return "04_Shop";
 
+            case SceneType.Test:
+                return "Test";
+
             default:
                 return "MainScene";
         }

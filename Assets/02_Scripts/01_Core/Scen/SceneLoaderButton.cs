@@ -5,6 +5,7 @@ public class SceneLoaderButton : MonoBehaviour
     public void LoadTitle()
     {
         SceneLoader.Instance.LoadScene(SceneType.Title);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void LoadMain()
     {
@@ -21,5 +22,14 @@ public class SceneLoaderButton : MonoBehaviour
     public void LoadShop()
     {
         SceneLoader.Instance.LoadScene(SceneType.Shop);
+    }
+    public void LoadTest()
+    {
+        SceneLoader.Instance.LoadScene(SceneType.Test);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
+    }
+    public void SoundTest()
+    {
+        SoundManager.Instance.PlaySFX(SFXType.Coin);
     }
 }
