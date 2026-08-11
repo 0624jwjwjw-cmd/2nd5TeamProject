@@ -2,19 +2,34 @@ using UnityEngine;
 
 public class FoodPlace : MonoBehaviour
 {
-    private DishBase placedDish;
+    [SerializeField] private FoodArea _foodArea;
 
-    public bool IsFilled => placedDish != null;
+    private DishBase _placedDish;
+
+    public bool IsFilled => _placedDish != null;
+    public DishBase PlacedDish => _placedDish;
 
     public void PlaceFood(DishBase dish)
     {
-        if (IsFilled)
+        if (IsFilled || dish == null)
         {
             return;
         }
 
-        placedDish = dish;
+        _placedDish = dish;
 
         dish.transform.position = transform.position;
+
+        LiveManager liveManager = FindFirstObjectByType<LiveManager>();
+
+        if (liveManager != null)
+        {
+            liveManager.AddFoodReward(dish);
+        }
+
+        if (_foodArea != null)
+        {
+            _foodArea.CheckFoodPlaces();
+        }
     }
 }

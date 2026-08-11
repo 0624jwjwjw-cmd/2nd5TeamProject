@@ -8,20 +8,28 @@ public class LiveManager : MonoBehaviour
     private float _elapsedTime;
     private bool _isLive;
 
-    // 마지막으로 UI에 전달한 초
     private int _lastSecond;
+    private int _totalDonation;
+    private int _totalSubscribers;
 
     public bool IsLive => _isLive;
     public float ElapsedTime => _elapsedTime;
 
+    public int TotalDonation => _totalDonation;
+    public int TotalSubscribers => _totalSubscribers;
+
     public event Action OnLiveStarted;
     public event Action OnLiveEnded;
     public event Action<float> OnLiveTimeChanged;
+    public event Action<int> OnDonationChanged;
+    public event Action<int> OnSubscribersChanged;
 
     private void Awake()
     {
         _elapsedTime = 0f;
         _lastSecond = 0;
+        _totalDonation = 0;
+        _totalSubscribers = 0;
     }
 
     private void Update()
@@ -64,7 +72,26 @@ public class LiveManager : MonoBehaviour
         OnLiveEnded?.Invoke();
     }
 
-    // 1초마다 이벤트 발생
+    public void AddFoodReward(DishBase dish)
+    {
+        if (dish == null)
+        {
+            return;
+        }
+
+        _totalDonation += dish.Donation;
+        _totalSubscribers += dish.Subscribers;
+
+        OnDonationChanged?.Invoke(_totalDonation);
+        OnSubscribersChanged?.Invoke(_totalSubscribers);
+
+        Debug.Log(
+            $"음식 배치 - {dish.DishName} / " +
+            $"후원금 +{dish.Donation} / " +
+            $"구독자 +{dish.Subscribers}"
+        );
+    }
+
     private void UpdateLiveTimer()
     {
         _elapsedTime += Time.deltaTime;
