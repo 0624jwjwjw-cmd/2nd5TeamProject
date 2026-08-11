@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class RecipeDetailUI : MonoBehaviour
 {
+    public static RecipeDetailUI Instance { get; private set; }
+
     [SerializeField] private Image image;
     [SerializeField] private TMP_Text foodNameText;
     [SerializeField] private TMP_Text[] materialName;
@@ -22,6 +24,15 @@ public class RecipeDetailUI : MonoBehaviour
     [SerializeField] private string lockedInfo = "레시피를 구매하여 요리를 해금해 주세요.";
     [SerializeField] private TMP_Text lockedInfoText;
 
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     public void LockedDish(DishBase dishBase)
     {
         image.sprite = dishBase.spriteRenderer.sprite;
