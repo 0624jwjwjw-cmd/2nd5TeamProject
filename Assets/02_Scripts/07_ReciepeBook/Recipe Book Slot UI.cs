@@ -10,6 +10,7 @@ public class RecipeBookSlotUI : MonoBehaviour
     [SerializeField] private TMP_Text text;
     [SerializeField] private Color originColor;
     [SerializeField] private Color black = new Color(0f,0f,0f);
+    [SerializeField] private ReciepeUnlockManager reciepeUnlockManager;
     private void Awake()
     {
         image.sprite = dishBase.spriteRenderer.sprite;
@@ -21,7 +22,7 @@ public class RecipeBookSlotUI : MonoBehaviour
     }
     private void RecipeStateManage()
     {
-        if(!dishBase.isUnlocked)
+        if(!reciepeUnlockManager.IsUnlocked(dishBase.ID))
         {
             image.color = black;
             text.text = "???";
@@ -31,9 +32,5 @@ public class RecipeBookSlotUI : MonoBehaviour
             image.color = originColor;
             text.text = dishBase.DishName;
         }
-    }
-    private void OnClickDishIcon()
-    {
-        
     }
 }
