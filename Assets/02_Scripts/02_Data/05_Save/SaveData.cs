@@ -11,8 +11,8 @@ public class SaveData
     public long lastHeartRecoverTime = 0;
 
     // 사운드 볼륨
-    public float bgmVolume = 1f;
-    public float sfxVolume = 0.5f;
+    public float bgmVolume = 1.0f;
+    public float sfxVolume = 1.0f;
 
     // 업그레이드
     public int kitchenLevel= 0;

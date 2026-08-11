@@ -50,7 +50,7 @@ public class SceneLoader : MonoBehaviour
                 return "Test";
 
             default:
-                return "MainScene";
+                return "00_Title";
         }
     }
 }
