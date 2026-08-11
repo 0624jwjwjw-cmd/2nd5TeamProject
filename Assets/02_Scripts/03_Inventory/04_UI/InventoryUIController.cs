@@ -59,15 +59,16 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
 
     private void OnEnable()
     {
-        //이미 초기화된 Controller가
-        //Panel 재활성화 등으로 다시 켜진 경우 이벤트 재구독
+        //이미 시스템 초기화가 끝난 상태라면
+        //인벤토리 창이 실제로 열리는 순간 현재 데이터를 UI로 생성
         if (isInitialized)
         {
-            SubscribeEvents();
-
             //꺼져 있는 동안 Inventory가 변경됐을 수 있으므로
             //현재 실제 데이터를 기준으로 UI 다시 동기화
             BuildInitialSlots();
+
+            //창이 열려 있는 동안만 Inventory 변경 이벤트 수신
+            SubscribeEvents();
 
             return;
         }
@@ -138,16 +139,17 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             return;
         }
 
-        //현재 InventoryManager에 이미 들어있는 아이템들을
-        //처음 한 번 화면에 생성
-        BuildInitialSlots();
-
         //초기화 완료
         isInitialized = true;
 
-        //현재 UI가 활성화 상태일 때만 이벤트 구독
+        //현재 UI가 활성화 상태일 때만
+        //Inventory 슬롯을 생성하고 변경 이벤트를 구독
         if (isActiveAndEnabled)
         {
+            //현재 실제 Inventory 데이터를 기준으로 UI 생성
+            BuildInitialSlots();
+
+            //인벤토리 창이 열려있는 동안만 변경 이벤트 수신
             SubscribeEvents();
         }
 
@@ -263,7 +265,8 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         if (!TryGetDisplayData(
             itemId,
             out string displayName,
-            out Sprite icon))
+            out Sprite icon,
+            out bool isSpecial))
         {
             Debug.LogWarning(
                 $"[InventoryUIController] " +
@@ -287,6 +290,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             amount,
             HandleSlotClicked
             );
+
+        //특별 요리라면 S 배지를 표시
+        newSlot.SetSpecialBadge(isSpecial);
 
         //ID → UI Slot 연결
         slotLookup.Add(
@@ -389,11 +395,12 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     }
 
     //*ID → UI 표시 정보 검색*
-    private bool TryGetDisplayData(string itemId, out string displayName, out Sprite icon)
+    private bool TryGetDisplayData(string itemId, out string displayName, out Sprite icon, out bool isSpecial)
     {
         //기본값
         displayName = string.Empty;
         icon = null;
+        isSpecial = false;
 
         //재료 검색
         if (gameDataRepository.TryGetIngredient(itemId, out IngredientData ingredientData))
@@ -411,6 +418,10 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         else if (gameDataRepository.TryGetSpecialDish(itemId, out DishData specialDishData))
         {
             displayName = specialDishData.DishName;
+
+            //Repository에서 특별 요리로 조회된 경우에만
+            //S 배지를 표시하도록 true 설정
+            isSpecial = true;
         }
 
         //어느 데이터 Repository에서도 ID를 찾지 못했다면 실패
@@ -424,6 +435,27 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //*Slot 클릭*
     private void HandleSlotClicked(string itemId)
     {
+        //이미 선택된 슬롯을 다시 터치한 경우
+        //현재 선택된 아이템과 방금 터치한 아이템이 같은지 확인
+        bool isSameSelectedItem = string.Equals(selectedItemId, itemId, StringComparison.Ordinal);
+
+        if (isSameSelectedItem)
+        {
+            //현재 선택된 슬롯 검색
+            if (slotLookup.TryGetValue(itemId, out InventorySlotUI sameSlot))
+            {
+                sameSlot.SetSelected(false);    //선택 테두리 OFF
+            }
+
+            //선택된 아이템이 없는 상태로 변경
+            selectedItemId = string.Empty;
+
+            Debug.Log("[InventoryUIController] 아이템 선택 취소");
+
+            return;
+        }
+
+        //다른 슬롯을 새로 터치한 경우
         //이전에 선택했던 Slot이 존재한다면
         //선택 테두리 제거
         if (!string.IsNullOrWhiteSpace(selectedItemId) &&
