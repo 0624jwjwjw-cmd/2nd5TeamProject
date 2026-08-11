@@ -22,7 +22,7 @@ public class RecipeBookUI : MonoBehaviour
 
             if (hit.collider.TryGetComponent<DishBase>(out DishBase dishBase))
             {
-                if (reciepeUnlockManager.IsUnlocked(dishBase.ID))
+                if (!reciepeUnlockManager.IsUnlocked(dishBase.ID))
                 {
                     recipeDetailUI.LockedDish(dishBase);
                 }

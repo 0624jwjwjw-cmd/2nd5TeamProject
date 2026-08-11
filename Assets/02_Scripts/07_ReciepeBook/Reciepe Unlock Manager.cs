@@ -12,26 +12,25 @@ public class ReciepeUnlockManager : MonoBehaviour
     {
         return unlockedRecipeIDs.Contains(foodID);        
     }
-    public void UnlockRecipe(string recipeID)
+    public void UnlockRecipe(string foodID)
     {
         foreach (DishBase dishbase in dishBases)
         {
-            if (dishbase.ID == recipeID)
+            if (dishbase.ID == foodID)
             {
-                dishbase.Unlock();
+                unlockedRecipeIDs.Add(foodID);
             }
         }
-        unlockedRecipeIDs.Add(recipeID);
     }
-    public void TestUnlockRandomOne() //
+    public void TestUnlockRandomOne()
     {
-        dishBases[Random.Range(0, dishBases.Count)].Unlock();
+        unlockedRecipeIDs.Add(dishBases[Random.Range(0, dishBases.Count)].ID);
     }
     public void TestAllUnlock()
     {
-        for(int i=0; i>dishBases.Count; i++)
+        for(int i=0; i<dishBases.Count; i++)
         {
-            dishBases[i].Unlock();
+            unlockedRecipeIDs.Add(dishBases[i].ID);
         }
     }
 }
