@@ -25,7 +25,12 @@ public class InventoryManager : MonoBehaviour
 
     //인벤토리 내용이 변경되었을 때 실행되는 이벤트
     //InventoryUIController가 이 이벤트를 구독하면 아이템 추가ㆍ제거 후 UI를 자동으로 갱신 가능
+    //팀원이 사용해도 깨지지 않게 기존 이벤트 일단 안지울게요
     public event Action OnInventoryChanged;
+
+    //인벤토리가 구체적으로 어떻게 변경됐는지 전달하는 상세 이벤트
+    //InventoryUIController가 변경된 슬롯만 갱신할 때 사용
+    public event Action<InventoryChange> OnInventoryChangedDetailed;
 
     //프로퍼티
     //IReadOnlyList로 제공하기 때문에
@@ -134,12 +139,27 @@ public class InventoryManager : MonoBehaviour
         //현재 인벤토리에서 동일한 아이템 슬롯 찾기
         InventorySlotData existingSlot = FindSlot(itemId);
 
+        //이번 변경 내용을 저장할 변수
+        InventoryChange change;
+
         //동일한 아이템 슬롯이 이미 존재하면
         if (existingSlot != null)
         {
-            //해당 슬롯의 수량만 증가
+            //변경되기 전 수량 저장
+            int previousAmount = existingSlot.Amount;
+
+            //기존 슬롯의 수량 증가
             existingSlot.AddAmount(amount);
+
+            //수량만 변경됐다는 상세 정보 생성
+            change = new InventoryChange(
+                InventoryChangeType.AmountChanged,
+                itemId, 
+                previousAmount, 
+                existingSlot.Amount
+                );
         }
+        //처음 들어오는 아이템
         else
         {
             //새로운 종류의 아이템이면 획득 순서 카운터 1 증가
@@ -155,13 +175,21 @@ public class InventoryManager : MonoBehaviour
 
             //새로 만든 슬롯을 전체 인벤토리 목록에 추가
             slots.Add(newSlot);
+
+            //기존에는 존재하지 않았으므로 PreviousAmount는 0
+            change = new InventoryChange(
+                InventoryChangeType.Added,
+                itemId,
+                0,
+                amount
+                );
         }
 
         //아이템이 추가된 뒤 아이템 ID 기준으로 자동 정렬
         SortSlotsByItemId();
 
-        //인벤토리 데이터가 변경되었다는 이벤트 발생
-        NotifyInventoryChanged();
+        //기존 이벤트 + 상세 이벤트 발생
+        NotifyInventoryChanged(change);
 
         //아이템 추가에 성공했으므로 true 반환
         return true;
@@ -224,6 +252,11 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
 
+        //아이템을 제거하기 전에 기존 수량 저장
+        //수량이 0이 되면 InventorySlotData.Clear()가 실행되므로
+        //변경 전 값을 먼저 기억해둬야 함
+        int previousAmount = targetSlot.Amount;
+
         //InventorySlotData에 지정한 수량 제거를 요청
         bool removeSucceeded = targetSlot.TryRemoveAmount(amount);
 
@@ -237,15 +270,34 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
 
-        //아이템을 제거한 결과 슬롯이 빈 슬롯이 되었는지 검사
+        //수량이 0이 되어 슬롯 자체가 사라진 경우
         if (targetSlot.IsEmpty)
         {
             //수량이 0이 된 슬롯을 인벤토리 목록에서 제거
             slots.Remove(targetSlot);
-        }
 
-        //인벤토리가 변경되었다는 이벤트 발생시키기
-        NotifyInventoryChanged();
+            //Remove 이벤트 생성
+            InventoryChange change = new InventoryChange(
+                InventoryChangeType.Removed,
+                itemId,
+                previousAmount,
+                0
+                );
+
+            //인벤토리가 변경되었다는 이벤트 발생시키기
+            NotifyInventoryChanged(change);
+        }
+        //아이템은 남아있고 수량만 줄어든 경우
+        else
+        {
+            InventoryChange change = new InventoryChange(
+                InventoryChangeType.AmountChanged,
+                itemId,
+                previousAmount,
+                targetSlot.Amount
+                );
+            NotifyInventoryChanged(change);
+        }
 
         //제거 성공했으므로 true 반환
         return true;
@@ -306,8 +358,17 @@ public class InventoryManager : MonoBehaviour
     {
         //실제 슬롯 정렬 실행
         SortSlotsByItemId();
+
+        //특정 아이템 하나의 변경이 아니므로 ItemId는 빈 문자열 사용
+        InventoryChange change = new InventoryChange(
+            InventoryChangeType.Sorted,
+            string.Empty,
+            0,
+            0
+            );
+        
         //정렬 결과 UI 반영하도록 인벤토리 변경 이벤트 발생
-        NotifyInventoryChanged();
+        NotifyInventoryChanged(change);
     }
 
     //[현재 인벤토리에 들어 있는 모든 아이템을 제거하는 메서드]
@@ -323,8 +384,15 @@ public class InventoryManager : MonoBehaviour
         //획득 순서 카운터도 처음 값인 0으로 초기화
         acquiredOrderCounter = 0;
 
+        InventoryChange change = new InventoryChange(
+            InventoryChangeType.Cleared,
+            string.Empty,
+            0,
+            0
+            );
+
         //인벤토리가 변경되었다는 이벤트 발생
-        NotifyInventoryChanged();
+        NotifyInventoryChanged(change);
     }
 
     //[현재 인벤토리에서 전달받은 아이템 ID와
@@ -372,8 +440,11 @@ public class InventoryManager : MonoBehaviour
     }
 
     //[인벤토리가 변경되었음을 외부 스크립트에 알리는 메서드]
-    private void NotifyInventoryChanged()
+    private void NotifyInventoryChanged(InventoryChange change)
     {
+        //상세 변경 정보가 필요한 UI 등에 전달
+        OnInventoryChangedDetailed?.Invoke(change);
+
         //OnInventoryChanged 이벤트를 구독한 대상이 있다면 해당 이벤트 실시
         //?.Invoke를 사용해 구독자가 없어도 오류가 발생하지 않음
         OnInventoryChanged?.Invoke();

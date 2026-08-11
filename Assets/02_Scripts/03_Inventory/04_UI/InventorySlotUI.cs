@@ -22,6 +22,10 @@ public sealed class InventorySlotUI : MonoBehaviour
 
     [Header("선택 표시")]
     [SerializeField] private GameObject selectedFrame;  //현재 선택된 슬롯임을 표시하는 테두리 오브젝트
+
+    [Header("인벤토리 특별 요리 배지")]
+    [SerializeField] private GameObject specialBadge;
+
     private string itemId = string.Empty;               //현재 이 슬롯에 연결된 아이템 ID (예: IG_01, DS_03 등)
     private Action<string> onClickCallback;             //슬롯이 클릭됐을 때 실행할 외부 메서드 저장
 
@@ -121,6 +125,16 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (selectedFrame != null) selectedFrame.SetActive(isSelected);
     }
 
+    //[특별 요리 여부에 따라 S 배지 표시를 변경
+    public void SetSpecialBadge(bool isSpecial)
+    {
+        //Inspector에서 SpecialBadge가 연결되지 않은 경우 NullReferenceException을 방지하고 종료
+        if (specialBadge == null) return;
+
+        //특별 요리라면 ON / 재료나 일반 요리라면 OFF
+        specialBadge.SetActive(isSpecial);
+    }
+
     //[슬롯에 연결된 아이템 정보를 모두 제거하는 메서드]
     public void ClearSlot()
     {
@@ -145,6 +159,9 @@ public sealed class InventorySlotUI : MonoBehaviour
 
         //선택 표시도 제거
         SetSelected(false);
+
+        //특별 요리 배지도 초기 상태로 복구
+        SetSpecialBadge(false);
     }
 
     //[실제로 슬롯 버튼을 클릭했을 때 실행되는 메서드]
