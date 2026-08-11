@@ -24,9 +24,14 @@ public class IngredientBase : MonoBehaviour
         {
             return;
         }
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
         Initialize(data);
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    private void OnValidate()
+    {
+        Initialize(data);
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
     private void Initialize(IngredientData data)
     {
