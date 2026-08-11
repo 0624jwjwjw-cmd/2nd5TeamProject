@@ -8,7 +8,6 @@ public class SoundOnClick : MonoBehaviour
 
     private void Start()
     {
-
         bgmSlider.value = SoundManager.Instance.BGMVolume;
         sfxSlider.value = SoundManager.Instance.SFXVolume;
 
