@@ -31,4 +31,8 @@ public class SaveTest : MonoBehaviour
         CalculateSubscriber.GetDonation(6700, 3);
         
     }
+    public void ResetGame()
+    {
+        SaveLoadManager.Instance.ResetGame();
+    }
 }
