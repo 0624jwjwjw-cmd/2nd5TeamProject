@@ -104,12 +104,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b231c8489845fcd45b0b0c33c57a65ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DishBase
-  data: {fileID: 0}
-  id: 
-  dishName: 
-  reciepeGrade: 
-  cost: 0
-  donation: 0
-  subscribers: 0
-  materials: []
-  info: 
+  data: {fileID: 11400000, guid: 94f5def28de934b4299bf62db0837d50, type: 2}
+  id: DS_01
+  dishName: "\uC2DD\uBE75"
+  reciepeGrade: "\uAE30\uBCF8"
+  cost: 50
+  donation: 100
+  subscribers: 20
+  materials:
+  - ingredientData: {fileID: 11400000, guid: 7324ab50d08ad2840a862ebf3da234d7, type: 2}
+    amount: 1
+  info: "\uAC13 \uAD6C\uC6CC\uB0B8 \uBD80\uB4DC\uB7EC\uC6B4 \uC2DD\uBE75"
+  spriteRenderer: {fileID: 7172128884981412112}

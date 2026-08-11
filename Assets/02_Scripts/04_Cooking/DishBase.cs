@@ -34,6 +34,11 @@ public class DishBase : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void OnValidate()
+    {
+        Initialize(data);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void Initialize(DishData data)
     {
         id = data.ID;
