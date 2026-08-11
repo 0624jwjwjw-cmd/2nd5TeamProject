@@ -10,14 +10,17 @@ public class SceneLoaderButton : MonoBehaviour
     public void LoadMain()
     {
         SceneLoader.Instance.LoadScene(SceneType.Main);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void LoadStudio()
     {
         SceneLoader.Instance.LoadScene(SceneType.Studio);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void LoadKichen()
     {
         SceneLoader.Instance.LoadScene(SceneType.Kitchen);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void LoadShop()
     {
