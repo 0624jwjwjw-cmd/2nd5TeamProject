@@ -1,6 +1,7 @@
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class RecipeBookSlotUI : MonoBehaviour
@@ -9,7 +10,7 @@ public class RecipeBookSlotUI : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TMP_Text text;
     [SerializeField] private Color originColor;
-    [SerializeField] private Color black = new Color(0f,0f,0f);
+    [SerializeField] private Color black = new Color(0f, 0f, 0f);
     [SerializeField] private ReciepeUnlockManager reciepeUnlockManager;
     private void Awake()
     {
@@ -22,7 +23,7 @@ public class RecipeBookSlotUI : MonoBehaviour
     }
     private void RecipeStateManage()
     {
-        if(!reciepeUnlockManager.IsUnlocked(dishBase.ID))
+        if (!reciepeUnlockManager.IsUnlocked(dishBase.ID))
         {
             image.color = black;
             text.text = "???";
@@ -33,4 +34,16 @@ public class RecipeBookSlotUI : MonoBehaviour
             text.text = dishBase.DishName;
         }
     }
+    public void OnClickDishIcon()
+    {
+        if (!reciepeUnlockManager.IsUnlocked(dishBase.ID))
+        {
+            RecipeDetailUI.Instance.LockedDish(dishBase);
+        }
+        else
+        {
+            RecipeDetailUI.Instance.UnlockedDish(dishBase);
+        }
+    }
+
 }
