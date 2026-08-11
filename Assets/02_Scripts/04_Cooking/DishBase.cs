@@ -13,7 +13,6 @@ public class DishBase : MonoBehaviour
     [SerializeField] private DishMaterial[] materials;
     [SerializeField] private string info;
     [Header("")]
-    [SerializeField] public bool isUnlocked = false;
     [SerializeField] public SpriteRenderer spriteRenderer;
     public DishData Data => data;
     public string ID => id;
@@ -35,6 +34,11 @@ public class DishBase : MonoBehaviour
 
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
+    private void OnValidate()
+    {
+        Initialize(data);
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
     private void Initialize(DishData data)
     {
         id = data.ID;
@@ -45,9 +49,5 @@ public class DishBase : MonoBehaviour
         subscribers = data.Subscribers;
         materials = data.Materials;
         info = data.Info;
-    }
-    public void Unlock()
-    {
-        isUnlocked = true;
     }
 }

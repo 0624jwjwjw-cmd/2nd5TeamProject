@@ -114,6 +114,7 @@ MonoBehaviour:
   subscribers: 0
   materials: []
   info: 
+  spriteRenderer: {fileID: 4534379101170186491}
 --- !u!61 &173189499181287865
 BoxCollider2D:
   m_ObjectHideFlags: 0
