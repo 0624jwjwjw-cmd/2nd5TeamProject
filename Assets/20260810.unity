@@ -257,6 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodArea: {fileID: 1769096698}
 --- !u!61 &121566591
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -995,6 +996,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodArea: {fileID: 1769096698}
 --- !u!61 &767650826
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1425,6 +1427,22 @@ PrefabInstance:
     - target: {fileID: 3159663422729071425, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
       propertyPath: m_Name
       value: "DS_01_\uC2DD\uBE75"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534379101170186491, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534379101170186491, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 4534379101170186491, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1d0f40afb9976b94b93397ddb7db4a01, type: 3}
+    - target: {fileID: 4534379101170186491, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1871,6 +1889,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1769096697}
+  - component: {fileID: 1769096698}
   m_Layer: 0
   m_Name: ===FoodArea===
   m_TagString: Untagged
@@ -1896,6 +1915,23 @@ Transform:
   - {fileID: 121566589}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1769096698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769096696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3ca877ead116f042839debd36b930b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodArea
+  _foodPlaces:
+  - {fileID: 1888567728}
+  - {fileID: 767650825}
+  - {fileID: 121566590}
+  _startButton: {fileID: 1485558623}
 --- !u!1 &1888567723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1907,7 +1943,7 @@ GameObject:
   - component: {fileID: 1888567724}
   - component: {fileID: 1888567727}
   - component: {fileID: 1888567726}
-  - component: {fileID: 1888567725}
+  - component: {fileID: 1888567728}
   m_Layer: 0
   m_Name: Dish 1
   m_TagString: Untagged
@@ -1931,18 +1967,6 @@ Transform:
   - {fileID: 16040413}
   m_Father: {fileID: 1769096697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1888567725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1888567723}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
 --- !u!61 &1888567726
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2048,6 +2072,19 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1888567728
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888567723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodArea: {fileID: 1769096698}
 --- !u!1 &2086287427
 GameObject:
   m_ObjectHideFlags: 0
