@@ -24,6 +24,11 @@ public class ReciepeUnlockManager : MonoBehaviour
     }
     public void TestUnlockRandomOne()
     {
+        if (unlockedRecipeIDs.Count >= dishBases.Count)
+        {
+            return;
+        }
+
         string id = dishBases[Random.Range(0, dishBases.Count)].ID;
         if(unlockedRecipeIDs.Contains(id))
         {
@@ -33,7 +38,12 @@ public class ReciepeUnlockManager : MonoBehaviour
     }
     public void TestAllUnlock()
     {
-        for(int i=0; i<dishBases.Count; i++)
+        if (unlockedRecipeIDs.Count >= dishBases.Count)
+        {
+            return;
+        }
+
+        for (int i=0; i<dishBases.Count; i++)
         {
             unlockedRecipeIDs.Add(dishBases[i].ID);
         }
