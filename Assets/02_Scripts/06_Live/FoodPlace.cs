@@ -17,15 +17,22 @@ public class FoodPlace : MonoBehaviour
         }
 
         _placedDish = dish;
-
         dish.transform.position = transform.position;
 
-        LiveManager liveManager = FindFirstObjectByType<LiveManager>();
-
-        if (liveManager != null)
+        if (_foodArea != null)
         {
-            liveManager.AddFoodReward(dish);
+            _foodArea.CheckFoodPlaces();
         }
+    }
+
+    public void RemoveFood(DishBase dish)
+    {
+        if (_placedDish != dish)
+        {
+            return;
+        }
+
+        _placedDish = null;
 
         if (_foodArea != null)
         {
