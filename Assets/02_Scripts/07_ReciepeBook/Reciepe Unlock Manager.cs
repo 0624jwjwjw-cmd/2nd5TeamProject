@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class ReciepeUnlockManager : MonoBehaviour
 {
+    public static ReciepeUnlockManager Instance { get; private set; }
+
     [SerializeField] private List<DishBase> dishBases;
 
-    private HashSet<string> unlockedRecipeIDs = new HashSet<string>();
-    
+    [SerializeField] private HashSet<string> unlockedRecipeIDs = new HashSet<string>();
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     public bool IsUnlocked(string foodID)
     {
         return unlockedRecipeIDs.Contains(foodID);        

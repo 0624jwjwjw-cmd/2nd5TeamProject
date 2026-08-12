@@ -127,6 +127,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4132091020617170194, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 245282235}
+    - target: {fileID: 4132091020617170194, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TestAllUnlock
+      objectReference: {fileID: 0}
     - target: {fileID: 4786131899002150080, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
       propertyPath: m_Name
       value: Canvas
@@ -138,6 +146,14 @@ PrefabInstance:
     - target: {fileID: 5977259363379270797, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnClickExitButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6141721132624516447, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 245282235}
+    - target: {fileID: 6141721132624516447, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: TestUnlockRandomOne
       objectReference: {fileID: 0}
     - target: {fileID: 6899955739745278686, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -232,6 +248,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34482507d22d88a4a9c0c27818bb507c, type: 3}
+--- !u!114 &245282235 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4069600318915768224, guid: 0198e56843fe6fe4584a6e80a1da49b0, type: 3}
+  m_PrefabInstance: {fileID: 259945254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603dc4a178ca98e4ca27f621cc96d8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReciepeUnlockManager
 --- !u!1001 &259945254
 PrefabInstance:
   m_ObjectHideFlags: 0

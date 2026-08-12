@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class RecipeDetailUI : MonoBehaviour
 {
-    public static RecipeDetailUI Instance { get; private set; }
-
     [SerializeField] private Image image;
     [SerializeField] private Sprite emptyDish;
     [SerializeField] private TMP_Text foodNameText;
@@ -26,13 +24,6 @@ public class RecipeDetailUI : MonoBehaviour
 
     private void Awake()
     {
-        if(Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
         ResetDish();
     }
     private void OnEnable()
