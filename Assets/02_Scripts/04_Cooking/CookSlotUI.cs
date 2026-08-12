@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class CookSlotUI : MonoBehaviour
 {
-    [SerializeField] private CookSlots cookSlots;
+    [SerializeField] private CookSlotManager cookSlotManager;
+
     public Image image;
     public TMP_Text count;
     private void Awake()
@@ -14,7 +15,7 @@ public class CookSlotUI : MonoBehaviour
     }
     public void SetIngredient(IngredientBase ingredient)
     {
-        foreach(CookSlotItem cookSlotItem in cookSlots.slots)
+        foreach(CookSlotItem cookSlotItem in cookSlotManager.slots)
         {
             if(cookSlotItem.ingredient.Data.ID == ingredient.ID)
             {
@@ -26,7 +27,7 @@ public class CookSlotUI : MonoBehaviour
     }
     public void AddIngredient(IngredientBase ingredient)
     {
-        foreach(CookSlotItem cookSlotItem in cookSlots.slots)
+        foreach(CookSlotItem cookSlotItem in cookSlotManager.slots)
         {
             if(cookSlotItem.ingredient.Data.ID == ingredient.ID)
             {
@@ -40,7 +41,7 @@ public class CookSlotUI : MonoBehaviour
     {
         CookSlotItem targetSlot = null;
 
-        foreach (CookSlotItem cookSlotItem in cookSlots.slots)
+        foreach (CookSlotItem cookSlotItem in cookSlotManager.slots)
         {
             if (cookSlotItem.ingredient != null &&
                 cookSlotItem.ingredient.spriteRenderer.sprite == image.sprite)
@@ -59,7 +60,7 @@ public class CookSlotUI : MonoBehaviour
         }
         else
         {
-            cookSlots.slots.Remove(targetSlot);
+            cookSlotManager.slots.Remove(targetSlot);
             Clear();
         }
     }
