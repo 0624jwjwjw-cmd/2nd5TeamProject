@@ -8,21 +8,21 @@ public class RecipeDetailUI : MonoBehaviour
     public static RecipeDetailUI Instance { get; private set; }
 
     [SerializeField] private Image image;
+    [SerializeField] private Sprite emptyDish;
     [SerializeField] private TMP_Text foodNameText;
+    [SerializeField] private TMP_Text recipeTitleText;
     [SerializeField] private TMP_Text[] materialName;
     [SerializeField] private TMP_Text[] materialCount;
     [SerializeField] private Image plus1;
     [SerializeField] private Image plus2;
+    [SerializeField] private TMP_Text infoTitleText;
     [SerializeField] private TMP_Text infoText;
 
-    [SerializeField] private GameObject lockedImage;
-    [SerializeField] private Color originColor;
+    [SerializeField] private Image lockedImage;
+    [SerializeField] private Color originColor = new Color(255f, 255f, 255f);
     [SerializeField] private Color lockedColor = new Color(0f, 0f, 0f);
     [SerializeField] private string questionMark = "???";
-    [SerializeField] private string lockedRecipe = "레시피가 해금되지 않았습니다.";
     [SerializeField] private TMP_Text lockedRecipeText;
-    [SerializeField] private string lockedInfo = "레시피를 구매하여 요리를 해금해 주세요.";
-    [SerializeField] private TMP_Text lockedInfoText;
 
     private void Awake()
     {
@@ -32,13 +32,20 @@ public class RecipeDetailUI : MonoBehaviour
             return;
         }
         Instance = this;
+
+        ResetDish();
+    }
+    private void OnEnable()
+    {
+        ResetDish();
     }
     public void LockedDish(DishBase dishBase)
     {
         image.sprite = dishBase.spriteRenderer.sprite;
         image.color = lockedColor;
-        lockedImage.SetActive(true);
+        lockedImage.gameObject.SetActive(true);
         foodNameText.text = questionMark;
+        recipeTitleText.gameObject.SetActive(false);
         for (int i = 0; i < materialName.Length; i++)
         {
             materialName[i].text = "";
@@ -49,16 +56,27 @@ public class RecipeDetailUI : MonoBehaviour
         }
         plus1.gameObject.SetActive(false);
         plus2.gameObject.SetActive(false);
+        infoTitleText.gameObject.SetActive(false);
+        infoText.text = "";
         lockedRecipeText.gameObject.SetActive(true);
-        lockedRecipeText.text = lockedRecipe;
-        lockedInfoText.gameObject.SetActive(true);
-        lockedInfoText.text = lockedInfo;
+
     }
     public void UnlockedDish(DishBase dishBase)
     {
-        lockedImage.SetActive(false);
+        for (int i = 0; i < materialName.Length; i++)
+        {
+            materialName[i].text = "";
+        }
+        for (int i = 0; i < materialCount.Length; i++)
+        {
+            materialCount[i].text = "";
+        }
+        lockedImage.gameObject.SetActive(false);
+        lockedRecipeText.gameObject.SetActive(false);
         image.sprite = dishBase.spriteRenderer.sprite;
+        image.color = originColor;
         foodNameText.text = dishBase.DishName;
+        recipeTitleText.gameObject.SetActive(true);
         for (int i = 0; i < dishBase.Materials.Length; i++)
         {
             materialName[i].text = dishBase.Materials[i].IngredientData.IngredientName;
@@ -80,6 +98,27 @@ public class RecipeDetailUI : MonoBehaviour
             plus1.gameObject.SetActive(true);
             plus2.gameObject.SetActive(true);
         }
+        infoTitleText.gameObject.SetActive(true);
         infoText.text = dishBase.Info;
+    }
+    public void ResetDish()
+    {
+        image.sprite = emptyDish;
+        foodNameText.text = "";
+        recipeTitleText.gameObject.SetActive(false);
+        for (int i = 0; i < materialName.Length; i++)
+        {
+            materialName[i].text = "";
+        }
+        for (int i= 0; i< materialCount.Length;i++)
+        {
+            materialCount[i].text = "";
+        }
+        plus1.gameObject.SetActive(false);
+        plus2.gameObject.SetActive(false);
+        infoTitleText.gameObject.SetActive(false);
+        infoText.text = "";
+        lockedImage.gameObject.SetActive(false);
+        lockedRecipeText.gameObject.SetActive(false);
     }
 }
