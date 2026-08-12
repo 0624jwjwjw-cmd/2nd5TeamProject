@@ -3,8 +3,10 @@ using UnityEngine.UI;
 
 public class SettingPenel : MonoBehaviour
 {
-    [Header("SettingPanel")]
-    [SerializeField] private GameObject SettingPanel;
+    [Header("Panel")]
+    [SerializeField] private GameObject settingPanel;
+    [SerializeField] private GameObject darkPanel;
+    [Header("Sound")]
     [SerializeField] private Slider bgmSlider;
     [SerializeField] private Slider sfxSlider;
 
@@ -18,11 +20,19 @@ public class SettingPenel : MonoBehaviour
     }
     public void OpenPanel()
     {
-        SettingPanel.SetActive(true);
+        settingPanel.SetActive(true);
+        if (darkPanel != null)
+        {
+            darkPanel.SetActive(true);
+        }
     }
     public void ClosePanel()
     {
-        SettingPanel.SetActive(false);
+        settingPanel.SetActive(false);
+        if (darkPanel != null)
+        {
+            darkPanel.SetActive(false);
+        }
     }
     private void OnDestroy()
     {
