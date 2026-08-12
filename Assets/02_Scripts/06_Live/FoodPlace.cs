@@ -32,4 +32,19 @@ public class FoodPlace : MonoBehaviour
             _foodArea.CheckFoodPlaces();
         }
     }
+
+    public void RemoveFood(DishBase dish)
+    {
+        if (_placedDish != dish)
+        {
+            return;
+        }
+
+        _placedDish = null;
+
+        if (_foodArea != null)
+        {
+            _foodArea.CheckFoodPlaces();
+        }
+    }
 }

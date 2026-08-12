@@ -8,6 +8,8 @@ public class FoodDrag : MonoBehaviour
     private bool _isDragging;
     private Vector3 _offset;
 
+    private FoodPlace _currentFoodPlace;
+
     private void Awake()
     {
         _mainCamera = Camera.main;
@@ -58,6 +60,12 @@ public class FoodDrag : MonoBehaviour
             return;
         }
 
+        if (_currentFoodPlace != null)
+        {
+            _currentFoodPlace.RemoveFood(_dishBase);
+            _currentFoodPlace = null;
+        }
+
         _offset = transform.position - pointerPosition;
         _isDragging = true;
     }
@@ -85,6 +93,8 @@ public class FoodDrag : MonoBehaviour
             }
 
             foodPlace.PlaceFood(_dishBase);
+            _currentFoodPlace = foodPlace;
+
             return;
         }
     }
