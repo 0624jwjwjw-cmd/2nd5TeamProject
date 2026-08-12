@@ -10,10 +10,20 @@ public class FoodDrag : MonoBehaviour
 
     private FoodPlace _currentFoodPlace;
 
+    private SpriteRenderer _spriteRenderer;
+    private int _originalSortingOrder;
+
     private void Awake()
     {
         _mainCamera = Camera.main;
         _dishBase = GetComponent<DishBase>();
+
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        if (_spriteRenderer != null)
+        {
+            _originalSortingOrder = _spriteRenderer.sortingOrder;
+        }
     }
 
     private void Update()
@@ -33,7 +43,9 @@ public class FoodDrag : MonoBehaviour
 
         if (InputManager.Instance.IsDragging)
         {
-            transform.position = pointerPosition + _offset;
+            Vector3 newPosition = pointerPosition + _offset;
+            newPosition.z = transform.position.z;
+            transform.position = newPosition;
         }
         else
         {
@@ -50,12 +62,7 @@ public class FoodDrag : MonoBehaviour
 
         Collider2D hit = Physics2D.OverlapPoint(pointerPosition);
 
-        if (hit == null)
-        {
-            return;
-        }
-
-        if (hit.gameObject != gameObject)
+        if (hit == null || hit.gameObject != gameObject)
         {
             return;
         }
@@ -68,11 +75,21 @@ public class FoodDrag : MonoBehaviour
 
         _offset = transform.position - pointerPosition;
         _isDragging = true;
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sortingOrder = 10;
+        }
     }
 
     private void PlaceFood()
     {
         _isDragging = false;
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.sortingOrder = _originalSortingOrder;
+        }
 
         Collider2D[] colliders = Physics2D.OverlapPointAll(
             transform.position
