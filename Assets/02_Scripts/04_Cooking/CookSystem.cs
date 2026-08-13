@@ -10,7 +10,7 @@ public class CookSystem : MonoBehaviour
     [SerializeField] private DishBase[] dishes;
     [SerializeField] private DishBase[] specialDishes;
     [SerializeField] private DishBase trashfood;
-    [SerializeField] private CookSlots cookSlots;
+    [SerializeField] private CookSlotManager cookSlotManager;
 
     [SerializeField] private int specialRate;
 
@@ -41,10 +41,16 @@ public class CookSystem : MonoBehaviour
                 madeDish.Add(dish.gameObject);
             }
         }
-        cookSlots.ClearSlots();
-        for(int i=0;i<cookSlots.slotUIs.Length;i++)
+
+        foreach (CookSlotItem slot in cookSlotManager.slots)
         {
-            cookSlots.slotUIs[i].Clear();
+            InventoryManager.Instance.RemoveItem(slot.ingredient.Data.ID, slot.count);
+        }
+
+        cookSlotManager.ClearSlots();
+        for(int i=0;i<cookSlotManager.slotUIs.Length;i++)
+        {
+            cookSlotManager.slotUIs[i].Clear();
         }
     }
     private DishBase FindMatchingDish(DishBase[] dishBases)
@@ -62,7 +68,7 @@ public class CookSystem : MonoBehaviour
     }
     private bool CanCook(DishData dish)
     {
-        if(dish.Materials.Length != cookSlots.slots.Count)
+        if(dish.Materials.Length != cookSlotManager.slots.Count)
         {
             return false;
         }
@@ -83,7 +89,7 @@ public class CookSystem : MonoBehaviour
     }
     private CookSlotItem FindSlotByID(string ingredientID)
     {
-        foreach(CookSlotItem slot in cookSlots.slots)
+        foreach(CookSlotItem slot in cookSlotManager.slots)
         {
             if(slot.ingredient.ID == ingredientID)
             {

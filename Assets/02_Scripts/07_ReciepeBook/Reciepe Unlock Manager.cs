@@ -4,10 +4,21 @@ using UnityEngine;
 
 public class ReciepeUnlockManager : MonoBehaviour
 {
+    public static ReciepeUnlockManager Instance { get; private set; }
+
     [SerializeField] private List<DishBase> dishBases;
 
-    private HashSet<string> unlockedRecipeIDs = new HashSet<string>();
-    
+    [SerializeField] private HashSet<string> unlockedRecipeIDs = new HashSet<string>();
+
+    private void Awake()
+    {
+        if(Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
     public bool IsUnlocked(string foodID)
     {
         return unlockedRecipeIDs.Contains(foodID);        
@@ -24,11 +35,26 @@ public class ReciepeUnlockManager : MonoBehaviour
     }
     public void TestUnlockRandomOne()
     {
-        unlockedRecipeIDs.Add(dishBases[Random.Range(0, dishBases.Count)].ID);
+        if (unlockedRecipeIDs.Count >= dishBases.Count)
+        {
+            return;
+        }
+
+        string id = dishBases[Random.Range(0, dishBases.Count)].ID;
+        if(unlockedRecipeIDs.Contains(id))
+        {
+            TestUnlockRandomOne();
+        }
+        unlockedRecipeIDs.Add(id);
     }
     public void TestAllUnlock()
     {
-        for(int i=0; i<dishBases.Count; i++)
+        if (unlockedRecipeIDs.Count >= dishBases.Count)
+        {
+            return;
+        }
+
+        for (int i=0; i<dishBases.Count; i++)
         {
             unlockedRecipeIDs.Add(dishBases[i].ID);
         }

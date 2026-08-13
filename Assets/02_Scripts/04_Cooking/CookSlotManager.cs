@@ -11,7 +11,7 @@ public class CookSlotItem
         this.count = count;
     }
 }
-public class CookSlots : MonoBehaviour
+public class CookSlotManager : MonoBehaviour
 {
     [SerializeField] private int maxSlot = 3;
     [SerializeField] public CookSlotUI[] slotUIs;
@@ -46,8 +46,7 @@ public class CookSlots : MonoBehaviour
 
         foreach (CookSlotItem slot in slots)
         {
-            if (slot.ingredient != null && slot.ingredient.Data != null &&
-                slot.ingredient.Data.ID == ingredient.Data.ID)
+            if (slot.ingredient != null && slot.ingredient.Data != null && slot.ingredient.Data.ID == ingredient.Data.ID)
             {
                 slot.count++;
 
@@ -105,5 +104,9 @@ public class CookSlots : MonoBehaviour
             }
         }
         return null;
+    }
+    public void CookComplete()
+    {
+        slots.Clear();
     }
 }

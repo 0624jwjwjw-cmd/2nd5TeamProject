@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class FoodArea : MonoBehaviour
 {
     [SerializeField] private FoodPlace[] _foodPlaces;
+    public FoodPlace[] FoodPlaces => _foodPlaces;
+
     [SerializeField] private Button _startButton;
 
     private void Awake()
@@ -13,6 +15,11 @@ public class FoodArea : MonoBehaviour
 
     public void CheckFoodPlaces()
     {
+        if (LiveManager.Instance != null && LiveManager.Instance.IsLive)
+        {
+            return;
+        }
+
         foreach (FoodPlace foodPlace in _foodPlaces)
         {
             if (!foodPlace.IsFilled)
