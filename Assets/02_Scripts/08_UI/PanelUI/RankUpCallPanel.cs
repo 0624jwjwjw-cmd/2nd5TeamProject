@@ -60,7 +60,7 @@ public class RankUpCallPanel : MonoBehaviour
 
         OpenPanel();
     }
-
+    
     // 현재 랭크에 맞는 이미지로 변경
     private void ChangeRankImage(int rank)
     {

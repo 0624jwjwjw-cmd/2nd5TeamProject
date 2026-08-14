@@ -13,7 +13,7 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
     private long lastHeartRecoverTime;
 
     //순서 구현
-    public int Priority => 10;
+    public int Priority => 60;
     public void Initialize()
     {
         RecoverOfflineHeart();
@@ -51,7 +51,6 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
             return;
 
         TimeSpan elapsed = DateTime.UtcNow - new DateTime(lastHeartRecoverTime);//현재시간 - 마지막 회복 시간
-
         if (elapsed.TotalSeconds >= recoverTime)
         {
             CurrencyManager.Instance.AddHeart(1);
