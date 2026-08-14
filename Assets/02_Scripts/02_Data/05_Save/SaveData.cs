@@ -10,6 +10,9 @@ public class SaveData
     // 마지막 하트 회복 시간
     public long lastHeartRecoverTime = 0;
 
+    //날짜
+    public int dateCount = 0;
+
     // 사운드 볼륨
     public float bgmVolume = 1.0f;
     public float sfxVolume = 1.0f;

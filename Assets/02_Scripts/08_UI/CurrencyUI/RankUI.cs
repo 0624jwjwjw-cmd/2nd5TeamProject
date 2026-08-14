@@ -8,12 +8,13 @@ public class RankUI : MonoBehaviour
 
     private SubscriberRank rankManager;
 
-
     private void Start()
     {
         rankManager = FindFirstObjectByType<SubscriberRank>();
+        if (rankManager == null)
+            return;
         rankManager.OnRankChanged += ChangeRankImage;
-        ChangeRankImage(rankManager.CurrentRank);
+        Invoke(nameof(RefreshRank),0.01f);
     }
 
 
@@ -24,7 +25,10 @@ public class RankUI : MonoBehaviour
             rankManager.OnRankChanged -= ChangeRankImage;
         }
     }
-
+    private void RefreshRank()
+    {
+        ChangeRankImage(rankManager.CurrentRank);
+    }
     private void ChangeRankImage(int rank)
     {
         if (rank < 1 || rank > rankSprites.Length)
