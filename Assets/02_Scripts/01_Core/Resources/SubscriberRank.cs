@@ -11,7 +11,7 @@ public class SubscriberRank : MonoBehaviour
     {
         CurrencyManager.Instance.OnRevenueChanged += CheckRank;
 
-        CheckRank();
+        currentRank = CalculateRank();
     }
 
     private void OnDestroy()
