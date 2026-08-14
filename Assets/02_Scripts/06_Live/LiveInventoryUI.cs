@@ -6,6 +6,9 @@ public class LiveInventoryUI : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
 
+    [Header("Dish Prefabs")]
+    [SerializeField] private DishBase[] dishBases;
+
     private readonly List<LiveInventorySlotUI> slots = new();
 
     private void Awake()
@@ -60,34 +63,44 @@ public class LiveInventoryUI : MonoBehaviour
             if (slotData == null || slotData.Amount <= 0)
                 continue;
 
-            Sprite icon = null;
+            DishBase dishBase = FindDishBase(slotData.ItemId);
 
-            if (ItemVisualRepository.Instance != null)
+            if (dishBase == null)
             {
-                ItemVisualRepository.Instance.TryGetIcon(
-                    slotData.ItemId,
-                    out icon
+                Debug.LogWarning(
+                    $"[LiveInventoryUI] DishBase를 찾을 수 없습니다. ID: {slotData.ItemId}"
                 );
-            }
-
-            string itemName = slotData.ItemId;
-
-            if (GameDataRepository.Instance != null)
-            {
-                if (GameDataRepository.Instance.TryGetDish(
-                    slotData.ItemId,
-                    out DishData dishData))
-                {
-                    itemName = dishData.DishName;
-                }
+                continue;
             }
 
             slots[i].Setup(
                 slotData.ItemId,
-                icon,
-                itemName,
+                dishBase,
+                dishBase.DishName,
                 slotData.Amount
             );
         }
+    }
+
+    private DishBase FindDishBase(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId))
+            return null;
+
+        for (int i = 0; i < dishBases.Length; i++)
+        {
+            DishBase dish = dishBases[i];
+
+            if (dish == null)
+                continue;
+
+            if (dish.ID == itemId)
+                return dish;
+
+            if (dish.Data != null && dish.Data.ID == itemId)
+                return dish;
+        }
+
+        return null;
     }
 }

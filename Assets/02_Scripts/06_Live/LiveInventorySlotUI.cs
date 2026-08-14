@@ -13,15 +13,31 @@ public class LiveInventorySlotUI : MonoBehaviour, IPointerClickHandler
     private DishBase dishBase;
 
     public string ItemId => itemId;
+    public DishBase DishBase => dishBase;
+
+    public void Setup(string id, DishBase dish, string itemName, int amount)
+    {
+        itemId = id;
+        dishBase = dish;
+
+        nameText.text = itemName;
+        amountText.text = amount.ToString();
+
+        if (dishBase != null && dishBase.spriteRenderer != null)
+        {
+            iconImage.sprite = dishBase.spriteRenderer.sprite;
+            iconImage.enabled = iconImage.sprite != null;
+        }
+        else
+        {
+            iconImage.sprite = null;
+            iconImage.enabled = false;
+        }
+    }
 
     public string GetItemId()
     {
         return itemId;
-    }
-
-    public DishBase GetDishBase()
-    {
-        return dishBase;
     }
 
     public Sprite GetItemSprite()
@@ -29,44 +45,10 @@ public class LiveInventorySlotUI : MonoBehaviour, IPointerClickHandler
         if (dishBase == null)
             return null;
 
-        SpriteRenderer renderer = dishBase.spriteRenderer;
-
-        if (renderer == null)
-            renderer = dishBase.GetComponent<SpriteRenderer>();
-
-        if (renderer == null)
+        if (dishBase.spriteRenderer == null)
             return null;
 
-        return renderer.sprite;
-    }
-
-    public void Setup(string id, Sprite icon, string itemName, int amount)
-    {
-        itemId = id;
-
-        iconImage.sprite = icon;
-        iconImage.enabled = icon != null;
-
-        nameText.text = itemName;
-        amountText.text = amount.ToString();
-
-        dishBase = null;
-
-        if (string.IsNullOrEmpty(itemId))
-            return;
-
-        if (ItemVisualRepository.Instance == null)
-            return;
-
-        if (ItemVisualRepository.Instance.TryGetPrefab(
-            itemId,
-            out GameObject prefab))
-        {
-            if (prefab != null)
-            {
-                dishBase = prefab.GetComponent<DishBase>();
-            }
-        }
+        return dishBase.spriteRenderer.sprite;
     }
 
     public void Clear()

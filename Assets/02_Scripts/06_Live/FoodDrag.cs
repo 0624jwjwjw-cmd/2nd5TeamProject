@@ -20,18 +20,26 @@ public class FoodDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (slotUI == null)
+        if (slotUI == null || canvas == null)
             return;
 
         if (string.IsNullOrEmpty(slotUI.ItemId))
             return;
 
-        Sprite foodSprite = slotUI.GetItemSprite();
+        DishBase dishBase = slotUI.DishBase;
 
-        if (foodSprite == null)
+        if (dishBase == null)
+            return;
+
+        SpriteRenderer renderer = dishBase.spriteRenderer;
+
+        if (renderer == null)
+            renderer = dishBase.GetComponent<SpriteRenderer>();
+
+        if (renderer == null || renderer.sprite == null)
         {
             Debug.LogWarning(
-                $"[FoodDrag] 음식 Sprite를 찾을 수 없습니다. ID: {slotUI.ItemId}"
+                $"[FoodDrag] 음식 Sprite가 없습니다. ID: {slotUI.ItemId}"
             );
             return;
         }
@@ -42,7 +50,7 @@ public class FoodDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         dragIcon.SetParent(canvas.transform, false);
 
         dragImage = obj.AddComponent<Image>();
-        dragImage.sprite = foodSprite;
+        dragImage.sprite = renderer.sprite;
         dragImage.preserveAspect = true;
         dragImage.raycastTarget = false;
 
@@ -74,9 +82,7 @@ public class FoodDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
                 targetObject.GetComponentInParent<FoodPlace>();
 
             if (foodPlace != null)
-            {
                 foodPlace.TryPlaceFromInventory(slotUI);
-            }
         }
 
         Destroy(dragIcon.gameObject);
