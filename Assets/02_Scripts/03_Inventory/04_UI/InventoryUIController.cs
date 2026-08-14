@@ -25,7 +25,12 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //    └── Viewport
     //        └── Content ← 여기를 연결
     [SerializeField] private Transform slotParent;
-    [SerializeField] private InventorySlotUI slotPrefab;    //반복 생성할 InventorySlotUI Prefab
+    [SerializeField] private InventorySlotPool slotPool;    //InventorySlotUI의 생성과 재사용을 담당하는 전용 Pool
+
+    [Header("Category Selected Visual")]
+    [SerializeField] private GameObject allSelectedFrame;          //전체 탭 선택 표시
+    [SerializeField] private GameObject ingredientSelectedFrame;   //재료 탭 선택 표시
+    [SerializeField] private GameObject dishSelectedFrame;         //요리 탭 선택 표시
 
     //Runtime System 참조
     private InventoryManager inventoryManager;              //실제 인벤토리 데이터 관리
@@ -48,6 +53,14 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //선택 상태
     private string selectedItemId = string.Empty;       //현재 선택된 아이템 ID
     public string SelectedItemId => selectedItemId;     //외부 시스템에서 현재 선택 아이템을 확인할 수 있도록 제공
+
+    //현재 인벤토리에서 선택되어 있는 필터 종류
+    //처음 인벤토리를 열었을 때 모든 아이템이 보이도록 All을 기본값으로 설정
+    private InventoryCategory currentCategory = InventoryCategory.All;
+
+    //현재 선택된 인벤토리 카테고리를 외부에서 확인하기 위한 읽기 전용 프로퍼티
+    public InventoryCategory CurrentCategory => currentCategory;
+
     private bool isInitialized;                         //Controller 초기화 완료 여부
 
     //Bootstrap 초기화 순서
@@ -100,6 +113,79 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         TryInitialize();
     }
 
+    //*인벤토리 카테고리 변경*
+    public void SetCategory(InventoryCategory category)
+    {
+        //이미 현재 보고 있는 카테고리라면 UI를 다시 생성하지 않고 선택 표시만 현재 상태와 맞춤
+        if (currentCategory == category)
+        {
+            UpdateCategoryVisual();
+            return;
+        }
+
+        currentCategory = category; //현재 카테고리 변경
+
+        //현재 선택된 카테고리에 맞춰
+        //버튼의 SelectedFrame 상태를 갱신
+        UpdateCategoryVisual();
+
+        //아직 초기화 전이거나
+        //현재 UI가 비활성화 상태라면 값만 저장
+        if (!isInitialized || !isActiveAndEnabled) return;
+
+        //카테고리가 변경되면 현재 인벤토리 데이터를 기준으로 슬롯 목록을 다시 구성
+        BuildInitialSlots();
+    }
+
+    //*전체 아이템 표시*
+    public void ShowAll()
+    {
+        SetCategory(InventoryCategory.All);
+    }
+
+    //*재료만 표시*
+    public void ShowIngredients()
+    {
+        SetCategory(InventoryCategory.Ingredient);
+    }
+
+    //*요리만 표시*
+    public void ShowDishes()
+    {
+        SetCategory(InventoryCategory.Dish);
+    }
+
+    //*현재 선택된 카테고리에 맞춰 버튼의 선택 표시 갱신*
+    private void UpdateCategoryVisual()
+    {
+        //현재 카테고리가 All이면
+        //전체 버튼의 SelectedFrame만 활성화
+        if (allSelectedFrame != null)
+        {
+            allSelectedFrame.SetActive(
+                currentCategory == InventoryCategory.All
+            );
+        }
+
+        //현재 카테고리가 Ingredient이면
+        //재료 버튼의 SelectedFrame만 활성화
+        if (ingredientSelectedFrame != null)
+        {
+            ingredientSelectedFrame.SetActive(
+                currentCategory == InventoryCategory.Ingredient
+            );
+        }
+
+        //현재 카테고리가 Dish이면
+        //요리 버튼의 SelectedFrame만 활성화
+        if (dishSelectedFrame != null)
+        {
+            dishSelectedFrame.SetActive(
+                currentCategory == InventoryCategory.Dish
+            );
+        }
+    }
+
     //*초기화*
     private void TryInitialize()
     {
@@ -133,14 +219,19 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             return;
         }
 
-        if (slotPrefab == null)
+        //InventorySlotPool이 연결 검사
+        if (slotPool == null)
         {
-            Debug.LogError("[InventoryUIController] Slot Prefab이 연결되지 않았습니다.");
+            Debug.LogError("[InventoryUIController] Slot Pool이 연결되지 않았습니다.");
             return;
         }
 
         //초기화 완료
         isInitialized = true;
+
+        //현재 기본 카테고리에 맞춰
+        //카테고리 버튼의 선택 표시를 초기화
+        UpdateCategoryVisual();
 
         //현재 UI가 활성화 상태일 때만
         //Inventory 슬롯을 생성하고 변경 이벤트를 구독
@@ -251,6 +342,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //*Slot 추가*
     private void AddSlot(string itemId, int amount)
     {
+        //현재 선택된 카테고리에서 보여주지 않은 아이템이라면 Slot을 생성하지 않음
+        if (!IsVisibleItem(itemId)) return;
+
         //이미 같은 ID 슬롯이 화면에 존재하면
         //새로 만들지 않고 수량만 갱신
         if (slotLookup.TryGetValue(
@@ -275,12 +369,16 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             return;
         }
 
-        //Slot Prefab 생성
-        InventorySlotUI newSlot =
-            Instantiate(
-                slotPrefab,
-                slotParent
-                );
+        //Pool에서 사용할 InventorySlotUI를 가져옴
+        InventorySlotUI newSlot = slotPool.GetSlot(slotParent);
+
+        //Pool에서 Slot을 가져오지 못한 예외 상황이라면
+        //이후 Setup을 진행할 수 없으므로 종료
+        if (newSlot == null)
+        {
+            Debug.LogError("[InventoryUIController] InventorySlotPool에서 Slot을 가져오지 못했습니다.");
+            return;
+        }
 
         //Slot UI에 실제 표시 데이터 전달
         newSlot.Setup(
@@ -295,10 +393,7 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         newSlot.SetSpecialBadge(isSpecial);
 
         //ID → UI Slot 연결
-        slotLookup.Add(
-            itemId,
-            newSlot
-            );
+        slotLookup.Add(itemId, newSlot);
 
         //현재 선택된 아이템과 같은 ID라면
         //선택 테두리 복구
@@ -314,6 +409,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //*수량만 갱신*
     private void UpdateSlotAmount(string itemId, int amount)
     {
+        //현재 선택된 카테고리에서 보여주지 않은 아이템이라면 Slot을 생성하지 않음
+        if (!IsVisibleItem(itemId)) return;
+
         //Dictionary에서 해당 아이템 UI를 바로 검색
         if (slotLookup.TryGetValue(
             itemId,
@@ -344,11 +442,11 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         //Dictionary에서 제거
         slotLookup.Remove(itemId);
 
-        //현재 단계에서는 UI 연결 확인이 먼저이므로 Destroy 사용
+        //화면에서 더 이상 사용하지 않는 Slot을 InventorySlotPool에 반환
         //
-        //다음 최적화 단계에서
-        //이 부분을 Slot Pool 반환으로 교체할 예정
-        Destroy(slot.gameObject);
+        //반환된 Slot은 비활성화 상태로 보관되며
+        //다음 Slot 생성 요청 때 다시 재사용됨
+        slotPool.ReleaseSlot(slot);
     }
 
     //*전체 Slot 정리*
@@ -361,7 +459,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
 
             if (slot != null)
             {
-                Destroy(slot.gameObject);
+                //화면에서 사용 중이던 Slot을 삭제하지 않고
+                //InventorySlotPool에 반환해서 다음에 재사용
+                slotPool.ReleaseSlot(slot);
             }
         }
 
@@ -375,6 +475,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     //*UI 순서 맞추기*
     private void ReorderSlots()
     {
+        //현재 실제 화면에 표시되는 슬롯의 순서
+        int visibleIndex = 0;
+
         //InventoryManager의 정렬된 실제 데이터 순서를 기준으로
         //UI의 Sibling 순서도 변경
         for (int i = 0; i < inventoryManager.Slots.Count; i++)
@@ -384,12 +487,16 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
 
             if (slotData == null) continue;
 
+            //현재 화면에 실제 생성되어 있는 Slot만 순서 변경
             if (slotLookup.TryGetValue(
                 slotData.ItemId,
                 out InventorySlotUI slot))
             {
-                //Hierarchy상 순서를 데이터 List와 동일하게 맞춤
-                slot.transform.SetSiblingIndex(i);
+                //필터로 숨겨진 아이템은 제외하고
+                //보이는 슬롯끼리 0, 1, 2... 순서로 배치
+                slot.transform.SetSiblingIndex(visibleIndex);
+
+                visibleIndex++;
             }
         }
     }
@@ -430,6 +537,77 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         itemVisualRepository.TryGetIcon(itemId, out icon);
 
         return true;
+    }
+
+    //*현재 선택된 인벤토리 카테고리에서
+    //전달받은 아이템을 보여줘야하는지 확인하는 메서드*
+    //
+    //true: 현재 탭에서 보여줄 아이템 / false: 현재 탭에서는 숨길 아이템
+    private bool IsVisibleItem(string itemId)
+    {
+        //아이템 ID가 비어있으면
+        //어떤 종류의 아이템인지 확인할 수 없으므로 표시하지 않음
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+
+        //현재 선택된 인벤토리 카테고리에 따라
+        //아이템을 표시할지 결정
+        switch (currentCategory)
+        {
+            //==================================================
+            //전체 탭
+            //==================================================
+            case InventoryCategory.All:
+
+                //전체 탭에서는
+                //인벤토리에 존재하는 모든 아이템을 표시
+                return true;
+
+
+            //==================================================
+            //재료 탭
+            //==================================================
+            case InventoryCategory.Ingredient:
+
+                //GameDataRepository에서
+                //해당 ItemId를 IngredientData로 찾을 수 있다면
+                //재료 아이템이므로 표시
+                return gameDataRepository.TryGetIngredient(
+                    itemId,
+                    out _
+                );
+
+
+            //==================================================
+            //요리 탭
+            //==================================================
+            case InventoryCategory.Dish:
+
+                //일반 요리 Repository에서
+                //해당 ItemId를 찾을 수 있다면 표시
+                if (gameDataRepository.TryGetDish(
+                    itemId,
+                    out _))
+                {
+                    return true;
+                }
+
+
+                //일반 요리가 아니라면
+                //특별 요리 Repository에서 다시 검색
+                //
+                //특별 요리도 Dish 탭에 함께 표시하기 때문에
+                //찾았다면 true 반환
+                return gameDataRepository.TryGetSpecialDish(
+                    itemId,
+                    out _
+                );
+
+
+            //정의되지 않은 카테고리 값이 들어온 경우
+            //안전하게 표시하지 않음
+            default:
+                return false;
+        }
     }
 
     //*Slot 클릭*
