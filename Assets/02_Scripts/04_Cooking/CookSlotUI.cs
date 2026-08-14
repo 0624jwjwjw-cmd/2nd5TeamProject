@@ -9,6 +9,8 @@ public class CookSlotUI : MonoBehaviour
 
     public Image image;
     public TMP_Text count;
+
+    public GameObject dashedSlot;
     private void Awake()
     {
         image = GetComponent<Image>();
@@ -69,5 +71,19 @@ public class CookSlotUI : MonoBehaviour
         image.sprite = null;
         count.text = "";
         gameObject.SetActive(false);
+        dashedSlot.gameObject.SetActive(true);
+    }
+    public void OnClickSlotIcon()
+    {
+        int slotcount = int.Parse(count.text);
+        slotcount--;
+        if (slotcount <= 0)
+        {
+            Clear();
+        }
+        else
+        {
+            count.text = slotcount.ToString();
+        }
     }
 }

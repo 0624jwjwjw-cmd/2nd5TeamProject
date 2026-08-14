@@ -107,15 +107,26 @@ public sealed class InventorySlotUI : MonoBehaviour
     //[아이템 종류는 그대로이고 수량만 바꼈을 때 사용하는 메서드]
     public void UpdateAmount(int amount)
     {
-        //수량이 0 이하라면 해당 아이템을 모두 소모한 것이므로 슬롯 비움
+        //0 이하의 수량은 이 메서드에서 처리하지 않음
+        //
+        //아이템이 모두 소모되어 Slot 자체가 사라지는 처리는
+        //InventoryUIController의 RemoveSlot()이 담당함
+        //
+        //여기서 ClearSlot()을 해버리면
+        //Controller의 slotLookup에는 Slot이 남아 있는데
+        //UI만 비어버리는 상태가 될 수 있음
         if (amount <= 0)
         {
-            ClearSlot();
+            Debug.LogWarning($"[InventorySlotUI] UpdateAmount에는 1 이상의 수량이 필요합니다. 전달값: {amount}");
+
             return;
         }
 
-        //수량 텍스트가 연결되어 있다면 새 수량으로 변경
-        if (amountText != null) amountText.text = amount.ToString();
+        //아이템 종류는 그대로 유지하고 화면에 표시되는 수량만 변경
+        if (amountText != null)
+        {
+            amountText.text = amount.ToString();
+        }
     }
 
     //[현재 슬롯의 선택 여부를 표시하는 메서드]
@@ -125,7 +136,7 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (selectedFrame != null) selectedFrame.SetActive(isSelected);
     }
 
-    //[특별 요리 여부에 따라 S 배지 표시를 변경
+    //[특별 요리 여부에 따라 S 배지 표시를 변경]
     public void SetSpecialBadge(bool isSpecial)
     {
         //Inspector에서 SpecialBadge가 연결되지 않은 경우 NullReferenceException을 방지하고 종료
