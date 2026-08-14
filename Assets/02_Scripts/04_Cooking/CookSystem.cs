@@ -15,9 +15,7 @@ public class CookSystem : MonoBehaviour
 
     [SerializeField] private int specialRate;
 
-    [SerializeField] private Transform cookResult;
-
-    public List<GameObject> madeDish = new List<GameObject>();
+    [SerializeField] private CookResult cookResult;
 
     public void StartCook()
     {
@@ -25,15 +23,17 @@ public class CookSystem : MonoBehaviour
 
         if (resultDish == null)
         {
-            DishBase trash = Instantiate(trashfood, cookResult.transform.position, Quaternion.identity);
-            madeDish.Add(trash.gameObject);
+            cookResult.gameObject.SetActive(true);
+            cookResult.SetResultInfo(trashfood);
+            //인벤토리에 음식물쓰레기 추가
         }
         else
         {
             if(!ReciepeUnlockManager.Instance.IsUnlocked(resultDish.ID))
             {
-                DishBase burnedDish = Instantiate(burnedFood, cookResult.transform.position, Quaternion.identity);
-                madeDish.Add(burnedDish.gameObject);
+                cookResult.gameObject.SetActive(true);
+                cookResult.SetResultInfo(burnedFood);
+                //인벤토리에 탄 음식 추가
             }
             else
             {
@@ -41,13 +41,15 @@ public class CookSystem : MonoBehaviour
                 {
                     int index = System.Array.IndexOf(dishes, resultDish);
                     DishBase specialDish = specialDishes[index];
-                    DishBase madeSpecialDish = Instantiate(specialDish, cookResult.transform.position, Quaternion.identity);
-                    madeDish.Add(madeSpecialDish.gameObject);
+                    cookResult.gameObject.SetActive(true);
+                    cookResult.SetResultInfo(specialDish);
+                    //인벤토리에 스페셜 음식 추가
                 }
                 else
                 {
-                    DishBase dish = Instantiate(resultDish, cookResult.transform.position, Quaternion.identity);
-                    madeDish.Add(dish.gameObject);
+                    cookResult.gameObject.SetActive(true);
+                    cookResult.SetResultInfo(resultDish);
+                    //인벤토리에 일반 음식 추가
                 }
             }
         }
@@ -107,16 +109,5 @@ public class CookSystem : MonoBehaviour
             }
         }
         return null;
-    }
-    public void ClearDish()
-    {
-        foreach (GameObject dish in madeDish)
-        {
-            if (dish != null)
-            {
-                Destroy(dish);
-            }
-        }
-        madeDish.Clear();
     }
 }

@@ -26,17 +26,10 @@ public class RecipePurchaseSlot : MonoBehaviour
     }
     public void OnClickRecipePurchaseButton()
     {
-        //후원금 감소로직
+        //후원금 보유량 체크, 감소로직 추가 필요
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
         purchaseButtonText.text = completePurchase;
-
-        //
-        HashSet<string> unlockedRecipes = ReciepeUnlockManager.Instance.unlockedRecipeIDs;
-        foreach(string recipeIDs in unlockedRecipes)
-        {
-            Debug.Log($"해제된 레시피 : {recipeIDs}");
-        }
     }
     private void CheckPurchase()
     {
