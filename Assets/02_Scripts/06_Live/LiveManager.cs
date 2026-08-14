@@ -44,9 +44,7 @@ public class LiveManager : MonoBehaviour
     private void Update()
     {
         if (!_isLive)
-        {
             return;
-        }
 
         _elapsedTime += Time.deltaTime;
 
@@ -59,21 +57,20 @@ public class LiveManager : MonoBehaviour
         }
 
         if (_elapsedTime >= _liveDuration)
-        {
             EndLive();
-        }
     }
 
     public void StartLive()
     {
         if (_isLive)
-        {
             return;
-        }
 
         _isLive = true;
         _elapsedTime = 0f;
         _lastSecond = 0;
+
+        _totalDonation = 0;
+        _totalSubscribers = 0;
 
         Debug.Log("라이브 시작!");
 
@@ -84,13 +81,13 @@ public class LiveManager : MonoBehaviour
     public void EndLive()
     {
         if (!_isLive)
-        {
             return;
-        }
 
         _isLive = false;
 
-        Debug.Log("라이브 종료");
+        Debug.Log(
+            $"라이브 종료 / 후원금: {_totalDonation} / 구독자: {_totalSubscribers}"
+        );
 
         OnLiveEnded?.Invoke();
     }
@@ -98,20 +95,51 @@ public class LiveManager : MonoBehaviour
     public void EatFood(DishBase dish)
     {
         if (!_isLive || dish == null)
+            return;
+
+        if (CurrencyManager.Instance == null)
         {
+            Debug.LogError("[LiveManager] CurrencyManager가 없습니다.");
             return;
         }
 
-        _totalDonation += dish.Donation;
-        _totalSubscribers += dish.Subscribers;
+        if (!int.TryParse(dish.ReciepeGrade, out int youtubeGrade))
+        {
+            Debug.LogError(
+                $"[LiveManager] 음식 등급을 숫자로 변환할 수 없습니다: {dish.ReciepeGrade}"
+            );
+            return;
+        }
+
+        int beforeGold = CurrencyManager.Instance.Gold;
+        int beforeSubscriber = CurrencyManager.Instance.Subscriber;
+
+        CalculateGold.GetDonation(
+            dish.Cost,
+            youtubeGrade
+        );
+
+        CalculateSubscriber.GetDonation(
+            dish.Cost,
+            youtubeGrade
+        );
+
+        int addedGold =
+            CurrencyManager.Instance.Gold - beforeGold;
+
+        int addedSubscriber =
+            CurrencyManager.Instance.Subscriber - beforeSubscriber;
+
+        _totalDonation += addedGold;
+        _totalSubscribers += addedSubscriber;
 
         OnDonationChanged?.Invoke(_totalDonation);
         OnSubscribersChanged?.Invoke(_totalSubscribers);
 
         Debug.Log(
             $"음식 섭취 - {dish.DishName} / " +
-            $"후원금 +{dish.Donation} / " +
-            $"구독자 +{dish.Subscribers}"
+            $"후원금 +{addedGold} / " +
+            $"구독자 +{addedSubscriber}"
         );
     }
 }
