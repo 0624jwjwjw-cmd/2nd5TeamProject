@@ -1900,7 +1900,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 480070538}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2144700626}
+        m_TargetAssemblyTypeName: CookSystem, Assembly-CSharp
+        m_MethodName: StartCook
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &480070538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2034,7 +2046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &486908122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3188,7 +3200,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CookSlotManager
   maxSlot: 3
-  slotUIs: []
+  solidSlotUIs:
+  - {fileID: 1221820601}
+  - {fileID: 732054010}
+  - {fileID: 1336068491}
+  dashedSlotUIs:
+  - {fileID: 1438292605}
+  - {fileID: 486908121}
+  - {fileID: 1284253848}
 --- !u!1 &692794989
 GameObject:
   m_ObjectHideFlags: 0
@@ -3326,13 +3345,14 @@ GameObject:
   - component: {fileID: 732054007}
   - component: {fileID: 732054009}
   - component: {fileID: 732054008}
+  - component: {fileID: 732054010}
   m_Layer: 5
   m_Name: SolidSlot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &732054007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3392,6 +3412,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732054006}
   m_CullTransparentMesh: 1
+--- !u!114 &732054010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732054006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5bd88b759dfa374a92368fbca5d26a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CookSlotUI
+  cookSlotManager: {fileID: 674552964}
+  image: {fileID: 333143971}
+  count: {fileID: 1083952236}
+  dashedSlot: {fileID: 486908121}
 --- !u!1 &736653872
 GameObject:
   m_ObjectHideFlags: 0
@@ -4254,7 +4290,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2144700625}
-  - {fileID: 1862308629}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067204346
@@ -4922,13 +4957,14 @@ GameObject:
   - component: {fileID: 1221820598}
   - component: {fileID: 1221820600}
   - component: {fileID: 1221820599}
+  - component: {fileID: 1221820601}
   m_Layer: 5
   m_Name: SolidSlot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1221820598
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4988,6 +5024,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1221820597}
   m_CullTransparentMesh: 1
+--- !u!114 &1221820601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1221820597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5bd88b759dfa374a92368fbca5d26a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CookSlotUI
+  cookSlotManager: {fileID: 674552964}
+  image: {fileID: 149713420}
+  count: {fileID: 1618863561}
+  dashedSlot: {fileID: 1438292605}
 --- !u!1 &1284253848
 GameObject:
   m_ObjectHideFlags: 0
@@ -5005,7 +5057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1284253849
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5189,13 +5241,14 @@ GameObject:
   - component: {fileID: 1336068488}
   - component: {fileID: 1336068490}
   - component: {fileID: 1336068489}
+  - component: {fileID: 1336068491}
   m_Layer: 5
   m_Name: SolidSlot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1336068488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5255,6 +5308,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336068487}
   m_CullTransparentMesh: 1
+--- !u!114 &1336068491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336068487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5bd88b759dfa374a92368fbca5d26a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CookSlotUI
+  cookSlotManager: {fileID: 674552964}
+  image: {fileID: 736653874}
+  count: {fileID: 4095330}
+  dashedSlot: {fileID: 1284253848}
 --- !u!1 &1343711171
 GameObject:
   m_ObjectHideFlags: 0
@@ -5799,7 +5868,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1438292606
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7141,55 +7210,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861240720}
   m_CullTransparentMesh: 1
---- !u!1 &1862308628
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1862308629}
-  - component: {fileID: 1862308630}
-  m_Layer: 0
-  m_Name: CookSlotManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1862308629
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862308628}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1066422531}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1862308630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1862308628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 957273d463f9a8e4d98220d0e04ba18b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CookSlotManager
-  maxSlot: 3
-  slotUIs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1903686892
 GameObject:
   m_ObjectHideFlags: 0
@@ -8106,7 +8126,8 @@ MonoBehaviour:
   dishes: []
   specialDishes: []
   trashfood: {fileID: 0}
-  cookSlotManager: {fileID: 0}
+  burnedFood: {fileID: 0}
+  cookSlotManager: {fileID: 674552964}
   specialRate: 0
   cookResult: {fileID: 0}
   madeDish: []

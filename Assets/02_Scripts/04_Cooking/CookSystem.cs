@@ -10,6 +10,7 @@ public class CookSystem : MonoBehaviour
     [SerializeField] private DishBase[] dishes;
     [SerializeField] private DishBase[] specialDishes;
     [SerializeField] private DishBase trashfood;
+    [SerializeField] private DishBase burnedFood;
     [SerializeField] private CookSlotManager cookSlotManager;
 
     [SerializeField] private int specialRate;
@@ -17,6 +18,7 @@ public class CookSystem : MonoBehaviour
     [SerializeField] private Transform cookResult;
 
     public List<GameObject> madeDish = new List<GameObject>();
+
     public void StartCook()
     {
         DishBase resultDish = FindMatchingDish(dishes);
@@ -28,17 +30,25 @@ public class CookSystem : MonoBehaviour
         }
         else
         {
-            if(Random.Range(0,100) < specialRate)
+            if(!ReciepeUnlockManager.Instance.IsUnlocked(resultDish.ID))
             {
-                int index = System.Array.IndexOf(dishes, resultDish);
-                DishBase specialDish = specialDishes[index];
-                DishBase madeSpecialDish = Instantiate(specialDish, cookResult.transform.position, Quaternion.identity);
-                madeDish.Add(madeSpecialDish.gameObject);
+                DishBase burnedDish = Instantiate(burnedFood, cookResult.transform.position, Quaternion.identity);
+                madeDish.Add(burnedDish.gameObject);
             }
             else
             {
-                DishBase dish = Instantiate(resultDish, cookResult.transform.position, Quaternion.identity);
-                madeDish.Add(dish.gameObject);
+                if (Random.Range(0, 100) < specialRate)
+                {
+                    int index = System.Array.IndexOf(dishes, resultDish);
+                    DishBase specialDish = specialDishes[index];
+                    DishBase madeSpecialDish = Instantiate(specialDish, cookResult.transform.position, Quaternion.identity);
+                    madeDish.Add(madeSpecialDish.gameObject);
+                }
+                else
+                {
+                    DishBase dish = Instantiate(resultDish, cookResult.transform.position, Quaternion.identity);
+                    madeDish.Add(dish.gameObject);
+                }
             }
         }
 
@@ -48,9 +58,9 @@ public class CookSystem : MonoBehaviour
         }
 
         cookSlotManager.ClearSlots();
-        for(int i=0;i<cookSlotManager.slotUIs.Length;i++)
+        for(int i=0;i<cookSlotManager.solidSlotUIs.Length;i++)
         {
-            cookSlotManager.slotUIs[i].Clear();
+            cookSlotManager.solidSlotUIs[i].Clear();
         }
     }
     private DishBase FindMatchingDish(DishBase[] dishBases)
