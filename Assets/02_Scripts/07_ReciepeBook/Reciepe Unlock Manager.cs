@@ -8,7 +8,7 @@ public class ReciepeUnlockManager : MonoBehaviour
 
     [SerializeField] private List<DishBase> dishBases;
 
-    [SerializeField] private HashSet<string> unlockedRecipeIDs = new HashSet<string>();
+    [SerializeField] public HashSet<string> unlockedRecipeIDs = new HashSet<string>();
 
     private void Awake()
     {
@@ -18,6 +18,7 @@ public class ReciepeUnlockManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     public bool IsUnlocked(string foodID)
     {

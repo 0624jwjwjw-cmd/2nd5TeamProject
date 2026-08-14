@@ -14,7 +14,8 @@ public class CookSlotItem
 public class CookSlotManager : MonoBehaviour
 {
     [SerializeField] private int maxSlot = 3;
-    [SerializeField] public CookSlotUI[] slotUIs;
+    [SerializeField] public CookSlotUI[] solidSlotUIs;
+    [SerializeField] public GameObject[] dashedSlotUIs;
     [SerializeField] public List<CookSlotItem> slots = new List<CookSlotItem>();
     private void Update()
     {
@@ -46,7 +47,7 @@ public class CookSlotManager : MonoBehaviour
 
         foreach (CookSlotItem slot in slots)
         {
-            if (slot.ingredient != null && slot.ingredient.Data != null && slot.ingredient.Data.ID == ingredient.Data.ID)
+            if (slot.ingredient.Data.ID == ingredient.Data.ID)
             {
                 slot.count++;
 
@@ -54,9 +55,6 @@ public class CookSlotManager : MonoBehaviour
                 if (sameSlot != null)
                 {
                     sameSlot.AddIngredient(ingredient);
-                }
-                else
-                {
                 }
                 return;
             }
@@ -75,16 +73,25 @@ public class CookSlotManager : MonoBehaviour
             return;
         }
 
+        emptySlot.gameObject.SetActive(true);
         emptySlot.SetIngredient(ingredient);
+
+        int index = System.Array.IndexOf(solidSlotUIs, emptySlot);
+        dashedSlotUIs[index].SetActive(false);
     }
 
     public void ClearSlots()
     {
         slots.Clear();
+        for(int i=0; i<solidSlotUIs.Length;i++)
+        {
+            solidSlotUIs[i].gameObject.SetActive(false);
+            dashedSlotUIs[i].SetActive(true);
+        }
     }
     public CookSlotUI FindEmptySlot()
     {
-        foreach(CookSlotUI slotUI in slotUIs)
+        foreach(CookSlotUI slotUI in solidSlotUIs)
         {
             if(slotUI.gameObject.activeSelf)
             {
@@ -96,7 +103,7 @@ public class CookSlotManager : MonoBehaviour
     }
     public CookSlotUI FindSameIngredient(IngredientBase ingredient)
     {
-        foreach(CookSlotUI slotUI in slotUIs)
+        foreach(CookSlotUI slotUI in solidSlotUIs)
         {
             if(slotUI.image.sprite == ingredient.spriteRenderer.sprite)
             {
