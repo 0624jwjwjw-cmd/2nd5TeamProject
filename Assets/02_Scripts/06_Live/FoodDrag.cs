@@ -1,127 +1,87 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class FoodDrag : MonoBehaviour
+public class FoodDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    private Camera _mainCamera;
-    private DishBase _dishBase;
+    [SerializeField] private LiveInventorySlotUI slotUI;
 
-    private bool _isDragging;
-    private Vector3 _offset;
-
-    private FoodPlace _currentFoodPlace;
-
-    private SpriteRenderer _spriteRenderer;
-    private int _originalSortingOrder;
+    private Canvas canvas;
+    private RectTransform dragIcon;
+    private Image dragImage;
 
     private void Awake()
     {
-        _mainCamera = Camera.main;
-        _dishBase = GetComponent<DishBase>();
+        canvas = GetComponentInParent<Canvas>();
 
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-
-        if (_spriteRenderer != null)
-        {
-            _originalSortingOrder = _spriteRenderer.sortingOrder;
-        }
+        if (slotUI == null)
+            slotUI = GetComponent<LiveInventorySlotUI>();
     }
 
-    private void Update()
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (InputManager.Instance == null)
+        if (slotUI == null)
+            return;
+
+        if (string.IsNullOrEmpty(slotUI.ItemId))
+            return;
+
+        Sprite foodSprite = slotUI.GetItemSprite();
+
+        if (foodSprite == null)
         {
+            Debug.LogWarning(
+                $"[FoodDrag] 음식 Sprite를 찾을 수 없습니다. ID: {slotUI.ItemId}"
+            );
             return;
         }
 
-        Vector3 pointerPosition = GetPointerWorldPosition();
+        GameObject obj = new GameObject("DragIcon");
 
-        if (!_isDragging)
-        {
-            TryStartDrag(pointerPosition);
-            return;
-        }
+        dragIcon = obj.AddComponent<RectTransform>();
+        dragIcon.SetParent(canvas.transform, false);
 
-        if (InputManager.Instance.IsDragging)
-        {
-            Vector3 newPosition = pointerPosition + _offset;
-            newPosition.z = transform.position.z;
-            transform.position = newPosition;
-        }
-        else
-        {
-            PlaceFood();
-        }
+        dragImage = obj.AddComponent<Image>();
+        dragImage.sprite = foodSprite;
+        dragImage.preserveAspect = true;
+        dragImage.raycastTarget = false;
+
+        dragIcon.sizeDelta = new Vector2(160f, 160f);
+        dragIcon.position = eventData.position;
+
+        CanvasGroup group = obj.AddComponent<CanvasGroup>();
+        group.blocksRaycasts = false;
     }
 
-    private void TryStartDrag(Vector3 pointerPosition)
+    public void OnDrag(PointerEventData eventData)
     {
-        if (!InputManager.Instance.IsDragging)
-        {
+        if (dragIcon == null)
             return;
-        }
 
-        Collider2D hit = Physics2D.OverlapPoint(pointerPosition);
-
-        if (hit == null || hit.gameObject != gameObject)
-        {
-            return;
-        }
-
-        if (_currentFoodPlace != null)
-        {
-            _currentFoodPlace.RemoveFood(_dishBase);
-            _currentFoodPlace = null;
-        }
-
-        _offset = transform.position - pointerPosition;
-        _isDragging = true;
-
-        if (_spriteRenderer != null)
-        {
-            _spriteRenderer.sortingOrder = 10;
-        }
+        dragIcon.position = eventData.position;
     }
 
-    private void PlaceFood()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        _isDragging = false;
+        if (dragIcon == null)
+            return;
 
-        if (_spriteRenderer != null)
+        GameObject targetObject = eventData.pointerEnter;
+
+        if (targetObject != null)
         {
-            _spriteRenderer.sortingOrder = _originalSortingOrder;
-        }
+            FoodPlace foodPlace =
+                targetObject.GetComponentInParent<FoodPlace>();
 
-        Collider2D[] colliders = Physics2D.OverlapPointAll(
-            transform.position
-        );
-
-        foreach (Collider2D collider in colliders)
-        {
-            FoodPlace foodPlace = collider.GetComponent<FoodPlace>();
-
-            if (foodPlace == null || foodPlace.IsFilled)
+            if (foodPlace != null)
             {
-                continue;
+                foodPlace.TryPlaceFromInventory(slotUI);
             }
-
-            if (_dishBase == null)
-            {
-                return;
-            }
-
-            foodPlace.PlaceFood(_dishBase);
-            _currentFoodPlace = foodPlace;
-
-            return;
         }
-    }
 
-    private Vector3 GetPointerWorldPosition()
-    {
-        Vector3 position = InputManager.Instance.PointerPosition;
+        Destroy(dragIcon.gameObject);
 
-        position.z = Mathf.Abs(_mainCamera.transform.position.z);
-
-        return _mainCamera.ScreenToWorldPoint(position);
+        dragIcon = null;
+        dragImage = null;
     }
 }

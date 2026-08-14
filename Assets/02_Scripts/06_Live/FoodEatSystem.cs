@@ -60,24 +60,31 @@ public class FoodEatSystem : MonoBehaviour
 
     private void EatNextFood()
     {
+        if (_foodArea == null)
+        {
+            StopEating();
+            return;
+        }
+
         FoodPlace[] foodPlaces = _foodArea.FoodPlaces;
 
-        if (_eatIndex >= foodPlaces.Length)
+        if (foodPlaces == null || _eatIndex >= foodPlaces.Length)
         {
             StopEating();
             return;
         }
 
         FoodPlace foodPlace = foodPlaces[_eatIndex];
-        DishBase dish = foodPlace.PlacedDish;
 
-        if (dish != null)
+        if (foodPlace != null && foodPlace.IsFilled)
         {
-            LiveManager.Instance.EatFood(dish);
+            string foodId = foodPlace.FoodId;
 
-            foodPlace.RemoveFood(dish);
+            // TODO:
+            // LiveManager가 string foodId를 받는 방식으로 연결
+            Debug.Log($"음식 섭취: {foodId}");
 
-            Destroy(dish.gameObject);
+            foodPlace.RemoveFood();
         }
 
         _eatIndex++;
