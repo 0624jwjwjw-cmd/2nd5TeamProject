@@ -3,9 +3,22 @@ using UnityEngine;
 
 public class SubscriberRank : MonoBehaviour
 {
+    public static SubscriberRank Instance { get; private set; }
     public event Action<int> OnRankChanged;
     private int currentRank = 1;
     public int CurrentRank => currentRank;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {

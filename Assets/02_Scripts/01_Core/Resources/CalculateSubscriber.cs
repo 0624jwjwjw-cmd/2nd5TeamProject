@@ -4,6 +4,7 @@ public static class CalculateSubscriber
 {
     private static readonly float[] youtubeMultiplier =
    {
+        0,
         1f,
         1.15f,
         1.3f,
