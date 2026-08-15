@@ -14,6 +14,7 @@ public class FoodEatSystem : MonoBehaviour
         if (LiveManager.Instance != null)
         {
             LiveManager.Instance.OnLiveStarted += StartEating;
+            LiveManager.Instance.OnLiveStopped += StopEating;
             LiveManager.Instance.OnLiveEnded += StopEating;
         }
     }
@@ -23,6 +24,7 @@ public class FoodEatSystem : MonoBehaviour
         if (LiveManager.Instance != null)
         {
             LiveManager.Instance.OnLiveStarted -= StartEating;
+            LiveManager.Instance.OnLiveStopped -= StopEating;
             LiveManager.Instance.OnLiveEnded -= StopEating;
         }
     }
@@ -30,9 +32,7 @@ public class FoodEatSystem : MonoBehaviour
     private void Update()
     {
         if (!_isEating)
-        {
             return;
-        }
 
         _timer += Time.deltaTime;
 
@@ -46,7 +46,6 @@ public class FoodEatSystem : MonoBehaviour
     private void StartEating()
     {
         _timer = 0f;
-        _eatIndex = 0;
         _isEating = true;
 
         Debug.Log("음식 먹기 시작");
@@ -68,25 +67,31 @@ public class FoodEatSystem : MonoBehaviour
 
         FoodPlace[] foodPlaces = _foodArea.FoodPlaces;
 
-        if (foodPlaces == null || _eatIndex >= foodPlaces.Length)
+        if (foodPlaces == null || foodPlaces.Length == 0)
         {
             StopEating();
             return;
         }
 
-        FoodPlace foodPlace = foodPlaces[_eatIndex];
-
-        if (foodPlace != null && foodPlace.IsFilled)
+        while (_eatIndex < foodPlaces.Length)
         {
-            string foodId = foodPlace.FoodId;
+            FoodPlace foodPlace = foodPlaces[_eatIndex];
+            _eatIndex++;
 
-            // TODO:
-            // LiveManager가 string foodId를 받는 방식으로 연결
-            Debug.Log($"음식 섭취: {foodId}");
+            if (foodPlace == null || !foodPlace.IsFilled)
+                continue;
 
+            DishBase dish = foodPlace.DishBase;
+
+            if (dish == null)
+                continue;
+
+            LiveManager.Instance.EatFood(dish);
             foodPlace.RemoveFood();
+
+            return;
         }
 
-        _eatIndex++;
+        StopEating();
     }
 }
