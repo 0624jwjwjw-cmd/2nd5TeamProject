@@ -25,13 +25,10 @@ public class FoodPlace : MonoBehaviour, IPointerClickHandler,
         Clear();
     }
 
-    // 클릭으로 음식 제거하지 않음
     public void OnPointerClick(PointerEventData eventData)
     {
     }
 
-    // 접시에 음식이 있을 때만 드래그 시작
-    // 방송 중에는 드래그 제거 불가
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!IsOccupied)
@@ -82,7 +79,6 @@ public class FoodPlace : MonoBehaviour, IPointerClickHandler,
         if (dragIcon == null)
             return;
 
-        // 방송 중이면 제거하지 않음
         if (LiveManager.Instance != null &&
             LiveManager.Instance.IsLive)
         {
@@ -90,22 +86,20 @@ public class FoodPlace : MonoBehaviour, IPointerClickHandler,
             return;
         }
 
-        // 접시 밖으로 드래그했다면 음식 제거
         GameObject targetObject = eventData.pointerEnter;
 
         if (targetObject == null)
         {
-            RemoveFood();
+            ReturnFoodToInventory();
         }
         else
         {
             FoodPlace targetPlace =
                 targetObject.GetComponentInParent<FoodPlace>();
 
-            // 다른 접시로 바로 옮기는 것은 일단 방지
             if (targetPlace == null)
             {
-                RemoveFood();
+                ReturnFoodToInventory();
             }
         }
 
@@ -165,14 +159,31 @@ public class FoodPlace : MonoBehaviour, IPointerClickHandler,
         return true;
     }
 
+    // 방송 중 음식 섭취 시 사용
+    // 인벤토리로 돌려보내지 않고 완전히 제거
     public void RemoveFood()
+    {
+        if (!IsOccupied)
+            return;
+
+        Clear();
+
+        FoodArea foodArea = FindFirstObjectByType<FoodArea>();
+
+        if (foodArea != null)
+            foodArea.CheckFoodPlaces();
+    }
+
+    // 방송 시작 전 접시에서 음식을 빼낼 때만 사용
+    private void ReturnFoodToInventory()
     {
         if (!IsOccupied)
             return;
 
         string removedFoodId = foodId;
 
-        if (InventoryManager.Instance != null)
+        if (InventoryManager.Instance != null &&
+            !string.IsNullOrEmpty(removedFoodId))
         {
             InventoryManager.Instance.AddItem(removedFoodId, 1);
         }

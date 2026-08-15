@@ -20,6 +20,7 @@ public class LiveManager : MonoBehaviour
     public int TotalSubscribers => _totalSubscribers;
 
     public event Action OnLiveStarted;
+    public event Action OnLiveStopped;
     public event Action OnLiveEnded;
     public event Action<float> OnLiveTimeChanged;
     public event Action<int> OnDonationChanged;
@@ -78,6 +79,20 @@ public class LiveManager : MonoBehaviour
         OnLiveStarted?.Invoke();
     }
 
+    // 사용자가 방송 중단 버튼을 눌렀을 때
+    public void StopLive()
+    {
+        if (!_isLive)
+            return;
+
+        _isLive = false;
+
+        Debug.Log("라이브 중단");
+
+        OnLiveStopped?.Invoke();
+    }
+
+    // 20초가 끝났을 때
     public void EndLive()
     {
         if (!_isLive)
@@ -103,12 +118,31 @@ public class LiveManager : MonoBehaviour
             return;
         }
 
-        if (!int.TryParse(dish.ReciepeGrade, out int youtubeGrade))
+        int youtubeGrade;
+
+        switch (dish.ReciepeGrade)
         {
-            Debug.LogError(
-                $"[LiveManager] 음식 등급을 숫자로 변환할 수 없습니다: {dish.ReciepeGrade}"
-            );
-            return;
+            case "기본":
+                youtubeGrade = 0;
+                break;
+
+            case "초급":
+                youtubeGrade = 1;
+                break;
+
+            case "중급":
+                youtubeGrade = 2;
+                break;
+
+            case "고급":
+                youtubeGrade = 3;
+                break;
+
+            default:
+                Debug.LogError(
+                    $"[LiveManager] 알 수 없는 음식 등급입니다: {dish.ReciepeGrade}"
+                );
+                return;
         }
 
         int beforeGold = CurrencyManager.Instance.Gold;
@@ -138,6 +172,7 @@ public class LiveManager : MonoBehaviour
 
         Debug.Log(
             $"음식 섭취 - {dish.DishName} / " +
+            $"등급: {dish.ReciepeGrade} / " +
             $"후원금 +{addedGold} / " +
             $"구독자 +{addedSubscriber}"
         );
