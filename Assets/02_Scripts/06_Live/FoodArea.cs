@@ -16,14 +16,11 @@ public class FoodArea : MonoBehaviour
     public void CheckFoodPlaces()
     {
         if (_startButton == null)
-        {
             return;
-        }
 
         if (LiveManager.Instance != null &&
             LiveManager.Instance.IsLive)
         {
-            _startButton.interactable = false;
             return;
         }
 
