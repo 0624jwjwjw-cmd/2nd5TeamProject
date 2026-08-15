@@ -65,7 +65,15 @@ public class LiveManager : MonoBehaviour
     {
         if (_isLive)
             return;
-
+        if(CurrencyManager.Instance.SpendHeart(1))//슈퍼 정재운이 잠시 만진거에용
+        {
+            Debug.Log("하트 1개 사용");
+        }
+        else
+        {
+            Debug.Log("하트가 부족합니다.");
+            return;
+        }
         _isLive = true;
         _elapsedTime = 0f;
         _lastSecond = 0;
