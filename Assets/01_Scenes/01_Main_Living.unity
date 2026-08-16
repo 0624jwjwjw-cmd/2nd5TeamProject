@@ -5643,13 +5643,13 @@ RectTransform:
   - {fileID: 1695226162}
   - {fileID: 1588789096}
   - {fileID: 1030425707}
-  - {fileID: 2004657844}
   - {fileID: 1482040674}
   - {fileID: 1370547180}
   - {fileID: 1897674832}
   - {fileID: 1736857494}
   - {fileID: 1754804455}
   - {fileID: 4934969340458575115}
+  - {fileID: 2004657844}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
