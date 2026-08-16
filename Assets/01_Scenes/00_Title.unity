@@ -1765,6 +1765,8 @@ MonoBehaviour:
   cooking: {fileID: 0}
   coin: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
   heart: {fileID: 0}
+  win: {fileID: 8300000, guid: df6309dc0b10ff74caa2c771653277ab, type: 3}
+  lose: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
   bgmVolume: 1
   sfxVolume: 1
 --- !u!4 &998510523

@@ -40,7 +40,7 @@ public class QuestCallUI : MonoBehaviour
     {
         resultImage.sprite = successSprite;
         resultText.text = "Äù½ºÆ® ¼º°ø!";
-
+        SoundManager.Instance.PlaySFX(SFXType.Win);
         OpenPanel();
     }
 
@@ -48,14 +48,14 @@ public class QuestCallUI : MonoBehaviour
     {
         resultImage.sprite = failSprite;
         resultText.text = "Äù½ºÆ® ½ÇÆÐ!";
-
+        SoundManager.Instance.PlaySFX(SFXType.Lose);
         OpenPanel();
     }
 
     private void OpenPanel()
     {
         resultPanel.SetActive(true);
-
+        
         if (darkPanel != null)
         {
             darkPanel.SetActive(true);
