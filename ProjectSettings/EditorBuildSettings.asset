@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01_Scenes/01_Main_Living.unity
     guid: dc8f3dff2dae65d4e8645a3c0ab297b6
-  - enabled: 1
+  - enabled: 0
     path: Assets/01_Scenes/_Dev/Jungjaeun/Test.unity
     guid: c8d59e6a388ea9f478895468d4f085b9
   m_configObjects:

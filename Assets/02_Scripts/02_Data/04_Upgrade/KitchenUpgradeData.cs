@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
+//using UnityEngine.InputSystem.iOS;
 
 [CreateAssetMenu(fileName = "KC_",menuName ="GameData/Upgrade/Kitchen")]
 public class KitchenUpgradeData : ScriptableObject
