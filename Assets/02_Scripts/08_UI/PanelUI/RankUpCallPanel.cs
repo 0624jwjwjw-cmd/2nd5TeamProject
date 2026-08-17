@@ -16,7 +16,7 @@ public class RankUpCallPanel : MonoBehaviour
     public void OpenPanel()
     {
         rankPanel.SetActive(true);
-
+        SoundManager.Instance.PlaySFX(SFXType.Win);
         if (darkPanel != null)
         {
             darkPanel.SetActive(true);

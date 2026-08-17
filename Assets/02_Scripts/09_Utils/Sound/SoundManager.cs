@@ -19,6 +19,8 @@ public class SoundManager : MonoBehaviour, ISaveable
     [SerializeField] private AudioClip cooking;
     [SerializeField] private AudioClip coin;
     [SerializeField] private AudioClip heart;
+    [SerializeField] private AudioClip win;
+    [SerializeField] private AudioClip lose;
 
     [Header("Volume")]
     [SerializeField, Range(0f, 1f)] private float bgmVolume = 1f;
@@ -67,6 +69,8 @@ public class SoundManager : MonoBehaviour, ISaveable
             SFXType.Cooking => cooking,
             SFXType.Coin => coin,
             SFXType.Heart => heart,
+            SFXType.Win => win,
+            SFXType.Lose => lose,
             _ => null
         };
 

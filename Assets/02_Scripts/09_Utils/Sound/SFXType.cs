@@ -5,4 +5,6 @@ public enum SFXType
     Cooking,
     Coin,
     Heart,
+    Win,
+    Lose
 }

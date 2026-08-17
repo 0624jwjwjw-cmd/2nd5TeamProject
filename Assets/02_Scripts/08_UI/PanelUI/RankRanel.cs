@@ -23,6 +23,7 @@ public class RankRanel : MonoBehaviour
     public void OpenPanel()
     {
         rankPanel.SetActive(true);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (darkPanel != null)
         {
             darkPanel.SetActive(true);
@@ -31,6 +32,7 @@ public class RankRanel : MonoBehaviour
     public void ClosePanel()
     {
         rankPanel.SetActive(false);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (darkPanel != null)
         {
             darkPanel.SetActive(false);
