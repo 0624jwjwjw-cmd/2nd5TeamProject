@@ -21,7 +21,6 @@ public class SettingPenel : MonoBehaviour
     public void OpenPanel()
     {
         settingPanel.SetActive(true);
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (darkPanel != null)
         {
             darkPanel.SetActive(true);
@@ -30,7 +29,6 @@ public class SettingPenel : MonoBehaviour
     public void ClosePanel()
     {
         settingPanel.SetActive(false);
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (darkPanel != null)
         {
             darkPanel.SetActive(false);
@@ -48,5 +46,8 @@ public class SettingPenel : MonoBehaviour
     public void ResetGame()
     {
         SaveLoadManager.Instance.ResetGame();
+        bgmSlider.value = SoundManager.Instance.BGMVolume;
+        sfxSlider.value = SoundManager.Instance.SFXVolume;
+        
     }
 }

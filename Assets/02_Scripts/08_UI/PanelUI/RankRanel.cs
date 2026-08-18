@@ -18,6 +18,13 @@ public class RankRanel : MonoBehaviour
     [SerializeField] private Sprite lockSprite;
     [SerializeField] private Sprite unlockSprite;
 
+    [Header("CurrentPanelImage")]
+    [SerializeField] private Image[] starImages;
+    [SerializeField] private Image[] panelImages;
+    [SerializeField] private Sprite currentPanelSprite;
+    [SerializeField] private Sprite unaderPanelSprite;
+
+
     private SubscriberRank rankManager;
 
     public void OpenPanel()
@@ -67,7 +74,7 @@ public class RankRanel : MonoBehaviour
         currentSubscriberText.text = $"현재 구독자{subscriber:N0}명";
 
         // 잠금 이미지
-        UpdateLockImages(currentRank);
+        UpdateRankImages(currentRank);
 
         // 최고 티어
         if (currentRank == 5)
@@ -90,7 +97,7 @@ public class RankRanel : MonoBehaviour
         progressSlider.value = Mathf.Clamp01(currentSubscriber / nextSubscriber);
     }
 
-    private void UpdateLockImages(int currentRank)
+    private void UpdateRankImages(int currentRank)
     {
         for (int i = 0; i < lockImages.Length; i++)
         {
@@ -103,6 +110,16 @@ public class RankRanel : MonoBehaviour
             else
             {
                 lockImages[i].sprite = lockSprite;
+            }
+            if (rank == currentRank)
+            {
+                panelImages[i].sprite = currentPanelSprite;
+                starImages[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                panelImages[i].sprite = unaderPanelSprite;
+                starImages[i].gameObject.SetActive(false);
             }
         }
     }

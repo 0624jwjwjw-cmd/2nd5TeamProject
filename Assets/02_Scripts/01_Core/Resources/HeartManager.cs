@@ -70,6 +70,8 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
 
         int recoverCount =Mathf.FloorToInt((float)elapsed.TotalSeconds / recoverTime);//경과시간 / 5분
         if (recoverCount <= 0) return;//0이면 중단
+        int missingHeart = maxHeart - CurrencyManager.Instance.Heart;
+        recoverCount = Mathf.Min(recoverCount, missingHeart);
         CurrencyManager.Instance.AddHeart(recoverCount);
 
         lastHeartRecoverTime +=TimeSpan.FromSeconds(recoverCount * recoverTime).Ticks;//하트 회복한 시간만큼 마지막 회복 시간 갱신
