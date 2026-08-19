@@ -7,7 +7,7 @@ public class FoodPlaceController : MonoBehaviour
         if (foodPlace == null)
             return false;
 
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrWhiteSpace(itemId))
             return false;
 
         return foodPlace.TryPlace(itemId);

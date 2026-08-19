@@ -84,14 +84,16 @@ public class FoodEatSystem : MonoBehaviour
 
             string itemId = foodPlace.ItemId;
 
-            if (string.IsNullOrEmpty(itemId))
+            if (string.IsNullOrWhiteSpace(itemId))
                 continue;
 
-            if (LiveManager.Instance != null)
+            if (LiveManager.Instance == null)
             {
-                LiveManager.Instance.EatFood(itemId);
+                StopEating();
+                return;
             }
 
+            LiveManager.Instance.EatFood(itemId);
             foodPlace.RemoveFood();
 
             return;

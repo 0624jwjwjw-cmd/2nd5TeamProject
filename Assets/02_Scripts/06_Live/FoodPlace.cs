@@ -2,8 +2,7 @@ using UnityEngine;
 
 public class FoodPlace : MonoBehaviour
 {
-    public bool IsFilled => !string.IsNullOrEmpty(ItemId);
-
+    public bool IsFilled => !string.IsNullOrWhiteSpace(ItemId);
     public string ItemId { get; private set; }
 
     public bool TryPlace(string itemId)
@@ -11,10 +10,11 @@ public class FoodPlace : MonoBehaviour
         if (IsFilled)
             return false;
 
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrWhiteSpace(itemId))
             return false;
 
         ItemId = itemId;
+
         return true;
     }
 

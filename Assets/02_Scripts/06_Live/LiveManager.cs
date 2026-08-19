@@ -14,6 +14,8 @@ public class LiveManager : MonoBehaviour
     private int _totalDonation;
     private int _totalSubscribers;
 
+    private int _totalFoodCost;
+
     public bool IsLive => _isLive;
     public float ElapsedTime => _elapsedTime;
     public int TotalDonation => _totalDonation;
@@ -40,6 +42,7 @@ public class LiveManager : MonoBehaviour
         _lastSecond = 0;
         _totalDonation = 0;
         _totalSubscribers = 0;
+        _totalFoodCost = 0;
     }
 
     private void Update()
@@ -66,6 +69,12 @@ public class LiveManager : MonoBehaviour
         if (_isLive)
             return;
 
+        if (CurrencyManager.Instance == null)
+        {
+            Debug.LogError("[LiveManager] CurrencyManager가 없습니다.");
+            return;
+        }
+
         if (!CurrencyManager.Instance.SpendHeart(1))
         {
             Debug.Log("하트가 부족합니다.");
@@ -78,6 +87,7 @@ public class LiveManager : MonoBehaviour
 
         _totalDonation = 0;
         _totalSubscribers = 0;
+        _totalFoodCost = 0;
 
         Debug.Log("라이브 시작!");
 
@@ -104,8 +114,14 @@ public class LiveManager : MonoBehaviour
 
         _isLive = false;
 
+        CalculateLiveReward();
+
+        if (GameDateManager.Instance != null)
+            GameDateManager.Instance.AddDateCount();
+
         Debug.Log(
-            $"라이브 종료 / 후원금: {_totalDonation} / 구독자: {_totalSubscribers}"
+            $"라이브 종료 / 후원금: {_totalDonation} / " +
+            $"구독자: {_totalSubscribers}"
         );
 
         OnLiveEnded?.Invoke();
@@ -116,14 +132,8 @@ public class LiveManager : MonoBehaviour
         if (!_isLive)
             return;
 
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrWhiteSpace(itemId))
             return;
-
-        if (CurrencyManager.Instance == null)
-        {
-            Debug.LogError("[LiveManager] CurrencyManager가 없습니다.");
-            return;
-        }
 
         if (GameDataRepository.Instance == null)
         {
@@ -133,20 +143,39 @@ public class LiveManager : MonoBehaviour
 
         DishData dishData;
 
-        if (GameDataRepository.Instance.TryGetDish(itemId, out dishData))
+        if (!GameDataRepository.Instance.TryGetDish(itemId, out dishData) &&
+            !GameDataRepository.Instance.TryGetSpecialDish(itemId, out dishData))
         {
-        }
-        else if (GameDataRepository.Instance.TryGetSpecialDish(
-            itemId,
-            out dishData))
-        {
-        }
-        else
-        {
-            Debug.LogError(
+            Debug.LogWarning(
                 $"[LiveManager] 음식 데이터를 찾을 수 없습니다. ID: {itemId}"
             );
 
+            return;
+        }
+
+        _totalFoodCost += dishData.Cost;
+
+        Debug.Log(
+            $"음식 섭취 - {dishData.DishName} / " +
+            $"원가: {dishData.Cost} / " +
+            $"누적 원가: {_totalFoodCost}"
+        );
+    }
+
+    private void CalculateLiveReward()
+    {
+        if (_totalFoodCost <= 0)
+            return;
+
+        if (CurrencyManager.Instance == null)
+        {
+            Debug.LogError("[LiveManager] CurrencyManager가 없습니다.");
+            return;
+        }
+
+        if (SubscriberRank.Instance == null)
+        {
+            Debug.LogError("[LiveManager] SubscriberRank가 없습니다.");
             return;
         }
 
@@ -156,32 +185,22 @@ public class LiveManager : MonoBehaviour
         int beforeSubscriber = CurrencyManager.Instance.Subscriber;
 
         CalculateGold.GetDonation(
-            dishData.Cost,
+            _totalFoodCost,
             youtubeGrade
         );
 
         CalculateSubscriber.GetDonation(
-            dishData.Cost,
+            _totalFoodCost,
             youtubeGrade
         );
 
-        int addedGold =
+        _totalDonation =
             CurrencyManager.Instance.Gold - beforeGold;
 
-        int addedSubscriber =
+        _totalSubscribers =
             CurrencyManager.Instance.Subscriber - beforeSubscriber;
-
-        _totalDonation += addedGold;
-        _totalSubscribers += addedSubscriber;
 
         OnDonationChanged?.Invoke(_totalDonation);
         OnSubscribersChanged?.Invoke(_totalSubscribers);
-
-        Debug.Log(
-            $"음식 섭취 - {dishData.DishName} / " +
-            $"등급: {dishData.ReciepeGrade} / " +
-            $"후원금 +{addedGold} / " +
-            $"구독자 +{addedSubscriber}"
-        );
     }
 }

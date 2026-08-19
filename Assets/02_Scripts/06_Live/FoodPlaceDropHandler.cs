@@ -4,32 +4,35 @@ using UnityEngine.EventSystems;
 public class FoodPlaceDropHandler : MonoBehaviour, IDropHandler
 {
     [SerializeField] private FoodPlace _foodPlace;
-    [SerializeField] private FoodPlaceController _foodPlaceController;
+    [SerializeField] private FoodPlaceController _controller;
 
     private void Awake()
     {
         if (_foodPlace == null)
             _foodPlace = GetComponent<FoodPlace>();
 
-        if (_foodPlaceController == null)
-            _foodPlaceController =
-                FindFirstObjectByType<FoodPlaceController>();
+        if (_controller == null)
+            _controller = GetComponentInParent<FoodPlaceController>();
     }
 
     public void OnDrop(PointerEventData eventData)
     {
+        if (_foodPlace == null)
+            return;
+
         if (FoodDrag.Instance == null)
             return;
 
         if (!FoodDrag.Instance.TryGetItemId(out string itemId))
             return;
 
-        if (_foodPlaceController == null)
-            return;
-
-        if (_foodPlaceController.TryPlaceFood(_foodPlace, itemId))
+        if (_controller == null)
         {
-            FoodDrag.Instance.EndDrag();
+            Debug.LogError("[FoodPlaceDropHandler] FoodPlaceController가 없습니다.");
+            return;
         }
+
+        if (_controller.TryPlaceFood(_foodPlace, itemId))
+            FoodDrag.Instance.EndDrag();
     }
 }

@@ -20,7 +20,7 @@ public class FoodDrag : MonoBehaviour
 
     public void BeginDrag(string itemId)
     {
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrWhiteSpace(itemId))
             return;
 
         ItemId = itemId;
@@ -36,8 +36,6 @@ public class FoodDrag : MonoBehaviour
     public bool TryGetItemId(out string itemId)
     {
         itemId = ItemId;
-
-        return IsDragging &&
-               !string.IsNullOrEmpty(ItemId);
+        return IsDragging && !string.IsNullOrWhiteSpace(ItemId);
     }
 }
