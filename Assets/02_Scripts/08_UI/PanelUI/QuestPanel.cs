@@ -10,7 +10,6 @@ public class QuestPanel : MonoBehaviour
     {
         CurrencyManager.Instance.OnRevenueChanged += RefreshUI;
         GameDateManager.Instance.OnDateChanged += RefreshQuestUI;
-        RefreshUI();
     }
     private void OnDisable()
     {
