@@ -5,9 +5,7 @@ public class LiveInventoryUI : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
-
-    [Header("Dish Prefabs")]
-    [SerializeField] private DishBase[] dishBases;
+    [SerializeField] private ItemVisualRepository itemVisualRepository;
 
     private readonly List<LiveInventorySlotUI> slots = new();
 
@@ -15,6 +13,9 @@ public class LiveInventoryUI : MonoBehaviour
     {
         if (inventoryManager == null)
             inventoryManager = InventoryManager.Instance;
+
+        if (itemVisualRepository == null)
+            itemVisualRepository = ItemVisualRepository.Instance;
 
         if (content == null)
         {
@@ -63,44 +64,25 @@ public class LiveInventoryUI : MonoBehaviour
             if (slotData == null || slotData.Amount <= 0)
                 continue;
 
-            DishBase dishBase = FindDishBase(slotData.ItemId);
+            string itemId = slotData.ItemId;
 
-            if (dishBase == null)
+            if (string.IsNullOrEmpty(itemId))
+                continue;
+
+            if (itemVisualRepository == null ||
+                !itemVisualRepository.TryGetIcon(itemId, out Sprite icon))
             {
                 Debug.LogWarning(
-                    $"[LiveInventoryUI] DishBase를 찾을 수 없습니다. ID: {slotData.ItemId}"
+                    $"[LiveInventoryUI] 아이콘을 찾을 수 없습니다. ID: {itemId}"
                 );
                 continue;
             }
 
             slots[i].Setup(
-                slotData.ItemId,
-                dishBase,
-                dishBase.DishName,
+                itemId,
+                icon,
                 slotData.Amount
             );
         }
-    }
-
-    private DishBase FindDishBase(string itemId)
-    {
-        if (string.IsNullOrEmpty(itemId))
-            return null;
-
-        for (int i = 0; i < dishBases.Length; i++)
-        {
-            DishBase dish = dishBases[i];
-
-            if (dish == null)
-                continue;
-
-            if (dish.ID == itemId)
-                return dish;
-
-            if (dish.Data != null && dish.Data.ID == itemId)
-                return dish;
-        }
-
-        return null;
     }
 }

@@ -46,6 +46,7 @@ public class FoodEatSystem : MonoBehaviour
     private void StartEating()
     {
         _timer = 0f;
+        _eatIndex = 0;
         _isEating = true;
 
         Debug.Log("음식 먹기 시작");
@@ -81,12 +82,16 @@ public class FoodEatSystem : MonoBehaviour
             if (foodPlace == null || !foodPlace.IsFilled)
                 continue;
 
-            DishBase dish = foodPlace.DishBase;
+            string itemId = foodPlace.ItemId;
 
-            if (dish == null)
+            if (string.IsNullOrEmpty(itemId))
                 continue;
 
-            LiveManager.Instance.EatFood(dish);
+            if (LiveManager.Instance != null)
+            {
+                LiveManager.Instance.EatFood(itemId);
+            }
+
             foodPlace.RemoveFood();
 
             return;

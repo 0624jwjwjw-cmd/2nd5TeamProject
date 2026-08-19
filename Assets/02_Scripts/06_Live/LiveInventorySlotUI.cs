@@ -3,97 +3,52 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LiveInventorySlotUI : MonoBehaviour, IPointerClickHandler
+public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler
 {
-    [SerializeField] private Image iconImage;
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text amountText;
+    [SerializeField] private Image _iconImage;
+    [SerializeField] private TMP_Text _amountText;
 
-    private string itemId;
-    private DishBase dishBase;
+    private string _itemId;
 
-    public string ItemId => itemId;
-    public DishBase DishBase => dishBase;
+    public string ItemId => _itemId;
 
-    public void Setup(string id, DishBase dish, string itemName, int amount)
+    public void Setup(
+        string itemId,
+        Sprite icon,
+        int amount)
     {
-        itemId = id;
-        dishBase = dish;
+        _itemId = itemId;
 
-        nameText.text = itemName;
-        amountText.text = amount.ToString();
+        if (_iconImage != null)
+            _iconImage.sprite = icon;
 
-        if (dishBase != null && dishBase.spriteRenderer != null)
-        {
-            iconImage.sprite = dishBase.spriteRenderer.sprite;
-            iconImage.enabled = iconImage.sprite != null;
-        }
-        else
-        {
-            iconImage.sprite = null;
-            iconImage.enabled = false;
-        }
-    }
+        if (_amountText != null)
+            _amountText.text = amount.ToString();
 
-    public string GetItemId()
-    {
-        return itemId;
-    }
-
-    public Sprite GetItemSprite()
-    {
-        if (dishBase == null)
-            return null;
-
-        if (dishBase.spriteRenderer == null)
-            return null;
-
-        return dishBase.spriteRenderer.sprite;
+        gameObject.SetActive(true);
     }
 
     public void Clear()
     {
-        itemId = string.Empty;
-        dishBase = null;
+        _itemId = null;
 
-        iconImage.sprite = null;
-        iconImage.enabled = false;
+        if (_iconImage != null)
+            _iconImage.sprite = null;
 
-        nameText.text = string.Empty;
-        amountText.text = string.Empty;
+        if (_amountText != null)
+            _amountText.text = string.Empty;
+
+        gameObject.SetActive(false);
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrEmpty(_itemId))
             return;
 
-        FoodPlace targetPlace = FindEmptyFoodPlace();
-
-        if (targetPlace == null)
+        if (FoodDrag.Instance == null)
             return;
 
-        targetPlace.TryPlaceFromInventory(this);
-    }
-
-    private FoodPlace FindEmptyFoodPlace()
-    {
-        FoodArea foodArea = FindFirstObjectByType<FoodArea>();
-
-        if (foodArea == null)
-            return null;
-
-        FoodPlace[] places = foodArea.FoodPlaces;
-
-        if (places == null)
-            return null;
-
-        foreach (FoodPlace place in places)
-        {
-            if (place != null && !place.IsOccupied)
-                return place;
-        }
-
-        return null;
+        FoodDrag.Instance.BeginDrag(_itemId);
     }
 }
