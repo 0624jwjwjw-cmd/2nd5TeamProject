@@ -46,7 +46,6 @@ public class FoodEatSystem : MonoBehaviour
     private void StartEating()
     {
         _timer = 0f;
-        _eatIndex = 0;
         _isEating = true;
 
         Debug.Log("À½½Ä ¸Ô±â ½ÃÀÛ");
@@ -82,8 +81,9 @@ public class FoodEatSystem : MonoBehaviour
             if (foodPlace == null || !foodPlace.IsFilled)
                 continue;
 
-            string itemId = foodPlace.ItemId;
+            DishBase dish = foodPlace.DishBase;
 
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(itemId))
                 continue;
 
@@ -94,6 +94,12 @@ public class FoodEatSystem : MonoBehaviour
             }
 
             LiveManager.Instance.EatFood(itemId);
+=======
+            if (dish == null)
+                continue;
+
+            LiveManager.Instance.EatFood(dish);
+>>>>>>> parent of 918d069 (/fix ìŒì‹ ì‹œìŠ¤í…œ ItemId ê¸°ë°˜ìœ¼ë¡œ ë³€ê²½)
             foodPlace.RemoveFood();
 
             return;

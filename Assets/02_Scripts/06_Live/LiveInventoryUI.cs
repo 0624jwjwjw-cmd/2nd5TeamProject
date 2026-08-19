@@ -5,6 +5,12 @@ public class LiveInventoryUI : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
+<<<<<<< HEAD
+=======
+
+    [Header("Dish Prefabs")]
+    [SerializeField] private DishBase[] dishBases;
+>>>>>>> parent of 918d069 (/fix ìŒì‹ ì‹œìŠ¤í…œ ItemId ê¸°ë°˜ìœ¼ë¡œ ë³€ê²½)
 
     private readonly List<LiveInventorySlotUI> slots = new();
 
@@ -16,9 +22,12 @@ public class LiveInventoryUI : MonoBehaviour
         if (inventoryManager == null)
             inventoryManager = InventoryManager.Instance;
 
+<<<<<<< HEAD
         _itemVisualRepository = ItemVisualRepository.Instance;
         _gameDataRepository = GameDataRepository.Instance;
 
+=======
+>>>>>>> parent of 918d069 (/fix ìŒì‹ ì‹œìŠ¤í…œ ItemId ê¸°ë°˜ìœ¼ë¡œ ë³€ê²½)
         if (content == null)
         {
             Debug.LogError("[LiveInventoryUI] Content°¡ ¿¬°áµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
@@ -74,8 +83,9 @@ public class LiveInventoryUI : MonoBehaviour
             if (slotData == null || slotData.Amount <= 0)
                 continue;
 
-            string itemId = slotData.ItemId;
+            DishBase dishBase = FindDishBase(slotData.ItemId);
 
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(itemId))
                 continue;
 
@@ -98,10 +108,46 @@ public class LiveInventoryUI : MonoBehaviour
                 itemId,
                 icon,
                 dishData.DishName,
+=======
+            if (dishBase == null)
+            {
+                Debug.LogWarning(
+                    $"[LiveInventoryUI] DishBase¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù. ID: {slotData.ItemId}"
+                );
+                continue;
+            }
+
+            slots[i].Setup(
+                slotData.ItemId,
+                dishBase,
+                dishBase.DishName,
+>>>>>>> parent of 918d069 (/fix ìŒì‹ ì‹œìŠ¤í…œ ItemId ê¸°ë°˜ìœ¼ë¡œ ë³€ê²½)
                 slotData.Amount
             );
 
             slotIndex++;
         }
+    }
+
+    private DishBase FindDishBase(string itemId)
+    {
+        if (string.IsNullOrEmpty(itemId))
+            return null;
+
+        for (int i = 0; i < dishBases.Length; i++)
+        {
+            DishBase dish = dishBases[i];
+
+            if (dish == null)
+                continue;
+
+            if (dish.ID == itemId)
+                return dish;
+
+            if (dish.Data != null && dish.Data.ID == itemId)
+                return dish;
+        }
+
+        return null;
     }
 }
