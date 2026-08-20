@@ -1,99 +1,54 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class LiveInventorySlotUI : MonoBehaviour, IPointerClickHandler
+public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler
 {
-    [SerializeField] private Image iconImage;
-    [SerializeField] private TMP_Text nameText;
-    [SerializeField] private TMP_Text amountText;
+    [SerializeField] private Image _icon;
+    [SerializeField] private TMPro.TMP_Text _amountText;
 
-    private string itemId;
-    private DishBase dishBase;
+    private string _itemId;
+    private int _amount;
 
-    public string ItemId => itemId;
-    public DishBase DishBase => dishBase;
+    public string ItemId => _itemId;
+    public int Amount => _amount;
 
-    public void Setup(string id, DishBase dish, string itemName, int amount)
+    public void Setup(
+        string itemId,
+        Sprite icon,
+        string itemName,
+        int amount)
     {
-        itemId = id;
-        dishBase = dish;
+        _itemId = itemId;
+        _amount = amount;
 
-        nameText.text = itemName;
-        amountText.text = amount.ToString();
+        if (_icon != null)
+            _icon.sprite = icon;
 
-        if (dishBase != null && dishBase.spriteRenderer != null)
-        {
-            iconImage.sprite = dishBase.spriteRenderer.sprite;
-            iconImage.enabled = iconImage.sprite != null;
-        }
-        else
-        {
-            iconImage.sprite = null;
-            iconImage.enabled = false;
-        }
-    }
-
-    public string GetItemId()
-    {
-        return itemId;
-    }
-
-    public Sprite GetItemSprite()
-    {
-        if (dishBase == null)
-            return null;
-
-        if (dishBase.spriteRenderer == null)
-            return null;
-
-        return dishBase.spriteRenderer.sprite;
+        if (_amountText != null)
+            _amountText.text = amount.ToString();
     }
 
     public void Clear()
     {
-        itemId = string.Empty;
-        dishBase = null;
+        _itemId = null;
+        _amount = 0;
 
-        iconImage.sprite = null;
-        iconImage.enabled = false;
+        if (_icon != null)
+            _icon.sprite = null;
 
-        nameText.text = string.Empty;
-        amountText.text = string.Empty;
+        if (_amountText != null)
+            _amountText.text = string.Empty;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
-        if (string.IsNullOrEmpty(itemId))
+        if (string.IsNullOrWhiteSpace(_itemId))
             return;
 
-        FoodPlace targetPlace = FindEmptyFoodPlace();
-
-        if (targetPlace == null)
+        if (FoodDrag.Instance == null)
             return;
 
-        targetPlace.TryPlaceFromInventory(this);
-    }
-
-    private FoodPlace FindEmptyFoodPlace()
-    {
-        FoodArea foodArea = FindFirstObjectByType<FoodArea>();
-
-        if (foodArea == null)
-            return null;
-
-        FoodPlace[] places = foodArea.FoodPlaces;
-
-        if (places == null)
-            return null;
-
-        foreach (FoodPlace place in places)
-        {
-            if (place != null && !place.IsOccupied)
-                return place;
-        }
-
-        return null;
+        FoodDrag.Instance.BeginDrag(_itemId);
     }
 }

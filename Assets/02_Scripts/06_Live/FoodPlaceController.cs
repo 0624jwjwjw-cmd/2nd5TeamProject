@@ -2,13 +2,14 @@ using UnityEngine;
 
 public class FoodPlaceController : MonoBehaviour
 {
-    public bool TryPlaceFood(
-        FoodPlace foodPlace,
-        LiveInventorySlotUI slotUI)
+    public bool TryPlaceFood(FoodPlace foodPlace, string itemId)
     {
-        if (foodPlace == null || slotUI == null)
+        if (foodPlace == null)
             return false;
 
-        return foodPlace.TryPlaceFromInventory(slotUI);
+        if (string.IsNullOrWhiteSpace(itemId))
+            return false;
+
+        return foodPlace.TryPlace(itemId);
     }
 }
