@@ -6,15 +6,18 @@ public class LiveInventoryUI : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
 
-    [Header("Dish Prefabs")]
-    [SerializeField] private DishBase[] dishBases;
-
     private readonly List<LiveInventorySlotUI> slots = new();
+
+    private ItemVisualRepository _itemVisualRepository;
+    private GameDataRepository _gameDataRepository;
 
     private void Awake()
     {
         if (inventoryManager == null)
             inventoryManager = InventoryManager.Instance;
+
+        _itemVisualRepository = ItemVisualRepository.Instance;
+        _gameDataRepository = GameDataRepository.Instance;
 
         if (content == null)
         {
@@ -50,57 +53,57 @@ public class LiveInventoryUI : MonoBehaviour
         if (inventoryManager == null)
             return;
 
+        if (_itemVisualRepository == null)
+            _itemVisualRepository = ItemVisualRepository.Instance;
+
+        if (_gameDataRepository == null)
+            _gameDataRepository = GameDataRepository.Instance;
+
         for (int i = 0; i < slots.Count; i++)
             slots[i].Clear();
 
         IReadOnlyList<InventorySlotData> inventorySlots =
             inventoryManager.Slots;
 
-        for (int i = 0; i < inventorySlots.Count && i < slots.Count; i++)
+        int slotIndex = 0;
+
+        for (int i = 0;
+             i < inventorySlots.Count && slotIndex < slots.Count;
+             i++)
         {
             InventorySlotData slotData = inventorySlots[i];
 
             if (slotData == null || slotData.Amount <= 0)
                 continue;
 
-            DishBase dishBase = FindDishBase(slotData.ItemId);
+            string itemId = slotData.ItemId;
 
-            if (dishBase == null)
+            if (string.IsNullOrWhiteSpace(itemId))
+                continue;
+
+            if (_gameDataRepository == null)
+                continue;
+
+            if (!_gameDataRepository.TryGetDish(itemId, out DishData dishData) &&
+                !_gameDataRepository.TryGetSpecialDish(itemId, out dishData))
             {
-                Debug.LogWarning(
-                    $"[LiveInventoryUI] DishBase를 찾을 수 없습니다. ID: {slotData.ItemId}"
-                );
                 continue;
             }
 
-            slots[i].Setup(
-                slotData.ItemId,
-                dishBase,
-                dishBase.DishName,
+            if (_itemVisualRepository == null ||
+                !_itemVisualRepository.TryGetIcon(itemId, out Sprite icon))
+            {
+                continue;
+            }
+
+            slots[slotIndex].Setup(
+                itemId,
+                icon,
+                dishData.DishName,
                 slotData.Amount
             );
+
+            slotIndex++;
         }
-    }
-
-    private DishBase FindDishBase(string itemId)
-    {
-        if (string.IsNullOrEmpty(itemId))
-            return null;
-
-        for (int i = 0; i < dishBases.Length; i++)
-        {
-            DishBase dish = dishBases[i];
-
-            if (dish == null)
-                continue;
-
-            if (dish.ID == itemId)
-                return dish;
-
-            if (dish.Data != null && dish.Data.ID == itemId)
-                return dish;
-        }
-
-        return null;
     }
 }
