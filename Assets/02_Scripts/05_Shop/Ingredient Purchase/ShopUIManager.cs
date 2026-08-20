@@ -199,25 +199,18 @@ public class ShopUIManager : MonoBehaviour, IInitializable
         }
     }
 
-
     //*ShopItem 클릭 처리*
-
-    private void HandleItemClicked(
-        IngredientData ingredientData
-    )
+    private void HandleItemClicked(IngredientData ingredientData)
     {
         //잘못된 데이터가 전달되었다면
         //장바구니에 추가하지 않음
         if (ingredientData == null) return;
-
 
         //ShopCartController에게
         //현재 클릭한 재료를 장바구니에 추가하도록 요청
         //
         //같은 재료가 이미 들어 있다면
         //ShopCartController 내부에서 수량 +1 처리
-        shopCartController.AddIngredient(
-            ingredientData
-        );
+        shopCartController.AddIngredient(ingredientData);
     }
 }
