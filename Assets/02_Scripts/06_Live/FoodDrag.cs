@@ -1,93 +1,43 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
-public class FoodDrag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class FoodDrag : MonoBehaviour
 {
-    [SerializeField] private LiveInventorySlotUI slotUI;
+    public static FoodDrag Instance { get; private set; }
 
-    private Canvas canvas;
-    private RectTransform dragIcon;
-    private Image dragImage;
+    public string ItemId { get; private set; }
+    public bool IsDragging { get; private set; }
 
     private void Awake()
     {
-        canvas = GetComponentInParent<Canvas>();
-
-        if (slotUI == null)
-            slotUI = GetComponent<LiveInventorySlotUI>();
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (slotUI == null || canvas == null)
-            return;
-
-        if (string.IsNullOrEmpty(slotUI.ItemId))
-            return;
-
-        DishBase dishBase = slotUI.DishBase;
-
-        if (dishBase == null)
-            return;
-
-        SpriteRenderer renderer = dishBase.spriteRenderer;
-
-        if (renderer == null)
-            renderer = dishBase.GetComponent<SpriteRenderer>();
-
-        if (renderer == null || renderer.sprite == null)
+        if (Instance != null && Instance != this)
         {
-            Debug.LogWarning(
-                $"[FoodDrag] 음식 Sprite가 없습니다. ID: {slotUI.ItemId}"
-            );
+            Destroy(gameObject);
             return;
         }
 
-        GameObject obj = new GameObject("DragIcon");
-
-        dragIcon = obj.AddComponent<RectTransform>();
-        dragIcon.SetParent(canvas.transform, false);
-
-        dragImage = obj.AddComponent<Image>();
-        dragImage.sprite = renderer.sprite;
-        dragImage.preserveAspect = true;
-        dragImage.raycastTarget = false;
-
-        dragIcon.sizeDelta = new Vector2(160f, 160f);
-        dragIcon.position = eventData.position;
-
-        CanvasGroup group = obj.AddComponent<CanvasGroup>();
-        group.blocksRaycasts = false;
+        Instance = this;
     }
 
-    public void OnDrag(PointerEventData eventData)
+    public void BeginDrag(string itemId)
     {
-        if (dragIcon == null)
+        if (string.IsNullOrWhiteSpace(itemId))
             return;
 
-        dragIcon.position = eventData.position;
+        ItemId = itemId;
+        IsDragging = true;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void EndDrag()
     {
-        if (dragIcon == null)
-            return;
+        ItemId = null;
+        IsDragging = false;
+    }
 
-        GameObject targetObject = eventData.pointerEnter;
+    public bool TryGetItemId(out string itemId)
+    {
+        itemId = ItemId;
 
-        if (targetObject != null)
-        {
-            FoodPlace foodPlace =
-                targetObject.GetComponentInParent<FoodPlace>();
-
-            if (foodPlace != null)
-                foodPlace.TryPlaceFromInventory(slotUI);
-        }
-
-        Destroy(dragIcon.gameObject);
-
-        dragIcon = null;
-        dragImage = null;
+        return IsDragging &&
+               !string.IsNullOrWhiteSpace(ItemId);
     }
 }
