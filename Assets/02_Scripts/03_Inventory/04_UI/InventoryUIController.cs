@@ -6,9 +6,9 @@
 //3. ItemVisualRepository에서 아이콘 검색
 //4. InventoryChange 상세 이벤트를 받아 변경된 슬롯만 갱신
 //5. 슬롯 선택 상태 관리
-
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 //같은 GameObject에 Controller가 중복으로 붙는 것을 방지
@@ -31,6 +31,10 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
     [SerializeField] private GameObject allSelectedFrame;          //전체 탭 선택 표시
     [SerializeField] private GameObject ingredientSelectedFrame;   //재료 탭 선택 표시
     [SerializeField] private GameObject dishSelectedFrame;         //요리 탭 선택 표시
+
+    [Header("Item Description")]
+    [SerializeField] private TMP_Text dishNameText;                 //선택한 요리 이름
+    [SerializeField] private TMP_Text descriptionText;              //선택한 요리 설명
 
     //Runtime System 참조
     private InventoryManager inventoryManager;              //실제 인벤토리 데이터 관리
@@ -437,7 +441,13 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         if (!slotLookup.TryGetValue(itemId, out InventorySlotUI slot)) return;
 
         //현재 선택 중이던 아이템이 삭제된 경우 선택 ID도 비움
-        if (string.Equals(selectedItemId, itemId, StringComparison.Ordinal)) selectedItemId = string.Empty;
+        if (string.Equals(selectedItemId, itemId, StringComparison.Ordinal))
+        {
+            selectedItemId = string.Empty;
+
+            //선택 중이던 아이템이 사라졌으므로 설명도 제거
+            ClearDescription();
+        }
 
         //Dictionary에서 제거
         slotLookup.Remove(itemId);
@@ -470,6 +480,9 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
 
         //선택 상태도 초기화
         selectedItemId = string.Empty;
+
+        //선택한 아이템 설명도 초기화
+        ClearDescription();
     }
 
     //*UI 순서 맞추기*
@@ -628,6 +641,8 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             //선택된 아이템이 없는 상태로 변경
             selectedItemId = string.Empty;
 
+            ClearDescription();
+
             Debug.Log("[InventoryUIController] 아이템 선택 취소");
 
             return;
@@ -655,9 +670,49 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             selectedSlot.SetSelected(true);
         }
 
-        Debug.Log(
-            $"[InventoryUIController] 아이템 선택: " +
-            $"{selectedItemId}"
-        );
+        UpdateDescription(selectedItemId);
+
+        Debug.Log($"[InventoryUIController] 아이템 선택: " + $"{selectedItemId}");
+    }
+
+    //*선택한 요리 설명 표시*
+    private void UpdateDescription(string itemId)
+    {
+        //재료(재료는 설명 없음)
+        if (gameDataRepository.TryGetIngredient(itemId, out IngredientData ingredientData))
+        {
+            dishNameText.text = ingredientData.IngredientName;
+            descriptionText.text = string.Empty;
+            return;
+        }
+
+        //일반 요리
+        if (gameDataRepository.TryGetDish(itemId, out DishData dishData))
+        {
+            dishNameText.text = dishData.DishName;
+            descriptionText.text = dishData.Info;
+            return;
+        }
+
+        //특별 요리
+        if (gameDataRepository.TryGetSpecialDish(
+            itemId,
+            out DishData specialDishData))
+        {
+            dishNameText.text = specialDishData.DishName;
+            descriptionText.text = specialDishData.Info;
+            return;
+        }
+
+        //재료를 선택한 경우 설명창 비우기
+        ClearDescription();
+    }
+
+    //*설명창 초기화*
+    private void ClearDescription()
+    {
+        if (dishNameText != null) dishNameText.text = string.Empty;
+
+        if (descriptionText != null) descriptionText.text = string.Empty;
     }
 }
