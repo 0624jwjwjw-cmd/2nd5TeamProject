@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler
 {
     [SerializeField] private Image _icon;
-    [SerializeField] private TMPro.TMP_Text _amountText;
+    [SerializeField] private TMP_Text _nameText;
+    [SerializeField] private TMP_Text _amountText;
 
     private string _itemId;
     private int _amount;
@@ -25,6 +27,9 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler
         if (_icon != null)
             _icon.sprite = icon;
 
+        if (_nameText != null)
+            _nameText.text = itemName;
+
         if (_amountText != null)
             _amountText.text = amount.ToString();
     }
@@ -36,6 +41,9 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler
 
         if (_icon != null)
             _icon.sprite = null;
+
+        if (_nameText != null)
+            _nameText.text = string.Empty;
 
         if (_amountText != null)
             _amountText.text = string.Empty;
