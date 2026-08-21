@@ -5,8 +5,6 @@ public class LiveInventoryUI : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
-    [SerializeField] private LiveInventorySlotUI slotPrefab;
-    [SerializeField] private int maxSlotCount = 30;
 
     private readonly List<LiveInventorySlotUI> slots = new();
 
@@ -27,13 +25,10 @@ public class LiveInventoryUI : MonoBehaviour
             return;
         }
 
-        if (slotPrefab == null)
-        {
-            Debug.LogError("[LiveInventoryUI] Slot Prefab이 연결되지 않았습니다.");
-            return;
-        }
-
-        CreateSlots();
+        slots.Clear();
+        slots.AddRange(
+            content.GetComponentsInChildren<LiveInventorySlotUI>(true)
+        );
     }
 
     private void OnEnable()
@@ -51,18 +46,6 @@ public class LiveInventoryUI : MonoBehaviour
     private void Start()
     {
         Refresh();
-    }
-
-    private void CreateSlots()
-    {
-        slots.Clear();
-
-        for (int i = 0; i < maxSlotCount; i++)
-        {
-            LiveInventorySlotUI slot = Instantiate(slotPrefab, content);
-            slot.Clear();
-            slots.Add(slot);
-        }
     }
 
     public void Refresh()
