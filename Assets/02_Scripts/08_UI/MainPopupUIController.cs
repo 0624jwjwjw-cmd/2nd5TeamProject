@@ -1,0 +1,261 @@
+//**거실씬에서 상점과 인벤토리 팝업의 열기/닫기를 공통으로 관리하는 스크립트**
+using UnityEngine;
+using UnityEngine.UI;   //Button 사용
+
+//같은 GameObject에 MainPopupUIController가 여러 개 붙는 것을 방지
+[DisallowMultipleComponent]
+public class MainPopupUIController : MonoBehaviour
+{
+    //*공통 UI*
+    [Header("공통 UI")]
+    [SerializeField] private GameObject dimOverlay; //UI열렸을때 배경 어둡게 하는 애
+
+    //*상점 UI*
+    [Header("상점 UI")]
+    [SerializeField] private Button shopButton;     //메인 화면의 상점 버튼
+
+    //상점 버튼에 추가해둔 Canvas
+    //팝업이 열렸을 때 Sort Order를 높여
+    //DimOverlay보다 위에 보이도록 사용
+    //(상점 눌러서 배경 어두워져도 버튼은 그대로)
+    [SerializeField] private Canvas shopButtonCanvas;
+
+    //상점 UI 전체를 담고 있는 Root
+    //켜고 끄면서 상점 화면을 표시한다
+    [SerializeField] private GameObject shopUIRoot;
+
+    //*인벤토리 UI*
+    //메인 화면의 가방 버튼
+    [Header("인벤토리 UI")]
+    [SerializeField] private Button inventoryButton;
+
+    //가방 버튼에 추가해둔 Canvas
+    //인벤토리가 열렸을 때 DimOverlay보다 위로 올린다
+    [SerializeField] private Canvas inventoryButtonCanvas;
+
+    //인벤토리 UI 전체를 담고 있는 Root
+    [SerializeField] private GameObject inventoryUIRoot;
+
+    //*Sorting 설정*
+    //평소 ShopButton / InventoryButton이 사용하는 Sort Order
+    //현재 BottomPanel보다 앞에 보이기 위해 1을 사용
+    [Header("Sorting")]
+    [SerializeField] private int normalButtonSortOrder = 1;
+
+    //현재 팝업을 열어둔 버튼의 Sort Order
+    //DimOverlay(50), Popup(60)보다 높아야 함
+    [SerializeField] private int selectedButtonSortOrder = 100;
+
+    //*현재 열려 있는 팝업 상태*
+    //어떤 팝업이 열려 있는지 구분하기 위한 enum
+    private enum PopupType
+    {
+        None,       //아무 팝업도 열려 있지 않음
+        Shop,       //상점이 열려 있음
+        Inventory   //인벤토리가 열려 있음
+    }
+
+    //게임 시작 시 아무것도 열려 있지 않음
+    private PopupType currentPopup = PopupType.None;
+
+    private void Awake()
+    {
+        //Inspector에서 연결한 버튼에 클릭 이벤트를 코드로 등록
+        if (shopButton != null)
+        {
+            shopButton.onClick.AddListener(ToggleShop);
+        }
+
+        if (inventoryButton != null)
+        {
+            inventoryButton.onClick.AddListener(ToggleInventory);
+        }
+
+        //씬이 시작될 때 모든 팝업을 닫힌 상태로 맞춤
+        SetInitialState();
+    }
+
+    private void OnDestroy()
+    {
+        //이 오브젝트가 제거될 때 등록했던 버튼 이벤트도 제거
+        //중복 이벤트가 남는 걸 방지
+        if (shopButton != null)
+        {
+            shopButton.onClick.RemoveListener(ToggleShop);
+        }
+
+        if (inventoryButton != null)
+        {
+            inventoryButton.onClick.RemoveListener(ToggleInventory);
+        }
+    }
+
+    //*초기화*
+    private void SetInitialState()
+    {
+        //어두운 배경 끄기
+        if (dimOverlay != null)
+        {
+            dimOverlay.SetActive(false);
+        }
+
+        //상점 UI 끄기
+        if (shopUIRoot != null)
+        {
+            shopUIRoot.SetActive(false);
+        }
+
+        //인벤토리 UI 끄기
+        if (inventoryUIRoot != null)
+        {
+            inventoryUIRoot.SetActive(false);
+        }
+
+        //상점 버튼 Sorting을 평소 값으로 복구
+        if (shopButtonCanvas != null)
+        {
+            shopButtonCanvas.sortingOrder = normalButtonSortOrder;
+        }
+
+        //가방 버튼 Sorting을 평소 값으로 복구
+        if (inventoryButtonCanvas != null)
+        {
+            inventoryButtonCanvas.sortingOrder = normalButtonSortOrder;
+        }
+
+        //현재 열린 팝업 없음
+        currentPopup = PopupType.None;
+    }
+
+    //*상점 버튼*
+    private void ToggleShop()
+    {
+        //이미 상점이 열려 있는 상태에서
+        //상점 버튼을 다시 누르면 닫음
+        if (currentPopup == PopupType.Shop)
+        {
+            CloseShop();
+            return;
+        }
+
+        //아무 팝업도 열려 있지 않을 때만 상점 열기
+        if (currentPopup == PopupType.None)
+        {
+            OpenShop();
+        }
+    }
+
+    private void OpenShop()
+    {
+        //뒤쪽 화면을 어둡게 만듬
+        if (dimOverlay != null)
+        {
+            dimOverlay.SetActive(true);
+        }
+
+        //상점 UI 표시
+        if (shopUIRoot != null)
+        {
+            shopUIRoot.SetActive(true);
+        }
+
+        //상점 버튼만 DimOverlay보다 위로 올림(버튼은 안어둡게)
+        if (shopButtonCanvas != null)
+        {
+            shopButtonCanvas.sortingOrder = selectedButtonSortOrder;
+        }
+
+        //현재 상점이 열려 있다고 기록
+        currentPopup = PopupType.Shop;
+    }
+
+    private void CloseShop()
+    {
+        //상점 UI 숨김
+        if (shopUIRoot != null)
+        {
+            shopUIRoot.SetActive(false);
+        }
+
+        //DimOverlay를 숨김(배경 다시 밝게)
+        if (dimOverlay != null)
+        {
+            dimOverlay.SetActive(false);
+        }
+
+        //상점 버튼 Sorting을 원래 값으로 되돌림
+        if (shopButtonCanvas != null)
+        {
+            shopButtonCanvas.sortingOrder = normalButtonSortOrder;
+        }
+
+        //현재 열린 팝업 없음
+        currentPopup = PopupType.None;
+    }
+
+    //*인벤토리 버튼*
+    private void ToggleInventory()
+    {
+        //이미 인벤토리가 열려 있다면 다시 눌렀을 때 닫음
+        if (currentPopup == PopupType.Inventory)
+        {
+            CloseInventory();
+            return;
+        }
+
+        //아무 팝업도 열려 있지 않을 때만 인벤토리 열기
+        if (currentPopup == PopupType.None)
+        {
+            OpenInventory();
+        }
+    }
+
+    private void OpenInventory()
+    {
+        //뒤쪽 화면을 어둡게 만들기
+        if (dimOverlay != null)
+        {
+            dimOverlay.SetActive(true);
+        }
+
+        //인벤토리 UI 표시
+        if (inventoryUIRoot != null)
+        {
+            inventoryUIRoot.SetActive(true);
+        }
+
+        //가방 버튼만 DimOverlay보다 위로 올림(버튼은 안어둡게)
+        if (inventoryButtonCanvas != null)
+        {
+            inventoryButtonCanvas.sortingOrder = selectedButtonSortOrder;
+        }
+
+        //현재 인벤토리가 열려 있다고 기록
+        currentPopup = PopupType.Inventory;
+    }
+
+
+    private void CloseInventory()
+    {
+        //인벤토리 UI를 숨김
+        if (inventoryUIRoot != null)
+        {
+            inventoryUIRoot.SetActive(false);
+        }
+
+        //DimOverlay를 숨긴다(다시 밝게ㄱㄱ)
+        if (dimOverlay != null)
+        {
+            dimOverlay.SetActive(false);
+        }
+
+        //가방 버튼 Sorting을 원래 값으로 되돌림
+        if (inventoryButtonCanvas != null)
+        {
+            inventoryButtonCanvas.sortingOrder = normalButtonSortOrder;
+        }
+
+        //현재 열린 팝업 없음
+        currentPopup = PopupType.None;
+    }
+}
