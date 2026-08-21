@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7015109117028629834}
   - component: {fileID: 285190827044796716}
   - component: {fileID: 7439500101645150829}
-  - component: {fileID: 813371064527899120}
+  - component: {fileID: 5955954673680564941}
   m_Layer: 0
   m_Name: LiveInvenSlot
   m_TagString: Untagged
@@ -42,7 +42,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 160}
+  m_SizeDelta: {x: 240, y: 240}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7015109117028629834
 CanvasRenderer:
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &813371064527899120
+--- !u!114 &5955954673680564941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -135,15 +135,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1012954585758344089}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6b1fc501b83d5438c5b3fafda2890e, type: 3}
+  m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventorySlotUI
-  slotButton: {fileID: 7439500101645150829}
-  itemIconImage: {fileID: 8296502408484627814}
-  itemNameText: {fileID: 3061913151269376902}
-  amountText: {fileID: 34923027317562400}
-  selectedFrame: {fileID: 1760947705128510923}
-  specialBadge: {fileID: 2361066700362055162}
+  m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
+  _icon: {fileID: 8296502408484627814}
+  _amountText: {fileID: 34923027317562400}
 --- !u!1 &1760947705128510923
 GameObject:
   m_ObjectHideFlags: 0
