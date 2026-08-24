@@ -1,8 +1,14 @@
 //**ScrollView가 움직이는 동안에만 세로 Scrollbar를 표시하는 UI**
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.EventSystems;     //IBeginDragHandler, IEndDragHandler 사용
+using UnityEngine.EventSystems;     //IBeginDragHandler, IEndDragHandler, IScrollHandler 사용
 using UnityEngine.UI;               //ScrollRect 사용
+
+//Scrollbar가 어떤 방향의 ScrollView를 검사할지 결정
+public enum ScrollbarDirection
+{
+    Vertical,       //세로 ScrollView
+    Horizontal      //가로 ScrollView
+}
 
 //같은 GameObject에 같은 스크립트가 여러 개 붙는 것을 방지
 [DisallowMultipleComponent]
@@ -18,12 +24,17 @@ public sealed class ScrollbarAutoHideUI : MonoBehaviour, IBeginDragHandler, IEnd
     //Alpha를 이용해서 표시 / 숨김 처리
     [SerializeField] private CanvasGroup scrollbarCanvasGroup;
 
+    //세로 스크롤인지 가로 스크롤인지 선택
+    //기본값을 Vertical로 두면
+    //기존 인벤토리와 재료 상점 설정이 그대로 유지됨
+    [SerializeField] private ScrollbarDirection scrollDirection = ScrollbarDirection.Vertical;
+
     //*Auto Hide 설정*
     [Header("Auto Hide")]
     //스크롤 움직임이 멈춘 뒤
     //Scrollbar가 사라지기 전까지 기다리는 시간
-    [Min(0f)][SerializeField] private float hideDelay = 0.05f;  //스크롤 움직임 멈추고 스크롤바가 사라지기 전까지 시간
-    [Min(0f)][SerializeField] private float fadeSpeed = 8f;     //스크롤바가 서서히 사라지는 속도
+    [Min(0f)][SerializeField] private float hideDelay = 0.1f;  //스크롤 움직임 멈추고 스크롤바가 사라지기 전까지 시간
+    [Min(0f)][SerializeField] private float fadeSpeed = 7f;     //스크롤바가 서서히 사라지는 속도
     
     //*Runtime 상태*
     private bool isDragging;                //현재 사용자가 직접 화면을 드래그하고 있는지 여부
@@ -40,9 +51,9 @@ public sealed class ScrollbarAutoHideUI : MonoBehaviour, IBeginDragHandler, IEnd
         if (scrollbarCanvasGroup == null) return;
 
         //스크롤할 만큼 Content가 크지 않다면
-        if (!CanScrollVertically())
+        if (!CanScroll())
         {
-            HideImmediately();  //스크롤바 계속 숨겨둠
+            HideImmediately();
             return;
         }
 
@@ -76,7 +87,7 @@ public sealed class ScrollbarAutoHideUI : MonoBehaviour, IBeginDragHandler, IEnd
     public void OnBeginDrag(PointerEventData eventData)
     {
         //스크롤할 내용이 없다면 아무것도 하지 않음
-        if (!CanScrollVertically()) return;
+        if (!CanScroll()) return;
 
         //현재 드래그 중이라고 기록
         isDragging = true;
@@ -103,7 +114,7 @@ public sealed class ScrollbarAutoHideUI : MonoBehaviour, IBeginDragHandler, IEnd
     public void OnScroll(PointerEventData eventData)
     {
         //실제로 스크롤 가능한 상태인지 확인
-        if (!CanScrollVertically()) return;
+        if (!CanScroll()) return;
         
         //휠을 움직이는 순간 Scrollbar 표시
         ShowImmediately();
@@ -113,16 +124,30 @@ public sealed class ScrollbarAutoHideUI : MonoBehaviour, IBeginDragHandler, IEnd
     }
 
     //*Scroll 가능 여부*
-    private bool CanScrollVertically()
+    private bool CanScroll()
     {
         //필수 참조가 없다면 스크롤 가능 여부를 계산할 수 없음
         if (scrollRect == null) return false;
         if (scrollRect.content == null) return false;
         if (scrollRect.viewport == null) return false;
 
-        //Content 높이가 Viewport 높이보다 클 때만
-        //실제로 세로 스크롤이 필요한 상태
-        return scrollRect.content.rect.height > scrollRect.viewport.rect.height;
+        //세로 ScrollView인 경우
+        if (scrollDirection == ScrollbarDirection.Vertical)
+        {
+            //Content 높이가 Viewport보다 클 때만
+            //세로 스크롤이 필요한 상태
+            return
+                scrollRect.content.rect.height >
+                scrollRect.viewport.rect.height;
+        }
+
+        //가로 ScrollView인 경우
+
+        //Content 너비가 Viewport보다 클 때만
+        //가로 스크롤이 필요한 상태
+        return
+            scrollRect.content.rect.width >
+            scrollRect.viewport.rect.width;
     }
 
     //*표시 / 숨김*
