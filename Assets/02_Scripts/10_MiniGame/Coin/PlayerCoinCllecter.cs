@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerCoinCollector : MonoBehaviour
 {
-    [SerializeField] private CoinGameManager gameManager;
+    [SerializeField] private MiniGameManager gameManager;
     [SerializeField] private CoinText resultTextPrefab;
     [SerializeField] private Transform resultTextRoot;
     [SerializeField] private Vector2 resultTextOffset = new Vector2(0f, 100f);

@@ -5,9 +5,7 @@ public class CoinCatcher : MonoBehaviour
     private RectTransform rectTransform;
     private RectTransform parentRect;
     private Vector2 startPosition;
-
-    [SerializeField] private float moveSpeed = 10f;
-    [SerializeField] private CoinGameManager gameManager;
+    [SerializeField] private MiniGameManager gameManager;
 
     private void Awake()
     {

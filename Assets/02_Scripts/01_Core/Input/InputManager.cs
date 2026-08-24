@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float dragThreshold = 10f;
 
     private bool pointerDown;
+    public bool IsPressed => pointerDown;
 
     private void Awake()
     {

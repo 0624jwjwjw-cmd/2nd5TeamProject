@@ -17,7 +17,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private float spawnInterval = 0.3f;
     private RectTransform spawnArea;
 
-    [SerializeField] private CoinGameManager gameManager;
+    [SerializeField] private MiniGameManager gameManager;
     private List<Coin> activeCoins = new List<Coin>();
 
     private void Awake()
