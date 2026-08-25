@@ -82,8 +82,10 @@ public class InventoryManager : MonoBehaviour
         //현재 슬롯 획득 순서 확인해서 acquiredOrderCounter 값을 다시 계산
         RecalculateAcquiredOrderCounter();
 
-        //게임 시작 시 슬롯 목록을 아이템 ID 기준으로 정렬
-        SortSlotsByItemId();
+        //게임 시작 시
+        //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
+        //같은 종류 안에서는 ItemId 숫자 순서로 정렬
+        SortSlotsByItemTypeAndId();
     }
 
     //[현재 슬롯 중 가장 큰 획득 순서를 찾아 acquiredOrderCounter에 저장하는 메서드]
@@ -188,8 +190,10 @@ public class InventoryManager : MonoBehaviour
                 );
         }
 
-        //아이템이 추가된 뒤 아이템 ID 기준으로 자동 정렬
-        SortSlotsByItemId();
+        //아이템이 추가된 뒤
+        //재료 → 일반 요리 → 특별 요리 순서로 다시 정렬하고,
+        //같은 종류 안에서는 ItemId 숫자 순서로 정렬
+        SortSlotsByItemTypeAndId();
 
         //기존 이벤트 + 상세 이벤트 발생
         NotifyInventoryChanged(change);
@@ -356,19 +360,17 @@ public class InventoryManager : MonoBehaviour
         return Mathf.Max(0, remainingSpace);
     }
 
-    //[인벤토리 슬롯을 아이템 ID 기준으로 정렬하는 공개 메서드]
+    //[인벤토리 슬롯을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 공개 메서드]
     public void SortByItemId()
     {
-        //실제 슬롯 정렬 실행
-        SortSlotsByItemId();
+        //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
+        //같은 종류 안에서는 ItemId 숫자 순서로 정렬
+        SortSlotsByItemTypeAndId();
 
-        //특정 아이템 하나의 변경이 아니므로 ItemId는 빈 문자열 사용
-        InventoryChange change = new InventoryChange(
-            InventoryChangeType.Sorted,
-            string.Empty,
-            0,
-            0
-            );
+        //특정 아이템 한 개가 변경된 것이 아니라
+        //전체 슬롯의 순서만 변경된 것이므로
+        //ItemId와 수량은 기본값으로 전달
+        InventoryChange change = new InventoryChange(InventoryChangeType.Sorted, string.Empty, 0, 0);
         
         //정렬 결과 UI 반영하도록 인벤토리 변경 이벤트 발생
         NotifyInventoryChanged(change);
@@ -419,27 +421,159 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
-    //현재 슬롯 목록을 아이템 ID 기준으로 정렬하는 내부 메서드
-    private void SortSlotsByItemId()
+    //[현재 슬롯 목록을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 메서드]
+    //
+    //정렬 결과:
+    //IG_01 → IG_02 → IG_03...
+    //DS_01 → DS_02 → DS_03...
+    //SD_01 → SD_02 → SD_03...
+    private void SortSlotsByItemTypeAndId()
     {
-        //List의 Sort 기능을 사용해 슬롯 순서 변경
-        slots.Sort(CompareSlotsByItemId);
+        //List.Sort()에 슬롯 비교 메서드를 전달
+        //
+        //CompareSlotsByItemTypeAndId()가
+        //두 슬롯 중 어느 슬롯이 앞에 와야 하는지 결정
+        slots.Sort(CompareSlotsByItemTypeAndId);
     }
 
-    //[두 슬롯의 아이템 ID를 비교해서 어떤 슬롯이 앞에 와야 하는지 결정하는 메서드]
-    private int CompareSlotsByItemId(InventorySlotData firstSlot, InventorySlotData secondSlot)
+    //[두 슬롯의 정렬 순서를 비교하는 메서드]
+    //
+    //1차 비교: ItemType
+    //Ingredient → Dish → SpecialDish
+    //
+    //2차 비교: ItemId의 숫자 부분
+    //01 → 02 → 03...
+    private int CompareSlotsByItemTypeAndId(InventorySlotData firstSlot, InventorySlotData secondSlot)
     {
-        //두 슬롯이 모두 같은 객체라면 순서를 바꿀 필요가 없으므로 0 반환
+        //두 변수가 완전히 같은 슬롯을 가리키고 있다면
+        //순서를 변경할 필요가 없으므로 0 반환
         if (ReferenceEquals(firstSlot, secondSlot)) return 0;
-
-        //첫 번째 슬롯만 null이라면 첫 번째 슬롯을 뒤쪽으로 보내기 위해 1 반환
+        
+        //첫 번째 슬롯만 null이라면
+        //첫 번째 슬롯을 정상 슬롯보다 뒤로 보내기 위해 1 반환
         if (firstSlot == null) return 1;
-
-        //두 번째 슬롯만 null이라면 두 번째 슬롯을 뒤쪽으로 보내기 위해 -1 반환
+        
+        //두 번째 슬롯만 null이라면
+        //두 번째 슬롯을 정상 슬롯보다 뒤로 보내기 위해 -1 반환
         if (secondSlot == null) return -1;
+        
+        //첫 번째 슬롯의 ItemType 정렬 우선순위를 가져옴
+        int firstTypeOrder = GetItemTypeSortOrder(firstSlot.ItemType);
 
-        //두 슬롯의 아이템 ID를 정확한 문자열 기준으로 비교
-        return string.Compare(firstSlot.ItemId, secondSlot.ItemId, StringComparison.Ordinal);
+        //두 번째 슬롯의 ItemType 정렬 우선순위를 가져옴
+        int secondTypeOrder = GetItemTypeSortOrder(secondSlot.ItemType);
+
+        //두 슬롯의 ItemType 정렬 우선순위를 비교
+        //
+        //firstTypeOrder가 더 작으면 첫 번째 슬롯이 앞으로 이동
+        //secondTypeOrder가 더 작으면 두 번째 슬롯이 앞으로 이동
+        int typeComparison = firstTypeOrder.CompareTo(secondTypeOrder);
+
+        //두 슬롯의 ItemType이 다르다면
+        //ID 숫자를 확인하지 않고 ItemType 비교 결과를 바로 반환
+        if (typeComparison != 0) return typeComparison;
+        
+        //여기까지 왔다면 두 슬롯은 같은 ItemType
+        //
+        //첫 번째 ItemId에서 숫자 부분 추출
+        int firstIdNumber = GetItemIdNumber(firstSlot.ItemId);
+
+        //두 번째 ItemId에서 숫자 부분 추출
+        int secondIdNumber = GetItemIdNumber(secondSlot.ItemId);
+
+        //두 ItemId의 숫자를 비교
+        //
+        //예:
+        //IG_02와 IG_10을 비교하면
+        //2와 10을 비교하므로 IG_02가 먼저 배치됨
+        int idNumberComparison = firstIdNumber.CompareTo(secondIdNumber);
+
+        //두 ID의 숫자가 다르다면
+        //숫자 비교 결과를 바로 반환
+        if (idNumberComparison != 0) return idNumberComparison;
+       
+        //ItemType과 ID 숫자까지 같은 예외 상황이라면
+        //마지막으로 ItemId 전체 문자열을 비교
+        //
+        //정렬 결과가 실행할 때마다 달라지는 것을 방지
+        return string.Compare(
+            firstSlot.ItemId,
+            secondSlot.ItemId,
+            StringComparison.Ordinal
+            );
+    }
+
+    //[ItemType별 인벤토리 정렬 우선순위를 반환하는 메서드]
+    //
+    //ItemType.cs 자체는 수정하지 않고
+    //InventoryManager 안에서만 표시 순서를 결정
+    private int GetItemTypeSortOrder(ItemType itemType)
+    {
+        //전달받은 ItemType 확인
+        switch (itemType)
+        {
+            //재료는 인벤토리에서 가장 먼저 표시
+            case ItemType.Ingredient:
+                return 0;
+
+            //일반 요리는 재료 다음에 표시
+            case ItemType.Dish:
+                return 1;
+
+            //특별 요리는 일반 요리 다음에 표시
+            case ItemType.SpecialDish:
+                return 2;
+
+            //정의되지 않은 ItemType은
+            //정상 아이템보다 가장 뒤로 이동
+            default:
+                return int.MaxValue;
+        }
+    }
+
+    //[ItemId에서 마지막 숫자 부분을 가져오는 메서드]
+    //
+    //예:
+    //IG_01 → 1
+    //DS_12 → 12
+    //SD_03 → 3
+    private int GetItemIdNumber(string itemId)
+    {
+        //ItemId가 null, 빈 문자열 또는 공백이라면
+        //정상적인 ID가 아니므로 가장 큰 값 반환
+        //
+        //int.MaxValue를 반환하면
+        //잘못된 ID가 정상 ID보다 뒤로 정렬됨
+        if (string.IsNullOrWhiteSpace(itemId)) return int.MaxValue;
+        
+        //ItemId에서 마지막 '_' 문자의 위치를 찾음
+        //
+        //예:
+        //IG_01에서 '_'의 위치를 가져옴
+        int separatorIndex = itemId.LastIndexOf('_');
+
+        //ItemId에 '_'가 없거나
+        //'_' 뒤에 숫자로 사용할 문자가 없다면
+        //정상적인 ID 형식이 아님
+        if (separatorIndex < 0 || separatorIndex >= itemId.Length - 1) return int.MaxValue;
+        
+        //'_' 다음 위치부터 문자열 끝까지 잘라냄
+        //
+        //예:
+        //IG_01 → "01"
+        //DS_12 → "12"
+        string numberText = itemId.Substring(separatorIndex + 1);
+
+        //잘라낸 문자열을 int로 변환 시도
+        if (int.TryParse(numberText, out int itemIdNumber))
+        {
+            //숫자 변환에 성공했다면 해당 숫자 반환
+            return itemIdNumber;
+        }
+
+        //숫자 변환에 실패했다면
+        //잘못된 ID이므로 정상 아이템보다 뒤로 정렬
+        return int.MaxValue;
     }
 
     //[인벤토리가 변경되었음을 외부 스크립트에 알리는 메서드]
@@ -485,24 +619,3 @@ public class InventoryManager : MonoBehaviour
         Debug.Log("[InventoryManager] 모든 재료/요리를 10개씩 추가했습니다.");
     }
 }
-
-/*
- *메서드별 정리*
- [InventoryManager.cs] 인벤토리 전체를 관리
-    모든 슬롯을 보관하고, 아이템 추가ㆍ제거ㆍ조회ㆍ정렬ㆍ최대 수량 검사ㆍUI 갱신 이벤트를 담당
- 
- PrepareInventoryData()             : 빈 슬롯과 잘못된 슬롯을 제거하고 인벤토리 데이터 정리
- RecalculateAcquiredOrderCounter()  : 현재 슬롯 중 가장 큰 획득 순서를 찾아 다음 획득 순서 준비
- AddItem()                          : 인벤토리에 아이템 추가 또는 기존 슬롯의 수량 증가
- CanAddItem()                       : 최대 스택 수를 넘지 않고 아이템을 추가할 수 있는지 확인
- RemoveItem()                       : 인벤토리에서 지정한 아이템을 원하는 수량만큼 제거
- HasItem()                          : 특정 아이템을 필요한 수량만큼 보유하고 있는지 확인
- GetItemCount()                     : 특정 아이템의 현재 보유 수량을 가져옴
- GetRemainingStackSpace()           : 해당 아이템을 현재 슬롯에 몇 개 더 추가할 수 있는지 계산
- SortByItemId()                     : 인벤토리 슬롯을 아이템 ID 기준으로 정렬
- ClearInventory()                   : 인벤토리에 들어 있는 모든 아이템을 제거
- FindSlot()                         : 전달받은 아이템 ID와 같은 슬롯을 인벤토리에서 찾음
- SortSlotsByItemId()                : 실제 슬롯 리스트를 아이템 ID 기준으로 정렬
- CompareSlotsByItemId()             : 두 슬롯의 아이템 ID를 비교해 정렬 순서를 결정
- NotifyInventoryChanged()           : 인벤토리가 변경됐다는 사실을 UI 등 다른 스크립트에 알림
- */
