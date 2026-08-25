@@ -10,17 +10,24 @@ public class KitchenInventorySlot : MonoBehaviour
     [SerializeField] private int amount;
     [SerializeField] private TMP_Text amountText;
 
-    [SerializeField] private CookSlotManager cookSlotManager;
-
+    [SerializeField] private Image amountBackGround;
+    public void OnEnable()
+    {
+        ClearSlot();
+    }
     public void SetSlot(InventorySlotData inventorySlotData)
     {
+        image.gameObject.SetActive(true);
+        nameText.gameObject.SetActive(true);
+        amountText.gameObject.SetActive(true);
+
         if (ItemVisualRepository.Instance.TryGetIcon(inventorySlotData.ItemId, out Sprite icon))
         {
             image.sprite = icon;
         }
         else
         {
-            return;
+            Debug.Log("아이콘 없는디");
         }
 
         if (inventorySlotData.ItemType == ItemType.Ingredient)
@@ -29,22 +36,21 @@ public class KitchenInventorySlot : MonoBehaviour
             {
                 slotName = ingredientData.IngredientName;
             }
-            else
-            {
-                return;
-            }
         }
         else if (inventorySlotData.ItemType == ItemType.Dish || inventorySlotData.ItemType == ItemType.SpecialDish)
         {
-            if(GameDataRepository.Instance.TryGetDish(inventorySlotData.ItemId, out DishData dishData))
+            if (GameDataRepository.Instance.TryGetDish(inventorySlotData.ItemId, out DishData dishData))
             {
                 slotName = dishData.DishName;
             }
-            else
-            {
-                return;
-            }
         }
+        //else if (inventorySlotData.ItemType == ItemType.SpecialDish)
+        //{
+        //    if (GameDataRepository.Instance.TryGetSpecialDish(inventorySlotData.ItemId, out DishData specialDishData))
+        //    {
+        //        slotName = specialDishData.DishName;
+        //    }
+        //}
 
         nameText.text = slotName;
         amount = inventorySlotData.Amount;
@@ -52,14 +58,13 @@ public class KitchenInventorySlot : MonoBehaviour
     }
     public void ClearSlot()
     {
+        image.gameObject.SetActive(false);
+        nameText.gameObject.SetActive(false);
+        amountText.gameObject.SetActive(false);
         image.sprite = null;
-        slotName = null;
-        nameText.text = null;
+        slotName = "";
+        nameText.text = "";
         amount = 0;
-        amountText.text = null;
-    }
-    public void OnClickSlot()
-    {
-
+        amountText.text = "";
     }
 }
