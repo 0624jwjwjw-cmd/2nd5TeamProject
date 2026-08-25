@@ -11,11 +11,14 @@ public sealed class InventorySlotData
     [SerializeField] private string itemId;     //슬롯에 들어 있는 아이템의 고유 ID
     [SerializeField] private int amount;        //현재 슬롯에 들어있는 아이템 개수 (예: 빵 5개는 amount = 5)
     [SerializeField] private int acquiredOrder; //해당 아이템을 처음 획득한 순서 저장(획득순 정렬용)
-    
+
+    [SerializeField] private ItemType itemType; //슬롯에 들어있는 아이템 타입(추가)
+
     //외부에서 읽게 프로퍼티
     public string ItemId => itemId;
     public int Amount => amount;
     public int AcquiredOrder => acquiredOrder;
+    public ItemType ItemType => itemType;       //아이템 타입 프로퍼티 (추가)
     //아이템 ID가 없거나 수량이 0 이하라면 현재 슬롯을 빈 슬롯으로 판정
     public bool IsEmpty => string.IsNullOrWhiteSpace(itemId) || amount <= 0;
     
@@ -29,7 +32,7 @@ public sealed class InventorySlotData
 
     //[새로운 인벤토리 슬롯을 생성할 때 사용하는 생성자]
     //InventoryManager에서 아이템을 처음 획득했을 때 호출
-    public InventorySlotData(string itemId, int amount, int acquiredOrder)
+    public InventorySlotData(string itemId, int amount, int acquiredOrder, ItemType itemType) //+타입(추가)
     {
         //전달받은 아이템 ID가 비어 있는지 검사
         if (string.IsNullOrWhiteSpace(itemId))
@@ -64,6 +67,7 @@ public sealed class InventorySlotData
         this.itemId = itemId;               //전달받은 아이템 ID를 현재 슬롯의 itemId에 저장
         this.amount = amount;               //전달받은 아이템 수량을 현재 슬롯의 amount에 저장
         this.acquiredOrder = acquiredOrder; //전달받은 획득 순서를 현재 슬롯에 저장
+        this.itemType = itemType;           //아이템 종류도 슬롯에 같이 저장(추가)
     }
 
     //[이 슬롯이 전달받은 아이템 ID와 같은 아이템인지 검사 하는 메서드]
