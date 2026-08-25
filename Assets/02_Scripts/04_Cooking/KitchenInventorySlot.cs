@@ -10,6 +10,8 @@ public class KitchenInventorySlot : MonoBehaviour
     [SerializeField] private int amount;
     [SerializeField] private TMP_Text amountText;
 
+    [SerializeField] private CookSlotManager cookSlotManager;
+
     public void SetSlot(InventorySlotData inventorySlotData)
     {
         if (ItemVisualRepository.Instance.TryGetIcon(inventorySlotData.ItemId, out Sprite icon))
@@ -55,5 +57,9 @@ public class KitchenInventorySlot : MonoBehaviour
         nameText.text = null;
         amount = 0;
         amountText.text = null;
+    }
+    public void OnClickSlot()
+    {
+
     }
 }
