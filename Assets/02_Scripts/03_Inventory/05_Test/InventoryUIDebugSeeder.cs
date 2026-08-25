@@ -39,10 +39,10 @@ public sealed class InventoryUIDebugSeeder : MonoBehaviour
         //기존 테스트 데이터 초기화
         inventoryManager.ClearInventory();
 
-        inventoryManager.AddItem("IG_01", 3);   //재료: 빵
-        inventoryManager.AddItem("IG_04", 2);   //재료: 계란
-        inventoryManager.AddItem("DS_01", 1);   //일반 요리
-        inventoryManager.AddItem("SD_01", 1);   //특별 요리
+        inventoryManager.AddItem("IG_01", 3, ItemType.Ingredient);  //재료: 빵
+        inventoryManager.AddItem("IG_04", 2, ItemType.Ingredient);  //재료: 계란
+        inventoryManager.AddItem("DS_01", 1, ItemType.Dish);        //일반 요리
+        inventoryManager.AddItem("SD_01", 1, ItemType.SpecialDish); //특별 요리
 
         Debug.Log("[InventoryUIDebugSeeder] UI 확인용 아이템 추가 완료");
     }
@@ -53,7 +53,7 @@ public sealed class InventoryUIDebugSeeder : MonoBehaviour
     {
         if (!CanRun()) return;
 
-        inventoryManager.AddItem("IG_01", 1);
+        inventoryManager.AddItem("IG_01", 1, ItemType.Ingredient);
     }
 
     //전체 초기화
