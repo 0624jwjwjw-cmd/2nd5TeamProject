@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class HeartManager : MonoBehaviour, ISaveable, IInitializable
+public class HeartManager : MonoBehaviour, ISaveable
 {
     public static HeartManager Instance;
 
@@ -12,9 +12,7 @@ public class HeartManager : MonoBehaviour, ISaveable, IInitializable
     //시간 저장용
     private long lastHeartRecoverTime;
 
-    //순서 구현
-    public int Priority => 60;
-    public void Initialize()
+    public void Start()
     {
         RecoverOfflineHeart();
 

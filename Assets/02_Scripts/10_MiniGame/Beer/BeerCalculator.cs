@@ -19,7 +19,6 @@ public class BeerCalculator : MonoBehaviour
     [SerializeField] private int perfectScore = 5;
     [SerializeField] private int goodScore = 3;
     [SerializeField] private int outScore = -3;
-    [SerializeField] private int tooMuchScore = -8;
 
     [SerializeField] private float resultDisplayTime = 1f;
     [SerializeField] private float tooMuchDisplayTime = 0.5f;
