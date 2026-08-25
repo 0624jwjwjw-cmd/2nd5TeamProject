@@ -1,55 +1,34 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BowlVisual : MonoBehaviour
 {
-    [Header("Bowl Color")]
-    [SerializeField] private Color bowlAColor = Color.blue;
-    [SerializeField] private Color bowlBColor = Color.red;
-
     [Header("Food Image")]
     [SerializeField] private Image foodImage;
-    [SerializeField] private Sprite[] foodSprites;
+    [SerializeField] private Sprite bowlAFoodSprite;
+    [SerializeField] private Sprite bowlBFoodSprite;
     [Header("Empty Bowl")]
-    [SerializeField] private Sprite emptyBowlImage;
-    private bool isEmpty= false;
-    public event Action<BowlVisual> OnFoodFinished;
-    public bool IsEmpty => isEmpty;
-    public void SetBowlType(bool isBowlA)
+    [SerializeField] private Sprite bowlImage;
+    [Header("Empty Bowl Color")]
+    [SerializeField] private Color bowlAColor = Color.blue;
+    [SerializeField] private Color bowlBColor = Color.red;
+    public void SetFoodVisual(bool isBowlA)
     {
-        if (isBowlA)
-        {
-            foodImage.color = bowlAColor;
-        }
-        else
-        {
-            foodImage.color = bowlBColor;
-        }
+        foodImage.sprite = isBowlA? bowlAFoodSprite: bowlBFoodSprite;
+
+        // 음식일 때는 원래 색상 유지
+        foodImage.color = Color.white;
+    }
+    public void SetFoodFill(float amount)
+    {
+        foodImage.fillAmount = amount;
     }
 
-    public void SetRandomFood()
+    public void SetEmptyVisual(bool isBowlA)
     {
-        if (foodSprites == null || foodSprites.Length == 0)
-        {
-            return;
-        }
+        foodImage.sprite = bowlImage;
+        foodImage.fillAmount = 1f;
 
-        int randomIndex = UnityEngine.Random.Range(0, foodSprites.Length);
-        foodImage.sprite = foodSprites[randomIndex];
-    }
-    public void SetEmptyBowl()
-    {
-        isEmpty = true;
-        foodImage.sprite = emptyBowlImage;
-    }
-    public void OnClickEat()
-    {
-        if (isEmpty)
-        {
-            return;
-        }
-
-        SetEmptyBowl();
+        foodImage.color = isBowlA ? bowlAColor : bowlBColor;
     }
 }

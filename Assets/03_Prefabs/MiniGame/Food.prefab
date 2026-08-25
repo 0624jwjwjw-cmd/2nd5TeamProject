@@ -68,10 +68,10 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 04f8f62c031deaa448ecb126334098d9, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
+  m_Type: 3
+  m_PreserveAspect: 1
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 1
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
@@ -102,15 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c13a44021adf9ff469b4eabd19f30a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BowlVisual
-  bowlAColor: {r: 0.627451, g: 1, b: 0.9722897, a: 1}
-  bowlBColor: {r: 0.990566, g: 0.8320542, b: 0.54668033, a: 1}
   foodImage: {fileID: 7949967444116022313}
-  foodSprites:
-  - {fileID: 21300000, guid: 1d0f40afb9976b94b93397ddb7db4a01, type: 3}
-  - {fileID: 21300000, guid: ed390ba662d3264419369d0dde2117c2, type: 3}
-  - {fileID: 21300000, guid: 6cb9e82d1119a0044b45f667e453cb6c, type: 3}
-  - {fileID: 21300000, guid: 5b34fbe6b7c7ff64bbb9a8a529b3fc88, type: 3}
-  - {fileID: 21300000, guid: 9ec6e71da86e72546bdb7601e2e0eb2f, type: 3}
-  - {fileID: 21300000, guid: 3724f8f49698a614aa6aee9185031295, type: 3}
-  - {fileID: 21300000, guid: fc0093f3eaa46f0429ba88134a2323a3, type: 3}
-  emptyBowlImage: {fileID: 8699466189890537625, guid: ddb643696f05c4245af5c881977d6de8, type: 3}
+  bowlAFoodSprite: {fileID: 21300000, guid: 1d0f40afb9976b94b93397ddb7db4a01, type: 3}
+  bowlBFoodSprite: {fileID: 21300000, guid: 3724f8f49698a614aa6aee9185031295, type: 3}
+  bowlImage: {fileID: 4335703319181269083, guid: 41eb2479b18dac646b32088e9bfd7aea, type: 3}
+  bowlAColor: {r: 0.627451, g: 1, b: 0.9725491, a: 1}
+  bowlBColor: {r: 0.990566, g: 0.8320542, b: 0.54668033, a: 1}

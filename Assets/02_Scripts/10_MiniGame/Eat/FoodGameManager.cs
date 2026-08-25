@@ -9,10 +9,21 @@ public class FoodGameManager : MonoBehaviour
     [Header("Move Manager")]
     [SerializeField] private FoodMoveManager foodMoveManager;
 
-    [Header("Food")]
-    [SerializeField] private List<FoodBowl> bowls;
+    [Header("Panels")]
+    [SerializeField] private RectTransform eatPanel;
+
+    private List<FoodBowl> bowls;
 
     private int currentFoodIndex;
+    private int washedBowlCount;
+
+    private enum GamePhase
+    {
+        Eating,
+        Washing
+    }
+
+    private GamePhase currentPhase;
 
     private void Start()
     {
@@ -21,15 +32,32 @@ public class FoodGameManager : MonoBehaviour
 
     public void StartFoodGame()
     {
-        currentFoodIndex = 0;
+        currentPhase = GamePhase.Eating;
 
-        // ±×¸© »ý¼º
+        currentFoodIndex = 0;
+        washedBowlCount = 0;
+
         bowlSpawner.SpawnBowls();
 
-        // »ý¼ºµÈ ±×¸© °¡Á®¿À±â
         bowls = bowlSpawner.GetBowls();
 
-        // Ã¹ ¹øÂ° À½½Ä ÀÌµ¿
+        foreach (FoodBowl bowl in bowls)
+        {
+            bowl.OnFoodFinished += OnFoodFinished;
+        }
+
+        MoveNextFood();
+    }
+
+    private void OnFoodFinished(FoodBowl bowl)
+    {
+        // ¸Ô¹æ ¡æ ºó±×¸© Á¤¸®
+        foodMoveManager.MoveFoodToEmptyPlate(
+            bowl.GetComponent<RectTransform>()
+        );
+
+        currentFoodIndex++;
+
         MoveNextFood();
     }
 
@@ -37,26 +65,98 @@ public class FoodGameManager : MonoBehaviour
     {
         if (currentFoodIndex >= bowls.Count)
         {
+            StartWashingPhase();
             return;
         }
 
-        FoodBowl bowl = bowls[currentFoodIndex];
+        // ¾Æ·¡ÂÊ À½½ÄºÎÅÍ
+        int bowlIndex = bowls.Count - 1 - currentFoodIndex;
+
+        FoodBowl bowl = bowls[bowlIndex];
 
         foodMoveManager.MoveFoodToEatZone(
             bowl.GetComponent<RectTransform>()
         );
     }
 
-    private void OnFoodFinished(FoodBowl bowl)
+    private void StartWashingPhase()
     {
-        // ¸ÔÀº À½½Ä ¡æ ºó±×¸© Zone
-        foodMoveManager.MoveFoodToEmptyPlate(
-            bowl.GetComponent<RectTransform>()
-        );
+        currentPhase = GamePhase.Washing;
 
-        currentFoodIndex++;
+        washedBowlCount = 0;
 
-        // ´ÙÀ½ À½½Ä ¡æ ¸Ô´Â °÷
+        MoveNextEmptyBowl();
+    }
+
+    private void MoveNextEmptyBowl()
+    {
+        foreach (FoodBowl bowl in bowls)
+        {
+            if (bowl == null)
+            {
+                continue;
+            }
+
+            if (!bowl.IsEmpty)
+            {
+                continue;
+            }
+
+            // ÇöÀç ¸Ô¹æ¿¡ ÀÖ´Â ºó±×¸©Àº Á¦¿Ü
+            if (bowl.transform.parent == eatPanel)
+            {
+                continue;
+            }
+
+            foodMoveManager.MoveEmptyPlateToEatZone(
+                bowl.GetComponent<RectTransform>()
+            );
+
+            return;
+        }
+    }
+
+    // ½ÌÅ©´ë¿¡¼­ ÇÏ³ª Ã³¸®µÊ
+    public void OnBowlWashed(FoodBowl bowl)
+    {
+        if (currentPhase != GamePhase.Washing)
+        {
+            return;
+        }
+
+        if (bowl == null || !bowl.IsEmpty)
+        {
+            return;
+        }
+
+        washedBowlCount++;
+
+        if (washedBowlCount >= bowls.Count)
+        {
+            StartNewRound();
+        }
+        else
+        {
+            MoveNextEmptyBowl();
+        }
+    }
+
+    private void StartNewRound()
+    {
+        currentPhase = GamePhase.Eating;
+
+        currentFoodIndex = 0;
+        washedBowlCount = 0;
+
+        bowlSpawner.SpawnBowls();
+
+        bowls = bowlSpawner.GetBowls();
+
+        foreach (FoodBowl bowl in bowls)
+        {
+            bowl.OnFoodFinished += OnFoodFinished;
+        }
+
         MoveNextFood();
     }
 }

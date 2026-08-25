@@ -1,21 +1,16 @@
+using System;
 using System.Collections;
 using UnityEngine;
-
 public class FoodMover : MonoBehaviour
 {
     [Header("Move Setting")]
     [SerializeField] private float moveDuration = 0.5f;
     [SerializeField] private float bottomOffset = 50f;
 
-    private Coroutine moveCoroutine;
 
     public void Move(RectTransform target,RectTransform destination)
     {
-        if (moveCoroutine != null)
-        {
-            StopCoroutine(moveCoroutine);
-        }
-        moveCoroutine = StartCoroutine(MoveRoutine(target, destination));
+        StartCoroutine(MoveRoutine(target, destination));
     }
 
     private IEnumerator MoveRoutine(RectTransform target,RectTransform destination)
@@ -41,7 +36,6 @@ public class FoodMover : MonoBehaviour
         }
         target.position = endPosition;
         target.SetParent(destination);
-        moveCoroutine = null;
     }
 
     private Vector3 GetBottomCenter(RectTransform panel)
