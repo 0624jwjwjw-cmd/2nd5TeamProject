@@ -41,13 +41,13 @@ public sealed class InventoryManagerTest : MonoBehaviour
     private void TestAddItem()
     {
         //빵 재료 5개 추가
-        bool firstAddResult = inventoryManager.AddItem(breadIngredientId, 5);
+        bool firstAddResult = inventoryManager.AddItem(breadIngredientId, 5, ItemType.Ingredient);
 
         //추가 성공 후 실제 보유량 5개인지 검사
         PrintTestResult("빵 재료 5개 추가", firstAddResult && inventoryManager.GetItemCount(breadIngredientId) == 5);
 
         //빵 재료 3개 더 추가
-        bool secondAddResult = inventoryManager.AddItem(breadIngredientId, 3);
+        bool secondAddResult = inventoryManager.AddItem(breadIngredientId, 3, ItemType.Ingredient);
 
         //빵 재료의 총 수량이 8개이고 같은 아이템이므로 슬롯은 1개인지 검사
         PrintTestResult(
@@ -114,7 +114,7 @@ public sealed class InventoryManagerTest : MonoBehaviour
         inventoryManager.ClearInventory();
 
         //빵 재료를 최대 수량인 99개 추가
-        bool addMaxResult = inventoryManager.AddItem(breadIngredientId, 99);
+        bool addMaxResult = inventoryManager.AddItem(breadIngredientId, 99, ItemType.Ingredient);
 
         //99개 추가 성공했고 실제 보유량도 99개인지 검사
         PrintTestResult(
@@ -124,7 +124,7 @@ public sealed class InventoryManagerTest : MonoBehaviour
             );
 
         //99개가 들어있는 상태에서 1개 더 추가
-        bool addOverflowResult = inventoryManager.AddItem(breadIngredientId, 1);
+        bool addOverflowResult = inventoryManager.AddItem(breadIngredientId, 1, ItemType.Ingredient);
 
         //최대 수량 초과로 추가가 실패하고 기존 수량 99개가 유지 됐는지 검사
         PrintTestResult(
@@ -140,11 +140,11 @@ public sealed class InventoryManagerTest : MonoBehaviour
         //이전 테스트 데이터가 영향을 주지 않도록 초기화
         inventoryManager.ClearInventory();
 
-        bool breadIngredientResult = inventoryManager.AddItem(breadIngredientId, 2);    //재료 빵 +2
+        bool breadIngredientResult = inventoryManager.AddItem(breadIngredientId, 2, ItemType.Ingredient);   //재료 빵 +2
 
-        bool eggIngredientResult = inventoryManager.AddItem(eggIngredientId, 3);        //재료 계란 +3
+        bool eggIngredientResult = inventoryManager.AddItem(eggIngredientId, 3, ItemType.Ingredient);       //재료 계란 +3
 
-        bool whiteBreadDishResult = inventoryManager.AddItem(whiteBreadDishId, 1);      //요리 식빵 +1
+        bool whiteBreadDishResult = inventoryManager.AddItem(whiteBreadDishId, 1, ItemType.Dish);           //요리 식빵 +1
 
         //세 아이템의 보유량이 정확한지,
         //서로 다른 ID이므로 슬롯이 총 3개인지 검사

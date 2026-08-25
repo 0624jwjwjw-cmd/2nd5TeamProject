@@ -99,7 +99,7 @@ public class ShopManager : MonoBehaviour
         }
 
         //*구매한 재료를 실제 인벤토리에 추가*
-        bool addSucceeded = InventoryManager.Instance.AddItem(itemId, amount);
+        bool addSucceeded = InventoryManager.Instance.AddItem(itemId, amount, ItemType.Ingredient);
 
         //인벤토리 추가가 예상치 못하게 실패했다면
         //이미 사용한 Gold를 다시 돌려줘서 데이터 불일치를 방지
@@ -211,7 +211,8 @@ public class ShopManager : MonoBehaviour
             bool addSucceeded =
                 InventoryManager.Instance.AddItem(
                     cartItem.Data.ID,
-                    cartItem.Amount
+                    cartItem.Amount,
+                    ItemType.Ingredient
                     );
 
             //예상하지 못한 추가 실패

@@ -762,7 +762,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 40326415}
 --- !u!114 &40326415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,9 +774,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 509891369}
-  nameText: {fileID: 1428081555}
-  amountText: {fileID: 836003152}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &40326416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1281,7 +1280,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 63746025}
 --- !u!114 &63746025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1294,9 +1292,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 330929225}
-  nameText: {fileID: 961201289}
-  amountText: {fileID: 1347300409}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &63746026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,7 +1364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
-  foodImage: {fileID: 466158672}
 --- !u!224 &66582719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1700,7 +1697,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
-  foodImage: {fileID: 850786554}
 --- !u!224 &148139420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2328,7 +2324,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 226301899}
 --- !u!114 &226301899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2341,9 +2336,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 661547920}
-  nameText: {fileID: 998808243}
-  amountText: {fileID: 2044244224}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &226301900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3256,7 +3251,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 369921101}
 --- !u!114 &369921101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3269,9 +3263,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 557921126}
-  nameText: {fileID: 1310482055}
-  amountText: {fileID: 486969274}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &369921102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3816,7 +3810,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 455480161}
 --- !u!114 &455480161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3829,9 +3822,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1251609032}
-  nameText: {fileID: 478686157}
-  amountText: {fileID: 2062212533}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &455480162
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4637,7 +4630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 494925560}
 --- !u!114 &494925560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4650,9 +4642,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 524819698}
-  nameText: {fileID: 1645707872}
-  amountText: {fileID: 731738683}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &494925561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4745,7 +4737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 500224012}
 --- !u!114 &500224012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4758,9 +4749,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 4595029}
-  nameText: {fileID: 1309285546}
-  amountText: {fileID: 1712270186}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &500224013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6723,7 +6714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 816900442}
 --- !u!114 &816900442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6736,9 +6726,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1141208822}
-  nameText: {fileID: 2115353496}
-  amountText: {fileID: 373779332}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &816900443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7574,7 +7564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 894810869}
 --- !u!114 &894810869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7587,9 +7576,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 874808258}
-  nameText: {fileID: 771214676}
-  amountText: {fileID: 1989646482}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &894810870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7819,7 +7808,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 935176278}
 --- !u!114 &935176278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7832,9 +7820,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 754349406}
-  nameText: {fileID: 476729097}
-  amountText: {fileID: 35388594}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &935176279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7927,7 +7915,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 937215528}
 --- !u!114 &937215528
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7940,9 +7927,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 262880747}
-  nameText: {fileID: 862629322}
-  amountText: {fileID: 269200925}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &937215529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8035,7 +8022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 939858973}
 --- !u!114 &939858973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8048,9 +8034,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 2078942841}
-  nameText: {fileID: 1276423976}
-  amountText: {fileID: 2051165227}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &939858974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9066,7 +9052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1043501421}
 --- !u!114 &1043501421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9079,9 +9064,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1545083972}
-  nameText: {fileID: 57159493}
-  amountText: {fileID: 1572029403}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1043501422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9523,7 +9508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1058836976}
 --- !u!114 &1058836976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9536,9 +9520,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1847498727}
-  nameText: {fileID: 873143838}
-  amountText: {fileID: 1634817454}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1058836977
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10042,7 +10026,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1127673576}
 --- !u!114 &1127673576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10055,9 +10038,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1542203594}
-  nameText: {fileID: 310335654}
-  amountText: {fileID: 1055746346}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1127673577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10652,7 +10635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1240751518}
 --- !u!114 &1240751518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10665,9 +10647,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1005123698}
-  nameText: {fileID: 328872822}
-  amountText: {fileID: 1071561342}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1240751519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10968,7 +10950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1254444258}
 --- !u!114 &1254444258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10981,9 +10962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1807694488}
-  nameText: {fileID: 1540268422}
-  amountText: {fileID: 110748189}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1254444259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11226,7 +11207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1275793139}
 --- !u!114 &1275793139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11239,9 +11219,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 961629467}
-  nameText: {fileID: 31893054}
-  amountText: {fileID: 2090377875}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1275793140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12960,7 +12940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1456750753}
 --- !u!114 &1456750753
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12973,9 +12952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1034406454}
-  nameText: {fileID: 1097896212}
-  amountText: {fileID: 62067589}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1456750754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13105,7 +13084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1483373863}
 --- !u!114 &1483373863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13118,9 +13096,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1020232036}
-  nameText: {fileID: 385989140}
-  amountText: {fileID: 1174608697}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1483373864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13445,7 +13423,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1532973217}
 --- !u!114 &1532973217
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13458,9 +13435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1883771180}
-  nameText: {fileID: 1787224455}
-  amountText: {fileID: 932004558}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1532973218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13897,37 +13874,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventoryUI
   inventoryManager: {fileID: 1971880473}
   content: {fileID: 107876286}
-  dishBases:
-  - {fileID: 7378677004785162881, guid: 85d473ee42c8df847be2e1baea8335ce, type: 3}
-  - {fileID: 8452070143674245640, guid: f4d50675119831f46b6f6f56cb5dd1b9, type: 3}
-  - {fileID: 3221205603069806229, guid: c85ed7df3f23a6a4a98d743b5c7e5643, type: 3}
-  - {fileID: 4663726326360531393, guid: cb941587ee2f226489e5b68f801043cf, type: 3}
-  - {fileID: 919395582878549916, guid: af5dec14ca1d06745b5ff666e31e52f6, type: 3}
-  - {fileID: 7780279878797887853, guid: 301f2cb06a4cb884799c380ed41d8ef6, type: 3}
-  - {fileID: 8422328542389717654, guid: 7d43fd764987c374081dd4e21808ceab, type: 3}
-  - {fileID: 1337388544496168061, guid: e2c46cbd5afe40e4d9d73b1f67d4808f, type: 3}
-  - {fileID: 4812681954720507219, guid: 24825e643b7fff74aa649f46931f6172, type: 3}
-  - {fileID: 5999280624089785147, guid: db72a7dbd26131142a38de03374ad568, type: 3}
-  - {fileID: 6543090678048092338, guid: 963729075a9412d43a6df7702a059f58, type: 3}
-  - {fileID: 8722540982539984299, guid: e1811e64013840445ae4761b41b34399, type: 3}
-  - {fileID: 8909400972084422079, guid: 31032fbe5429ab64da3a13be1a449de2, type: 3}
-  - {fileID: 5892530796025808358, guid: 77994e6b722c11949ba02ba1d76bf5bb, type: 3}
-  - {fileID: 4330768975373041537, guid: 79fdc6f03063a4844b738bf3fe338d05, type: 3}
-  - {fileID: 7733533609594445472, guid: 18057090e9b6adb42b6013d2d045c849, type: 3}
-  - {fileID: 1832585870416173424, guid: 96b58e1416fea3040841c29ce677edef, type: 3}
-  - {fileID: 1012053322576038701, guid: f5a0426fbd4a69d4582f3cf9a413fd63, type: 3}
-  - {fileID: 2770855917098163946, guid: 560e460636678a34ab7c1170fd24ec6a, type: 3}
-  - {fileID: 3224228942769204537, guid: 9cf2bf2aef23d9b4a918ae1672bf3c13, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  slotPrefab: {fileID: 0}
+  maxSlotCount: 30
 --- !u!114 &1545712194
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14187,7 +14135,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1599291902}
 --- !u!114 &1599291902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14200,9 +14147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1058034036}
-  nameText: {fileID: 770287061}
-  amountText: {fileID: 59106984}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1599291903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14623,7 +14570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1638158604}
 --- !u!114 &1638158604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14636,9 +14582,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 989956364}
-  nameText: {fileID: 608326733}
-  amountText: {fileID: 1788755050}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1638158605
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14913,7 +14859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1685203883}
 --- !u!114 &1685203883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14926,9 +14871,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 2095619311}
-  nameText: {fileID: 1816274984}
-  amountText: {fileID: 2144135122}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1685203884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15263,7 +15208,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1715431063}
 --- !u!114 &1715431063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15276,9 +15220,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 1918343842}
-  nameText: {fileID: 1105018377}
-  amountText: {fileID: 1975427532}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1715431064
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16025,7 +15969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1809272966}
 --- !u!114 &1809272966
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16038,9 +15981,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 785285178}
-  nameText: {fileID: 334027000}
-  amountText: {fileID: 1942961251}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1809272967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16756,7 +16699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 1951531640}
 --- !u!114 &1951531640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16769,9 +16711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 310848606}
-  nameText: {fileID: 1304662545}
-  amountText: {fileID: 574755902}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &1951531641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17578,7 +17520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 2043615212}
 --- !u!114 &2043615212
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17591,9 +17532,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 570915263}
-  nameText: {fileID: 951869682}
-  amountText: {fileID: 1412132761}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &2043615213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18644,7 +18585,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 2131522176}
 --- !u!114 &2131522176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18657,9 +18597,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 195560232}
-  nameText: {fileID: 148741733}
-  amountText: {fileID: 1306558158}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &2131522177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18752,7 +18692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 976255310dc3324478a8a0e40cd979c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodDrag
-  slotUI: {fileID: 2138892242}
 --- !u!114 &2138892242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18765,9 +18704,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81be678d99dca0f449f891b0c2d508f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventorySlotUI
-  iconImage: {fileID: 450523149}
-  nameText: {fileID: 1320964171}
-  amountText: {fileID: 832444891}
+  _icon: {fileID: 0}
+  _nameText: {fileID: 0}
+  _amountText: {fileID: 0}
 --- !u!114 &2138892243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18974,7 +18913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
-  foodImage: {fileID: 2024356682}
 --- !u!224 &2144903295
 RectTransform:
   m_ObjectHideFlags: 0

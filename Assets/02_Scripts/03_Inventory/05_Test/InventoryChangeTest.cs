@@ -65,7 +65,7 @@ public sealed class InventoryChangeTest : MonoBehaviour
 
             if (RunTestCase(
                 "새 아이템 추가",
-                () => inventoryManager.AddItem("IG_01", 3),
+                () => inventoryManager.AddItem("IG_01", 3, ItemType.Ingredient),
                 InventoryChangeType.Added,
                 "IG_01",
                 0,
@@ -80,7 +80,7 @@ public sealed class InventoryChangeTest : MonoBehaviour
 
             if (RunTestCase(
                 "기존 아이템 수량 증가",
-                () => inventoryManager.AddItem("IG_01", 2),
+                () => inventoryManager.AddItem("IG_01", 2, ItemType.Ingredient),
                 InventoryChangeType.AmountChanged,
                 "IG_01",
                 3,
@@ -125,7 +125,7 @@ public sealed class InventoryChangeTest : MonoBehaviour
 
             if (RunTestCase(
                 "재료 추가",
-                () => inventoryManager.AddItem("IG_04", 1),
+                () => inventoryManager.AddItem("IG_04", 1, ItemType.Ingredient),
                 InventoryChangeType.Added,
                 "IG_04",
                 0,
@@ -140,7 +140,7 @@ public sealed class InventoryChangeTest : MonoBehaviour
 
             if (RunTestCase(
                 "요리 추가",
-                () => inventoryManager.AddItem("DS_01", 1),
+                () => inventoryManager.AddItem("DS_01", 1, ItemType.Dish),
                 InventoryChangeType.Added,
                 "DS_01",
                 0,
