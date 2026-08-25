@@ -107,7 +107,7 @@ public class InventoryManager : MonoBehaviour
 
     //[아이템을 인벤토리에 추가하는 메서드]
     //상점에서 재료를 구매하거나, 요리 시스템에서 완성된 음식을 지급할 때 사용
-    public bool AddItem(string itemId, int amount)
+    public bool AddItem(string itemId, int amount, ItemType itemType) //+타입 (추가)
     {
         //전달받은 아이템 ID가 비어 있는지 검사
         if (string.IsNullOrWhiteSpace(itemId))
@@ -170,7 +170,8 @@ public class InventoryManager : MonoBehaviour
                 new InventorySlotData(
                     itemId,
                     amount,
-                    acquiredOrderCounter
+                    acquiredOrderCounter,
+                    itemType
                     );
 
             //새로 만든 슬롯을 전체 인벤토리 목록에 추가
