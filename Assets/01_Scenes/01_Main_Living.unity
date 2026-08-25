@@ -15556,38 +15556,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   maxStackSize: 99
-  slots:
-  - itemId: IG_01
-    amount: 5
-    acquiredOrder: 1
-  - itemId: IG_05
-    amount: 12
-    acquiredOrder: 2
-  - itemId: DS_02
-    amount: 7
-    acquiredOrder: 3
-  - itemId: SD_07
-    amount: 7
-    acquiredOrder: 4
-  - itemId: SD_12
-    amount: 6
-    acquiredOrder: 5
-  - itemId: SD_13
-    amount: 6
-    acquiredOrder: 6
-  - itemId: SD_16
-    amount: 6
-    acquiredOrder: 7
-  - itemId: SD_17
-    amount: 6
-    acquiredOrder: 8
-  - itemId: SD_18
-    amount: 6
-    acquiredOrder: 9
-  - itemId: SD_19
-    amount: 6
-    acquiredOrder: 10
+  slots: []
   acquiredOrderCounter: 0
+  gameDataCatalog: {fileID: 11400000, guid: 7e7fdfc850de1a644bb498370c9ab6e5, type: 2}
 --- !u!4 &1332266940
 Transform:
   m_ObjectHideFlags: 0

@@ -23,6 +23,8 @@ public class InventoryManager : MonoBehaviour
     //새로 들어올때마다 1씩 증가하고, InventorySlotData의 acquiredOrder에 전달
     [SerializeField] private int acquiredOrderCounter;
 
+    [SerializeField] private GameDataCatalog gameDataCatalog;   //모든 아이템 인벤에 넣는 개발자용 코드 사용 용도
+
     //인벤토리 내용이 변경되었을 때 실행되는 이벤트
     //InventoryUIController가 이 이벤트를 구독하면 아이템 추가ㆍ제거 후 UI를 자동으로 갱신 가능
     //팀원이 사용해도 깨지지 않게 기존 이벤트 일단 안지울게요
@@ -449,6 +451,38 @@ public class InventoryManager : MonoBehaviour
         //OnInventoryChanged 이벤트를 구독한 대상이 있다면 해당 이벤트 실시
         //?.Invoke를 사용해 구독자가 없어도 오류가 발생하지 않음
         OnInventoryChanged?.Invoke();
+    }
+    //**개발 테스트용**
+    //InventoryManager 컴포넌트의 점세개 메뉴에서 실행할 수 있음
+    [ContextMenu("DEBUG/모든 아이템 10개 추가")]
+    private void DebugAddAllItems()
+    {
+        //게임 실행 중에만 사용
+        if (!Application.isPlaying)
+        {
+            Debug.LogWarning("[InventoryManager] Play Mode에서만 사용할 수 있습니다.");
+            return;
+        }
+
+        //모든 재료 추가
+        foreach (IngredientData ingredient in gameDataCatalog.Ingredients)
+        {
+            AddItem(ingredient.ID, 10, ItemType.Ingredient);
+        }
+
+        //모든 일반 요리 추가
+        foreach (DishData dish in gameDataCatalog.Dishes)
+        {
+            AddItem(dish.ID, 10, ItemType.Dish);
+        }
+
+        //모든 특별 요리 추가
+        foreach (DishData specialDish in gameDataCatalog.SpecialDishes)
+        {
+            AddItem(specialDish.ID, 10, ItemType.SpecialDish);
+        }
+
+        Debug.Log("[InventoryManager] 모든 재료/요리를 10개씩 추가했습니다.");
     }
 }
 
