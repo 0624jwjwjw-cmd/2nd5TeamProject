@@ -17,10 +17,7 @@ public class CookSlotManager : MonoBehaviour
     [SerializeField] public CookSlotUI[] solidSlotUIs;
     [SerializeField] public GameObject[] dashedSlotUIs;
     [SerializeField] public List<CookSlotItem> slots = new List<CookSlotItem>();
-    private void Update()
-    {
-        GetIngredient();
-    }
+
     private void GetIngredient()
     {
         if(Mouse.current.leftButton.wasPressedThisFrame)
