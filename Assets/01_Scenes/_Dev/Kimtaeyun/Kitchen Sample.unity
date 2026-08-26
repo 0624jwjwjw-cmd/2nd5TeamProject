@@ -309,6 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 229464659}
   slotName: 
   nameText: {fileID: 206424503}
@@ -619,6 +620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 559668294}
   slotName: 
   nameText: {fileID: 2087259252}
@@ -1065,6 +1067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 443800305}
   slotName: 
   nameText: {fileID: 2012388126}
@@ -1162,6 +1165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 529756969}
   slotName: 
   nameText: {fileID: 1529199178}
@@ -1334,6 +1338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1964120159}
   slotName: 
   nameText: {fileID: 1070312175}
@@ -1431,6 +1436,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 438703154}
   slotName: 
   nameText: {fileID: 1410920335}
@@ -1878,6 +1884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 495762198}
   slotName: 
   nameText: {fileID: 1623727580}
@@ -2126,6 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1053260656}
   slotName: 
   nameText: {fileID: 1059656876}
@@ -3195,6 +3203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1130247947}
   slotName: 
   nameText: {fileID: 270641802}
@@ -4341,6 +4350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1017940386}
   slotName: 
   nameText: {fileID: 2068277034}
@@ -4513,6 +4523,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1510662587}
   slotName: 
   nameText: {fileID: 347475090}
@@ -4897,6 +4908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1349788529}
   slotName: 
   nameText: {fileID: 276760187}
@@ -5476,6 +5488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1632471457}
   slotName: 
   nameText: {fileID: 2073887009}
@@ -5999,6 +6012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 231148030}
   slotName: 
   nameText: {fileID: 1083586453}
@@ -6174,6 +6188,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 932084494}
   slotName: 
   nameText: {fileID: 1824884107}
@@ -7395,6 +7410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1016431267}
   slotName: 
   nameText: {fileID: 1170482594}
@@ -7643,6 +7659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1863341255}
   slotName: 
   nameText: {fileID: 1449056319}
@@ -8329,6 +8346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1236171735}
   slotName: 
   nameText: {fileID: 1625644555}
@@ -8638,6 +8656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 989902505}
   slotName: 
   nameText: {fileID: 391475194}
@@ -10144,6 +10163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 2136066349}
   slotName: 
   nameText: {fileID: 1711107925}
@@ -11378,6 +11398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1369517140}
   slotName: 
   nameText: {fileID: 127224185}
@@ -11899,6 +11920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1434712248}
   slotName: 
   nameText: {fileID: 200040441}
@@ -11996,6 +12018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1485450455}
   slotName: 
   nameText: {fileID: 1009734441}
@@ -12808,6 +12831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 2069857492}
   slotName: 
   nameText: {fileID: 1134263016}
@@ -13150,6 +13174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 250182807}
   slotName: 
   nameText: {fileID: 1329173901}
@@ -13871,6 +13896,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 467246758}
   slotName: 
   nameText: {fileID: 2065900220}
@@ -15111,6 +15137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 491849213}
   slotName: 
   nameText: {fileID: 1273329587}
@@ -15694,6 +15721,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1496785112}
   slotName: 
   nameText: {fileID: 483581566}
@@ -15928,6 +15956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 690530709}
   slotName: 
   nameText: {fileID: 1536259565}
@@ -16892,6 +16921,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1819542066}
   slotName: 
   nameText: {fileID: 754313055}
@@ -16989,6 +17019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 808925735}
   slotName: 
   nameText: {fileID: 1827604306}
@@ -17375,6 +17406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 525894836}
   slotName: 
   nameText: {fileID: 1275611655}
@@ -17472,6 +17504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 2074994797}
   slotName: 
   nameText: {fileID: 1446339933}
@@ -17644,6 +17677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1347074726}
   slotName: 
   nameText: {fileID: 2057587526}
@@ -17741,6 +17775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 23849652}
   slotName: 
   nameText: {fileID: 760415520}
@@ -18815,6 +18850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1657807293}
   slotName: 
   nameText: {fileID: 135337608}
@@ -20326,6 +20362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 74257517}
   slotName: 
   nameText: {fileID: 1422496600}
@@ -20423,6 +20460,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 2119192745}
   slotName: 
   nameText: {fileID: 1082797740}
@@ -21100,6 +21138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 474118305}
   slotName: 
   nameText: {fileID: 1585021510}
@@ -21434,6 +21473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f314ba3e2e793144addd46041be1ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventory
+  wholeButton: {fileID: 1585226958}
+  ingredientButton: {fileID: 915106519}
+  dishButton: {fileID: 1014928200}
   slots:
   - {fileID: 1322996939}
   - {fileID: 950620436}
@@ -21495,6 +21537,8 @@ MonoBehaviour:
   - {fileID: 1214275185}
   - {fileID: 253827303}
   - {fileID: 585909495}
+  selectedButtonColor: {r: 0.99607843, g: 0.7647059, b: 0.07450981, a: 1}
+  unSelectedButtonColor: {r: 0.9882353, g: 0.9098039, b: 0.8, a: 1}
 --- !u!1 &1170482592
 GameObject:
   m_ObjectHideFlags: 0
@@ -21897,6 +21941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 978275811}
   slotName: 
   nameText: {fileID: 123969975}
@@ -22069,6 +22114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 2054271940}
   slotName: 
   nameText: {fileID: 2098231991}
@@ -22332,6 +22378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 540822928}
   slotName: 
   nameText: {fileID: 899798764}
@@ -23422,6 +23469,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 605070861}
   slotName: 
   nameText: {fileID: 1666397421}
@@ -23732,6 +23780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 291003265}
   slotName: 
   nameText: {fileID: 152926349}
@@ -23829,6 +23878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1531103682}
   slotName: 
   nameText: {fileID: 196633159}
@@ -23964,6 +24014,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1384765967}
   slotName: 
   nameText: {fileID: 22439254}
@@ -26505,6 +26556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 280181604}
   slotName: 
   nameText: {fileID: 104443518}
@@ -27300,6 +27352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1668641827}
   slotName: 
   nameText: {fileID: 210602213}
@@ -27472,6 +27525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 995786843}
   slotName: 
   nameText: {fileID: 140650282}
@@ -28978,6 +29032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 767726528}
   slotName: 
   nameText: {fileID: 19887660}
@@ -31308,6 +31363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1355745185}
   slotName: 
   nameText: {fileID: 751752105}
@@ -31716,6 +31772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 911659263}
   slotName: 
   nameText: {fileID: 1153897709}
@@ -32573,6 +32630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1541187255}
   slotName: 
   nameText: {fileID: 448702337}
@@ -33019,6 +33077,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 873227356}
   slotName: 
   nameText: {fileID: 1663755940}
@@ -33328,6 +33387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1181713806}
   slotName: 
   nameText: {fileID: 868925176}
@@ -33562,6 +33622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 1672108701}
   slotName: 
   nameText: {fileID: 747871526}
@@ -34358,6 +34419,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 122643271}
   slotName: 
   nameText: {fileID: 1250218275}
@@ -35443,6 +35505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 429398666}
   slotName: 
   nameText: {fileID: 1659112309}
@@ -36451,6 +36514,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 674314907}
   slotName: 
   nameText: {fileID: 58528450}
@@ -36685,6 +36749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dc28473ddb4b24aa89711f9fae3cf6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KitchenInventorySlot
+  kitchenCookingSlotManager: {fileID: 0}
   image: {fileID: 625246350}
   slotName: 
   nameText: {fileID: 674163190}
