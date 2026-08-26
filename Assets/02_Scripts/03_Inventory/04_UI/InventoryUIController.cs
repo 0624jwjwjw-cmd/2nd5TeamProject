@@ -7,6 +7,7 @@
 //4. InventoryChange 상세 이벤트를 받아 변경된 슬롯만 갱신
 //5. 슬롯 선택 상태 관리
 using System;
+using System.Collections;           //IEnumerator 코루틴 사용
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,7 +15,7 @@ using UnityEngine;
 //같은 GameObject에 Controller가 중복으로 붙는 것을 방지
 [DisallowMultipleComponent]
 
-public sealed class InventoryUIController : MonoBehaviour, IInitializable
+public sealed class InventoryUIController : MonoBehaviour
 {
     //Inspector 연결
     [Header("Inventory UI")]
@@ -67,17 +68,13 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
 
     private bool isInitialized;                         //Controller 초기화 완료 여부
 
-    //Bootstrap 초기화 순서
-    //GameDataRepository = -100
-    //ItemVisualRepository = -90
-    //
-    //두 Repository 초기화가 끝난 뒤 UI를 만들기 위해 -80 사용
-    public int Priority => -80;
+    //Repository가 준비될 때까지 기다리는 초기화 코루틴
+    private Coroutine initializeCoroutine;
 
     private void OnEnable()
     {
-        //이미 시스템 초기화가 끝난 상태라면
-        //인벤토리 창이 실제로 열리는 순간 현재 데이터를 UI로 생성
+        //이미 초기화가 끝난 상태라면
+        //현재 인벤토리 데이터를 다시 화면에 표시
         if (isInitialized)
         {
             //꺼져 있는 동안 Inventory가 변경됐을 수 있으므로
@@ -90,31 +87,26 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
             return;
         }
 
-        //다른 씬에서 Repository들이 이미 살아있는 경우
-        //BootstrapManager가 없어도 초기화를 시도
-        TryInitialize();
-    }
-
-    private void Start()
-    {
-        //OnEnable 시점에는 Repository가 아직 초기화 전일 수 있으므로
-        //Start 시점에도 한 번 더 초기화 시도
-        if (!isInitialized)
+        //Repository 초기화가 아직 끝나지 않았다면
+        //준비될 때까지 기다리는 코루틴 시작
+        if (initializeCoroutine == null)
         {
-            TryInitialize();
+            initializeCoroutine = StartCoroutine(InitializeWhenReady());
         }
     }
-
+    
     private void OnDisable()
     {
-        //UI가 꺼져 있을 때 불필요하게 이벤트를 받지 않도록 구독 해제
-        UnsubscribeEvents();
-    }
+        //초기화 도중 인벤토리 UI가 꺼졌다면
+        //실행 중인 초기화 코루틴 중단
+        if (initializeCoroutine != null)
+        {
+            StopCoroutine(initializeCoroutine);
+            initializeCoroutine = null;
+        }
 
-    //BootstrapManager에서도 호출 가능
-    public void Initialize()
-    {
-        TryInitialize();
+        //인벤토리 변경 이벤트 구독 해제
+        UnsubscribeEvents();
     }
 
     //*인벤토리 카테고리 변경*
@@ -190,31 +182,53 @@ public sealed class InventoryUIController : MonoBehaviour, IInitializable
         }
     }
 
+    //*필요한 시스템이 준비될 때까지 기다리는 코루틴*
+    private IEnumerator InitializeWhenReady()
+    {
+        //InventoryManager와 Repository들이 모두 준비될 때까지
+        //매 프레임 한 번씩 확인
+        while (!AreRequiredSystemsReady())
+        {
+            yield return null;
+        }
+
+        //대기가 끝났으므로 코루틴 참조 초기화
+        initializeCoroutine = null;
+
+        //실제 인벤토리 UI 초기화
+        TryInitialize();
+    }
+
+    //*인벤토리 UI가 사용하는 시스템 준비 상태 확인*
+    private bool AreRequiredSystemsReady()
+    {
+        //각 Singleton의 현재 인스턴스 가져오기
+        inventoryManager = InventoryManager.Instance;
+        gameDataRepository = GameDataRepository.Instance;
+        itemVisualRepository = ItemVisualRepository.Instance;
+
+        //인벤토리 매니저가 아직 생성되지 않았다면 준비되지 않은 상태
+        if (inventoryManager == null) return false;
+
+        //게임 데이터 Repository가 없거나
+        //내부 Dictionary 초기화가 끝나지 않았다면 대기
+        if (gameDataRepository == null || !gameDataRepository.IsInitialized) return false;
+
+        //아이템 Visual Repository가 없거나
+        //내부 Dictionary 초기화가 끝나지 않았다면 대기
+        if (itemVisualRepository == null || !itemVisualRepository.IsInitialized) return false;       
+
+        return true;
+    }
+
     //*초기화*
     private void TryInitialize()
     {
         //이미 초기화했다면 중복 작업 방지
         if (isInitialized) return;
 
-        //Persistent Singleton에서 InventoryManager 가져오기
-        inventoryManager = InventoryManager.Instance;
-
-        //GameDataRepository는
-        //Interface 타입으로 보관
-        gameDataRepository = GameDataRepository.Instance;
-
-        //ItemVisualRepository 역시 Interface 타입으로 보관
-        itemVisualRepository = ItemVisualRepository.Instance;
-
-        //InventoryManager가 아직 준비되지 않았다면 대기
-        if (inventoryManager == null) return;
-
-        //GameDataRepository가 존재하지 않거나
-        //Dictionary 초기화가 아직 끝나지 않았다면 대기
-        if (gameDataRepository == null || !gameDataRepository.IsInitialized) return;
-
-        //Visual Repository도 초기화되지 않았다면 대기
-        if (itemVisualRepository == null || !itemVisualRepository.IsInitialized) return;
+        //필요한 시스템이 모두 준비됐는지 최종 확인
+        if (!AreRequiredSystemsReady()) return;
 
         //Inspector 연결 검사
         if (slotParent == null)

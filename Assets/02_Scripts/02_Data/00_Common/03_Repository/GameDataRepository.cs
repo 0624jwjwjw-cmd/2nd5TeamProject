@@ -6,7 +6,7 @@ using UnityEngine;
 //같은 게임 오브젝트에 해당 스크립트가 여러개 붙는거 방지
 [DisallowMultipleComponent]
 
-public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository, IInitializable
+public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository
 {
     //게임 전체에 하나만 존재해야 하므로 싱글톤 형태로 관리
     public static GameDataRepository Instance { get; private set; }
@@ -36,12 +36,6 @@ public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository, IIn
     //Repository가 초기화되었는지 기록
     public bool IsInitialized { get; private set; }
 
-    //BootstrapManager가 초기화 순서를 정할 때 사용하는 값
-    //
-    //CurrencyManager가 0이고 HeartManager가 10이므로,
-    //데이터 Repository를 먼저 초기화하기 위해 -100 사용
-    public int Priority => -100;
-
     //프로퍼티
     public int IngredientCount => ingredientLookup.Count;   //재료 개수
     public int DishCount => dishLookup.Count;               //일반 요리 개수
@@ -50,23 +44,37 @@ public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository, IIn
 
     private void Awake()
     {
-        //아직 Repository가 등록되지 않았다면 현재 컴포넌트를 싱글톤 인스턴스로 등록
-        if (Instance == null)
+        //이미 다른 GameDataRepository가 존재한다면
+        //현재 중복 오브젝트 제거
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-
-            //씬이 변경되어도 Repository는 파괴되지 않음
-            DontDestroyOnLoad(gameObject);
-
+            Destroy(gameObject);
             return;
         }
 
-        //이미 다른 Repositoy가 존재하는데 현재 오브젝트가 또 생성됐다면 중복 제거
-        if (Instance != this) Destroy(gameObject);
+        //현재 컴포넌트를 Singleton Instance로 등록
+        Instance = this;
+
+        //GameDataCatalog의 데이터를
+        //검색용 Dictionary로 변환
+        InitializeRepository();
+
+        //Catalog 누락 등의 이유로 초기화에 실패했다면
+        //잘못된 Repository를 Singleton으로 유지하지 않음
+        if (!IsInitialized)
+        {
+            Instance = null;
+            return;
+        }
+
+        //정상적으로 초기화된 Repository만
+        //씬이 변경되어도 유지
+        DontDestroyOnLoad(gameObject);
     }
 
-    //BootstrapManager가 게임 시작 시 한 번 호출
-    public void Initialize()
+    //Awake에서 Singleton 등록 후 한 번 호출
+    //GameDataCatalog를 검색용 Dictionary로 변환
+    private void InitializeRepository()
     {
         if (IsInitialized) return;  //초기화가 끝났다면 중복 작업 X
         //Catalog가 Inspector에 연결되지 않았다면 종료

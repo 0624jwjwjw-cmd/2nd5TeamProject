@@ -6,7 +6,7 @@ using UnityEngine;
 //같은 게임 오브젝트에 해당 스크립트가 여러개 붙는거 방지
 [DisallowMultipleComponent]
 
-public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository, IInitializable
+public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository
 {
     //Singleton
     //다른 시스템에서 ItemVisualRepository에 접근 가능하도록 현재 인스턴스를 저장
@@ -35,10 +35,6 @@ public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository,
     //Repository 초기화가 끝났는지 외부에서 확인 가능
     public bool IsInitialized { get; private set; }
 
-    //GameDataRepositoy가 -100이므로
-    //그 다음 순서인 -90에서 VisualRepository 초기화
-    public int Priority => -90;
-
     //내부 Visual 데이터
     //하나의 아이템 ID에 필요한 Visual 정보를 묶어서 보관
     //Dictionary를
@@ -61,17 +57,32 @@ public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository,
 
     private void Awake()
     {
-        //아직 Repository가 존재하지 않는다면
-        //현재 객체를 Singleton Instance로 등록
-        if (Instance == null)
+        //이미 다른 ItemVisualRepository가 존재한다면
+        //현재 중복 오브젝트 제거
+        if (Instance != null && Instance != this)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);  //씬이 변경되어도 Repository 유지
+            Destroy(gameObject);
             return;
         }
 
-        //이미 다른 Repository가 있으면 중복 생성 막기
-        if (Instance != this) Destroy(gameObject);
+        //현재 컴포넌트를 Singleton Instance로 등록
+        Instance = this;
+
+        //ItemVisualCatalog에 등록된 아이콘과 프리팹을
+        //ID 검색용 Dictionary로 변환
+        InitializeRepository();
+
+        //Catalog 누락 등의 이유로 초기화에 실패했다면
+        //잘못된 Repository를 Singleton으로 유지하지 않음
+        if (!IsInitialized)
+        {
+            Instance = null;
+            return;
+        }
+
+        //정상적으로 초기화된 Repository만
+        //씬이 변경되어도 유지
+        DontDestroyOnLoad(gameObject);
     }
 
     private void OnDestroy()
@@ -80,8 +91,9 @@ public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository,
         if (Instance == this) Instance = null;
     }
 
-    //초기화
-    public void Initialize()
+    //Awake에서 Singleton 등록 후 한 번 호출
+    //ItemVisualCatalog를 검색용 Dictionary로 변환
+    private void InitializeRepository()
     {
         //이미 초기화했으면 중복초기화 방지
         if (IsInitialized) return;
