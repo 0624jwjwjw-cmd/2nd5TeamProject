@@ -47,6 +47,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 05f987eb12b612141b1ea1a86d2f1ea3, type: 2}
   - {fileID: 11400000, guid: f4a2d8f55b010344c89f76c7619beee7, type: 2}
   - {fileID: 11400000, guid: 510ad40e0e9d10d45a6a6b0143109b1f, type: 2}
+  - {fileID: 11400000, guid: 6dbdaf6df76107c4d8b74920fcbec19e, type: 2}
+  - {fileID: 11400000, guid: 31ec24a60573eab4cb093e80911fd8d6, type: 2}
   specialDishes:
   - {fileID: 11400000, guid: c8250fa8c9c326e459816f090fb2fc9a, type: 2}
   - {fileID: 11400000, guid: fd24d75b540b30d4791277407431ce98, type: 2}
