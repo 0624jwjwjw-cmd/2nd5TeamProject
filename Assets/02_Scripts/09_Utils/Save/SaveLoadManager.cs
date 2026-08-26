@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class SaveLoadManager : MonoBehaviour, IInitializable
+public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
 
@@ -13,14 +13,9 @@ public class SaveLoadManager : MonoBehaviour, IInitializable
     private float timer;
     private float saveDelay = 10f;
 
-    //게임 시작 순서 구현
-    public int Priority => 50;
-    public void Initialize()
+    public void Start()
     {
-        var objects = FindObjectsByType<MonoBehaviour>(
-            FindObjectsInactive.Include,
-            FindObjectsSortMode.None)
-            .OfType<ISaveable>();
+        var objects = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None).OfType<ISaveable>();
 
         foreach (ISaveable obj in objects)
         {

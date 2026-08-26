@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class CurrencyManager : MonoBehaviour, ISaveable, IInitializable
+public class CurrencyManager : MonoBehaviour, ISaveable
 {
     public static CurrencyManager Instance { get; private set; }
 
@@ -17,13 +17,7 @@ public class CurrencyManager : MonoBehaviour, ISaveable, IInitializable
 
     public event Action OnRevenueChanged;//후원금이랑 구독자 변경될때마다 보고용
     public event Action OnHeartChanged;//하트 변경될때마다 보고용
-    
-    //순서 구현
-    public int Priority => 0;
-    public void Initialize()
-    {
-    }
-
+  
     private void Awake()
     {
         if (Instance == null)
