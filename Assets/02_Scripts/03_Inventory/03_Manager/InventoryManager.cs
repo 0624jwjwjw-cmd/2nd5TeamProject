@@ -18,10 +18,6 @@ public class InventoryManager : MonoBehaviour
     [Header("현재 인벤토리 데이터")]
     //InventorySlotData를 여러 개 보관하는 실제 인벤토리 목록
     [SerializeField] private List<InventorySlotData> slots = new List<InventorySlotData>();
-    
-    //아이템 처음 들어온 순서를 계산하기 위한 카운터
-    //새로 들어올때마다 1씩 증가하고, InventorySlotData의 acquiredOrder에 전달
-    [SerializeField] private int acquiredOrderCounter;
 
     [SerializeField] private GameDataCatalog gameDataCatalog;   //모든 아이템 인벤에 넣는 개발자용 코드 사용 용도
 
@@ -79,34 +75,10 @@ public class InventoryManager : MonoBehaviour
         //리스트 안에 null 슬롯이나 빈 슬롯이 있다면 제거
         slots.RemoveAll(slot => slot == null || slot.IsEmpty);
 
-        //현재 슬롯 획득 순서 확인해서 acquiredOrderCounter 값을 다시 계산
-        RecalculateAcquiredOrderCounter();
-
         //게임 시작 시
         //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
         //같은 종류 안에서는 ItemId 숫자 순서로 정렬
         SortSlotsByItemTypeAndId();
-    }
-
-    //[현재 슬롯 중 가장 큰 획득 순서를 찾아 acquiredOrderCounter에 저장하는 메서드]
-    //저장 데이터를 불러왔을 때 새로운 아이템의 획득 순서가 기존 아이템과 겹치지 않도록 사용
-    private void RecalculateAcquiredOrderCounter()
-    {
-        //획득 순서 카운터를 0으로 초기화
-        acquiredOrderCounter = 0;
-
-        //현재 인벤토리 슬롯을 처음부터 끝까지 확인
-        for (int index = 0; index < slots.Count; index++)
-        {
-            //현재 순서에서 확인할 슬롯을 가져옴
-            InventorySlotData slot = slots[index];
-
-            //현재 슬롯의 획득 순서가 acquiredOrderCounter 보다 크면
-            if (slot.AcquiredOrder > acquiredOrderCounter)
-            {
-                acquiredOrderCounter = slot.AcquiredOrder; //acquiredOrderCounter를 해당 값으로 변경
-            }
-        }
     }
 
     //[아이템을 인벤토리에 추가하는 메서드]
@@ -166,15 +138,11 @@ public class InventoryManager : MonoBehaviour
         //처음 들어오는 아이템
         else
         {
-            //새로운 종류의 아이템이면 획득 순서 카운터 1 증가
-            acquiredOrderCounter++;
-
             //전달받은 아이템 정보로 새로운 슬롯 데이터를 생성
             InventorySlotData newSlot =
                 new InventorySlotData(
                     itemId,
                     amount,
-                    acquiredOrderCounter,
                     itemType
                     );
 
@@ -385,9 +353,6 @@ public class InventoryManager : MonoBehaviour
 
         //모든 슬롯 데이터를 리스트에서 제거
         slots.Clear();
-
-        //획득 순서 카운터도 처음 값인 0으로 초기화
-        acquiredOrderCounter = 0;
 
         InventoryChange change = new InventoryChange(
             InventoryChangeType.Cleared,
