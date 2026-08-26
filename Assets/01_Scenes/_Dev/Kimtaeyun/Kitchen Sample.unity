@@ -22912,7 +22912,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   maxStackSize: 99
   slots: []
-  acquiredOrderCounter: 0
   gameDataCatalog: {fileID: 11400000, guid: 7e7fdfc850de1a644bb498370c9ab6e5, type: 2}
 --- !u!4 &1243241255
 Transform:

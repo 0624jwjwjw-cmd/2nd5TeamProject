@@ -10,6 +10,9 @@ public class KitchenCookingSystem : MonoBehaviour
 
     [SerializeField] private KitchenCookResult cookResult;
 
+    [SerializeField] private string burnedDishID = "BD_01";
+    [SerializeField] private string trashDishID = "TD_01";
+
     public void StartCook()
     {
         string resultDishID = FindMatchingDish();
@@ -17,30 +20,31 @@ public class KitchenCookingSystem : MonoBehaviour
         if (resultDishID == null)
         {
             cookResult.gameObject.SetActive(true);
-            //cookResult.SetResultDishInfo(음식물쓰레기 ID);
-            //InventoryManager.Instance.AddItem(음식물쓰레기ID, 1, ItemType.Dish);
+            cookResult.SetResultDishInfo(burnedDishID);
+            InventoryManager.Instance.AddItem(burnedDishID, 1, ItemType.Dish);
         }
         else
         {
             if (!ReciepeUnlockManager.Instance.IsUnlocked(resultDishID))
             {
                 cookResult.gameObject.SetActive(true);
-                //cookResult.SetResultDishInfo(탄음식 ID);
-                //InventoryManager.Instance.AddItem(탄음식ID, 1, ItemType.Dish);
+                cookResult.SetResultDishInfo(trashDishID);
+                InventoryManager.Instance.AddItem(trashDishID, 1, ItemType.Dish);
             }
             else
             {
                 if (Random.Range(0, 100) < specialRate)
                 {
-                    //resultDishID를 가지고 매칭되는 specialDishID를 가져오는 로직
+                    //resultDishID를 가지고 매칭되는 specialDishID를 가져오는 로직\
+                    //string specialDishID = 
                     cookResult.gameObject.SetActive(true);
-                    //cookResult.SetResultSpecialDishInfo(특별한음식 ID);
-                    //InventoryManager.Instance.AddItem(특별한음식ID, 1, ItemType.Dish);
+                    //cookResult.SetResultSpecialDishInfo(specialDishID);
+                    //InventoryManager.Instance.AddItem(specialDishID, 1, ItemType.Dish);
                 }
                 else
                 {
                     cookResult.gameObject.SetActive(true);
-                    //cookResult.SetResultDishInfo(음식 ID);
+                    cookResult.SetResultDishInfo(resultDishID);
                     InventoryManager.Instance.AddItem(resultDishID, 1, ItemType.Dish);
                 }
             }

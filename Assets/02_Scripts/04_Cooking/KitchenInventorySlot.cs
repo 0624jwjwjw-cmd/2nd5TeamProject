@@ -30,10 +30,6 @@ public class KitchenInventorySlot : MonoBehaviour
         {
             image.sprite = icon;
         }
-        else
-        {
-            Debug.Log("아이콘 없는디");
-        }
 
         if (inventorySlotData.ItemType == ItemType.Ingredient)
         {
