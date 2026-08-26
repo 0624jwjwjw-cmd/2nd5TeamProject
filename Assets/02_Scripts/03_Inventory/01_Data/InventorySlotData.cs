@@ -10,15 +10,13 @@ public sealed class InventorySlotData
 {
     [SerializeField] private string itemId;     //슬롯에 들어 있는 아이템의 고유 ID
     [SerializeField] private int amount;        //현재 슬롯에 들어있는 아이템 개수 (예: 빵 5개는 amount = 5)
-    [SerializeField] private int acquiredOrder; //해당 아이템을 처음 획득한 순서 저장(획득순 정렬용)
-
     [SerializeField] private ItemType itemType; //슬롯에 들어있는 아이템 타입(추가)
 
     //외부에서 읽게 프로퍼티
     public string ItemId => itemId;
     public int Amount => amount;
-    public int AcquiredOrder => acquiredOrder;
     public ItemType ItemType => itemType;       //아이템 타입 프로퍼티 (추가)
+
     //아이템 ID가 없거나 수량이 0 이하라면 현재 슬롯을 빈 슬롯으로 판정
     public bool IsEmpty => string.IsNullOrWhiteSpace(itemId) || amount <= 0;
     
@@ -27,12 +25,12 @@ public sealed class InventorySlotData
     {
         itemId = string.Empty;  //새로 생성된 빈 슬롯이므로 아이템 ID를 빈 문자열로 설정
         amount = 0;             //빈 슬롯이므로 수량 0으로 설정
-        acquiredOrder = 0;      //아직 획득 못했으므로 획득 순서 0으로 설정
+        itemType = default;     //아이템 타입을 ItemType enum의 기본값으로 초기화
     }
 
     //[새로운 인벤토리 슬롯을 생성할 때 사용하는 생성자]
     //InventoryManager에서 아이템을 처음 획득했을 때 호출
-    public InventorySlotData(string itemId, int amount, int acquiredOrder, ItemType itemType) //+타입(추가)
+    public InventorySlotData(string itemId, int amount, ItemType itemType) //+타입(추가)
     {
         //전달받은 아이템 ID가 비어 있는지 검사
         if (string.IsNullOrWhiteSpace(itemId))
@@ -53,20 +51,8 @@ public sealed class InventorySlotData
                 );
         }
 
-        //전달받은 획득 순서가 0보다 작은지 검사
-        if (acquiredOrder < 0)
-        {
-            //획득 순서는 음수가 될 수 없으므로 예외 발생시키기
-            throw new ArgumentOutOfRangeException(
-                nameof(acquiredOrder),
-                acquiredOrder,
-                "획득 순서는 0 이상이어야 합니다."
-                );
-        }
-
         this.itemId = itemId;               //전달받은 아이템 ID를 현재 슬롯의 itemId에 저장
         this.amount = amount;               //전달받은 아이템 수량을 현재 슬롯의 amount에 저장
-        this.acquiredOrder = acquiredOrder; //전달받은 획득 순서를 현재 슬롯에 저장
         this.itemType = itemType;           //아이템 종류도 슬롯에 같이 저장(추가)
     }
 
@@ -146,20 +132,5 @@ public sealed class InventorySlotData
     {
         itemId = string.Empty;  //슬롯에 들어 있던 아이템 ID 제거
         amount = 0;             //슬롯의 아이템 수량을 0으로 변경
-        acquiredOrder = 0;      //획득 순서도 초기값인 0으로 변경
     }
 }
-
-/*
- *메서드별 정리*
- [InventorySlotData.cs] 인벤토리 슬롯 한 칸을 관리
-    해당 슬롯의 아이템 ID, 보유 수량, 획득 순서를 저장하고 수량 증가ㆍ감소ㆍ초기화를 담당
- 
- InventorySlotData()                                : 빈 인벤토리 슬롯 데이터를 만듦
- InventorySlotData(itemId, amount, acquiredOrder)   : 아이템 ID, 수량, 획득 순서를 가진 새 슬롯을 만듦
- IsSameItem()                                       : 현재 슬롯과 전달받은 아이템이 같은 아이템인지 확인
- AddAmount()                                        : 현재 슬롯의 아이템 수량을 증가
- TryRemoveAmount()                                  : 현재 슬롯에서 아이템 수량을 제거하고, 제거 성공 여부를 반환
- SetAmount()                                        : 저장 데이터 복원이나 테스트 시 슬롯 수량을 직접 변경
- Clear()                                            : 슬롯의 아이템 ID, 수량, 획득 순서를 전부 초기화
- */

@@ -18,15 +18,15 @@ public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository
     [SerializeField] private GameDataCatalog catalog;
 
     //재료 ID와 IngredientData를 연결하는 검색용 Dictionary
-    private readonly Dictionary<string, IngredientData>
+    public readonly Dictionary<string, IngredientData>
         ingredientLookup = new Dictionary<string, IngredientData>(StringComparer.Ordinal);
 
     //일반 요리 ID와 DishData를 연결하는 검색용 Dictionary
-    private readonly Dictionary<string, DishData>
+    public readonly Dictionary<string, DishData>
         dishLookup = new Dictionary<string, DishData>(StringComparer.Ordinal);
 
     //특별 요리 ID와 DishData를 연결하는 검색용 Dictionary
-    private readonly Dictionary<string, DishData>
+    public readonly Dictionary<string, DishData>
         specialDishLookup = new Dictionary<string, DishData>(StringComparer.Ordinal);
 
     //재료, 일반 요리, 특별 요리 전체에서 동일한 ID가 중복 등록되는 것을 검사하기 위한 HashSet
@@ -40,6 +40,9 @@ public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository
     public int IngredientCount => ingredientLookup.Count;   //재료 개수
     public int DishCount => dishLookup.Count;               //일반 요리 개수
     public int SpecialDishCount => specialDishLookup.Count; //특별 요리 개수
+
+    //요리 Dictionary에 등록된 값들만 외부에 읽기 전용으로 제공
+    //public IEnumerable<DishData> Dishes => dishLookup.Values;
 
 
     private void Awake()

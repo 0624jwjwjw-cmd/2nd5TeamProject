@@ -18,10 +18,6 @@ public class InventoryManager : MonoBehaviour
     [Header("현재 인벤토리 데이터")]
     //InventorySlotData를 여러 개 보관하는 실제 인벤토리 목록
     [SerializeField] private List<InventorySlotData> slots = new List<InventorySlotData>();
-    
-    //아이템 처음 들어온 순서를 계산하기 위한 카운터
-    //새로 들어올때마다 1씩 증가하고, InventorySlotData의 acquiredOrder에 전달
-    [SerializeField] private int acquiredOrderCounter;
 
     [SerializeField] private GameDataCatalog gameDataCatalog;   //모든 아이템 인벤에 넣는 개발자용 코드 사용 용도
 
@@ -79,45 +75,34 @@ public class InventoryManager : MonoBehaviour
         //리스트 안에 null 슬롯이나 빈 슬롯이 있다면 제거
         slots.RemoveAll(slot => slot == null || slot.IsEmpty);
 
-        //현재 슬롯 획득 순서 확인해서 acquiredOrderCounter 값을 다시 계산
-        RecalculateAcquiredOrderCounter();
-
         //게임 시작 시
         //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
         //같은 종류 안에서는 ItemId 숫자 순서로 정렬
         SortSlotsByItemTypeAndId();
     }
 
-    //[현재 슬롯 중 가장 큰 획득 순서를 찾아 acquiredOrderCounter에 저장하는 메서드]
-    //저장 데이터를 불러왔을 때 새로운 아이템의 획득 순서가 기존 아이템과 겹치지 않도록 사용
-    private void RecalculateAcquiredOrderCounter()
-    {
-        //획득 순서 카운터를 0으로 초기화
-        acquiredOrderCounter = 0;
-
-        //현재 인벤토리 슬롯을 처음부터 끝까지 확인
-        for (int index = 0; index < slots.Count; index++)
-        {
-            //현재 순서에서 확인할 슬롯을 가져옴
-            InventorySlotData slot = slots[index];
-
-            //현재 슬롯의 획득 순서가 acquiredOrderCounter 보다 크면
-            if (slot.AcquiredOrder > acquiredOrderCounter)
-            {
-                acquiredOrderCounter = slot.AcquiredOrder; //acquiredOrderCounter를 해당 값으로 변경
-            }
-        }
-    }
-
     //[아이템을 인벤토리에 추가하는 메서드]
     //상점에서 재료를 구매하거나, 요리 시스템에서 완성된 음식을 지급할 때 사용
-    public bool AddItem(string itemId, int amount, ItemType itemType) //+타입 (추가)
+    public bool AddItem(string itemId, int amount, ItemType itemType)
     {
         //전달받은 아이템 ID가 비어 있는지 검사
         if (string.IsNullOrWhiteSpace(itemId))
         {
             Debug.LogWarning("[InventoryManager] 아이템 ID가 비어 있어 추가할 수 없습니다.");
             //추가에 실패했으므로 false반환
+            return false;
+        }
+
+        //아이템 ID 접두사와 전달받은 ItemType이
+        //서로 일치하는지 검사
+        if (!IsItemTypeMatchingId(itemId, itemType))
+        {
+            Debug.LogWarning(
+                $"[InventoryManager] ID와 ItemType이 일치하지 않습니다. " +
+                $"ID: {itemId}, ItemType: {itemType}"
+                );
+
+            //잘못된 타입으로 슬롯이 생성되는 것을 방지
             return false;
         }
 
@@ -166,15 +151,11 @@ public class InventoryManager : MonoBehaviour
         //처음 들어오는 아이템
         else
         {
-            //새로운 종류의 아이템이면 획득 순서 카운터 1 증가
-            acquiredOrderCounter++;
-
             //전달받은 아이템 정보로 새로운 슬롯 데이터를 생성
             InventorySlotData newSlot =
                 new InventorySlotData(
                     itemId,
                     amount,
-                    acquiredOrderCounter,
                     itemType
                     );
 
@@ -386,9 +367,6 @@ public class InventoryManager : MonoBehaviour
         //모든 슬롯 데이터를 리스트에서 제거
         slots.Clear();
 
-        //획득 순서 카운터도 처음 값인 0으로 초기화
-        acquiredOrderCounter = 0;
-
         InventoryChange change = new InventoryChange(
             InventoryChangeType.Cleared,
             string.Empty,
@@ -398,6 +376,39 @@ public class InventoryManager : MonoBehaviour
 
         //인벤토리가 변경되었다는 이벤트 발생
         NotifyInventoryChanged(change);
+    }
+
+    //[아이템 ID 접두사와 ItemType이 일치하는지 검사하는 메서드]
+    //
+    //현재 프로젝트 아이템 ID 규칙
+    //IG_ = 재료
+    //DS_ = 일반 요리
+    //SD_ = 특별 요리
+    private bool IsItemTypeMatchingId(string itemId, ItemType itemType)
+    {
+        //아이템 ID가 비어 있다면 타입을 확인할 수 없음
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
+        //IG_로 시작하는 ID는 Ingredient 타입이어야 함
+        if (itemId.StartsWith("IG_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.Ingredient;
+        }
+
+        //DS_로 시작하는 ID는 Dish 타입이어야 함
+        if (itemId.StartsWith("DS_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.Dish;
+        }
+
+        //SD_로 시작하는 ID는 SpecialDish 타입이어야 함
+        if (itemId.StartsWith("SD_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.SpecialDish;
+        }
+
+        //현재 프로젝트에서 정의하지 않은 ID 접두사
+        return false;
     }
 
     //[현재 인벤토리에서 전달받은 아이템 ID와
