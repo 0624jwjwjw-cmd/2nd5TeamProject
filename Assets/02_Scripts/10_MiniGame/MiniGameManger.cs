@@ -59,8 +59,11 @@ public class MiniGameManager : MonoBehaviour
         {
             return;
         }
-
         totalCoin += value;
+        if (totalCoin <= 0)
+        {
+            totalCoin = 0;
+        }
         scoreText.text = $"Á¡¼ö : {totalCoin}Á¡";
     }
 
