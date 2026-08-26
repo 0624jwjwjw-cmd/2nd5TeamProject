@@ -31,4 +31,15 @@ public class BowlSpawner : MonoBehaviour
     {
         return bowls;
     }
+    public void ClearBowls()
+    {
+        foreach (FoodBowl bowl in bowls)
+        {
+            if (bowl != null)
+            {
+                Destroy(bowl.gameObject);
+            }
+        }
+        bowls.Clear();
+    }
 }
