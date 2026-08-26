@@ -53,7 +53,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    //[Unity Inspector에서 값이 변경될 때 호출되는 메서드]
+    //*Unity Inspector에서 값이 변경될 때 호출되는 메서드*
     //게임을 실행하지 않은 상태에서도
     //잘못된 설정값이 들어가지 않도록 보정
     private void OnValidate()
@@ -62,8 +62,7 @@ public class InventoryManager : MonoBehaviour
         maxStackSize = Mathf.Max(1, maxStackSize);
     }
 
-    //[Inspector나 저장 데이터로 들어온 인벤토리 목록을
-    //실제 게임에서 사용하기 전에 정리하는 메서드]
+    //*Inspector나 저장 데이터로 들어온 인벤토리 목록을 실제 게임에서 사용하기 전에 정리하는 메서드*
     private void PrepareInventoryData()
     {
         if (slots == null)
@@ -81,7 +80,7 @@ public class InventoryManager : MonoBehaviour
         SortSlotsByItemTypeAndId();
     }
 
-    //[아이템을 인벤토리에 추가하는 메서드]
+    //*아이템을 인벤토리에 추가하는 메서드*
     //상점에서 재료를 구매하거나, 요리 시스템에서 완성된 음식을 지급할 때 사용
     public bool AddItem(string itemId, int amount, ItemType itemType)
     {
@@ -183,7 +182,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    //[해당 아이템을 지정한 수량만큼 추가할 수 있는지 검사하는 메서드]
+    //*해당 아이템을 지정한 수량만큼 추가할 수 있는지 검사하는 메서드*
     //ShopManager가 후원금을 먼저 차감하기 전에 인벤토리에 공간이 있는지 확인할 때 사용
     public bool CanAddItem(string itemId, int amount)
     {
@@ -206,7 +205,7 @@ public class InventoryManager : MonoBehaviour
         return existingSlot.Amount + amount <= maxStackSize;
     }
 
-    //[아이템을 지정한 수량만큼 제거하는 메서드]
+    //*아이템을 지정한 수량만큼 제거하는 메서드*
     //요리할 때 재료를 소비하거나 라이브에서 음식을 먹었을 때 사용
     public bool RemoveItem(string itemId, int amount)
     {
@@ -291,7 +290,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    //[특정 아이템을 필요한 수량만큼 보유하고 있는지 검사하는 메서드]
+    //*특정 아이템을 필요한 수량만큼 보유하고 있는지 검사하는 메서드*
     //요리 시작 전에 필요한 재료가 있는지 확인하거나
     //라이브 시작 전에 음식이 있는지 확인할 때 사용
     public bool HasItem(string itemId, int requireAmount)
@@ -306,7 +305,7 @@ public class InventoryManager : MonoBehaviour
         return GetItemCount(itemId) >= requireAmount;
     }
 
-    //[특정 아이템을 현재 몇 개 보유하고 있는지 반환하는 메서드]
+    //*특정 아이템을 현재 몇 개 보유하고 있는지 반환하는 메서드*
     public int GetItemCount(string itemId)
     {
         //아이템 ID가 비어 있다면 해당 아이템을 찾을 수 없으므로 0 반환
@@ -322,7 +321,7 @@ public class InventoryManager : MonoBehaviour
         return targetSlot.Amount;
     }
 
-    //[특정 아이템을 추가할 수 있는 남은 수량을 반환하는 메서드]
+    //*특정 아이템을 추가할 수 있는 남은 수량을 반환하는 메서드*
     public int GetRemainingStackSpace(string itemId)
     {
         //아이템 ID가 비어 있다면 공간을 계산할 수 없으므로 0 반환
@@ -341,7 +340,7 @@ public class InventoryManager : MonoBehaviour
         return Mathf.Max(0, remainingSpace);
     }
 
-    //[인벤토리 슬롯을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 공개 메서드]
+    //*인벤토리 슬롯을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 공개 메서드*
     public void SortByItemId()
     {
         //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
@@ -357,7 +356,7 @@ public class InventoryManager : MonoBehaviour
         NotifyInventoryChanged(change);
     }
 
-    //[현재 인벤토리에 들어 있는 모든 아이템을 제거하는 메서드]
+    //*현재 인벤토리에 들어 있는 모든 아이템을 제거하는 메서드*
     //데이터 초기화 또는 디버그 사용
     public void ClearInventory()
     {
@@ -378,11 +377,13 @@ public class InventoryManager : MonoBehaviour
         NotifyInventoryChanged(change);
     }
 
-    //[아이템 ID 접두사와 ItemType이 일치하는지 검사하는 메서드]
+    //*아이템 ID 접두사와 ItemType이 일치하는지 검사하는 메서드*
     //
     //현재 프로젝트 아이템 ID 규칙
     //IG_ = 재료
     //DS_ = 일반 요리
+    //TD_ = 음식물 쓰레기
+    //BD_ = 탄 음식
     //SD_ = 특별 요리
     private bool IsItemTypeMatchingId(string itemId, ItemType itemType)
     {
@@ -395,8 +396,16 @@ public class InventoryManager : MonoBehaviour
             return itemType == ItemType.Ingredient;
         }
 
-        //DS_로 시작하는 ID는 Dish 타입이어야 함
-        if (itemId.StartsWith("DS_", StringComparison.Ordinal))
+        //DS_는 정상적으로 완성된 일반 요리 ID
+        //TD_는 잘못된 재료 조합으로 만들어진 음식물 쓰레기 ID
+        //BD_는 조리 과정에서 만들어진 탄 음식 ID
+        //
+        //세 데이터는 서로 다른 ID 접두사를 사용하지만
+        //모두 DishData를 사용하는 음식이므로
+        //인벤토리에서는 ItemType.Dish로 동일하게 처리
+        if (itemId.StartsWith("DS_", StringComparison.Ordinal) || 
+            itemId.StartsWith("TD_", StringComparison.Ordinal) ||
+            itemId.StartsWith("BD_", StringComparison.Ordinal))
         {
             return itemType == ItemType.Dish;
         }
@@ -411,8 +420,7 @@ public class InventoryManager : MonoBehaviour
         return false;
     }
 
-    //[현재 인벤토리에서 전달받은 아이템 ID와
-    //일치하는 슬롯을 찾는 내부 메서드]
+    //*현재 인벤토리에서 전달받은 아이템 ID와 일치하는 슬롯을 찾는 내부 메서드*
     private InventorySlotData FindSlot(string itemId)
     {
         //현재 슬롯 목록을 처음부터 끝까지 확인
@@ -432,7 +440,7 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
-    //[현재 슬롯 목록을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 메서드]
+    //*현재 슬롯 목록을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 메서드*
     //
     //정렬 결과:
     //IG_01 → IG_02 → IG_03...
@@ -447,66 +455,50 @@ public class InventoryManager : MonoBehaviour
         slots.Sort(CompareSlotsByItemTypeAndId);
     }
 
-    //[두 슬롯의 정렬 순서를 비교하는 메서드]
+    //*두 인벤토리 슬롯의 정렬 순서를 비교*
     //
-    //1차 비교: ItemType
-    //Ingredient → Dish → SpecialDish
+    //1차 정렬:
+    //재료 → 일반 음식 → 특별한 음식 → 탄 음식 → 음식물 쓰레기
     //
-    //2차 비교: ItemId의 숫자 부분
-    //01 → 02 → 03...
+    //2차 정렬:
+    //같은 종류 안에서 ID 숫자 오름차순
     private int CompareSlotsByItemTypeAndId(InventorySlotData firstSlot, InventorySlotData secondSlot)
     {
         //두 변수가 완전히 같은 슬롯을 가리키고 있다면
         //순서를 변경할 필요가 없으므로 0 반환
         if (ReferenceEquals(firstSlot, secondSlot)) return 0;
-        
-        //첫 번째 슬롯만 null이라면
-        //첫 번째 슬롯을 정상 슬롯보다 뒤로 보내기 위해 1 반환
+
+        //첫 번째 슬롯만 null이면 뒤로 이동
         if (firstSlot == null) return 1;
-        
-        //두 번째 슬롯만 null이라면
-        //두 번째 슬롯을 정상 슬롯보다 뒤로 보내기 위해 -1 반환
+
+        //두 번째 슬롯만 null이면 뒤로 이동
         if (secondSlot == null) return -1;
         
         //첫 번째 슬롯의 ItemType 정렬 우선순위를 가져옴
-        int firstTypeOrder = GetItemTypeSortOrder(firstSlot.ItemType);
+        int firstGroupOrder = GetInventoryGroupSortOrder(firstSlot);
 
         //두 번째 슬롯의 ItemType 정렬 우선순위를 가져옴
-        int secondTypeOrder = GetItemTypeSortOrder(secondSlot.ItemType);
+        int secondGroupOrder = GetInventoryGroupSortOrder(secondSlot);
 
-        //두 슬롯의 ItemType 정렬 우선순위를 비교
-        //
-        //firstTypeOrder가 더 작으면 첫 번째 슬롯이 앞으로 이동
-        //secondTypeOrder가 더 작으면 두 번째 슬롯이 앞으로 이동
-        int typeComparison = firstTypeOrder.CompareTo(secondTypeOrder);
+        //재료, 일반 음식, 특별한 음식, 탄 음식, 음식물 쓰레기 순서로 비교
+        int groupComparison = firstGroupOrder.CompareTo(secondGroupOrder);
 
-        //두 슬롯의 ItemType이 다르다면
-        //ID 숫자를 확인하지 않고 ItemType 비교 결과를 바로 반환
-        if (typeComparison != 0) return typeComparison;
-        
-        //여기까지 왔다면 두 슬롯은 같은 ItemType
-        //
-        //첫 번째 ItemId에서 숫자 부분 추출
+        //서로 다른 그룹이라면 그룹 비교 결과를 바로 반환
+        if (groupComparison != 0) return groupComparison;
+
+        //같은 그룹이라면 ID 마지막 숫자를 가져옴
         int firstIdNumber = GetItemIdNumber(firstSlot.ItemId);
 
-        //두 번째 ItemId에서 숫자 부분 추출
         int secondIdNumber = GetItemIdNumber(secondSlot.ItemId);
 
-        //두 ItemId의 숫자를 비교
-        //
-        //예:
-        //IG_02와 IG_10을 비교하면
-        //2와 10을 비교하므로 IG_02가 먼저 배치됨
+        //ID 숫자를 오름차순으로 비교
         int idNumberComparison = firstIdNumber.CompareTo(secondIdNumber);
 
-        //두 ID의 숫자가 다르다면
-        //숫자 비교 결과를 바로 반환
+        //숫자가 다르면 숫자 비교 결과 반환
         if (idNumberComparison != 0) return idNumberComparison;
-       
-        //ItemType과 ID 숫자까지 같은 예외 상황이라면
-        //마지막으로 ItemId 전체 문자열을 비교
-        //
-        //정렬 결과가 실행할 때마다 달라지는 것을 방지
+
+        //그룹과 ID 숫자까지 같다면
+        //전체 ID 문자열을 마지막으로 비교
         return string.Compare(
             firstSlot.ItemId,
             secondSlot.ItemId,
@@ -514,35 +506,49 @@ public class InventoryManager : MonoBehaviour
             );
     }
 
-    //[ItemType별 인벤토리 정렬 우선순위를 반환하는 메서드]
+    //*인벤토리에 표시할 아이템 그룹의 정렬 순위를 반환*
     //
-    //ItemType.cs 자체는 수정하지 않고
-    //InventoryManager 안에서만 표시 순서를 결정
-    private int GetItemTypeSortOrder(ItemType itemType)
+    //0: 재료
+    //1: 일반 음식
+    //2: 특별한 음식
+    //3: 탄 음식
+    //4: 음식물 쓰레기
+    private int GetInventoryGroupSortOrder(InventorySlotData slot)
     {
-        //전달받은 ItemType 확인
-        switch (itemType)
+        //슬롯이 없으면 정상 아이템보다 뒤로 이동
+        if (slot == null) return int.MaxValue;
+
+        string itemId = slot.ItemId;
+
+        //탄 음식은 특별한 음식 다음으로 배치
+        if (!string.IsNullOrWhiteSpace(itemId) && itemId.StartsWith("BD_", StringComparison.Ordinal)) return 3;
+
+        //음식물 쓰레기는 인벤토리의 가장 뒤에 배치
+        if (!string.IsNullOrWhiteSpace(itemId) && itemId.StartsWith("TD_", StringComparison.Ordinal)) return 4;
+        
+        //탄 음식과 음식물 쓰레기가 아니라면
+        //기존 ItemType으로 정렬 순서를 결정
+        switch (slot.ItemType)
         {
-            //재료는 인벤토리에서 가장 먼저 표시
+            //재료
             case ItemType.Ingredient:
                 return 0;
 
-            //일반 요리는 재료 다음에 표시
+            //일반 음식
             case ItemType.Dish:
                 return 1;
 
-            //특별 요리는 일반 요리 다음에 표시
+            //특별한 음식
             case ItemType.SpecialDish:
                 return 2;
 
-            //정의되지 않은 ItemType은
-            //정상 아이템보다 가장 뒤로 이동
+            //정의되지 않은 타입은 가장 뒤로 이동
             default:
                 return int.MaxValue;
         }
     }
 
-    //[ItemId에서 마지막 숫자 부분을 가져오는 메서드]
+    //*ItemId에서 마지막 숫자 부분을 가져오는 메서드*
     //
     //예:
     //IG_01 → 1
@@ -587,7 +593,7 @@ public class InventoryManager : MonoBehaviour
         return int.MaxValue;
     }
 
-    //[인벤토리가 변경되었음을 외부 스크립트에 알리는 메서드]
+    //*인벤토리가 변경되었음을 외부 스크립트에 알리는 메서드*
     private void NotifyInventoryChanged(InventoryChange change)
     {
         //상세 변경 정보가 필요한 UI 등에 전달
@@ -597,6 +603,7 @@ public class InventoryManager : MonoBehaviour
         //?.Invoke를 사용해 구독자가 없어도 오류가 발생하지 않음
         OnInventoryChanged?.Invoke();
     }
+
     //**개발 테스트용**
     //InventoryManager 컴포넌트의 점세개 메뉴에서 실행할 수 있음
     [ContextMenu("DEBUG/모든 아이템 10개 추가")]
