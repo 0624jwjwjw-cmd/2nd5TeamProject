@@ -2117,7 +2117,11 @@ MonoBehaviour:
   bgmSource: {fileID: 998510521}
   sfxSource: {fileID: 998510520}
   mainBGM: {fileID: 8300000, guid: a762bcf1fce91d44381117e4441139f0, type: 3}
-  bgmBaseVolume: 0.235
+  mainBgmBaseVolume: 0.398
+  kitchenBGM: {fileID: 8300000, guid: 575f5149e7c52894288887111d4b15ce, type: 3}
+  kitchenBgmBaseVolume: 0.687
+  studioBGM: {fileID: 8300000, guid: 4e84785254fc42b48bc76b00a9b8d48c, type: 3}
+  studioBgmBaseVolume: 0.697
   buttonClick: {fileID: 8300000, guid: 78a5bd70144167449ad826ac9c6ec4ee, type: 3}
   buttonClickVolume: 0.249
   cooking: {fileID: 0}
