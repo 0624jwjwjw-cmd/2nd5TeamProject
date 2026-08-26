@@ -1,11 +1,12 @@
 //**상점의 재료 목록을 생성하고
 //ShopItem 클릭을 장바구니 시스템과 연결하는 UI 관리자**
+using System.Collections;   //IEnumerator 초기화 코루틴 사용
 using UnityEngine;
 
 //같은 GameObject에 ShopUIManager가 여러 개 붙는 것을 방지
 [DisallowMultipleComponent]
 
-public class ShopUIManager : MonoBehaviour, IInitializable
+public class ShopUIManager : MonoBehaviour
 {
     [Header("Shop UI")]
     //생성된 ShopItem들이 들어갈 부모 Transform
@@ -36,20 +37,11 @@ public class ShopUIManager : MonoBehaviour, IInitializable
     //아이콘은 ItemVisualRepository에서 가져옴
     private IItemVisualRepository itemVisualRepository;
 
-    //상태
-    //ShopUIManager의 초기화가 완료되었는지 저장
-    //
-    //true가 된 이후에는
-    //ShopItem들을 다시 중복 생성하지 않음
+    //ShopUIManager 초기화가 완료되었는지 기록
     private bool isInitialized;
 
-    //Bootstrap 초기화 순서
-    //GameDataRepository   = -100
-    //ItemVisualRepository = -90
-    //InventoryUIController = -80
-    //필요한 Repository들이 만들어진 뒤
-    //Shop UI를 생성하기 위해 -70 사용
-    public int Priority => -70;
+    //ItemVisualRepository가 준비될 때까지 기다리는 코루틴
+    private Coroutine initializeCoroutine;
 
     //*이 GameObject가 활성화될 때 Unity가 호출*
     private void OnEnable()
@@ -58,27 +50,56 @@ public class ShopUIManager : MonoBehaviour, IInitializable
         //ShopItem을 다시 생성하지 않음
         if (isInitialized) return;
 
-        //Repository들이 이미 준비되어 있을 수 있으므로
-        //초기화를 한 번 시도
-        TryInitialize();
-    }
-
-    //*OnEnable보다 늦은 시점에 Unity가 호출*
-    private void Start()
-    {
-        //OnEnable 시점에 Repository가 아직 준비되지 않아
-        //초기화에 실패했을 수도 있으므로 다시 시도
-        if (!isInitialized)
+        //Repository를 기다리는 코루틴이 실행 중이 아닐 때만 시작
+        //OnEnable이 여러 번 호출되어도 코루틴이 중복 실행되지 않도록 방지
+        if (initializeCoroutine == null)
         {
-            TryInitialize();
+            initializeCoroutine = StartCoroutine(InitializeWhenReady());
         }
     }
 
-    //*BootstrapManager에서 호출할 수 있는 초기화 메서드*
-    public void Initialize()
+    //*상점 UI 오브젝트가 비활성화될 때 호출*
+    private void OnDisable()
     {
-        //실제 초기화 로직은 TryInitialize에서 처리
+        //Repository를 기다리는 도중 상점 UI가 닫혔다면
+        //실행 중인 초기화 코루틴 중단
+        if (initializeCoroutine != null)
+        {
+            StopCoroutine(initializeCoroutine);
+            initializeCoroutine = null;
+        }
+    }
+
+    //*ItemVisualRepository가 준비될 때까지 기다리는 코루틴*
+    private IEnumerator InitializeWhenReady()
+    {
+        //ItemVisualRepository가 생성되고
+        //내부 Visual Dictionary 초기화까지 끝날 때까지 대기
+        while (!IsRequiredSystemReady())
+        {
+            //다음 프레임까지 대기한 후 다시 확인
+            yield return null;
+        }
+
+        //Repository 준비가 끝났으므로
+        //현재 코루틴을 실행 중인 상태가 아닌 것으로 변경
+        initializeCoroutine = null;
+
+        //실제 상점 UI 초기화
         TryInitialize();
+    }
+
+    //*ShopUIManager가 사용하는 Repository 준비 상태 확인*
+    private bool IsRequiredSystemReady()
+    {
+        //현재 게임에 존재하는 ItemVisualRepository 가져오기
+        itemVisualRepository = ItemVisualRepository.Instance;
+
+        //Repository가 존재하고
+        //내부 Visual Dictionary 초기화까지 끝났을 때만 true
+        return
+            itemVisualRepository != null &&
+            itemVisualRepository.IsInitialized;
     }
 
     //*초기화*
@@ -87,17 +108,8 @@ public class ShopUIManager : MonoBehaviour, IInitializable
         //이미 초기화가 끝난 경우 중복 실행 방지
         if (isInitialized) return;
 
-        //현재 게임에서 사용 중인
-        //ItemVisualRepository Singleton 가져오기
-        itemVisualRepository = ItemVisualRepository.Instance;
-
-        //ItemVisualRepository 자체가 아직 존재하지 않는다면
-        //아이콘을 찾을 수 없으므로 이번 초기화 중단
-        if (itemVisualRepository == null) return;
-
-        //Repository는 존재하지만
-        //아직 내부 Dictionary 초기화가 끝나지 않았다면 중단
-        if (!itemVisualRepository.IsInitialized) return;
+        //ItemVisualRepository가 준비되었는지 최종 확인
+        if (!IsRequiredSystemReady()) return;
 
         //Inspector 연결 검사
         if (content == null)
