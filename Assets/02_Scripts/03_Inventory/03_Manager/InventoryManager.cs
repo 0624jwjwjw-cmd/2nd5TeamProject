@@ -83,13 +83,26 @@ public class InventoryManager : MonoBehaviour
 
     //[아이템을 인벤토리에 추가하는 메서드]
     //상점에서 재료를 구매하거나, 요리 시스템에서 완성된 음식을 지급할 때 사용
-    public bool AddItem(string itemId, int amount, ItemType itemType) //+타입 (추가)
+    public bool AddItem(string itemId, int amount, ItemType itemType)
     {
         //전달받은 아이템 ID가 비어 있는지 검사
         if (string.IsNullOrWhiteSpace(itemId))
         {
             Debug.LogWarning("[InventoryManager] 아이템 ID가 비어 있어 추가할 수 없습니다.");
             //추가에 실패했으므로 false반환
+            return false;
+        }
+
+        //아이템 ID 접두사와 전달받은 ItemType이
+        //서로 일치하는지 검사
+        if (!IsItemTypeMatchingId(itemId, itemType))
+        {
+            Debug.LogWarning(
+                $"[InventoryManager] ID와 ItemType이 일치하지 않습니다. " +
+                $"ID: {itemId}, ItemType: {itemType}"
+                );
+
+            //잘못된 타입으로 슬롯이 생성되는 것을 방지
             return false;
         }
 
@@ -363,6 +376,39 @@ public class InventoryManager : MonoBehaviour
 
         //인벤토리가 변경되었다는 이벤트 발생
         NotifyInventoryChanged(change);
+    }
+
+    //[아이템 ID 접두사와 ItemType이 일치하는지 검사하는 메서드]
+    //
+    //현재 프로젝트 아이템 ID 규칙
+    //IG_ = 재료
+    //DS_ = 일반 요리
+    //SD_ = 특별 요리
+    private bool IsItemTypeMatchingId(string itemId, ItemType itemType)
+    {
+        //아이템 ID가 비어 있다면 타입을 확인할 수 없음
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
+        //IG_로 시작하는 ID는 Ingredient 타입이어야 함
+        if (itemId.StartsWith("IG_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.Ingredient;
+        }
+
+        //DS_로 시작하는 ID는 Dish 타입이어야 함
+        if (itemId.StartsWith("DS_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.Dish;
+        }
+
+        //SD_로 시작하는 ID는 SpecialDish 타입이어야 함
+        if (itemId.StartsWith("SD_", StringComparison.Ordinal))
+        {
+            return itemType == ItemType.SpecialDish;
+        }
+
+        //현재 프로젝트에서 정의하지 않은 ID 접두사
+        return false;
     }
 
     //[현재 인벤토리에서 전달받은 아이템 ID와
