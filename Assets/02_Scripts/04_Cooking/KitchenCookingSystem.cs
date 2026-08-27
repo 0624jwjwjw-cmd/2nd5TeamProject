@@ -15,21 +15,29 @@ public class KitchenCookingSystem : MonoBehaviour
 
     public void StartCook()
     {
+        for(int i=0; i<kitchenCookingSlotManager.slots.Count; i++)
+        {
+            Debug.Log($"{kitchenCookingSlotManager.slots[i].ingredientID}");
+            Debug.Log($"{kitchenCookingSlotManager.slots[i].count}");
+        }
+
         string resultDishID = FindMatchingDish();
+
+        Debug.Log($"resultDishID = {resultDishID}");
 
         if (resultDishID == null)
         {
             cookResult.gameObject.SetActive(true);
-            cookResult.SetResultDishInfo(burnedDishID);
-            InventoryManager.Instance.AddItem(burnedDishID, 1, ItemType.Dish);
+            cookResult.SetResultDishInfo(trashDishID);
+            InventoryManager.Instance.AddItem(trashDishID, 1, ItemType.Dish);
         }
         else
         {
             if (!ReciepeUnlockManager.Instance.IsUnlocked(resultDishID))
             {
                 cookResult.gameObject.SetActive(true);
-                cookResult.SetResultDishInfo(trashDishID);
-                InventoryManager.Instance.AddItem(trashDishID, 1, ItemType.Dish);
+                cookResult.SetResultDishInfo(burnedDishID);
+                InventoryManager.Instance.AddItem(burnedDishID, 1, ItemType.Dish);
             }
             else
             {

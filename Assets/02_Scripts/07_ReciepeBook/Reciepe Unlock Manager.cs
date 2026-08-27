@@ -19,6 +19,9 @@ public class ReciepeUnlockManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        ///////////////////////////////////
+        TestAllUnlock();
     }
     public bool IsUnlocked(string foodID)
     {

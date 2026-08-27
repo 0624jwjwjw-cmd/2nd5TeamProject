@@ -15,6 +15,7 @@ public class KitchenCookingSlot : MonoBehaviour
     {
         foreach (KitchenCookSlotItem cookSlotItem in manager.slots)
         {
+            this.ingredientID = ingredientID;
             if (cookSlotItem.ingredientID == ingredientID)
             {
                 gameObject.SetActive(true);
@@ -40,6 +41,7 @@ public class KitchenCookingSlot : MonoBehaviour
                 number++;
                 count.text = number.ToString();
             }
+            this.ingredientID = ingredientID;
         }
     }
     public void RemoveIngredient()
@@ -74,18 +76,5 @@ public class KitchenCookingSlot : MonoBehaviour
         count.text = "";
         gameObject.SetActive(false);
         dashedSlot.gameObject.SetActive(true);
-    }
-    public void OnClickSlotIcon()
-    {
-        int slotcount = int.Parse(count.text);
-        slotcount--;
-        if (slotcount <= 0)
-        {
-            Clear();
-        }
-        else
-        {
-            count.text = slotcount.ToString();
-        }
     }
 }

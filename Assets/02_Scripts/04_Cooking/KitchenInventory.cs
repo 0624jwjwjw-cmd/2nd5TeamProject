@@ -1,4 +1,5 @@
 using NUnit.Framework.Constraints;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,8 @@ public class KitchenInventory : MonoBehaviour
     }
     private void OnEnable()
     {
-        InventoryManager.Instance.OnInventoryChanged += RefreshView;
+        //InventoryManager.Instance.OnInventoryChanged += RefreshView;
+        StartCoroutine(WaitforMangaer());
     }
     private void OnDisable()
     {
@@ -110,5 +112,14 @@ public class KitchenInventory : MonoBehaviour
                 SetDish();
                 break;
         }
+    }
+    ////////////////////////////
+    private IEnumerator WaitforMangaer()
+    {
+        while (InventoryManager.Instance == null)
+        {
+            yield return null;
+        }
+        InventoryManager.Instance.OnInventoryChanged += RefreshView;
     }
 }
