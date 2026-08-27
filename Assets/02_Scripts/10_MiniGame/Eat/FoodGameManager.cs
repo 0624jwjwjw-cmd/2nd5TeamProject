@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class FoodGameManager : MonoBehaviour
 {
+    [Header("Mini Game Manager")]
+    [SerializeField] private MiniGameManager miniGameManager;
+
     [Header("Spawner")]
     [SerializeField] private BowlSpawner bowlSpawner;
 
@@ -12,10 +15,10 @@ public class FoodGameManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private RectTransform eatPanel;
 
-    private List<FoodBowl> bowls;
+    private List<FoodBowl> foodBowls = new List<FoodBowl>();
+    private List<FoodBowl> emptyBowls = new List<FoodBowl>();
 
-    private int currentFoodIndex;
-    private int washedBowlCount;
+    private bool isFoodGamePlaying;
 
     private enum GamePhase
     {
@@ -25,24 +28,54 @@ public class FoodGameManager : MonoBehaviour
 
     private GamePhase currentPhase;
 
-    private void Start()
+    private void OnEnable()
     {
-        StartFoodGame();
+        if (miniGameManager != null)
+        {
+            miniGameManager.OnMiniGamePlayingChanged += HandleGameState;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (miniGameManager != null)
+        {
+            miniGameManager.OnMiniGamePlayingChanged -= HandleGameState;
+        }
+
+        StopFoodGame();
+    }
+
+    private void HandleGameState(bool isPlaying)
+    {
+        if (isPlaying)
+        {
+            StartFoodGame();
+        }
+        else
+        {
+            StopFoodGame();
+        }
     }
 
     public void StartFoodGame()
     {
+        if (isFoodGamePlaying)
+        {
+            return;
+        }
+
+        isFoodGamePlaying = true;
         currentPhase = GamePhase.Eating;
 
-        currentFoodIndex = 0;
-        washedBowlCount = 0;
+        foodBowls.Clear();
+        emptyBowls.Clear();
 
         bowlSpawner.SpawnBowls();
 
-        bowls = bowlSpawner.GetBowls();
-
-        foreach (FoodBowl bowl in bowls)
+        foreach (FoodBowl bowl in bowlSpawner.GetBowls())
         {
+            foodBowls.Add(bowl);
             bowl.OnFoodFinished += OnFoodFinished;
         }
 
@@ -51,112 +84,153 @@ public class FoodGameManager : MonoBehaviour
 
     private void OnFoodFinished(FoodBowl bowl)
     {
-        // ¸Ô¹æ ¡æ ºó±×¸© Á¤¸®
-        foodMoveManager.MoveFoodToEmptyPlate(
-            bowl.GetComponent<RectTransform>()
-        );
+        if (!isFoodGamePlaying)
+        {
+            return;
+        }
 
-        currentFoodIndex++;
+        foodBowls.Remove(bowl);
+        emptyBowls.Add(bowl);
 
         MoveNextFood();
     }
 
     private void MoveNextFood()
     {
-        if (currentFoodIndex >= bowls.Count)
+        if (!isFoodGamePlaying)
         {
-            StartWashingPhase();
             return;
         }
 
-        // ¾Æ·¡ÂÊ À½½ÄºÎÅÍ
-        int bowlIndex = bowls.Count - 1 - currentFoodIndex;
+        // ¸ðµç À½½ÄÀ» ¸Ô¾úÀ¸¸é
+        if (foodBowls.Count == 0)
+        {
+            FoodBowl lastEmptyBowl = emptyBowls[^1];
 
-        FoodBowl bowl = bowls[bowlIndex];
+            foodMoveManager.MoveFoodToEmptyPlate(
+                lastEmptyBowl.GetComponent<RectTransform>()
+            );
+
+            StartWashingPhase();
+
+            return;
+        }
+
+        // ºó ±×¸©ÀÌ ¾øÀ¸¸é
+        if (emptyBowls.Count == 0)
+        {
+            FoodBowl firstFood = foodBowls[^1];
+
+            foodMoveManager.MoveFoodToEatZone(
+                firstFood.GetComponent<RectTransform>()
+            );
+
+            return;
+        }
+
+        // ºó ±×¸©°ú À½½ÄÀÌ ¸ðµÎ ÀÖÀ¸¸é
+        FoodBowl emptyBowl = emptyBowls[^1];
+        FoodBowl foodBowl = foodBowls[^1];
+
+        foodMoveManager.MoveFoodToEmptyPlate(
+            emptyBowl.GetComponent<RectTransform>()
+        );
 
         foodMoveManager.MoveFoodToEatZone(
-            bowl.GetComponent<RectTransform>()
+            foodBowl.GetComponent<RectTransform>()
         );
     }
 
     private void StartWashingPhase()
     {
-        currentPhase = GamePhase.Washing;
+        if (!isFoodGamePlaying)
+        {
+            return;
+        }
 
-        washedBowlCount = 0;
+        currentPhase = GamePhase.Washing;
 
         MoveNextEmptyBowl();
     }
 
     private void MoveNextEmptyBowl()
     {
-        foreach (FoodBowl bowl in bowls)
+        if (!isFoodGamePlaying)
         {
-            if (bowl == null)
-            {
-                continue;
-            }
-
-            if (!bowl.IsEmpty)
-            {
-                continue;
-            }
-
-            // ÇöÀç ¸Ô¹æ¿¡ ÀÖ´Â ºó±×¸©Àº Á¦¿Ü
-            if (bowl.transform.parent == eatPanel)
-            {
-                continue;
-            }
-
-            foodMoveManager.MoveEmptyPlateToEatZone(
-                bowl.GetComponent<RectTransform>()
-            );
-
             return;
         }
+
+        if (emptyBowls.Count == 0)
+        {
+            StartNewRound();
+            return;
+        }
+
+        FoodBowl bowl = emptyBowls[0];
+
+        foodMoveManager.MoveEmptyPlateToEatZone(
+            bowl.GetComponent<RectTransform>()
+        );
     }
 
-    // ½ÌÅ©´ë¿¡¼­ ÇÏ³ª Ã³¸®µÊ
     public void OnBowlWashed(FoodBowl bowl)
     {
+        if (!isFoodGamePlaying)
+        {
+            return;
+        }
+
         if (currentPhase != GamePhase.Washing)
         {
             return;
         }
 
-        if (bowl == null || !bowl.IsEmpty)
+        if (bowl == null)
         {
             return;
         }
 
-        washedBowlCount++;
+        emptyBowls.Remove(bowl);
 
-        if (washedBowlCount >= bowls.Count)
-        {
-            StartNewRound();
-        }
-        else
-        {
-            MoveNextEmptyBowl();
-        }
+        MoveNextEmptyBowl();
     }
 
     private void StartNewRound()
     {
+        if (!isFoodGamePlaying)
+        {
+            return;
+        }
+
         currentPhase = GamePhase.Eating;
 
-        currentFoodIndex = 0;
-        washedBowlCount = 0;
+        foodBowls.Clear();
+        emptyBowls.Clear();
 
         bowlSpawner.SpawnBowls();
 
-        bowls = bowlSpawner.GetBowls();
-
-        foreach (FoodBowl bowl in bowls)
+        foreach (FoodBowl bowl in bowlSpawner.GetBowls())
         {
+            foodBowls.Add(bowl);
             bowl.OnFoodFinished += OnFoodFinished;
         }
 
         MoveNextFood();
+    }
+
+    public void StopFoodGame()
+    {
+        if (!isFoodGamePlaying)
+        {
+            return;
+        }
+
+        isFoodGamePlaying = false;
+        currentPhase = GamePhase.Eating;
+
+        foodBowls.Clear();
+        emptyBowls.Clear();
+
+        bowlSpawner.ClearBowls();
     }
 }

@@ -6,11 +6,13 @@ public class SinkZone : MonoBehaviour
     [SerializeField] private bool isSinkA;
 
     [Header("Score")]
-    [SerializeField] private int correctScore = 1;
-    [SerializeField] private int wrongScore = -1;
+    [SerializeField] private int correctScore = 3;
+    [SerializeField] private int wrongScore = -3;
 
     [Header("Game Manager")]
     [SerializeField] private FoodGameManager foodGameManager;
+    [Header("Mini Game Manager")]
+    [SerializeField] private MiniGameManager miniGameManager;
 
     private RectTransform rectTransform;
     private void Awake()
@@ -28,16 +30,16 @@ public class SinkZone : MonoBehaviour
         {
             return;
         }
-
+        SoundManager.Instance.PlaySFX(SFXType.MSink);
         bool isCorrect = bowl.IsBowlA == isSinkA;
 
         if (isCorrect)
         {
-            Debug.Log($"정답! +{correctScore}");
+            miniGameManager.AddCoin(correctScore);
         }
         else
         {
-            Debug.Log($"오답! {wrongScore}");
+            miniGameManager.AddCoin(wrongScore);
         }
 
         Destroy(bowl.gameObject);

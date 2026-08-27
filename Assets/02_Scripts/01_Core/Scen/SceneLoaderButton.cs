@@ -18,9 +18,5 @@ public class SceneLoaderButton : MonoBehaviour
     {
         SceneLoader.Instance.LoadScene(SceneType.Kitchen);
     }
-    public void LoadShop()
-    {
-        SceneLoader.Instance.LoadScene(SceneType.Shop);
-    }
 
 }

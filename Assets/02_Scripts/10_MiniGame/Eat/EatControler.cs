@@ -2,7 +2,7 @@ using UnityEngine;
 public class EatController : MonoBehaviour
 {
     [SerializeField] private int maxEatCount = 10;
-
+    [SerializeField] private FoodPlayerVisual playerVisual;
     private FoodBowl currentFood;
     private int eatCount;
 
@@ -18,8 +18,6 @@ public class EatController : MonoBehaviour
                 {
                     currentFood = food;
                     eatCount = 0;
-
-                    Debug.Log("새로운 음식이 들어왔습니다.");
                     break;
                 }
             }
@@ -37,7 +35,8 @@ public class EatController : MonoBehaviour
         {
             return;
         }
-
+        SoundManager.Instance.PlaySFX(SFXType.MEat);
+        playerVisual.PlayEat();
         eatCount++;
 
         float fillAmount = 1f - (float)eatCount / maxEatCount;

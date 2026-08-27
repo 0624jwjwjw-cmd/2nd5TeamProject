@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class BeerController : MonoBehaviour
 {
     [Header("Beer")]
@@ -16,24 +17,56 @@ public class BeerController : MonoBehaviour
 
     private float pourSpeed;
     private bool wasPressed;
+    private bool isPlaying;
 
-    private void Start()
+    private void OnEnable()
     {
-        StartNewRound();
+        if (gameManager != null)
+        {
+            gameManager.OnMiniGamePlayingChanged += HandleGameState;
+        }
     }
-    private void Update()
+
+    private void OnDisable()
     {
-        if (!gameManager.IsMiniGamePlaying)
+        if (gameManager != null)
+        {
+            gameManager.OnMiniGamePlayingChanged -= HandleGameState;
+        }
+    }
+
+    private void HandleGameState(bool playing)
+    {
+        isPlaying = playing;
+
+        if (playing)
+        {
+            StartNewRound();
+        }
+        else
         {
             wasPressed = false;
+            ResetBeer();
+        }
+    }
+
+    private void Update()
+    {
+        if (!isPlaying)
+        {
             return;
         }
-        // InputManager가 없으면 정지
+
         if (InputManager.Instance == null)
+        {
             return;
+        }
 
         bool isPressed = InputManager.Instance.IsPressed;
-
+        if (isPressed && !wasPressed)
+        {
+            SoundManager.Instance.PlaySFX(SFXType.MBeerFall);
+        }
         if (isPressed)
         {
             PourBeer();
@@ -45,24 +78,33 @@ public class BeerController : MonoBehaviour
             scoreCalculator.CalculateScore();
             StartNewRound();
         }
+
         wasPressed = isPressed;
     }
+
     private void PourBeer()
     {
         beerImage.fillAmount += pourSpeed * Time.deltaTime;
-        
+
         // 100% 이상 올라가지 않도록 제한
         if (beerImage.fillAmount >= 1f)
         {
             beerImage.fillAmount = 1f;
         }
     }
+
     private void StartNewRound()
     {
         ResetBeer();
-        pourSpeed = Random.Range(minPourSpeed, maxPourSpeed);
+
+        pourSpeed = Random.Range(
+            minPourSpeed,
+            maxPourSpeed
+        );
+
         targetArrow.SetRandomPosition();
     }
+
     public float GetBeerAmount()
     {
         return beerImage.fillAmount;

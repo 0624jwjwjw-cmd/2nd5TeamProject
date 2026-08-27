@@ -35,4 +35,8 @@ public class SaveTest : MonoBehaviour
     {
         GameDateManager.Instance.AddDateCount();
     }
+    public void SoundLive()
+    {
+        SoundManager.Instance.PlayBGM(BGMType.Studio);
+    }
 }

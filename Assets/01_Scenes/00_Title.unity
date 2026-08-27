@@ -1008,6 +1008,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1905334765}
+        m_TargetAssemblyTypeName: SFXButton, Assembly-CSharp
+        m_MethodName: ClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &615003630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1643,6 +1655,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1905334765}
+        m_TargetAssemblyTypeName: SFXButton, Assembly-CSharp
+        m_MethodName: ClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &951545399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,6 +1791,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1153541277}
         m_TargetAssemblyTypeName: SettingPenel, Assembly-CSharp
         m_MethodName: OpenPanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1905334765}
+        m_TargetAssemblyTypeName: SFXButton, Assembly-CSharp
+        m_MethodName: ClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2117,19 +2153,57 @@ MonoBehaviour:
   bgmSource: {fileID: 998510521}
   sfxSource: {fileID: 998510520}
   mainBGM: {fileID: 8300000, guid: a762bcf1fce91d44381117e4441139f0, type: 3}
-  bgmBaseVolume: 0.235
-  buttonClick: {fileID: 8300000, guid: 78a5bd70144167449ad826ac9c6ec4ee, type: 3}
-  buttonClickVolume: 0.249
-  cooking: {fileID: 0}
-  cookingVolume: 0.488
-  coin: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
-  coinVolume: 0.498
-  heart: {fileID: 0}
-  heartVolume: 0.535
-  win: {fileID: 8300000, guid: df6309dc0b10ff74caa2c771653277ab, type: 3}
-  winVolume: 0.765
-  lose: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
-  loseVolume: 0.601
+  mainBgmBaseVolume: 0.398
+  kitchenBGM: {fileID: 8300000, guid: 575f5149e7c52894288887111d4b15ce, type: 3}
+  kitchenBgmBaseVolume: 0.687
+  studioBGM: {fileID: 8300000, guid: 4e84785254fc42b48bc76b00a9b8d48c, type: 3}
+  studioBgmBaseVolume: 0.697
+  sfxList:
+  - type: 0
+    clip: {fileID: 8300000, guid: 78a5bd70144167449ad826ac9c6ec4ee, type: 3}
+    volume: 1
+  - type: 1
+    clip: {fileID: 0}
+    volume: 1
+  - type: 2
+    clip: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
+    volume: 1
+  - type: 2
+    clip: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
+    volume: 1
+  - type: 4
+    clip: {fileID: 8300000, guid: c22869a558ce1cb488dad2436403c41e, type: 3}
+    volume: 1
+  - type: 5
+    clip: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
+    volume: 1
+  - type: 3
+    clip: {fileID: 8300000, guid: 0ad7d162d5529c149a114fbcd64ebde2, type: 3}
+    volume: 1
+  - type: 6
+    clip: {fileID: 8300000, guid: 4ee57a43176f5394b8992711abcb5d19, type: 3}
+    volume: 0.703
+  - type: 7
+    clip: {fileID: 8300000, guid: 6a6f3459903ac7d4d875d1d7d176e4f7, type: 3}
+    volume: 1
+  - type: 8
+    clip: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
+    volume: 1
+  - type: 9
+    clip: {fileID: 8300000, guid: 97846f83bf28b1c4ba5ef0d2c0950102, type: 3}
+    volume: 1
+  - type: 10
+    clip: {fileID: 8300000, guid: e95b2678c6d5a5f49bde3f28b0343041, type: 3}
+    volume: 1
+  - type: 11
+    clip: {fileID: 8300000, guid: d4104c0b551496346b66aea3b2e63f4d, type: 3}
+    volume: 1
+  - type: 12
+    clip: {fileID: 8300000, guid: 84fb53a35459b4c4880ff4d7154b28c9, type: 3}
+    volume: 1
+  - type: 12
+    clip: {fileID: 8300000, guid: 70d622e2a59c736409167f763b0edbb8, type: 3}
+    volume: 1
   bgmVolume: 1
   sfxVolume: 1
 --- !u!4 &998510523
@@ -2233,6 +2307,18 @@ MonoBehaviour:
       - m_Target: {fileID: 252951899}
         m_TargetAssemblyTypeName: SceneLoaderButton, Assembly-CSharp
         m_MethodName: LoadMain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1905334765}
+        m_TargetAssemblyTypeName: SFXButton, Assembly-CSharp
+        m_MethodName: ClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2486,6 +2572,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1153541277}
         m_TargetAssemblyTypeName: SettingPenel, Assembly-CSharp
         m_MethodName: ClosePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1905334765}
+        m_TargetAssemblyTypeName: SFXButton, Assembly-CSharp
+        m_MethodName: ClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3141,50 +3239,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1432288922
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1432288924}
-  - component: {fileID: 1432288923}
-  m_Layer: 0
-  m_Name: UIButtonSound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1432288923
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432288922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c224bf5b9fefe654c9009e96195b8cd4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UIButtonSound
---- !u!4 &1432288924
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432288922}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 742.4649, y: 926.43787, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1441755265
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,7 +3860,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3863398898160514251, guid: 8c01585ddfefbcd45a4d55c53519e5cc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8c01585ddfefbcd45a4d55c53519e5cc, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -4019,6 +4073,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787084794}
   m_CullTransparentMesh: 1
+--- !u!1 &1905334764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905334766}
+  - component: {fileID: 1905334765}
+  m_Layer: 0
+  m_Name: SFXButton
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1905334765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905334764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07265fc6dd2aaa2408ff0e860cda02ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SFXButton
+--- !u!4 &1905334766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905334764}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 441.8368, y: 1159.7667, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1939077341
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,4 +4488,4 @@ SceneRoots:
   - {fileID: 728625711}
   - {fileID: 1303894936}
   - {fileID: 545799349}
-  - {fileID: 1432288924}
+  - {fileID: 1905334766}

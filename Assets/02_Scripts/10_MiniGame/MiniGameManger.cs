@@ -1,5 +1,6 @@
-using UnityEngine;
+using System;
 using TMPro;
+using UnityEngine;
 public class MiniGameManager : MonoBehaviour
 {
     [Header("Game Setting")]
@@ -15,10 +16,18 @@ public class MiniGameManager : MonoBehaviour
 
     private bool isMiniGamePlaying;
     public bool IsMiniGamePlaying => isMiniGamePlaying;
+    public event Action<bool> OnMiniGamePlayingChanged;
 
-    private void Start()
+    private void SetMiniGamePlaying(bool value)
     {
-        StartGame();
+        if (isMiniGamePlaying == value)
+        {
+            return;
+        }
+
+        isMiniGamePlaying = value;
+
+        OnMiniGamePlayingChanged?.Invoke(isMiniGamePlaying);
     }
 
     private void Update()
@@ -43,9 +52,9 @@ public class MiniGameManager : MonoBehaviour
     {
         totalCoin = 0;
         remainingTime = gameDuration;
-
-        isMiniGamePlaying = true;
-
+        totalPanel.SetActive(false);
+        scoreText.text = "점수 : 0점";
+        SetMiniGamePlaying(true);
         UpdateTimeUI();
     }
     private void UpdateTimeUI()
@@ -59,15 +68,19 @@ public class MiniGameManager : MonoBehaviour
         {
             return;
         }
-
         totalCoin += value;
+        if (totalCoin <= 0)
+        {
+            totalCoin = 0;
+        }
         scoreText.text = $"점수 : {totalCoin}점";
     }
 
     private void EndGame()
     {
-        isMiniGamePlaying = false;
+        SoundManager.Instance.PlaySFX(SFXType.Win);
         totalPoint.text = $"총 점수: {totalCoin}";
         totalPanel.SetActive(true);
+        SetMiniGamePlaying(false);
     }
 }

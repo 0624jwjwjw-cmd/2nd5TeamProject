@@ -47,6 +47,8 @@ MonoBehaviour:
   - {fileID: 1012053322576038701, guid: f5a0426fbd4a69d4582f3cf9a413fd63, type: 3}
   - {fileID: 2770855917098163946, guid: 560e460636678a34ab7c1170fd24ec6a, type: 3}
   - {fileID: 3224228942769204537, guid: 9cf2bf2aef23d9b4a918ae1672bf3c13, type: 3}
+  - {fileID: 1423550071341927515, guid: f8b5ba3d2b95b864d949a40cc2762970, type: 3}
+  - {fileID: 1423550071341927515, guid: b11465ffdd83c3140bf1e21c6da01dc4, type: 3}
   specialDishPrefabs:
   - {fileID: 2545853720008457659, guid: d7649aa537250d94f9da533580865cd6, type: 3}
   - {fileID: 805444540908623156, guid: 7f7f97ba8eefa4245843c22bbc9df5ba, type: 3}
