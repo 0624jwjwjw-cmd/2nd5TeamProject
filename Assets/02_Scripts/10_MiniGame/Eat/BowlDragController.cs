@@ -9,6 +9,7 @@ public class BowlDragController : MonoBehaviour
     private FoodBowl currentBowl;
     private RectTransform currentBowlRect;
     private Vector3 originalPosition;
+    private bool wasDragging;
     private void Update()
     {
         if (currentBowl == null)
@@ -20,15 +21,21 @@ public class BowlDragController : MonoBehaviour
         {
             return;
         }
-
-        if (InputManager.Instance.IsPressed &&InputManager.Instance.IsDragging)
+        bool isDragging =InputManager.Instance.IsPressed &&InputManager.Instance.IsDragging;
+        if (isDragging && !wasDragging)
         {
-            currentBowlRect.position =InputManager.Instance.PointerPosition;
+            SoundManager.Instance.PlaySFX(SFXType.MBowl);
+        }
+
+        if (isDragging)
+        {
+            currentBowlRect.position = InputManager.Instance.PointerPosition;
         }
         if (InputManager.Instance.IsDragReleased)
         {
             CheckSink();
         }
+        wasDragging = isDragging;
     }
 
     private void FindEmptyBowl()
@@ -65,5 +72,6 @@ public class BowlDragController : MonoBehaviour
         }
         currentBowl = null;
         currentBowlRect = null;
+        wasDragging = false;
     }
 }
