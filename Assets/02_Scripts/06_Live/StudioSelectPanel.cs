@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StudioSelectPopup : MonoBehaviour
+public class StudioSelectPanel : MonoBehaviour
 {
     [SerializeField] private Image _studioImage;
     [SerializeField] private Button _prevButton;
@@ -28,7 +28,7 @@ public class StudioSelectPopup : MonoBehaviour
     {
         _prevButton.onClick.AddListener(ShowPrevious);
         _nextButton.onClick.AddListener(ShowNext);
-        _closeButton.onClick.AddListener(ClosePopup);
+        _closeButton.onClick.AddListener(ClosePanel);
     }
 
     private void ShowPrevious()
@@ -70,11 +70,11 @@ public class StudioSelectPopup : MonoBehaviour
         );
     }
 
-    private void ClosePopup()
+    private void ClosePanel()
     {
         gameObject.SetActive(false);
     }
-    public void OpenPopup()
+    public void OpenPanel()
     {
         gameObject.SetActive(true);
     }
