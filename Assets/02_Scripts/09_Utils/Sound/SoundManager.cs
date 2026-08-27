@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public enum BGMType
@@ -25,18 +26,7 @@ public class SoundManager : MonoBehaviour, ISaveable
     [SerializeField, Range(0f, 1f)] private float studioBgmBaseVolume = 1f;
 
     [Header("SFX")]
-    [SerializeField] private AudioClip buttonClick;
-    [SerializeField, Range(0f, 1f)] private float buttonClickVolume = 1f;
-    [SerializeField] private AudioClip cooking;
-    [SerializeField, Range(0f, 1f)] private float cookingVolume = 1f;
-    [SerializeField] private AudioClip coin;
-    [SerializeField, Range(0f, 1f)] private float coinVolume = 1f;
-    [SerializeField] private AudioClip heart;
-    [SerializeField, Range(0f, 1f)] private float heartVolume = 1f;
-    [SerializeField] private AudioClip win;
-    [SerializeField, Range(0f, 1f)] private float winVolume = 1f;
-    [SerializeField] private AudioClip lose;
-    [SerializeField, Range(0f, 1f)] private float loseVolume = 1f;
+    [SerializeField] private List<SFXData> sfxList;
 
     [Header("SettingVolume")]
     [SerializeField, Range(0f, 1f)] private float bgmVolume = 1f;
@@ -135,43 +125,17 @@ public class SoundManager : MonoBehaviour, ISaveable
 
     public void PlaySFX(SFXType type)
     {
-        AudioClip clip = null;
-        float baseVolume = 1f;
+        SFXData data = sfxList.Find(x => x.type == type);
 
-        switch (type)
-        {
-            case SFXType.ButtonClick:
-                clip = buttonClick;
-                baseVolume = buttonClickVolume;
-                break;
-            case SFXType.Cooking:
-                clip = cooking;
-                baseVolume = cookingVolume;
-                break;
-            case SFXType.Coin:
-                clip = coin;
-                baseVolume = coinVolume;
-                break;
-            case SFXType.Heart:
-                clip = heart;
-                baseVolume = heartVolume;
-                break;
-            case SFXType.Win:
-                clip = win;
-                baseVolume = winVolume;
-                break;
-            case SFXType.Lose:
-                clip = lose;
-                baseVolume = loseVolume;
-                break;
-        }
-        if (clip == null)
+        if (data == null || data.clip == null)
         {
             Debug.LogWarning($"등록되지 않은 SFX : {type}");
             return;
         }
-        float finalVolume = baseVolume * sfxVolume;
-        sfxSource.PlayOneShot(clip, finalVolume);
+
+        float finalVolume = data.volume * sfxVolume;
+
+        sfxSource.PlayOneShot(data.clip, finalVolume);
     }
 
     public void SetBGMVolume(float volume)

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+
 public class CoinCatcher : MonoBehaviour
 {
     [Header("Manager")]
@@ -21,6 +22,8 @@ public class CoinCatcher : MonoBehaviour
     private float idleTimer;
     private float previousX;
 
+    private bool isPlaying;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -32,18 +35,47 @@ public class CoinCatcher : MonoBehaviour
         SetIdleSprite();
     }
 
+    private void OnEnable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnMiniGamePlayingChanged += HandleGameState;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (gameManager != null)
+        {
+            gameManager.OnMiniGamePlayingChanged -= HandleGameState;
+        }
+    }
+
+    private void HandleGameState(bool playing)
+    {
+        isPlaying = playing;
+
+        if (!playing)
+        {
+            ResetCatcher();
+        }
+        else
+        {
+            ResetCatcher();
+        }
+    }
+
     private void Update()
     {
-        if (!gameManager.IsMiniGamePlaying)
+        if (!isPlaying)
         {
-            rectTransform.anchoredPosition = startPosition;
-            idleTimer = 0f;
-            SetIdleSprite();
             return;
         }
 
         if (InputManager.Instance == null)
+        {
             return;
+        }
 
         if (!InputManager.Instance.IsDragging)
         {
@@ -52,6 +84,16 @@ public class CoinCatcher : MonoBehaviour
         }
 
         Move();
+    }
+
+    private void ResetCatcher()
+    {
+        rectTransform.anchoredPosition = startPosition;
+
+        idleTimer = 0f;
+        previousX = startPosition.x;
+
+        SetIdleSprite();
     }
 
     private void Move()
@@ -79,7 +121,6 @@ public class CoinCatcher : MonoBehaviour
 
         rectTransform.anchoredPosition = position;
 
-        // 이동 방향 확인
         float currentX = position.x;
 
         if (currentX > previousX)
@@ -129,6 +170,7 @@ public class CoinCatcher : MonoBehaviour
     {
         playerImage.sprite = rightSprite;
     }
+
     private float GetMinX()
     {
         float parentWidth = parentRect.rect.width;

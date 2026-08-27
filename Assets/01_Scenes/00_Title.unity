@@ -2158,18 +2158,52 @@ MonoBehaviour:
   kitchenBgmBaseVolume: 0.687
   studioBGM: {fileID: 8300000, guid: 4e84785254fc42b48bc76b00a9b8d48c, type: 3}
   studioBgmBaseVolume: 0.697
-  buttonClick: {fileID: 8300000, guid: 78a5bd70144167449ad826ac9c6ec4ee, type: 3}
-  buttonClickVolume: 0.249
-  cooking: {fileID: 0}
-  cookingVolume: 0.488
-  coin: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
-  coinVolume: 0.498
-  heart: {fileID: 0}
-  heartVolume: 0.535
-  win: {fileID: 8300000, guid: df6309dc0b10ff74caa2c771653277ab, type: 3}
-  winVolume: 0.765
-  lose: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
-  loseVolume: 0.601
+  sfxList:
+  - type: 0
+    clip: {fileID: 8300000, guid: 78a5bd70144167449ad826ac9c6ec4ee, type: 3}
+    volume: 1
+  - type: 1
+    clip: {fileID: 0}
+    volume: 1
+  - type: 2
+    clip: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
+    volume: 1
+  - type: 2
+    clip: {fileID: 8300000, guid: 33713d31432863a4c8816d57af275124, type: 3}
+    volume: 1
+  - type: 4
+    clip: {fileID: 8300000, guid: c22869a558ce1cb488dad2436403c41e, type: 3}
+    volume: 1
+  - type: 5
+    clip: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
+    volume: 1
+  - type: 3
+    clip: {fileID: 8300000, guid: 0ad7d162d5529c149a114fbcd64ebde2, type: 3}
+    volume: 1
+  - type: 6
+    clip: {fileID: 8300000, guid: 4ee57a43176f5394b8992711abcb5d19, type: 3}
+    volume: 0.703
+  - type: 7
+    clip: {fileID: 8300000, guid: 6a6f3459903ac7d4d875d1d7d176e4f7, type: 3}
+    volume: 1
+  - type: 8
+    clip: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
+    volume: 1
+  - type: 9
+    clip: {fileID: 8300000, guid: 97846f83bf28b1c4ba5ef0d2c0950102, type: 3}
+    volume: 1
+  - type: 10
+    clip: {fileID: 8300000, guid: e95b2678c6d5a5f49bde3f28b0343041, type: 3}
+    volume: 1
+  - type: 11
+    clip: {fileID: 8300000, guid: d4104c0b551496346b66aea3b2e63f4d, type: 3}
+    volume: 1
+  - type: 12
+    clip: {fileID: 8300000, guid: 84fb53a35459b4c4880ff4d7154b28c9, type: 3}
+    volume: 1
+  - type: 12
+    clip: {fileID: 8300000, guid: 70d622e2a59c736409167f763b0edbb8, type: 3}
+    volume: 1
   bgmVolume: 1
   sfxVolume: 1
 --- !u!4 &998510523

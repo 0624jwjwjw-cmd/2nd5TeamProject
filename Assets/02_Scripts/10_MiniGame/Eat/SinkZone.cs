@@ -30,7 +30,7 @@ public class SinkZone : MonoBehaviour
         {
             return;
         }
-
+        SoundManager.Instance.PlaySFX(SFXType.MSink);
         bool isCorrect = bowl.IsBowlA == isSinkA;
 
         if (isCorrect)
