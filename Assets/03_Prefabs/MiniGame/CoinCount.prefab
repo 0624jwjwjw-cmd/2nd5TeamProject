@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4371621404031804400}
   - component: {fileID: 8267413644801763550}
   - component: {fileID: 2421575391605890781}
+  - component: {fileID: -4918786776113851916}
   m_Layer: 5
   m_Name: CoinCount
   m_TagString: Untagged
@@ -150,4 +151,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301762bf8c2f2b440b01ffcd0ecc0f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinText
-  displayTime: 2
+  moveUpDistance: 50
+  moveDuration: 0.5
+--- !u!114 &-4918786776113851916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386603200829924745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cc59d7e7aefbf54f948d32a4e476d24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoinTextDestroy
+  destroyTime: 2

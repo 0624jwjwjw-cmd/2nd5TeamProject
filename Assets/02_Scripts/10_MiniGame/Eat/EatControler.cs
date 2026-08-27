@@ -35,6 +35,7 @@ public class EatController : MonoBehaviour
         {
             return;
         }
+        SoundManager.Instance.PlaySFX(SFXType.MEat);
         playerVisual.PlayEat();
         eatCount++;
 
