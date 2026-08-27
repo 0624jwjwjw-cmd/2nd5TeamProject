@@ -43,12 +43,6 @@ public class SceneLoader : MonoBehaviour
             case SceneType.Kitchen:
                 return "03_Kitchen";
 
-            case SceneType.Shop:
-                return "04_Shop";
-
-            case SceneType.Test:
-                return "Test";
-
             default:
                 return "00_Title";
         }
