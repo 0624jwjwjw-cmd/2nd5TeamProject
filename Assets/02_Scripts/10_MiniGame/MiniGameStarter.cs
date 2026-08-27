@@ -12,17 +12,28 @@ public class MiniGameStarter : MonoBehaviour
     [Header("Mini Game Manager")]
     [SerializeField] private MiniGameManager miniGameManager;
 
+    [Header("Roulette")]
+    [SerializeField] private GameObject roulettePanel;
+
     [Header("Panel Close")]
     [SerializeField] private float closeDelay = 1f;
 
     private GameObject currentMiniGamePanel;
     private Coroutine closeCoroutine;
-
+    private MiniGameRoulette roulette;
+    private void Awake()
+    {
+        roulette = roulettePanel.GetComponent<MiniGameRoulette>();
+    }
     private void OnEnable()
     {
         if (miniGameManager != null)
         {
             miniGameManager.OnMiniGamePlayingChanged += HandleMiniGameState;
+        }
+        if (roulette != null)
+        {
+            roulette.OnRouletteFinished += StartSelectedGame;
         }
     }
 
@@ -31,6 +42,10 @@ public class MiniGameStarter : MonoBehaviour
         if (miniGameManager != null)
         {
             miniGameManager.OnMiniGamePlayingChanged -= HandleMiniGameState;
+        }
+        if (roulette != null)
+        {
+            roulette.OnRouletteFinished -= StartSelectedGame;
         }
     }
 
@@ -41,7 +56,10 @@ public class MiniGameStarter : MonoBehaviour
         {
             return;
         }
-
+        if (Random.value > 0.5f)
+        {
+            return;
+        }
         // 기존 패널 정리
         ResetPanels();
 
@@ -54,12 +72,18 @@ public class MiniGameStarter : MonoBehaviour
         currentMiniGamePanel = miniGamePanels[randomIndex];
 
         // 선택된 게임 패널 활성화
+        roulettePanel.SetActive(true);
+        roulette.StartRoulette(randomIndex);
+    }
+    private void StartSelectedGame(int gameIndex)
+    {
+        roulettePanel.SetActive(false);
+
+        currentMiniGamePanel = miniGamePanels[gameIndex];
         currentMiniGamePanel.SetActive(true);
 
-        // 미니게임 시작
         miniGameManager.StartGame();
     }
-
     private void HandleMiniGameState(bool isPlaying)
     {
         // 게임 시작 상태는 여기서 할 일 없음
@@ -91,6 +115,11 @@ public class MiniGameStarter : MonoBehaviour
         if (gamePanel != null)
         {
             gamePanel.SetActive(false);
+        }
+
+        if (roulettePanel != null)
+        {
+            roulettePanel.SetActive(false);
         }
 
         foreach (GameObject panel in miniGamePanels)
