@@ -1351,6 +1351,54 @@ MonoBehaviour:
   breadIngredientId: IG_01
   eggIngredientId: IG_04
   whiteBreadDishId: DS_01
+--- !u!1 &231957647
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 231957649}
+  - component: {fileID: 231957648}
+  m_Layer: 0
+  m_Name: LiveChat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &231957648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231957647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c351d93a0c872f7419a12ba810bc8466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LiveChat
+  _liveManager: {fileID: 1656232465}
+  _chatText: {fileID: 1467084658}
+  _chatInterval: 2
+  _maxChatCount: 5
+--- !u!4 &231957649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 231957647}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 119.47696, y: 213.91592, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254352985
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,7 +2685,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 80085410}
   m_HandleRect: {fileID: 80085409}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9921,6 +9969,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveManager
   _liveDuration: 20
+  _miniGameStarter: {fileID: 0}
+  _miniGameStartDelay: 3
 --- !u!4 &1656232466
 Transform:
   m_ObjectHideFlags: 0
@@ -13066,3 +13116,4 @@ SceneRoots:
   - {fileID: 6742647}
   - {fileID: 327620493}
   - {fileID: 858380645}
+  - {fileID: 231957649}
