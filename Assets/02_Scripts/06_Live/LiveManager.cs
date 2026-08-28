@@ -1,11 +1,17 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class LiveManager : MonoBehaviour
 {
     public static LiveManager Instance { get; private set; }
 
+    [Header("Live")]
     [SerializeField] private float _liveDuration = 20f;
+
+    [Header("Mini Game")]
+    [SerializeField] private MiniGameStarter _miniGameStarter;
+    [SerializeField] private float _miniGameStartDelay = 3f;
 
     private float _elapsedTime;
     private bool _isLive;
@@ -14,6 +20,8 @@ public class LiveManager : MonoBehaviour
     private int _totalDonation;
     private int _totalSubscribers;
     private int _totalFoodCost;
+
+    private Coroutine _miniGameCoroutine;
 
     public bool IsLive => _isLive;
     public float ElapsedTime => _elapsedTime;
@@ -85,6 +93,8 @@ public class LiveManager : MonoBehaviour
         OnLiveTimeChanged?.Invoke(0);
         OnLiveStarted?.Invoke();
 
+        StartMiniGameTimer();
+
         Debug.Log("라이브 시작!");
     }
 
@@ -94,6 +104,8 @@ public class LiveManager : MonoBehaviour
             return;
 
         _isLive = false;
+
+        StopMiniGameTimer();
 
         OnLiveStopped?.Invoke();
 
@@ -106,6 +118,8 @@ public class LiveManager : MonoBehaviour
             return;
 
         _isLive = false;
+
+        StopMiniGameTimer();
 
         CalculateLiveReward();
 
@@ -156,6 +170,40 @@ public class LiveManager : MonoBehaviour
             $"원가: {dishData.Cost} / " +
             $"누적 원가: {_totalFoodCost}"
         );
+    }
+
+    private void StartMiniGameTimer()
+    {
+        StopMiniGameTimer();
+
+        if (_miniGameStarter == null)
+        {
+            Debug.LogWarning("[LiveManager] MiniGameStarter가 연결되지 않았습니다.");
+            return;
+        }
+
+        _miniGameCoroutine = StartCoroutine(StartMiniGameAfterDelay());
+    }
+
+    private void StopMiniGameTimer()
+    {
+        if (_miniGameCoroutine == null)
+            return;
+
+        StopCoroutine(_miniGameCoroutine);
+        _miniGameCoroutine = null;
+    }
+
+    private IEnumerator StartMiniGameAfterDelay()
+    {
+        yield return new WaitForSeconds(_miniGameStartDelay);
+
+        _miniGameCoroutine = null;
+
+        if (!_isLive)
+            yield break;
+
+        _miniGameStarter.StartMiniGame();
     }
 
     private void CalculateLiveReward()

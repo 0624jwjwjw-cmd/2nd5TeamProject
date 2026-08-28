@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c04c7bd5b375d314988c88b9ebb985ee
+guid: b20525f6df1f4ae42aff0f3a3ff2a6e1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2743137252385966473
-    second: Gemini_Generated_Image_71fgtu71fgtu71fg_0
+      213: 737235505099918352
+    second: Gemini_Generated_Image_6i515i6i515i6i51-Photoroom_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,53 +96,27 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gemini_Generated_Image_71fgtu71fgtu71fg_0
+      name: Gemini_Generated_Image_6i515i6i515i6i51-Photoroom_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 2048
-        height: 2048
+        width: 1340
+        height: 2400
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 100, y: 100, z: 100, w: 100}
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 776b465e33b6ee9d0800000000000000
-      internalID: -2743137252385966473
+      spriteID: 01c494d29cf2b3a00800000000000000
+      internalID: 737235505099918352
       vertices: []
       indices: 
       edges: []
@@ -151,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: c60ed071bb129e842b124916cf3349a7
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gemini_Generated_Image_71fgtu71fgtu71fg_0: -2743137252385966473
+      Gemini_Generated_Image_6i515i6i515i6i51-Photoroom_0: 737235505099918352
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
