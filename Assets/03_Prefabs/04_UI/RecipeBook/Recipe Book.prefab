@@ -525,7 +525,6 @@ MonoBehaviour:
   questionMark: ???
   lockedRecipeText: {fileID: 7446286219099494774}
   dotedLine1: {fileID: 5726933754609806832}
-  dotedLine2: {fileID: 5469178542527752970}
 --- !u!1 &394062074735382399
 GameObject:
   m_ObjectHideFlags: 0
@@ -1428,7 +1427,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 70, y: 816}
+  m_AnchoredPosition: {x: 346, y: 816}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9125264245813489760
@@ -9404,7 +9403,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4514632254759303001
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9418,10 +9417,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8316574215418525195}
-  - {fileID: 5418887200949711627}
   - {fileID: 3877675741332813274}
   - {fileID: 4225022725988467961}
   - {fileID: 8984482061062711578}
+  - {fileID: 5418887200949711627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
