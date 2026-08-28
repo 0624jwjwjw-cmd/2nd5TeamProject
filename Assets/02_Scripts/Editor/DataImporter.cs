@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 
 public class DataImporter : EditorWindow
 {
-    //절대 틀리면 안되는 값
+    //틀리면 죽으셈
     //==============================================================================================
     private string csvFolder = "Assets/02_Scripts/Editor/CSV"; //csv 기본 볼더 경로
 
@@ -19,6 +19,7 @@ public class DataImporter : EditorWindow
     private string reciepePurchaseCsv = "ReciepePurchase.csv";
     private string studioUpgradeCsv = "StudioUpgrade.csv";
     private string kitchenUpgradeCsv = "KitchenUpgrade.csv";
+    private string inventoryUpgradeCsv = "InventoryUpgrade.csv";
 
     //에셋이 저장될 폴더 경로
     private string IngredientAssetFolder = "Assets/04_Data/01_Ingredient";
@@ -28,6 +29,7 @@ public class DataImporter : EditorWindow
     private string ReciepePurchaseAssetFolder = "Assets/04_Data/04_Upgrade/01_Reciepe";
     private string StudioUpgradeAssetFolder = "Assets/04_Data/04_Upgrade/02_Studio";
     private string KitchenUpgradeAssetFolder = "Assets/04_Data/04_Upgrade/03_Kitchen";
+    private string InventoryUpgradeAssetFolder = "Assets/04_Data/04_Upgrade/04_Inventory";
 
     private static string DishMaterialSeparator = "+";
     private static char DishMaterialAmountSeparator = 'x';
@@ -86,6 +88,10 @@ public class DataImporter : EditorWindow
         {
             ImportKitchenUpgrades();
         }
+        if (GUILayout.Button("7. 인벤토리 업그레이드 임포트", GUILayout.Height(20)))
+        {
+            ImportInventoryUpgrades();
+        }
 
         EditorGUILayout.Space(15);
 
@@ -97,6 +103,7 @@ public class DataImporter : EditorWindow
             ImportReciepePurchases();
             ImportStudioUpgrades();
             ImportKitchenUpgrades();
+            ImportInventoryUpgrades();
         }
     }
     private static T FindOrCreateAsset<T>(string folder, string id) where T : ScriptableObject //에셋을 찾거나 없으면 생성하는 메서드
@@ -386,7 +393,30 @@ public class DataImporter : EditorWindow
         AssetDatabase.SaveAssets(); //저장
         AssetDatabase.Refresh(); //갱신
     }
+    private void ImportInventoryUpgrades()
+    {
+        string path = CsvPath(inventoryUpgradeCsv);
+        if(!File.Exists(path))
+        {
+            return;
+        }
+        List<Dictionary<string, string>> rows = CSVParser.ParseWithHeader(path);
 
+        foreach(Dictionary<string, string> row in rows)
+        {
+            string id = CSVParser.Get(row, "ID");
+            if(string.IsNullOrEmpty(id))
+            {
+                continue;
+            }
+            InventoryUpgradeData data = FindOrCreateAsset<InventoryUpgradeData>(InventoryUpgradeAssetFolder, id);
+            data.SetData(id, CSVParser.GetInt(row, "Lv"), CSVParser.GetInt(row, "가격"), CSVParser.GetInt(row, "최대보유량"));
+
+            EditorUtility.SetDirty(data);
+        }
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+    }
     private void DeletAllData() //SO 다 삭제하기
     {
         bool confirm = EditorUtility.DisplayDialog("데이터 삭제 경고", "모든 SO 데이터를 삭제하시겠습니까?","예","취소");
