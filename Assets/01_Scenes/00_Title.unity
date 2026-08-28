@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 786998253}
   - component: {fileID: 786998252}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeartManager
   maxHeart: 10
-  recoverTime: 60
+  recoverTime: 300
 --- !u!4 &830675669
 Transform:
   m_ObjectHideFlags: 0
