@@ -30,7 +30,7 @@ public class MiniGameRoulette : MonoBehaviour
     private IEnumerator RouletteRoutine()
     {
         float elapsedTime = 0f;
-        SoundManager.Instance.PlaySFX(SFXType.MRulette);
+
         while (elapsedTime < rouletteTime)
         {
             ShowRandomImage();
