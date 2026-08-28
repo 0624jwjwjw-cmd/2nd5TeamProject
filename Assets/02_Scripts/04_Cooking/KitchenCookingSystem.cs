@@ -10,37 +10,62 @@ public class KitchenCookingSystem : MonoBehaviour
 
     [SerializeField] private KitchenCookResult cookResult;
 
+    [SerializeField] private string burnedDishID = "BD_01";
+    [SerializeField] private string trashDishID = "TD_01";
+
     public void StartCook()
     {
+        for(int i=0; i<kitchenCookingSlotManager.slots.Count; i++)
+        {
+            Debug.Log($"{kitchenCookingSlotManager.slots[i].ingredientID}");
+            Debug.Log($"{kitchenCookingSlotManager.slots[i].count}");
+        }
+
+        bool isAllNull = true;
+        foreach(KitchenCookSlotItem kitchenCookSlotItem in kitchenCookingSlotManager.slots)
+        {
+            if(kitchenCookSlotItem != null && kitchenCookSlotItem.ingredientID != null)
+            {
+                isAllNull = false;
+                break;
+            }
+        }
+        if(isAllNull)
+        {
+            return; 
+        }
+
         string resultDishID = FindMatchingDish();
+
+        Debug.Log($"resultDishID = {resultDishID}");
 
         if (resultDishID == null)
         {
             cookResult.gameObject.SetActive(true);
-            //cookResult.SetResultDishInfo(음식물쓰레기 ID);
-            //InventoryManager.Instance.AddItem(음식물쓰레기ID, 1, ItemType.Dish);
+            cookResult.SetResultDishInfo(trashDishID);
+            InventoryManager.Instance.AddItem(trashDishID, 1, ItemType.Dish);
         }
         else
         {
             if (!ReciepeUnlockManager.Instance.IsUnlocked(resultDishID))
             {
                 cookResult.gameObject.SetActive(true);
-                //cookResult.SetResultDishInfo(탄음식 ID);
-                //InventoryManager.Instance.AddItem(탄음식ID, 1, ItemType.Dish);
+                cookResult.SetResultDishInfo(burnedDishID);
+                InventoryManager.Instance.AddItem(burnedDishID, 1, ItemType.Dish);
             }
             else
             {
                 if (Random.Range(0, 100) < specialRate)
                 {
-                    //resultDishID를 가지고 매칭되는 specialDishID를 가져오는 로직
+                    string specialDishID = FindMatchingSpecialDish(resultDishID);
                     cookResult.gameObject.SetActive(true);
-                    //cookResult.SetResultSpecialDishInfo(특별한음식 ID);
-                    //InventoryManager.Instance.AddItem(특별한음식ID, 1, ItemType.Dish);
+                    cookResult.SetResultSpecialDishInfo(specialDishID);
+                    InventoryManager.Instance.AddItem(specialDishID, 1, ItemType.SpecialDish);
                 }
                 else
                 {
                     cookResult.gameObject.SetActive(true);
-                    //cookResult.SetResultDishInfo(음식 ID);
+                    cookResult.SetResultDishInfo(resultDishID);
                     InventoryManager.Instance.AddItem(resultDishID, 1, ItemType.Dish);
                 }
             }
@@ -102,5 +127,38 @@ public class KitchenCookingSystem : MonoBehaviour
             }
         }
         return null;
+    }
+    private string FindMatchingSpecialDish(string normalDishID)
+    {
+        if (!GameDataRepository.Instance.TryGetDish(normalDishID, out DishData normalDish))
+            return null;
+
+        foreach (KeyValuePair<string, DishData> kvp in GameDataRepository.Instance.specialDishLookup)
+        {
+            DishData specialDish = kvp.Value;
+
+            if (HasSameMaterials(normalDish, specialDish))
+            {
+                return kvp.Key;
+            }
+        }
+
+        return null;
+    }
+
+    private bool HasSameMaterials(DishData dishA, DishData dishB)
+    {
+        if (dishA.Materials.Length != dishB.Materials.Length)
+            return false;
+
+        for (int i = 0; i < dishA.Materials.Length; i++)
+        {
+            if (dishA.Materials[i].IngredientData.ID != dishB.Materials[i].IngredientData.ID ||
+                dishA.Materials[i].Amount != dishB.Materials[i].Amount)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

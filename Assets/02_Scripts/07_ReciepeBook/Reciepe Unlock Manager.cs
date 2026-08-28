@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class ReciepeUnlockManager : MonoBehaviour
 
     [SerializeField] public HashSet<string> unlockedRecipeIDs = new HashSet<string>();
 
+    public event Action OnUnlockChanged;
     private void Awake()
     {
         if(Instance != null && Instance != this)
@@ -19,6 +21,9 @@ public class ReciepeUnlockManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        ///////////////////////////////////
+        //TestAllUnlock();
     }
     public bool IsUnlocked(string foodID)
     {
@@ -33,21 +38,22 @@ public class ReciepeUnlockManager : MonoBehaviour
                 unlockedRecipeIDs.Add(foodID);
             }
         }
+        OnUnlockChanged?.Invoke();
     }
-    public void TestUnlockRandomOne()
-    {
-        if (unlockedRecipeIDs.Count >= dishBases.Count)
-        {
-            return;
-        }
-
-        string id = dishBases[Random.Range(0, dishBases.Count)].ID;
-        if(unlockedRecipeIDs.Contains(id))
-        {
-            TestUnlockRandomOne();
-        }
-        unlockedRecipeIDs.Add(id);
-    }
+    //public void TestUnlockRandomOne()
+    //{
+    //    if (unlockedRecipeIDs.Count >= dishBases.Count)
+    //    {
+    //        return;
+    //    }
+    //    /////////////////
+    //    string id = dishBases[Random.Range(0, dishBases.Count)].ID;
+    //    if(unlockedRecipeIDs.Contains(id))
+    //    {
+    //        TestUnlockRandomOne();
+    //    }
+    //    unlockedRecipeIDs.Add(id);
+    //}
     public void TestAllUnlock()
     {
         if (unlockedRecipeIDs.Count >= dishBases.Count)
