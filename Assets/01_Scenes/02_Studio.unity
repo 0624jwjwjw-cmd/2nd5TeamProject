@@ -1621,8 +1621,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279512410
+  m_fontColor: {r: 0.3529412, g: 0.1764706, b: 0.078431375, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1930,51 +1930,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 322295618}
   m_CullTransparentMesh: 1
---- !u!1 &327620491
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 327620493}
-  - component: {fileID: 327620492}
-  m_Layer: 0
-  m_Name: GeminiChatTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &327620492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327620491}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5499366d059246c4e9bb83be3bcf43a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GeminiChatTest
-  _apiKey: 
---- !u!4 &327620493
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 327620491}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 173.07877, y: 237.00577, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357985285
 GameObject:
   m_ObjectHideFlags: 0
@@ -3103,11 +3058,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb99a17a700e9543814350b67530a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CoinGameManager
-  gameDuration: 15
+  gameDuration: 12
   scoreText: {fileID: 1242993095}
   timeText: {fileID: 1131171931}
   totalPanel: {fileID: 757357957}
-  totalPoint: {fileID: 1242993095}
+  totalPoint: {fileID: 1774337313}
 --- !u!114 &508010012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3121,7 +3076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.7882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3801,9 +3756,6 @@ RectTransform:
   - {fileID: 1424369494}
   - {fileID: 1466981971}
   - {fileID: 322295619}
-  - {fileID: 508010010}
-  - {fileID: 757357961}
-  - {fileID: 1131379520}
   - {fileID: 1243899651}
   - {fileID: 753678046}
   - {fileID: 1257491656}
@@ -3811,6 +3763,9 @@ RectTransform:
   - {fileID: 527129526}
   - {fileID: 1362255172}
   - {fileID: 939662707}
+  - {fileID: 508010010}
+  - {fileID: 757357961}
+  - {fileID: 1131379520}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5641,7 +5596,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &939662707
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5674,7 +5629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97fe3ec584000b14c9bb7ce3fe83d85a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveResultUI
-  liveManager: {fileID: 0}
+  liveManager: {fileID: 1656232465}
   panel: {fileID: 1569377813}
   donationText: {fileID: 943033619}
   subscriberText: {fileID: 321252275}
@@ -5745,8 +5700,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4279512410
+  m_fontColor: {r: 0.3529412, g: 0.1764706, b: 0.078431375, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -7771,7 +7726,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 7968904927735349844, guid: 842c93910b051bc4291e9d636f7d1c5d, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7830,7 +7785,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: -600}
+  m_AnchoredPosition: {x: 200, y: -600}
   m_SizeDelta: {x: 450, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1257491657
@@ -9261,7 +9216,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0.3529412, g: 0.1764706, b: 0.078431375, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -9278,15 +9233,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 44
-  m_fontSizeBase: 44
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
-  m_VerticalAlignment: 512
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 1024
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -9763,7 +9718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9882353, g: 0.9098039, b: 0.8, a: 0.392}
+  m_Color: {r: 0.9882353, g: 0.9098039, b: 0.8, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -10081,7 +10036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveManager
   _liveDuration: 20
-  _miniGameStarter: {fileID: 0}
+  _miniGameStarter: {fileID: 1320289337}
   _miniGameStartDelay: 3
 --- !u!4 &1656232466
 Transform:
@@ -11344,10 +11299,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveUI
   _liveManager: {fileID: 1656232465}
-  _startButton: {fileID: 0}
-  _startButtonText: {fileID: 0}
-  _liveStatusText: {fileID: 0}
-  _liveTimerText: {fileID: 0}
+  _startButton: {fileID: 1949847755}
+  _startButtonText: {fileID: 19274786}
+  _liveStatusText: {fileID: 1878839606}
+  _liveTimerText: {fileID: 925807312}
 --- !u!1 &1844216821
 GameObject:
   m_ObjectHideFlags: 0
@@ -12117,7 +12072,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -150}
-  m_SizeDelta: {x: 150, y: 50}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1954688485
 MonoBehaviour:
@@ -12176,7 +12131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.99607843, g: 0.7647059, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -12955,7 +12910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveChat
   _liveManager: {fileID: 1656232465}
-  _chatText: {fileID: 0}
+  _chatText: {fileID: 1467084658}
   _chatInterval: 2
   _maxChatCount: 5
 --- !u!1 &2061314944
@@ -13272,6 +13227,5 @@ SceneRoots:
   - {fileID: 10549956}
   - {fileID: 618827482}
   - {fileID: 6742647}
-  - {fileID: 327620493}
   - {fileID: 858380645}
   - {fileID: 231957649}
