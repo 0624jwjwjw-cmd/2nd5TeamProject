@@ -74,11 +74,12 @@ public class StudioSelectPanel : MonoBehaviour
         );
     }
 
-    private void ApplyStudio()
+    public void ApplyStudio()
     {
         if (_studioSprites.Length == 0)
             return;
 
+        _studioBackground.gameObject.SetActive(true);
         _studioBackground.sprite = _studioSprites[_currentIndex];
 
         ClosePanel();
