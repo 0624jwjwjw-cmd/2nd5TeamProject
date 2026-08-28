@@ -13,7 +13,7 @@ public class InventoryManager : MonoBehaviour
     public static InventoryManager Instance { get; private set; }
 
     [Header("인벤토리 설정")]
-    [Min(1)][SerializeField] private int maxStackSize = 99; //슬롯당 1 ~ 99로 기본값 설정
+    [Min(1)][SerializeField] private int maxStackSize = 100; //슬롯당 1 ~ 100로 기본값 설정
 
     [Header("현재 인벤토리 데이터")]
     //InventorySlotData를 여러 개 보관하는 실제 인벤토리 목록
@@ -33,7 +33,14 @@ public class InventoryManager : MonoBehaviour
     //프로퍼티
     //IReadOnlyList로 제공하기 때문에
     public IReadOnlyList<InventorySlotData> Slots => slots; //slots.Add()나 slots.Remove()직접 호출 불가
-    public int MaxStackSize => maxStackSize;                //최대 스택 수량 외부에 제공
+       
+    //*외부 시스템에서 최대 스택 수량을 확인하거나 변경*
+    public int MaxStackSize
+    {
+        get => maxStackSize;
+        set => maxStackSize = Mathf.Max(1, value);
+    }
+
     public int SlotCount => slots.Count;                    //슬롯 개수 외부에 제공
 
     private void Awake()
