@@ -1310,7 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HeartManager
   maxHeart: 10
-  recoverTime: 60
+  recoverTime: 300
 --- !u!4 &830675669
 Transform:
   m_ObjectHideFlags: 0
