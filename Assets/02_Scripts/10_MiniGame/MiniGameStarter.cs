@@ -63,8 +63,7 @@ public class MiniGameStarter : MonoBehaviour
         // 기존 패널 정리
         ResetPanels();
 
-        // 전체 게임 패널 활성화
-        gamePanel.SetActive(true);
+
 
         // 3개 중 하나 랜덤 선택
         int randomIndex = Random.Range(0, miniGamePanels.Length);
@@ -79,6 +78,7 @@ public class MiniGameStarter : MonoBehaviour
     {
         roulettePanel.SetActive(false);
 
+        gamePanel.SetActive(true);
         currentMiniGamePanel = miniGamePanels[gameIndex];
         currentMiniGamePanel.SetActive(true);
 
