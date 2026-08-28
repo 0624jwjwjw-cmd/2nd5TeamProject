@@ -16,10 +16,8 @@ public class RecipeBookSlotUI : MonoBehaviour
     {
         image.sprite = dishBase.spriteRenderer.sprite;
         originColor = dishBase.spriteRenderer.color;
-
-        RecipeStateManage();
     }
-    private void Update()
+    private void OnEnable()
     {
         RecipeStateManage();
     }

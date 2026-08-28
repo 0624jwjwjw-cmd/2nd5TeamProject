@@ -21,6 +21,20 @@ public class KitchenCookingSystem : MonoBehaviour
             Debug.Log($"{kitchenCookingSlotManager.slots[i].count}");
         }
 
+        bool isAllNull = true;
+        foreach(KitchenCookSlotItem kitchenCookSlotItem in kitchenCookingSlotManager.slots)
+        {
+            if(kitchenCookSlotItem != null && kitchenCookSlotItem.ingredientID != null)
+            {
+                isAllNull = false;
+                break;
+            }
+        }
+        if(isAllNull)
+        {
+            return; 
+        }
+
         string resultDishID = FindMatchingDish();
 
         Debug.Log($"resultDishID = {resultDishID}");
@@ -43,11 +57,10 @@ public class KitchenCookingSystem : MonoBehaviour
             {
                 if (Random.Range(0, 100) < specialRate)
                 {
-                    //resultDishID를 가지고 매칭되는 specialDishID를 가져오는 로직\
-                    //string specialDishID = 
+                    string specialDishID = FindMatchingSpecialDish(resultDishID);
                     cookResult.gameObject.SetActive(true);
-                    //cookResult.SetResultSpecialDishInfo(specialDishID);
-                    //InventoryManager.Instance.AddItem(specialDishID, 1, ItemType.Dish);
+                    cookResult.SetResultSpecialDishInfo(specialDishID);
+                    InventoryManager.Instance.AddItem(specialDishID, 1, ItemType.SpecialDish);
                 }
                 else
                 {
@@ -114,5 +127,38 @@ public class KitchenCookingSystem : MonoBehaviour
             }
         }
         return null;
+    }
+    private string FindMatchingSpecialDish(string normalDishID)
+    {
+        if (!GameDataRepository.Instance.TryGetDish(normalDishID, out DishData normalDish))
+            return null;
+
+        foreach (KeyValuePair<string, DishData> kvp in GameDataRepository.Instance.specialDishLookup)
+        {
+            DishData specialDish = kvp.Value;
+
+            if (HasSameMaterials(normalDish, specialDish))
+            {
+                return kvp.Key;
+            }
+        }
+
+        return null;
+    }
+
+    private bool HasSameMaterials(DishData dishA, DishData dishB)
+    {
+        if (dishA.Materials.Length != dishB.Materials.Length)
+            return false;
+
+        for (int i = 0; i < dishA.Materials.Length; i++)
+        {
+            if (dishA.Materials[i].IngredientData.ID != dishB.Materials[i].IngredientData.ID ||
+                dishA.Materials[i].Amount != dishB.Materials[i].Amount)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
