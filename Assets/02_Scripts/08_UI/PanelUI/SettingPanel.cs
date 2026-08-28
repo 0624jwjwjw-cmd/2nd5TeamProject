@@ -20,6 +20,7 @@ public class SettingPenel : MonoBehaviour
     }
     public void OpenPanel()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         settingPanel.SetActive(true);
         if (darkPanel != null)
         {
@@ -28,6 +29,7 @@ public class SettingPenel : MonoBehaviour
     }
     public void ClosePanel()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         settingPanel.SetActive(false);
         if (darkPanel != null)
         {
