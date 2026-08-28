@@ -5,9 +5,12 @@ using TMPro;
 public class CharacterSelectPanel : MonoBehaviour
 {
     [SerializeField] private Image _characterImage;
+    [SerializeField] private Image _characterDisplay;
+
     [SerializeField] private Button _prevButton;
     [SerializeField] private Button _nextButton;
     [SerializeField] private Button _closeButton;
+    [SerializeField] private Button _applyButton;
 
     [SerializeField] private TMP_Text _characterNameText;
     [SerializeField] private TMP_Text _characterDescriptionText;
@@ -29,11 +32,7 @@ public class CharacterSelectPanel : MonoBehaviour
         _prevButton.onClick.AddListener(ShowPrevious);
         _nextButton.onClick.AddListener(ShowNext);
         _closeButton.onClick.AddListener(ClosePanel);
-    }
-
-    public void OpenPanel()
-    {
-        gameObject.SetActive(true);
+        _applyButton.onClick.AddListener(ApplyCharacter);
     }
 
     private void ShowPrevious()
@@ -75,8 +74,24 @@ public class CharacterSelectPanel : MonoBehaviour
         );
     }
 
+    public void ApplyCharacter()
+    {
+        if (_characterSprites.Length == 0)
+            return;
+
+        _characterDisplay.gameObject.SetActive(true);
+        _characterDisplay.sprite = _characterSprites[_currentIndex];
+
+        ClosePanel();
+    }
+
     private void ClosePanel()
     {
         gameObject.SetActive(false);
+    }
+
+    public void OpenPanel()
+    {
+        gameObject.SetActive(true);
     }
 }

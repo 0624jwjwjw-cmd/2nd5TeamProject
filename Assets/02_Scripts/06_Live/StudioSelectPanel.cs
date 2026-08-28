@@ -5,9 +5,12 @@ using TMPro;
 public class StudioSelectPanel : MonoBehaviour
 {
     [SerializeField] private Image _studioImage;
+    [SerializeField] private Image _studioBackground;
+
     [SerializeField] private Button _prevButton;
     [SerializeField] private Button _nextButton;
     [SerializeField] private Button _closeButton;
+    [SerializeField] private Button _applyButton;
 
     [SerializeField] private TMP_Text _studioNameText;
     [SerializeField] private TMP_Text _studioDescriptionText;
@@ -29,6 +32,7 @@ public class StudioSelectPanel : MonoBehaviour
         _prevButton.onClick.AddListener(ShowPrevious);
         _nextButton.onClick.AddListener(ShowNext);
         _closeButton.onClick.AddListener(ClosePanel);
+        _applyButton.onClick.AddListener(ApplyStudio);
     }
 
     private void ShowPrevious()
@@ -70,10 +74,22 @@ public class StudioSelectPanel : MonoBehaviour
         );
     }
 
+    public void ApplyStudio()
+    {
+        if (_studioSprites.Length == 0)
+            return;
+
+        _studioBackground.gameObject.SetActive(true);
+        _studioBackground.sprite = _studioSprites[_currentIndex];
+
+        ClosePanel();
+    }
+
     private void ClosePanel()
     {
         gameObject.SetActive(false);
     }
+
     public void OpenPanel()
     {
         gameObject.SetActive(true);
