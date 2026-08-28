@@ -15,6 +15,8 @@ public class RecipePurchaseSlot : MonoBehaviour
 
     [SerializeField] private string tryPurchase = "구매하기";
     [SerializeField] private string completePurchase = "구매완료";
+
+    [SerializeField] private RecipeShotDetailUI recipeShotDetailUI;
     private void Awake()
     {
         recipeNameText.text = reciepePurchaseData.ReciepeName;
@@ -23,6 +25,11 @@ public class RecipePurchaseSlot : MonoBehaviour
     private void OnEnable()
     {
         StartCoroutine(WaitManager());
+        ReciepeUnlockManager.Instance.OnUnlockChanged += CheckPurchase;
+    }
+    private void OnDisable()
+    {
+        ReciepeUnlockManager.Instance.OnUnlockChanged -= CheckPurchase;
     }
     public void OnClickRecipePurchaseButton()
     {
@@ -33,6 +40,7 @@ public class RecipePurchaseSlot : MonoBehaviour
     }
     private void CheckPurchase()
     {
+
         if (ReciepeUnlockManager.Instance.IsUnlocked(reciepePurchaseData.FoodID))
         {
             purchaseButton.interactable = false;
@@ -51,5 +59,9 @@ public class RecipePurchaseSlot : MonoBehaviour
             yield return null;
         }
         CheckPurchase();
+    }
+    public void OnclickRecipeImage()
+    {
+        recipeShotDetailUI.OpenDetail(reciepePurchaseData);
     }
 }

@@ -54,8 +54,19 @@ public class KitchenCookingSlotManager : MonoBehaviour
         emptySlot.gameObject.SetActive(true);
         emptySlot.SetIngredient(ingredientID);
 
-        int index = System.Array.IndexOf(solidSlotUIs, emptySlot);
-        dashedSlotUIs[index].SetActive(false);
+        int index = -1;
+        for (int i = 0; i < solidSlotUIs.Length; i++)
+        {
+            if (solidSlotUIs[i] == emptySlot)
+            {
+                index = i;
+                break;
+            }
+        }
+        if (index != -1)
+        {
+            dashedSlotUIs[index].SetActive(false);
+        }
     }
 
     public void ClearSlots()

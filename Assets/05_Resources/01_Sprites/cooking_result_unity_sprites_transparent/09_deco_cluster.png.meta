@@ -1,0 +1,689 @@
+fileFormatVersion: 2
+guid: b0204fc92c2359f4bab9c7a673f66621
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5715928586925364889
+    second: 09_deco_cluster_0
+  - first:
+      213: 476004269716200448
+    second: 09_deco_cluster_1
+  - first:
+      213: 6154841502109720335
+    second: 09_deco_cluster_2
+  - first:
+      213: -8685256243083393530
+    second: 09_deco_cluster_3
+  - first:
+      213: 7636008216520345552
+    second: 09_deco_cluster_4
+  - first:
+      213: 4328884196753196513
+    second: 09_deco_cluster_5
+  - first:
+      213: 8185264872113196564
+    second: 09_deco_cluster_6
+  - first:
+      213: -5283902456093047957
+    second: 09_deco_cluster_7
+  - first:
+      213: 2119086195896145164
+    second: 09_deco_cluster_8
+  - first:
+      213: 6037136957971600672
+    second: 09_deco_cluster_9
+  - first:
+      213: 4978069329018844175
+    second: 09_deco_cluster_10
+  - first:
+      213: -1407896609490774783
+    second: 09_deco_cluster_11
+  - first:
+      213: 6788210534474211985
+    second: 09_deco_cluster_12
+  - first:
+      213: 9017003416559530079
+    second: 09_deco_cluster_13
+  - first:
+      213: -4434590569931230476
+    second: 09_deco_cluster_14
+  - first:
+      213: -7839534317122598674
+    second: 09_deco_cluster_15
+  - first:
+      213: 4172094318284436224
+    second: 09_deco_cluster_16
+  - first:
+      213: 8165035386355980941
+    second: 09_deco_cluster_17
+  - first:
+      213: 7299298323096934637
+    second: 09_deco_cluster_18
+  - first:
+      213: -1522913404029032880
+    second: 09_deco_cluster_19
+  - first:
+      213: -7097475532962141674
+    second: 09_deco_cluster_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: 09_deco_cluster_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 385
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 996df29f3ce035f40800000000000000
+      internalID: 5715928586925364889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_1
+      rect:
+        serializedVersion: 2
+        x: 156
+        y: 372
+        width: 147
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00cd0008c5b1b9600800000000000000
+      internalID: 476004269716200448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 292
+        width: 80
+        height: 77
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0fd4168cb36a6550800000000000000
+      internalID: 6154841502109720335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_3
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 324
+        width: 36
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60645cf9675c77780800000000000000
+      internalID: -8685256243083393530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_4
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 301
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d7c8aff30d88f960800000000000000
+      internalID: 7636008216520345552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_5
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 298
+        width: 67
+        height: 72
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e5c645dd39431c30800000000000000
+      internalID: 4328884196753196513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_6
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 236
+        width: 36
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41e4ac6a807e79170800000000000000
+      internalID: 8185264872113196564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 260
+        width: 51
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6382c426becba6b0800000000000000
+      internalID: -5283902456093047957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_8
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 252
+        width: 67
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c05d2d2faa1886d10800000000000000
+      internalID: 2119086195896145164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_9
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 244
+        width: 42
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0259740c31838c350800000000000000
+      internalID: 6037136957971600672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_10
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 246
+        width: 46
+        height: 69
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f047f670ea7a51540800000000000000
+      internalID: 4978069329018844175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_11
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 193
+        width: 40
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10553d63e75267ce0800000000000000
+      internalID: -1407896609490774783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_12
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 196
+        width: 40
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 19266eff381943e50800000000000000
+      internalID: 6788210534474211985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_13
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 112
+        width: 112
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f50b38e45d4d22d70800000000000000
+      internalID: 9017003416559530079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_14
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 214
+        width: 35
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f2b3f24f5b2572c0800000000000000
+      internalID: -4434590569931230476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_15
+      rect:
+        serializedVersion: 2
+        x: 278
+        y: 102
+        width: 132
+        height: 136
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee84c6ff211643390800000000000000
+      internalID: -7839534317122598674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_16
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 134
+        width: 38
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 003f4c28da146e930800000000000000
+      internalID: 4172094318284436224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_17
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 91
+        width: 46
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8a1e367c68005170800000000000000
+      internalID: 8165035386355980941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_18
+      rect:
+        serializedVersion: 2
+        x: 45
+        y: 17
+        width: 178
+        height: 85
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de81cc9c6215c4560800000000000000
+      internalID: 7299298323096934637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_19
+      rect:
+        serializedVersion: 2
+        x: 238
+        y: 6
+        width: 83
+        height: 99
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0562b29e3568ddae0800000000000000
+      internalID: -1522913404029032880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 09_deco_cluster_20
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 18
+        width: 78
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61ae3c75b93b08d90800000000000000
+      internalID: -7097475532962141674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      09_deco_cluster_0: 5715928586925364889
+      09_deco_cluster_1: 476004269716200448
+      09_deco_cluster_10: 4978069329018844175
+      09_deco_cluster_11: -1407896609490774783
+      09_deco_cluster_12: 6788210534474211985
+      09_deco_cluster_13: 9017003416559530079
+      09_deco_cluster_14: -4434590569931230476
+      09_deco_cluster_15: -7839534317122598674
+      09_deco_cluster_16: 4172094318284436224
+      09_deco_cluster_17: 8165035386355980941
+      09_deco_cluster_18: 7299298323096934637
+      09_deco_cluster_19: -1522913404029032880
+      09_deco_cluster_2: 6154841502109720335
+      09_deco_cluster_20: -7097475532962141674
+      09_deco_cluster_3: -8685256243083393530
+      09_deco_cluster_4: 7636008216520345552
+      09_deco_cluster_5: 4328884196753196513
+      09_deco_cluster_6: 8185264872113196564
+      09_deco_cluster_7: -5283902456093047957
+      09_deco_cluster_8: 2119086195896145164
+      09_deco_cluster_9: 6037136957971600672
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

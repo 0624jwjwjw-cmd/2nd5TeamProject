@@ -22,6 +22,8 @@ public class RecipeDetailUI : MonoBehaviour
     [SerializeField] private string questionMark = "???";
     [SerializeField] private TMP_Text lockedRecipeText;
 
+    [SerializeField] private Image dotedLine1;
+    //[SerializeField] private Image dotedLine2;
     private void Awake()
     {
         ResetDish();
@@ -32,6 +34,8 @@ public class RecipeDetailUI : MonoBehaviour
     }
     public void LockedDish(DishBase dishBase)
     {
+        dotedLine1.gameObject.SetActive(false);
+        //dotedLine2.gameObject.SetActive(false);
         image.sprite = dishBase.spriteRenderer.sprite;
         image.color = lockedColor;
         lockedImage.gameObject.SetActive(true);
@@ -54,6 +58,8 @@ public class RecipeDetailUI : MonoBehaviour
     }
     public void UnlockedDish(DishBase dishBase)
     {
+        dotedLine1.gameObject.SetActive(true);
+        //dotedLine2.gameObject.SetActive(true);
         for (int i = 0; i < materialName.Length; i++)
         {
             materialName[i].text = "";
@@ -111,5 +117,7 @@ public class RecipeDetailUI : MonoBehaviour
         infoText.text = "";
         lockedImage.gameObject.SetActive(false);
         lockedRecipeText.gameObject.SetActive(false);
+        dotedLine1.gameObject.SetActive(false);
+        //dotedLine2.gameObject.SetActive(false);
     }
 }

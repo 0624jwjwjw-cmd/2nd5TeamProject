@@ -16,10 +16,11 @@ public class KitchenInventorySlot : MonoBehaviour
     private string slotID;
     public void OnEnable()
     {
-        ClearSlot();
+        ResetSlot();
     }
     public void SetSlot(InventorySlotData inventorySlotData)
     {
+        gameObject.SetActive(true);
         slotID = inventorySlotData.ItemId;
 
         image.gameObject.SetActive(true);
@@ -29,10 +30,6 @@ public class KitchenInventorySlot : MonoBehaviour
         if (ItemVisualRepository.Instance.TryGetIcon(inventorySlotData.ItemId, out Sprite icon))
         {
             image.sprite = icon;
-        }
-        else
-        {
-            Debug.Log("아이콘 없는디");
         }
 
         if (inventorySlotData.ItemType == ItemType.Ingredient)
@@ -61,7 +58,7 @@ public class KitchenInventorySlot : MonoBehaviour
         amount = inventorySlotData.Amount;
         amountText.text = amount.ToString();
     }
-    public void ClearSlot()
+    public void ResetSlot()
     {
         slotID = "";
         image.gameObject.SetActive(false);
@@ -72,6 +69,11 @@ public class KitchenInventorySlot : MonoBehaviour
         nameText.text = "";
         amount = 0;
         amountText.text = "";
+    }
+    public void ClearSlot()
+    {
+        ResetSlot();
+        gameObject.SetActive(false);
     }
     public void OnClickSlot()
     {
