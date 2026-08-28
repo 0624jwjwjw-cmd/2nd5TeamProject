@@ -607,7 +607,7 @@ public class InventoryManager : MonoBehaviour
     //**개발 테스트용**
     //InventoryManager 컴포넌트의 점세개 메뉴에서 실행할 수 있음
     [ContextMenu("DEBUG/모든 아이템 10개 추가")]
-    private void DebugAddAllItems()
+    public void DebugAddAllItems()
     {
         //게임 실행 중에만 사용
         if (!Application.isPlaying)
