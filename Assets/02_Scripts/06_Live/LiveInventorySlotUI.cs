@@ -1,4 +1,5 @@
 //**스튜디오의 인벤토리에서 음식 하나를 표시하는 슬롯 UI**
+using System;                   //Action 이벤트 사용
 using UnityEngine;
 using UnityEngine.EventSystems; //IBeginDragHandler, PointerEventData 사용
 using UnityEngine.UI;           //Image 사용
@@ -17,6 +18,12 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandle
     private GameObject _dragIconObject;             //드래그 중 화면 최상단에 생성되는 음식 아이콘 오브젝트
     private RectTransform _dragIconRectTransform;   //드래그 아이콘의 위치와 크기를 조절하는 RectTransform
     private Canvas _rootCanvas;                     //현재 UI가 들어 있는 최상위 Canvas
+
+    //*음식 드래그 상태 알림*
+    //음식 드래그가 시작되거나 종료됐음을 Dish UI에 알리는 이벤트
+    public static event Action<bool> OnFoodDragStateChanged;
+    //현재 이 슬롯이 실제로 드래그 중인지 저장
+    private bool _isDragging;
 
     //프로퍼티
     public string ItemId => _itemId;
@@ -82,6 +89,17 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandle
 
         //드래그 중 보여줄 음식 아이콘 생성
         CreateDragVisual();
+
+        //Canvas를 찾지 못하는 등의 이유로
+        //드래그 아이콘 생성에 실패했다면 드래그 시작으로 처리하지 않음
+        if (_dragIconRectTransform == null) return;
+        
+        //현재 슬롯이 드래그 중임을 저장
+        _isDragging = true;
+
+        //이 이벤트를 구독 중인 Dish들에게
+        //음식 드래그가 시작됐다고 알림
+        OnFoodDragStateChanged?.Invoke(true);
 
         //생성된 아이콘을 현재 터치 위치로 이동
         UpdateDragVisualPosition(eventData);
@@ -200,6 +218,12 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandle
     //*화면에 남아 있는 임시 드래그 아이콘 제거* (새로 추가)
     public void CancelDragVisual()
     {
+        //이 슬롯이 실제로 드래그 중이었는지 먼저 저장
+        bool wasDragging = _isDragging;
+
+        //현재 드래그 상태 종료
+        _isDragging = false;
+
         //드래그 아이콘 오브젝트가 존재하면 제거
         if (_dragIconObject != null)
         {
@@ -213,8 +237,14 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandle
         _dragIconObject = null;
         _dragIconRectTransform = null;
         _rootCanvas = null;
-    }
 
+        //실제로 드래그 중이었던 슬롯만 종료 이벤트 발생
+        //빈 슬롯 Clear 등으로 잘못된 종료 이벤트가 발생하는 것을 방지
+        if (wasDragging)
+        {
+            OnFoodDragStateChanged?.Invoke(false);
+        }
+    }
 
     //*인벤토리 갱신으로 슬롯이 비활성화될 때 호출* (새로 추가)
     private void OnDisable()

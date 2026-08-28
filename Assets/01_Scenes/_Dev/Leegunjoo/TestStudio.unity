@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 66582721}
   - component: {fileID: 66582720}
   - component: {fileID: 66582718}
+  - component: {fileID: 66582722}
   m_Layer: 0
   m_Name: Dish 2
   m_TagString: Untagged
@@ -388,6 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodImage: {fileID: 466158672}
 --- !u!224 &66582719
 RectTransform:
   m_ObjectHideFlags: 0
@@ -421,14 +423,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.99607843, g: 0.7647059, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8699466189890537625, guid: ddb643696f05c4245af5c881977d6de8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce0e17c2715a644d0bd484f8013ed6bf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -446,6 +448,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66582717}
   m_CullTransparentMesh: 1
+--- !u!114 &66582722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66582717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0fe9d85469f7a418ac2d86ffeca6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodPlaceDropHandler
+  _foodPlace: {fileID: 66582718}
+  _controller: {fileID: 1734525541}
+  _foodArea: {fileID: 1542253492}
+  _dropGuideImage: {fileID: 0}
+  _dropGuideVisibleAlpha: 1
 --- !u!1 &107876285
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +554,7 @@ GameObject:
   - component: {fileID: 148139422}
   - component: {fileID: 148139421}
   - component: {fileID: 148139419}
+  - component: {fileID: 148139423}
   m_Layer: 0
   m_Name: Dish 1
   m_TagString: Untagged
@@ -554,6 +574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodImage: {fileID: 850786554}
 --- !u!224 &148139420
 RectTransform:
   m_ObjectHideFlags: 0
@@ -587,14 +608,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.99607843, g: 0.7647059, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8699466189890537625, guid: ddb643696f05c4245af5c881977d6de8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce0e17c2715a644d0bd484f8013ed6bf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -612,6 +633,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148139418}
   m_CullTransparentMesh: 1
+--- !u!114 &148139423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148139418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0fe9d85469f7a418ac2d86ffeca6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodPlaceDropHandler
+  _foodPlace: {fileID: 148139419}
+  _controller: {fileID: 1734525541}
+  _foodArea: {fileID: 1542253492}
+  _dropGuideImage: {fileID: 0}
+  _dropGuideVisibleAlpha: 1
 --- !u!1 &174729392
 GameObject:
   m_ObjectHideFlags: 0
@@ -5275,6 +5313,7 @@ GameObject:
   - component: {fileID: 2144903297}
   - component: {fileID: 2144903296}
   - component: {fileID: 2144903294}
+  - component: {fileID: 2144903298}
   m_Layer: 0
   m_Name: Dish 3
   m_TagString: Untagged
@@ -5294,6 +5333,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 200d7a164d071f146a709f74ea60bfa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodPlace
+  _foodImage: {fileID: 2024356682}
 --- !u!224 &2144903295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5327,14 +5367,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.99607843, g: 0.7647059, b: 0.07450981, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8699466189890537625, guid: ddb643696f05c4245af5c881977d6de8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ce0e17c2715a644d0bd484f8013ed6bf, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5352,6 +5392,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2144903293}
   m_CullTransparentMesh: 1
+--- !u!114 &2144903298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144903293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c0fe9d85469f7a418ac2d86ffeca6e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodPlaceDropHandler
+  _foodPlace: {fileID: 2144903294}
+  _controller: {fileID: 1734525541}
+  _foodArea: {fileID: 1542253492}
+  _dropGuideImage: {fileID: 0}
+  _dropGuideVisibleAlpha: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
