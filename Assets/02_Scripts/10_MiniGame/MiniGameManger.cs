@@ -13,7 +13,7 @@ public class MiniGameManager : MonoBehaviour
     [SerializeField] private TMP_Text timeText;
     [SerializeField] private GameObject totalPanel;
     [SerializeField] private TMP_Text totalPoint;
-
+    private float warningTimer;
     private bool isMiniGamePlaying;
     public bool IsMiniGamePlaying => isMiniGamePlaying;
     public event Action<bool> OnMiniGamePlayingChanged;
@@ -38,7 +38,17 @@ public class MiniGameManager : MonoBehaviour
         }
 
         remainingTime -= Time.deltaTime;
+        if (remainingTime <= 5f)
+        {
+            warningTimer -= Time.deltaTime;
 
+            if (warningTimer <= 0f)
+            {
+                warningTimer = 1f;
+
+                SoundManager.Instance.PlaySFX(SFXType.MTimer);
+            }
+        }
         if (remainingTime <= 0f)
         {
             remainingTime = 0f;
@@ -51,6 +61,7 @@ public class MiniGameManager : MonoBehaviour
     public void StartGame()
     {
         totalCoin = 0;
+        warningTimer = 0f;
         remainingTime = gameDuration;
         totalPanel.SetActive(false);
         scoreText.text = "Á¡¼ö : 0Á¡";

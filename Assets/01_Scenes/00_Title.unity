@@ -2145,7 +2145,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 0ad7d162d5529c149a114fbcd64ebde2, type: 3}
     volume: 1
   - type: 6
-    clip: {fileID: 8300000, guid: 4ee57a43176f5394b8992711abcb5d19, type: 3}
+    clip: {fileID: 8300000, guid: 07bef54331841914bad54b0504c00798, type: 3}
     volume: 0.703
   - type: 7
     clip: {fileID: 8300000, guid: 6a6f3459903ac7d4d875d1d7d176e4f7, type: 3}
@@ -2165,8 +2165,14 @@ MonoBehaviour:
   - type: 12
     clip: {fileID: 8300000, guid: 84fb53a35459b4c4880ff4d7154b28c9, type: 3}
     volume: 1
-  - type: 12
+  - type: 13
     clip: {fileID: 8300000, guid: 70d622e2a59c736409167f763b0edbb8, type: 3}
+    volume: 1
+  - type: 14
+    clip: {fileID: 8300000, guid: 54b9c468e743e9a46896bb866ec3ec74, type: 3}
+    volume: 1
+  - type: 15
+    clip: {fileID: 8300000, guid: 29dabc07b64344a4e8fed20327679223, type: 3}
     volume: 1
   bgmVolume: 1
   sfxVolume: 1
