@@ -13,6 +13,8 @@ public enum SFXType
     MEat,
     MCoin,
     MBowl,
-    MSink
+    MSink,
+    MTimer,
+    MRulette,
 
 }
