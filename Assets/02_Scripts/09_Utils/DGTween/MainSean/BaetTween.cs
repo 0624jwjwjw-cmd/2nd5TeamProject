@@ -1,0 +1,23 @@
+using UnityEngine;
+using DG.Tweening;
+
+public class BeatTween : MonoBehaviour
+{
+    [Header("beat Settings")]
+    [SerializeField] private float targetScale = 1.05f;
+    [SerializeField] private float duration = 1f;
+
+    private void Start()
+    {
+        transform.DOKill();
+
+        transform.DOScale(targetScale, duration)
+            .SetEase(Ease.InOutSine)
+            .SetLoops(-1, LoopType.Yoyo);
+    }
+
+    private void OnDestroy()
+    {
+        transform.DOKill();
+    }
+}
