@@ -6,11 +6,18 @@ public class GameDateUI : MonoBehaviour
     [SerializeField] private TMP_Text dayText;
     [SerializeField] private TMP_Text countText;
 
-    private void Start()
+    private void OnEnable()
     {
-        GameDateManager.Instance.OnDateChanged += RefreshUI;
+        if (GameDateManager.Instance != null)
+        {
+            GameDateManager.Instance.OnDateChanged += RefreshUI;
+
+            // 현재 날짜를 바로 갱신
+            RefreshUI(GameDateManager.Instance.DateCount);
+        }
     }
-    private void OnDestroy()
+
+    private void OnDisable()
     {
         if (GameDateManager.Instance != null)
         {

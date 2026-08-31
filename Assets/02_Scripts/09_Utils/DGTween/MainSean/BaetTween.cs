@@ -9,16 +9,25 @@ public class BeatTween : MonoBehaviour
 
     private Tween heartbeatTween;
 
-    private void Start()
+    private void OnEnable()
     {
+        heartbeatTween?.Kill();
+
         heartbeatTween = transform
             .DOScale(targetScale, duration)
             .SetEase(Ease.InOutSine)
             .SetLoops(-1, LoopType.Yoyo);
     }
 
+    private void OnDisable()
+    {
+        heartbeatTween?.Kill();
+        heartbeatTween = null;
+    }
+
     private void OnDestroy()
     {
         heartbeatTween?.Kill();
+        heartbeatTween = null;
     }
 }

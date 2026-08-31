@@ -31,8 +31,18 @@ public class DayQuest : MonoBehaviour
     {
         GameDateManager.Instance.OnDateChanged += EndQuest;
         startGold = CurrencyManager.Instance.Gold;
+        RefreshCurrentQuest();
     }
+    public void RefreshCurrentQuest()
+    {
+        int day = GameDateManager.Instance.DateCount
+            / GameDateManager.Instance.MaxDateCount;
 
+        if (day >= 0 && day < targetGold.Length)
+        {
+            currentTargetGold = targetGold[day];
+        }
+    }
     private void OnDestroy()
     {
         if (GameDateManager.Instance != null)

@@ -12,6 +12,7 @@ public class GameDateManager : MonoBehaviour, ISaveable
 
     // ÇÏ·ç¿¡ ÇÊ¿äÇÑ ÃÑ È½¼ö
     public int MaxDateCount => maxDateCount;
+    public int DateCount => dateCount;
 
     private void Awake()
     {
