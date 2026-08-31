@@ -6,6 +6,8 @@ public enum SFXType
     Heart,
     Win,
     Lose,
+    CookWin,
+    CookLose,
     MBeerFall,
     MGood,
     MBad,
