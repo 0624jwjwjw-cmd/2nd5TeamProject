@@ -28,5 +28,6 @@ public class BeatTween : MonoBehaviour
     private void OnDestroy()
     {
         heartbeatTween?.Kill();
+        heartbeatTween = null;
     }
 }
