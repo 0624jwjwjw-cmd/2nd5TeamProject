@@ -34,6 +34,7 @@ public class StudioUpgradeUI : MonoBehaviour
         {
             nextLevelText.text = "";
             nextRateText.text = "";
+            upgradeButton.interactable = false;
         }
     }
 }
