@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class KitchenCookResult : MonoBehaviour
 {
@@ -12,39 +13,32 @@ public class KitchenCookResult : MonoBehaviour
 
     public void SetResultDishInfo(string dishID)
     {
-        if(ItemVisualRepository.Instance.TryGetIcon(dishID, out Sprite icon))
-        {
-            image.sprite = icon;
-        }
-        else
-        {
-            return;
-        }
-        if(GameDataRepository.Instance.TryGetDish(dishID, out DishData dishData))
-        {
-            dishNameText.text = dishData.DishName;
-            dishInfoText.text = dishData.Info;
-            donationText.text = dishData.Donation.ToString();
-            subscribersText.text = dishData.Subscribers.ToString();
-        }
+        SetData(dishID, false);
     }
     public void SetResultSpecialDishInfo(string dishID)
     {
-        if (ItemVisualRepository.Instance.TryGetIcon(dishID, out Sprite icon))
+        SetData(dishID, true);
+    }
+    private void SetData(string dishID, bool isSpecial)
+    {
+        if (!ItemVisualRepository.Instance.TryGetIcon(dishID, out Sprite icon)) return;
+        image.sprite = icon;
+
+        DishData dishData;
+
+        if (!isSpecial)
         {
-            image.sprite = icon;
+            GameDataRepository.Instance.TryGetDish(dishID, out dishData);
         }
         else
         {
-            return;
+            GameDataRepository.Instance.TryGetSpecialDish(dishID, out dishData);
         }
-        if (GameDataRepository.Instance.TryGetSpecialDish(dishID, out DishData dishData))
-        {
-            dishNameText.text = dishData.DishName;
-            dishInfoText.text = dishData.Info;
-            donationText.text = dishData.Donation.ToString();
-            subscribersText.text = dishData.Subscribers.ToString();
-        }
+
+        dishNameText.text = dishData.DishName;
+        dishInfoText.text = dishData.Info;
+        donationText.text = dishData.Donation.ToString();
+        subscribersText.text = dishData.Subscribers.ToString();
     }
     public void OnClickExitButton()
     {
