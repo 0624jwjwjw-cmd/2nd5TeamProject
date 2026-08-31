@@ -1,17 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class LiveChat : MonoBehaviour
 {
     [SerializeField] private LiveManager _liveManager;
-    [SerializeField] private TMP_Text _chatText;
+    [SerializeField] private LiveChatUI _liveChatUI;
 
     [SerializeField] private float _chatInterval = 2f;
-    [SerializeField] private int _maxChatCount = 5;
 
-    private readonly List<string> _currentChats = new();
+    private Coroutine _chatCoroutine;
 
     private readonly string[] _chatMessages =
     {
@@ -39,8 +36,6 @@ public class LiveChat : MonoBehaviour
         "매니저봇: 타인 비하, 욕설, 과도한 스포일러는 매니저에 의해 차단될 수 있습니다."
     };
 
-    private Coroutine _chatCoroutine;
-
     private void OnEnable()
     {
         if (_liveManager == null)
@@ -63,8 +58,10 @@ public class LiveChat : MonoBehaviour
 
     private void StartChat()
     {
-        if (_chatCoroutine != null)
-            StopCoroutine(_chatCoroutine);
+        StopChat();
+
+        if (_liveChatUI != null)
+            _liveChatUI.ClearChats();
 
         _chatCoroutine = StartCoroutine(ChatRoutine());
     }
@@ -76,6 +73,9 @@ public class LiveChat : MonoBehaviour
             StopCoroutine(_chatCoroutine);
             _chatCoroutine = null;
         }
+
+        if (_liveChatUI != null)
+            _liveChatUI.ClearChats();
     }
 
     private IEnumerator ChatRoutine()
@@ -92,17 +92,7 @@ public class LiveChat : MonoBehaviour
     {
         int randomIndex = Random.Range(0, _chatMessages.Length);
 
-        _currentChats.Add(_chatMessages[randomIndex]);
-
-        if (_currentChats.Count > _maxChatCount)
-            _currentChats.RemoveAt(0);
-
-        UpdateChatUI();
-    }
-
-    private void UpdateChatUI()
-    {
-        if (_chatText != null)
-            _chatText.text = string.Join("\n", _currentChats);
+        if (_liveChatUI != null)
+            _liveChatUI.AddChat(_chatMessages[randomIndex]);
     }
 }
