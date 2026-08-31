@@ -10,7 +10,6 @@ public class CharacterTitleTween : MonoBehaviour
     [SerializeField] private float firstScale = 1.2f;
     [SerializeField] private float bounceMinScale = 0.9f;
     [SerializeField] private float bounceMaxScale = 1.1f;
-    [SerializeField] private float finalScale = 1.2f;
 
     [Header("Bounce")]
     [SerializeField] private int bounceCount = 3;
