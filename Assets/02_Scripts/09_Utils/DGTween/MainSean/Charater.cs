@@ -18,7 +18,7 @@ public class CharacterTitleTween : MonoBehaviour
     public Tween Play()
     {
         transform.DOKill();
-
+        transform.localScale = Vector3.zero;
         Sequence sequence = DOTween.Sequence();
 
         // 0 ¡æ 1.2
