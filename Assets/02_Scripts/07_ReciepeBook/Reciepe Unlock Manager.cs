@@ -22,7 +22,7 @@ public class ReciepeUnlockManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        TestAllUnlock();
+        //TestAllUnlock();
     }
     public bool IsUnlocked(string foodID)
     {

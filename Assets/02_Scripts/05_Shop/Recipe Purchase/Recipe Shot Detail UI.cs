@@ -29,7 +29,7 @@ public class RecipeShotDetailUI : MonoBehaviour
         {
             foodNameText.text = dishData.DishName;
         }
-        priceText.text = reciepePurchaseData.Price.ToString();
+        priceText.text = reciepePurchaseData.Price.ToString() + "원";
         itemInfoText.text = reciepePurchaseData.Info;
         recipeInfoText.text = reciepePurchaseData.ReciepeInfo;
 
@@ -51,7 +51,10 @@ public class RecipeShotDetailUI : MonoBehaviour
     public void OnclickPurchaseButton()
     {
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
-        //후원금 보유량 체크, 감소로직 추가 필요
+        if(!CurrencyManager.Instance.SpendGold(reciepePurchaseData.Price))
+        {
+            return;
+        }
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
         purchaseButtonText.text = completePurchase;

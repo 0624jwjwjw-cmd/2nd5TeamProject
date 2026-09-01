@@ -37,7 +37,6 @@ public class StudioUpgradeManager : MonoBehaviour
         {
             return;
         }
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index<studioUpgradeDatas.Length-1)
         {
             index++;
@@ -47,6 +46,7 @@ public class StudioUpgradeManager : MonoBehaviour
         {
             return;
         }
+        Debug.Log(currentData.ID);
     }
     private void SetData(int index)
     {
