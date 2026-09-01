@@ -26,11 +26,17 @@ public class StudioUpgradeManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
+    }
+    private void Start()
+    {
         SetData(index);
     }
     public void LevelUp()
     {
+        if(!CurrencyManager.Instance.SpendGold(nextData.Price))
+        {
+            return;
+        }
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index<studioUpgradeDatas.Length-1)
         {
