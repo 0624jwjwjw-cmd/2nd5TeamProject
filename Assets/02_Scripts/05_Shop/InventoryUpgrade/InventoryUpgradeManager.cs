@@ -29,6 +29,10 @@ public class InventoryUpgradeManager : MonoBehaviour
     }
     public void LevelUp()
     {
+        if(!CurrencyManager.Instance.SpendGold(nextData.Price))
+        {
+            return;
+        }
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < inventoryUpgradeDatas.Length - 1)
         {
@@ -51,6 +55,7 @@ public class InventoryUpgradeManager : MonoBehaviour
         {
             nextData = null;
         }
+        InventoryManager.Instance.MaxStackSize = currentData.Stack;
         OnInventoryUpgradeChanged?.Invoke();
     }
 }
