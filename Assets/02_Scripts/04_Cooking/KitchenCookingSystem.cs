@@ -3,7 +3,6 @@ using UnityEngine;
 public class KitchenCookingSystem : MonoBehaviour
 {
     [SerializeField] private KitchenCookingSlotManager kitchenCookingSlotManager;
-    [SerializeField] private int specialRate;
     [SerializeField] private KitchenCookResult cookResult;
     [SerializeField] private string burnedDishID = "BD_01";
     [SerializeField] private string trashDishID = "TD_01";
@@ -31,7 +30,7 @@ public class KitchenCookingSystem : MonoBehaviour
         {
             string specialDishID = dishMatchingService.FindMatchingSpecialDish(resultDishID);
             ShowResultAndAddToInventory(specialDishID, ItemType.SpecialDish, true);
-            SoundManager.Instance.PlaySFX(SFXType.CookLose);
+            SoundManager.Instance.PlaySFX(SFXType.CookWin);
         }
         else
         {

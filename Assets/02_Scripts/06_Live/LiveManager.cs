@@ -19,7 +19,10 @@ public class LiveManager : MonoBehaviour
 
     private int _totalDonation;
     private int _totalSubscribers;
-    private int _totalFoodCost;
+
+    // 기본
+    private int _baseDonation;
+    private int _baseSubscribers;
 
     private Coroutine _miniGameCoroutine;
 
@@ -88,7 +91,11 @@ public class LiveManager : MonoBehaviour
 
         _totalDonation = 0;
         _totalSubscribers = 0;
-        _totalFoodCost = 0;
+        _baseDonation = 0;
+        _baseSubscribers = 0;
+
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+        SoundManager.Instance?.PlayBGM(BGMType.Studio);
 
         OnLiveTimeChanged?.Invoke(0);
         OnLiveStarted?.Invoke();
@@ -107,6 +114,8 @@ public class LiveManager : MonoBehaviour
 
         StopMiniGameTimer();
 
+        SoundManager.Instance?.PlayBGM(BGMType.Normal);
+
         OnLiveStopped?.Invoke();
 
         Debug.Log("라이브 중단");
@@ -124,6 +133,8 @@ public class LiveManager : MonoBehaviour
         CalculateLiveReward();
 
         GameDateManager.Instance.AddDateCount();
+
+        SoundManager.Instance?.PlayBGM(BGMType.Normal);
 
         OnLiveEnded?.Invoke();
 
@@ -156,19 +167,23 @@ public class LiveManager : MonoBehaviour
                 out dishData))
             {
                 Debug.LogWarning(
-                    $"[LiveManager] 음식 데이터를 찾을 수 없습니다. ID: {itemId}"
+                    $"[LiveManager] 음식을 찾을 수 없습니다. ID: {itemId}"
                 );
 
                 return;
             }
         }
 
-        _totalFoodCost += dishData.Cost;
+        // 음식 후원금, 구독자 누적
+        _baseDonation += dishData.Donation;
+        _baseSubscribers += dishData.Subscribers;
 
         Debug.Log(
-            $"음식 섭취 - {dishData.DishName} / " +
-            $"원가: {dishData.Cost} / " +
-            $"누적 원가: {_totalFoodCost}"
+            $"음식 섭취: {dishData.DishName} / " +
+            $"후원금: {dishData.Donation} / " +
+            $"구독자: {dishData.Subscribers} / " +
+            $"누적 후원금: {_baseDonation} / " +
+            $"누적 구독자: {_baseSubscribers}"
         );
     }
 
@@ -178,7 +193,9 @@ public class LiveManager : MonoBehaviour
 
         if (_miniGameStarter == null)
         {
-            Debug.LogWarning("[LiveManager] MiniGameStarter가 연결되지 않았습니다.");
+            Debug.LogWarning(
+                "[LiveManager] MiniGameStarter가 연결되지 않았습니다."
+            );
             return;
         }
 
@@ -208,7 +225,7 @@ public class LiveManager : MonoBehaviour
 
     private void CalculateLiveReward()
     {
-        if (_totalFoodCost <= 0)
+        if (_baseDonation <= 0 && _baseSubscribers <= 0)
             return;
 
         if (CurrencyManager.Instance == null)
@@ -223,20 +240,46 @@ public class LiveManager : MonoBehaviour
             return;
         }
 
-        int youtubeGrade = SubscriberRank.Instance.CurrentRank;
+        if (StudioUpgradeManager.Instance == null)
+        {
+            Debug.LogError("[LiveManager] StudioUpgradeManager가 없습니다.");
+            return;
+        }
+
+        if (StudioUpgradeManager.Instance.CurrentData == null)
+        {
+            Debug.LogError(
+                "[LiveManager] StudioUpgradeManager의 CurrentData가 없습니다."
+            );
+            return;
+        }
 
         int beforeGold = CurrencyManager.Instance.Gold;
         int beforeSubscriber = CurrencyManager.Instance.Subscriber;
 
+
+        // 후원금 계산
+        // Donation × 유튜브 랭크 배율
+
+        int youtubeGrade = SubscriberRank.Instance.CurrentRank;
+
         CalculateGold.GetDonation(
-            _totalFoodCost,
+            _baseDonation,
             youtubeGrade
         );
 
-        CalculateSubscriber.GetDonation(
-            _totalFoodCost,
-            youtubeGrade
+
+        // 구독자 계산
+        // Subscribers × 스튜디오 업그레이드 배율
+
+        float subscriberBonus =
+            StudioUpgradeManager.Instance.CurrentData.SubscriberBonus;
+
+        int finalSubscribers = Mathf.RoundToInt(
+            _baseSubscribers * subscriberBonus
         );
+
+        CurrencyManager.Instance.AddSubscriber(finalSubscribers);
 
         _totalDonation =
             CurrencyManager.Instance.Gold - beforeGold;
@@ -246,5 +289,14 @@ public class LiveManager : MonoBehaviour
 
         OnDonationChanged?.Invoke(_totalDonation);
         OnSubscribersChanged?.Invoke(_totalSubscribers);
+
+        Debug.Log(
+            $"라이브 보상 계산 / " +
+            $"기본 후원금: {_baseDonation} / " +
+            $"최종 후원금: {_totalDonation} / " +
+            $"기본 구독자: {_baseSubscribers} / " +
+            $"스튜디오 배율: {subscriberBonus} / " +
+            $"최종 구독자: {_totalSubscribers}"
+        );
     }
 }

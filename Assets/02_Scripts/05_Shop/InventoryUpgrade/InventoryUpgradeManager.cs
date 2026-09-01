@@ -36,7 +36,6 @@ public class InventoryUpgradeManager : MonoBehaviour
         {
             return;
         }
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < inventoryUpgradeDatas.Length - 1)
         {
             index++;
