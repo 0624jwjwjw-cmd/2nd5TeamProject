@@ -90,6 +90,9 @@ public class LiveManager : MonoBehaviour
         _totalSubscribers = 0;
         _totalFoodCost = 0;
 
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+        SoundManager.Instance?.PlayBGM(BGMType.Studio);
+
         OnLiveTimeChanged?.Invoke(0);
         OnLiveStarted?.Invoke();
 
@@ -106,6 +109,8 @@ public class LiveManager : MonoBehaviour
         _isLive = false;
 
         StopMiniGameTimer();
+
+        SoundManager.Instance?.PlayBGM(BGMType.Normal);
 
         OnLiveStopped?.Invoke();
 
@@ -124,6 +129,8 @@ public class LiveManager : MonoBehaviour
         CalculateLiveReward();
 
         GameDateManager.Instance.AddDateCount();
+
+        SoundManager.Instance?.PlayBGM(BGMType.Normal);
 
         OnLiveEnded?.Invoke();
 
@@ -156,7 +163,7 @@ public class LiveManager : MonoBehaviour
                 out dishData))
             {
                 Debug.LogWarning(
-                    $"[LiveManager] 음식 데이터를 찾을 수 없습니다. ID: {itemId}"
+                    $"[LiveManager] 음식을 찾을 수 없습니다. ID: {itemId}"
                 );
 
                 return;
@@ -178,7 +185,9 @@ public class LiveManager : MonoBehaviour
 
         if (_miniGameStarter == null)
         {
-            Debug.LogWarning("[LiveManager] MiniGameStarter가 연결되지 않았습니다.");
+            Debug.LogWarning(
+                "[LiveManager] MiniGameStarter가 연결되지 않았습니다."
+            );
             return;
         }
 
@@ -223,20 +232,40 @@ public class LiveManager : MonoBehaviour
             return;
         }
 
-        int youtubeGrade = SubscriberRank.Instance.CurrentRank;
+        if (StudioUpgradeManager.Instance == null)
+        {
+            Debug.LogError("[LiveManager] StudioUpgradeManager가 없습니다.");
+            return;
+        }
+
+        if (StudioUpgradeManager.Instance.CurrentData == null)
+        {
+            Debug.LogError(
+                "[LiveManager] StudioUpgradeManager의 CurrentData가 없습니다."
+            );
+            return;
+        }
 
         int beforeGold = CurrencyManager.Instance.Gold;
         int beforeSubscriber = CurrencyManager.Instance.Subscriber;
+
+        // 골드(후원금)는 기존 유튜브 랭크 배율 사용
+        int youtubeGrade = SubscriberRank.Instance.CurrentRank;
 
         CalculateGold.GetDonation(
             _totalFoodCost,
             youtubeGrade
         );
 
-        CalculateSubscriber.GetDonation(
-            _totalFoodCost,
-            youtubeGrade
+        // 구독자는 스튜디오 업그레이드 배율 사용
+        float subscriberBonus =
+            StudioUpgradeManager.Instance.CurrentData.SubscriberBonus;
+
+        int subscribers = Mathf.RoundToInt(
+            _totalFoodCost * subscriberBonus
         );
+
+        CurrencyManager.Instance.AddSubscriber(subscribers);
 
         _totalDonation =
             CurrencyManager.Instance.Gold - beforeGold;
@@ -246,5 +275,12 @@ public class LiveManager : MonoBehaviour
 
         OnDonationChanged?.Invoke(_totalDonation);
         OnSubscribersChanged?.Invoke(_totalSubscribers);
+
+        Debug.Log(
+            $"라이브 보상 계산 / " +
+            $"후원금: {_totalDonation} / " +
+            $"구독자: {_totalSubscribers} / " +
+            $"스튜디오 배율: {subscriberBonus}"
+        );
     }
 }

@@ -41,6 +41,9 @@ public class CharacterSelectPanel : MonoBehaviour
             return;
 
         _currentIndex--;
+
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+
         UpdateCharacter();
     }
 
@@ -50,6 +53,9 @@ public class CharacterSelectPanel : MonoBehaviour
             return;
 
         _currentIndex++;
+
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+
         UpdateCharacter();
     }
 
@@ -87,11 +93,14 @@ public class CharacterSelectPanel : MonoBehaviour
 
     private void ClosePanel()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+
         gameObject.SetActive(false);
     }
 
     public void OpenPanel()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(true);
     }
 }
