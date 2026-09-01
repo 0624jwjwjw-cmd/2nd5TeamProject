@@ -1,28 +1,20 @@
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 public class SaveLoadManager : MonoBehaviour
 {
     public static SaveLoadManager Instance;
 
+    [Header("Saveable Objects")]
+    [SerializeField] private MonoBehaviour[] saveableObjects;
+
     private List<ISaveable> saveables = new();
+
     private string savePath;
     private bool isDirty;
     private float timer;
     private float saveDelay = 10f;
-
-    public void Start()
-    {
-        var objects = FindObjectsByType<MonoBehaviour>( FindObjectsInactive.Include,FindObjectsSortMode.None).OfType<ISaveable>();
-
-        foreach (ISaveable obj in objects)
-        {
-            Register(obj);
-        }
-        LoadGame();
-    }
 
     private void Awake()
     {
@@ -34,29 +26,69 @@ public class SaveLoadManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
-        savePath =Path.Combine(Application.persistentDataPath,"SaveData.json");
+
+        savePath = Path.Combine(
+            Application.persistentDataPath,
+            "SaveData.json"
+        );
+
+        RegisterSaveables();
+
+        LoadGame();
+    }
+
+    private void RegisterSaveables()
+    {
+        saveables.Clear();
+
+        foreach (MonoBehaviour obj in saveableObjects)
+        {
+            if (obj == null)
+                continue;
+
+            if (obj is ISaveable saveable)
+            {
+                Register(saveable);
+            }
+            else
+            {
+                Debug.LogWarning(
+                    $"{obj.name}은 ISaveable을 구현하지 않았습니다."
+                );
+            }
+        }
     }
 
     private void Update()
     {
-        if (!isDirty)return;
+        if (!isDirty)
+            return;
+
         timer += Time.deltaTime;
+
         if (timer >= saveDelay)
         {
             SaveGame();
-            timer = 0;
+
+            timer = 0f;
             isDirty = false;
         }
     }
-    //저장 필요해지면 10초뒤에 변경
+
+    // 저장 필요 상태로 변경
     public void SetDirty()
     {
         isDirty = true;
-        timer = 0;
+        timer = 0f;
     }
+
     public void Register(ISaveable saveable)
     {
+        if (saveable == null)
+            return;
+
         if (!saveables.Contains(saveable))
         {
             saveables.Add(saveable);
@@ -66,11 +98,13 @@ public class SaveLoadManager : MonoBehaviour
     public void SaveGame()
     {
         SaveData data = new SaveData();
+
         foreach (ISaveable saveable in saveables)
         {
             saveable.Save(data);
         }
-        string json =JsonUtility.ToJson(data, true);
+
+        string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, json);
     }
 
@@ -81,20 +115,25 @@ public class SaveLoadManager : MonoBehaviour
             Debug.Log("저장 데이터 없음");
             return;
         }
+
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
+
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
         }
+
+        Debug.Log("저장 데이터 불러오기 완료");
     }
 
-
-    // 앱 종료 / 백그라운드 대비
+    // 앱 종료 대비
     private void OnApplicationQuit()
     {
         SaveGame();
     }
+
+    // 앱 백그라운드 대비
     private void OnApplicationPause(bool pause)
     {
         if (pause)
@@ -105,20 +144,21 @@ public class SaveLoadManager : MonoBehaviour
 
     public void ResetGame()
     {
-        // 저장 파일 삭제
         if (File.Exists(savePath))
         {
             File.Delete(savePath);
         }
-        // 기본 데이터 생성
+
         SaveData data = new SaveData();
-        // 모든 매니저를 기본값으로 변경
+
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
         }
-        // 변경된 데이터를 즉시 저장
+
         SaveGame();
 
+        isDirty = false;
+        timer = 0f;
     }
 }

@@ -2888,6 +2888,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b217c95ec4810b44aa531d2bd5c67791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SaveLoadManager
+  saveableObjects:
+  - {fileID: 111996459}
+  - {fileID: 1213764656}
+  - {fileID: 830675668}
+  - {fileID: 998510522}
 --- !u!4 &1213457461
 Transform:
   m_ObjectHideFlags: 0
