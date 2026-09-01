@@ -9,7 +9,10 @@ public class InventoryUpgradeUI : MonoBehaviour
     [SerializeField] private TMP_Text nextLevelText;
     [SerializeField] private TMP_Text currentRateText;
     [SerializeField] private TMP_Text nextRateText;
+    [SerializeField] private TMP_Text priceText;
 
+    [SerializeField] private string unMaxLevel = "업그레이드";
+    [SerializeField] private string maxLevel = "최대 레벨";
     private void OnEnable()
     {
         InventoryUpgradeManager.Instance.OnInventoryUpgradeChanged += SetData;
@@ -17,6 +20,10 @@ public class InventoryUpgradeUI : MonoBehaviour
     private void OnDisable()
     {
         InventoryUpgradeManager.Instance.OnInventoryUpgradeChanged -= SetData;
+    }
+    private void Start()
+    {
+        SetData();
     }
     private void SetData()
     {
@@ -27,12 +34,22 @@ public class InventoryUpgradeUI : MonoBehaviour
         {
             nextLevelText.text = "Lv. " + InventoryUpgradeManager.Instance.NextData.Level.ToString();
             nextRateText.text = "x " + InventoryUpgradeManager.Instance.NextData.Stack.ToString() + "개";
+            priceText.text = InventoryUpgradeManager.Instance.NextData.Price.ToString() + "원";
+            upgradeButtonText.text = unMaxLevel;
+
         }
         else
         {
             nextLevelText.text = "";
             nextRateText.text = "";
+            priceText.text = "";
             upgradeButton.interactable = false;
+            upgradeButtonText.text = maxLevel;
         }
+    }
+    public void OnclickUpgradeButton()
+    {
+        InventoryUpgradeManager.Instance.LevelUp();
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
 }

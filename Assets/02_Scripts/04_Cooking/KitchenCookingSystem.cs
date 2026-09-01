@@ -3,7 +3,6 @@ using UnityEngine;
 public class KitchenCookingSystem : MonoBehaviour
 {
     [SerializeField] private KitchenCookingSlotManager kitchenCookingSlotManager;
-    [SerializeField] private int specialRate;
     [SerializeField] private KitchenCookResult cookResult;
     [SerializeField] private string burnedDishID = "BD_01";
     [SerializeField] private string trashDishID = "TD_01";
