@@ -7,7 +7,6 @@ public class LiveUI : MonoBehaviour
     [SerializeField] private LiveManager _liveManager;
 
     [SerializeField] private Button _startButton;
-    [SerializeField] private TMP_Text _startButtonText;
 
     [SerializeField] private TMP_Text _liveStatusText;
     [SerializeField] private TMP_Text _liveTimerText;
@@ -16,7 +15,6 @@ public class LiveUI : MonoBehaviour
     {
         _liveStatusText.text = "LIVE OFF";
         _liveTimerText.text = "00:00";
-        _startButtonText.text = "规价 矫累";
 
         _startButton.onClick.AddListener(OnButtonClicked);
     }
@@ -60,14 +58,12 @@ public class LiveUI : MonoBehaviour
     private void ShowLiveStarted()
     {
         _liveStatusText.text = "LIVE ON";
-        _startButtonText.text = "规价 吝窜";
         _startButton.interactable = true;
     }
 
     private void ShowLiveStopped()
     {
         _liveStatusText.text = "LIVE OFF";
-        _startButtonText.text = "规价 矫累";
 
         FoodArea foodArea = FindFirstObjectByType<FoodArea>();
 
@@ -78,7 +74,6 @@ public class LiveUI : MonoBehaviour
     private void ShowLiveEnded()
     {
         _liveStatusText.text = "LIVE OFF";
-        _startButtonText.text = "规价 矫累";
         _liveTimerText.text = "00:00";
 
         FoodArea foodArea = FindFirstObjectByType<FoodArea>();
