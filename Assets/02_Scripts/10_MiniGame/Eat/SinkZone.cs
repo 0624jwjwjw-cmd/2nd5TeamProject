@@ -30,15 +30,17 @@ public class SinkZone : MonoBehaviour
         {
             return;
         }
-        SoundManager.Instance.PlaySFX(SFXType.MSink);
+        
         bool isCorrect = bowl.IsBowlA == isSinkA;
 
         if (isCorrect)
         {
+            SoundManager.Instance.PlaySFX(SFXType.MSink);
             miniGameManager.AddCoin(correctScore);
         }
         else
         {
+            SoundManager.Instance.PlaySFX(SFXType.MGlass);
             miniGameManager.AddCoin(wrongScore);
         }
 
