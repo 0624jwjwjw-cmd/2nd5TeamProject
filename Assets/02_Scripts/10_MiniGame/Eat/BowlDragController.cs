@@ -5,7 +5,8 @@ public class BowlDragController : MonoBehaviour
     [Header("Sink")]
     [SerializeField] private SinkZone sinkA;
     [SerializeField] private SinkZone sinkB;
-
+    [SerializeField] private SinkZoneTween sinkTweenA;
+    [SerializeField] private SinkZoneTween sinkTweenB;
     private FoodBowl currentBowl;
     private RectTransform currentBowlRect;
     private Vector3 originalPosition;
@@ -30,6 +31,7 @@ public class BowlDragController : MonoBehaviour
         if (isDragging)
         {
             currentBowlRect.position = InputManager.Instance.PointerPosition;
+            CheckSinkHighlight();
         }
         if (InputManager.Instance.IsDragReleased)
         {
@@ -57,14 +59,22 @@ public class BowlDragController : MonoBehaviour
     private void CheckSink()
     {
         Vector2 position = InputManager.Instance.PointerPosition;
+        if (sinkTweenA != null)
+        {
+            sinkTweenA.SetHighlight(false);
+        }
 
+        if (sinkTweenB != null)
+        {
+            sinkTweenB.SetHighlight(false);
+        }
         if (sinkA.IsInside(position))
         {
-            sinkA.CheckBowl(currentBowl);
+            sinkA.CheckBowl(currentBowl); 
         }
         else if (sinkB.IsInside(position))
         {
-            sinkB.CheckBowl(currentBowl);
+            sinkB.CheckBowl(currentBowl); 
         }
         else
         {
@@ -73,5 +83,22 @@ public class BowlDragController : MonoBehaviour
         currentBowl = null;
         currentBowlRect = null;
         wasDragging = false;
+    }
+    private void CheckSinkHighlight()
+    {
+        Vector2 position = InputManager.Instance.PointerPosition;
+
+        bool isInsideA = sinkA.IsInside(position);
+        bool isInsideB = sinkB.IsInside(position);
+
+        if (sinkTweenA != null)
+        {
+            sinkTweenA.SetHighlight(isInsideA);
+        }
+
+        if (sinkTweenB != null)
+        {
+            sinkTweenB.SetHighlight(isInsideB);
+        }
     }
 }

@@ -26,6 +26,9 @@ public class BeerCalculator : MonoBehaviour
     [SerializeField] private float resultDisplayTime = 1f;
     [SerializeField] private float tooMuchDisplayTime = 0.5f;
 
+    [Header("Result Tween")]
+    [SerializeField] private ResultTextTween resultTextTween;
+
     private Coroutine resultCoroutine;
     private Coroutine tooMuchCoroutine;
 
@@ -121,7 +124,10 @@ public class BeerCalculator : MonoBehaviour
     private IEnumerator ShowResult()
     {
         resultText.gameObject.SetActive(true);
-
+        if (resultTextTween != null)
+        {
+            resultTextTween.Play();
+        }
         yield return new WaitForSeconds(resultDisplayTime);
 
         resultText.gameObject.SetActive(false);

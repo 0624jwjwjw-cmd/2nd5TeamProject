@@ -32,7 +32,7 @@ public class GameDateUI : MonoBehaviour
         int currentDay = dayCount / maxCount + 1;
         int currentCount = dayCount % maxCount;
 
-        dayText.text = $"{currentDay}일차";
+        dayText.text = $"{currentDay}주차";
         countText.text = $"{currentCount} / {maxCount}";
     }
 }

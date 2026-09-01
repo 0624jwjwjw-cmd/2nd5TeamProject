@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class DayQuest : MonoBehaviour
+public class DayQuest : MonoBehaviour, ISaveable
 {
     public static DayQuest Instance { get; private set; }
     public event Action<bool> OnQuestResult;
@@ -8,7 +8,7 @@ public class DayQuest : MonoBehaviour
     [Header("Daily Quest Gold")]
     [SerializeField] private int[] targetGold;
 
-    private int startGold = 5000;
+    private int startGold;
     private int currentTargetGold;
     public int TodayEarnedGold => CurrencyManager.Instance.Gold - startGold;
     public int CurrentTargetGold => currentTargetGold;
@@ -30,7 +30,7 @@ public class DayQuest : MonoBehaviour
     private void Start()
     {
         GameDateManager.Instance.OnDateChanged += EndQuest;
-        startGold = CurrencyManager.Instance.Gold;
+
         RefreshCurrentQuest();
     }
     public void RefreshCurrentQuest()
@@ -68,7 +68,7 @@ public class DayQuest : MonoBehaviour
 
     private void CheckQuest(int dayCount)
     {
-        int currentDay = dayCount / 5;
+        int currentDay = dayCount / GameDateManager.Instance.MaxDateCount;
 
         // 목표 금액이 설정되지 않은 날짜라면 종료
         if (currentDay - 1 >= targetGold.Length)
@@ -106,5 +106,23 @@ public class DayQuest : MonoBehaviour
         int subscriber = Mathf.RoundToInt(CurrencyManager.Instance.Subscriber * 0.2f);
         CurrencyManager.Instance.AddSubscriber(-subscriber);
         OnQuestResult?.Invoke(false);
+    }
+
+    public void Save(SaveData data)
+    {
+        data.questStartGold = startGold;
+    }
+
+    // 불러오기
+    public void Load(SaveData data)
+    {
+        startGold = data.questStartGold;
+    }
+
+    // 게임 완전 초기화용
+    public void ResetQuestProgress()
+    {
+        startGold = CurrencyManager.Instance.Gold;
+        RefreshCurrentQuest();
     }
 }

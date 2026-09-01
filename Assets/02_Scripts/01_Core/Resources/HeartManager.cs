@@ -12,7 +12,7 @@ public class HeartManager : MonoBehaviour, ISaveable
     //시간 저장용
     private long lastHeartRecoverTime;
 
-    public void Start()
+    private void Start()
     {
         RecoverOfflineHeart();
 
@@ -84,7 +84,6 @@ public class HeartManager : MonoBehaviour, ISaveable
         {
             lastHeartRecoverTime = DateTime.UtcNow.Ticks;
         }
-        SaveLoadManager.Instance.SetDirty();
         return true;
     }
     //5분 타이머 전달용

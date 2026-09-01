@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class SaveData
@@ -10,12 +11,15 @@ public class SaveData
     // 마지막 하트 회복 시간
     public long lastHeartRecoverTime = 0;
 
+    //퀘스트 데이터
+    public int questStartGold = 5000;
+
     //날짜
     public int dateCount = 0;
 
     // 사운드 볼륨
-    public float bgmVolume = 1.0f;
-    public float sfxVolume = 1.0f;
+    public float bgmVolume = 0.5f;
+    public float sfxVolume = 0.5f;
 
     // 업그레이드
     public int kitchenLevel= 0;
@@ -23,6 +27,5 @@ public class SaveData
     public int recipeLevel = 0;
 
     //인벤토리 안에 음식,재료들
-    public int[] foodInventory;
-    public int[] ingredientsInventory;
+    public List<InventorySlotData> inventory = new();
 }

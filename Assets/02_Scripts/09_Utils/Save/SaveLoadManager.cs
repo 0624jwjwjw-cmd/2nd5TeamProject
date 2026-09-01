@@ -10,7 +10,7 @@ public class SaveLoadManager : MonoBehaviour
     [SerializeField] private MonoBehaviour[] saveableObjects;
 
     private List<ISaveable> saveables = new();
-
+    public bool HasSaveData => File.Exists(savePath);
     private string savePath;
     private bool isDirty;
     private float timer;
@@ -154,6 +154,11 @@ public class SaveLoadManager : MonoBehaviour
         foreach (ISaveable saveable in saveables)
         {
             saveable.Load(data);
+        }
+
+        if (DayQuest.Instance != null)
+        {
+            DayQuest.Instance.ResetQuestProgress();
         }
 
         SaveGame();

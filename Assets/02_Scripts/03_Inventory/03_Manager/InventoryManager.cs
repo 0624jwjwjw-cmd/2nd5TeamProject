@@ -6,7 +6,7 @@ using UnityEngine;
 //하나의 게임 오브젝트에 특정 컴포넌트를 오직 하나만 추가할 수 있게 제한하는 어트리뷰트
 [DisallowMultipleComponent]
 
-public class InventoryManager : MonoBehaviour
+public class InventoryManager : MonoBehaviour,ISaveable
 {
     //현재 게임에서 사용 중인 InventoryManager를
     //다른 스크립트가 쉽게 접근 가능하도록 제공하는 싱글톤 프로퍼티
@@ -642,5 +642,34 @@ public class InventoryManager : MonoBehaviour
         }
 
         Debug.Log("[InventoryManager] 모든 재료/요리를 10개씩 추가했습니다.");
+    }
+
+    //정재운이 추가 SAVE,LOAD용
+    public void Save(SaveData data)
+    {
+        data.inventory.Clear();
+        foreach (InventorySlotData slot in slots)
+        {
+            if (slot != null && !slot.IsEmpty)
+            {
+                data.inventory.Add(slot);
+            }
+        }
+    }
+    public void Load(SaveData data)
+    {
+        slots.Clear();
+        if (data.inventory == null)
+            return;
+        foreach (InventorySlotData savedSlot in data.inventory)
+        {
+            if (savedSlot == null || savedSlot.IsEmpty)
+                continue;
+            InventorySlotData slot = new InventorySlotData(
+                savedSlot.ItemId,savedSlot.Amount,savedSlot.ItemType);
+            slots.Add(slot);
+        }
+        SortSlotsByItemTypeAndId();
+        OnInventoryChanged?.Invoke();
     }
 }
