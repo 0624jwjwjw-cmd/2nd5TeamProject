@@ -44,6 +44,7 @@ public class KitchenInventory : MonoBehaviour
     }
     private void SetData(InventoryViewType viewType)
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         currentView = viewType;
         int slotIndex = 0;
         for (int i = 0; i < InventoryManager.Instance.SlotCount; i++)

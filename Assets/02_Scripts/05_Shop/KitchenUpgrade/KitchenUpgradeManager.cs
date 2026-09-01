@@ -29,6 +29,7 @@ public class KitchenUpgradeManager : MonoBehaviour
     }
     public void LevelUp()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < kitchenUpgradeDatas.Length - 1)
         {
             index++;

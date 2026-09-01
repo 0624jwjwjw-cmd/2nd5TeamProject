@@ -77,6 +77,7 @@ public class KitchenInventorySlot : MonoBehaviour
     }
     public void OnClickSlot()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         kitchenCookingSlotManager.AddIngredient(slotID);
     }
 }

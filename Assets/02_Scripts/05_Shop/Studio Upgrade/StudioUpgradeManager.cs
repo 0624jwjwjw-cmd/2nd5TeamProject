@@ -31,7 +31,8 @@ public class StudioUpgradeManager : MonoBehaviour
     }
     public void LevelUp()
     {
-        if(index<studioUpgradeDatas.Length-1)
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
+        if (index<studioUpgradeDatas.Length-1)
         {
             index++;
             SetData(index);

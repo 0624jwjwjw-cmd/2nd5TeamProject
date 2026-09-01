@@ -29,6 +29,7 @@ public class InventoryUpgradeManager : MonoBehaviour
     }
     public void LevelUp()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < inventoryUpgradeDatas.Length - 1)
         {
             index++;

@@ -8,12 +8,14 @@ public class RecipeBookUIManager : MonoBehaviour
     [SerializeField] private Image background;
     public void OnClickRecipeBookButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         recipeBook.SetActive(true);
         dishScrollRect.verticalNormalizedPosition = 1f;
         background.gameObject.SetActive(true);
     }
     public void OnClickExitButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         recipeBook.SetActive(false);
         background.gameObject.SetActive(false);
     }

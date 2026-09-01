@@ -8,11 +8,13 @@ public class RecipeShopUIController : MonoBehaviour
 
     public void OnclickRecipeShopOpenButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         recipePurchasePanel.gameObject.SetActive(true);
         recipeShopOpenButton.gameObject.SetActive(false);
     }
     public void OnclickRecipeShopExitButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         recipePurchasePanel.gameObject.SetActive(false);
         recipeShopOpenButton.gameObject.SetActive(true);
     }

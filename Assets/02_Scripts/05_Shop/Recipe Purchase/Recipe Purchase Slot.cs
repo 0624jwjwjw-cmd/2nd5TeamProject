@@ -34,6 +34,7 @@ public class RecipePurchaseSlot : MonoBehaviour
     public void OnClickRecipePurchaseButton()
     {
         //후원금 보유량 체크, 감소로직 추가 필요
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
         purchaseButtonText.text = completePurchase;
@@ -62,6 +63,7 @@ public class RecipePurchaseSlot : MonoBehaviour
     }
     public void OnclickRecipeImage()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         recipeShotDetailUI.OpenDetail(reciepePurchaseData);
     }
 }

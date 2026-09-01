@@ -12,26 +12,31 @@ public class KitchenCookingSystem : MonoBehaviour
 
     public void StartCook()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (IsAllSlotsEmpty()) return;
 
         string resultDishID = dishMatchingService.FindMatchingDish(kitchenCookingSlotManager.slots);
 
         if (resultDishID == null)
         {
-            ShowResultAndAddToInventory(trashDishID, ItemType.Dish, isSpecial: false);
+            ShowResultAndAddToInventory(trashDishID, ItemType.Dish, false);
+            SoundManager.Instance.PlaySFX(SFXType.CookLose);
         }
         else if (!ReciepeUnlockManager.Instance.IsUnlocked(resultDishID))
         {
-            ShowResultAndAddToInventory(burnedDishID, ItemType.Dish, isSpecial: false);
+            ShowResultAndAddToInventory(burnedDishID, ItemType.Dish, false);
+            SoundManager.Instance.PlaySFX(SFXType.CookLose);
         }
         else if (Random.Range(0, 100) < specialRate)
         {
             string specialDishID = dishMatchingService.FindMatchingSpecialDish(resultDishID);
-            ShowResultAndAddToInventory(specialDishID, ItemType.SpecialDish, isSpecial: true);
+            ShowResultAndAddToInventory(specialDishID, ItemType.SpecialDish, true);
+            SoundManager.Instance.PlaySFX(SFXType.CookLose);
         }
         else
         {
-            ShowResultAndAddToInventory(resultDishID, ItemType.Dish, isSpecial: false);
+            ShowResultAndAddToInventory(resultDishID, ItemType.Dish, false);
+            SoundManager.Instance.PlaySFX(SFXType.CookWin);
         }
 
         ConsumeIngredients();
