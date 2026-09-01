@@ -10,7 +10,10 @@ public class KitchenUpgradeUI : MonoBehaviour
     [SerializeField] private TMP_Text nextLevelText;
     [SerializeField] private TMP_Text currentRateText;
     [SerializeField] private TMP_Text nextRateText;
+    [SerializeField] private TMP_Text priceText;
 
+    [SerializeField] private string unMaxLevel = "업그레이드";
+    [SerializeField] private string maxLevel = "최대 레벨";
     private void OnEnable()
     {
         KitchenUpgradeManager.Instance.OnKitchenUpgradeChanged += SetData;
@@ -18,6 +21,10 @@ public class KitchenUpgradeUI : MonoBehaviour
     private void OnDisable()
     {
         KitchenUpgradeManager.Instance.OnKitchenUpgradeChanged -= SetData;
+    }
+    private void Start()
+    {
+        SetData();
     }
     private void SetData()
     {
@@ -28,12 +35,21 @@ public class KitchenUpgradeUI : MonoBehaviour
         {
             nextLevelText.text = "Lv. " + KitchenUpgradeManager.Instance.NextData.Level.ToString();
             nextRateText.text = "x " + KitchenUpgradeManager.Instance.NextData.SpecialFoodRate.ToString() + "%";
+            priceText.text = KitchenUpgradeManager.Instance.NextData.Price.ToString() + "원";
+            upgradeButtonText.text = unMaxLevel;
         }
         else
         {
             nextLevelText.text = "";
             nextRateText.text = "";
+            priceText.text = "";
             upgradeButton.interactable = false;
+            upgradeButtonText.text = maxLevel;
         }
+    }
+    public void OnclickUpgradeButton()
+    {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
+        KitchenUpgradeManager.Instance.LevelUp();
     }
 }

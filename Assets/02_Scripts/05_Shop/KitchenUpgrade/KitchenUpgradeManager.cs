@@ -36,7 +36,6 @@ public class KitchenUpgradeManager : MonoBehaviour
         {
             return;
         }
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < kitchenUpgradeDatas.Length - 1)
         {
             index++;
