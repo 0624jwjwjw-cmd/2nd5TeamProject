@@ -115,6 +115,12 @@ public sealed class ShopPageController : MonoBehaviour
             ingredientPurchasePage.SetActive(true);
         }
 
+        //레시피 구매 페이지가 열려 있었다면 숨김
+        if (recipePurchasePage != null)
+        {
+            recipePurchasePage.SetActive(false);
+        }
+
         //서브 페이지이므로 뒤로가기 버튼 표시
         if (backButton != null)
         {
