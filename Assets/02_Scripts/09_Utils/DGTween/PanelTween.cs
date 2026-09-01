@@ -1,5 +1,5 @@
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class PanelTween : MonoBehaviour
 {
@@ -8,7 +8,7 @@ public class PanelTween : MonoBehaviour
     [SerializeField] private float overshootScale = 1.3f;
 
     private RectTransform rectTransform;
-
+    private Sequence sequence;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -25,7 +25,9 @@ public class PanelTween : MonoBehaviour
 
         rectTransform.localScale = Vector3.zero;
 
-        Sequence sequence = DOTween.Sequence();
+        sequence?.Kill();
+
+        sequence = DOTween.Sequence();
 
         sequence.Append(
             rectTransform.DOScale(overshootScale, duration * 0.7f)
@@ -37,5 +39,13 @@ public class PanelTween : MonoBehaviour
 
         sequence.SetEase(Ease.OutBack);
     }
+    private void OnDisable()
+    {
+        sequence?.Kill();
+    }
 
+    private void OnDestroy()
+    {
+        sequence?.Kill();
+    }
 }

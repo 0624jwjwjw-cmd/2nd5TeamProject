@@ -59,8 +59,15 @@ public class BowlDragController : MonoBehaviour
     private void CheckSink()
     {
         Vector2 position = InputManager.Instance.PointerPosition;
-        sinkTweenA.SetHighlight(false);
-        sinkTweenB.SetHighlight(false);
+        if (sinkTweenA != null)
+        {
+            sinkTweenA.SetHighlight(false);
+        }
+
+        if (sinkTweenB != null)
+        {
+            sinkTweenB.SetHighlight(false);
+        }
         if (sinkA.IsInside(position))
         {
             sinkA.CheckBowl(currentBowl); 
@@ -84,7 +91,14 @@ public class BowlDragController : MonoBehaviour
         bool isInsideA = sinkA.IsInside(position);
         bool isInsideB = sinkB.IsInside(position);
 
-        sinkTweenA.SetHighlight(isInsideA);
-        sinkTweenB.SetHighlight(isInsideB);
+        if (sinkTweenA != null)
+        {
+            sinkTweenA.SetHighlight(isInsideA);
+        }
+
+        if (sinkTweenB != null)
+        {
+            sinkTweenB.SetHighlight(isInsideB);
+        }
     }
 }

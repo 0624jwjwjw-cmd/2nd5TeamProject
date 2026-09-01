@@ -107,4 +107,10 @@ public class DayQuest : MonoBehaviour
         CurrencyManager.Instance.AddSubscriber(-subscriber);
         OnQuestResult?.Invoke(false);
     }
+
+    public void ResetQuestProgress()
+    {
+        startGold = CurrencyManager.Instance.Gold;
+        RefreshCurrentQuest();
+    }
 }
