@@ -31,7 +31,7 @@ public class KitchenCookingSystem : MonoBehaviour
         {
             string specialDishID = dishMatchingService.FindMatchingSpecialDish(resultDishID);
             ShowResultAndAddToInventory(specialDishID, ItemType.SpecialDish, true);
-            SoundManager.Instance.PlaySFX(SFXType.CookLose);
+            SoundManager.Instance.PlaySFX(SFXType.CookWin);
         }
         else
         {
