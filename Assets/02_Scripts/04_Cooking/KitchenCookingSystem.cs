@@ -27,7 +27,7 @@ public class KitchenCookingSystem : MonoBehaviour
             ShowResultAndAddToInventory(burnedDishID, ItemType.Dish, false);
             SoundManager.Instance.PlaySFX(SFXType.CookLose);
         }
-        else if (Random.Range(0, 100) < specialRate)
+        else if (Random.Range(0, 100) < KitchenUpgradeManager.Instance.CurrentData.SpecialFoodRate)
         {
             string specialDishID = dishMatchingService.FindMatchingSpecialDish(resultDishID);
             ShowResultAndAddToInventory(specialDishID, ItemType.SpecialDish, true);

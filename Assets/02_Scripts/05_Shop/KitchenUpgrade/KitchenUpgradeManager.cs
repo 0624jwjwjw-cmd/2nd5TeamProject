@@ -25,10 +25,17 @@ public class KitchenUpgradeManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+    }
+    private void Start()
+    {
         SetData(index);
     }
     public void LevelUp()
     {
+        if(!CurrencyManager.Instance.SpendGold(nextData.Price))
+        {
+            return;
+        }
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (index < kitchenUpgradeDatas.Length - 1)
         {
