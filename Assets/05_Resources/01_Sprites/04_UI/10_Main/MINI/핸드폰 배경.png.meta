@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7d5bfca43d1f5b245bea6b136b7e9b75
+guid: da347858cf692d84c98711c93ce2420c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2722515617068019262
-    second: side_panel_0
+      213: 1227934058505544395
+    second: "\uD578\uB4DC\uD3F0 \uBC30\uACBD_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -96,43 +96,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: Android
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: side_panel_0
+      name: "\uD578\uB4DC\uD3F0 \uBC30\uACBD_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 283
-        height: 622
+        x: 31
+        y: 26
+        width: 486
+        height: 969
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3eeaca778158c520800000000000000
-      internalID: 2722515617068019262
+      spriteID: bc2a3d4358f7a0110800000000000000
+      internalID: 1227934058505544395
       vertices: []
       indices: 
       edges: []
@@ -161,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      side_panel_0: 2722515617068019262
+      "\uD578\uB4DC\uD3F0 \uBC30\uACBD_0": 1227934058505544395
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
