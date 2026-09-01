@@ -21,10 +21,22 @@ public class KitchenCookingSlotManager : MonoBehaviour
 
     public void AddIngredient(string ingredientID)
     {
+        int amount = 0;
+
+        foreach(InventorySlotData slotData in InventoryManager.Instance.Slots)
+        {
+            if(slotData != null && slotData.ItemId == ingredientID)
+            {
+                amount = slotData.Amount;
+                break;
+            }
+        }
+        if (amount <= 0) return;
         foreach (KitchenCookSlotItem slot in slots)
         {
             if (slot.ingredientID == ingredientID)
             {
+                if (slot.count >= amount) return;
                 slot.count++;
                 uiBinder.RefreshExistingSlot(ingredientID);
                 return;
