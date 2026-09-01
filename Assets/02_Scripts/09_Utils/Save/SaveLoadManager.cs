@@ -155,7 +155,10 @@ public class SaveLoadManager : MonoBehaviour
         {
             saveable.Load(data);
         }
-
+        if (DayQuest.Instance != null)
+        {
+            DayQuest.Instance.ResetQuestProgress();
+        }
         SaveGame();
 
         isDirty = false;
