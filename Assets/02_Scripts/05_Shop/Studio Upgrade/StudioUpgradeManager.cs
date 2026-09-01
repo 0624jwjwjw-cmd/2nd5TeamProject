@@ -26,7 +26,9 @@ public class StudioUpgradeManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
+    }
+    private void Start()
+    {
         SetData(index);
     }
     public void LevelUp()
