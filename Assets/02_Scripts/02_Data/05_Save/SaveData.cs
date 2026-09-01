@@ -11,6 +11,9 @@ public class SaveData
     // 마지막 하트 회복 시간
     public long lastHeartRecoverTime = 0;
 
+    //퀘스트 데이터
+    public int questStartGold = 5000;
+
     //날짜
     public int dateCount = 0;
 
