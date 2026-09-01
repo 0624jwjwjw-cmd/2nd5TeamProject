@@ -36,6 +36,7 @@ public class RecipeBookSlotUI : MonoBehaviour
     }
     public void OnClickDishIcon()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (!ReciepeUnlockManager.Instance.IsUnlocked(dishBase.ID))
         {
             recipeDetailUI.LockedDish(dishBase);

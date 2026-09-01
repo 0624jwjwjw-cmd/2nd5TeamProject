@@ -8,11 +8,13 @@ public class UpgradeUIController : MonoBehaviour
 
     public void OnClickOpenButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         openButton.gameObject.SetActive(false);
         upgradePanel.gameObject.SetActive(true);
     }
     public void OnClickExitButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         openButton.gameObject.SetActive(true);
         upgradePanel.gameObject.SetActive(false);
     }

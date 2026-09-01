@@ -50,6 +50,7 @@ public class RecipeShotDetailUI : MonoBehaviour
     }
     public void OnclickPurchaseButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         //후원금 보유량 체크, 감소로직 추가 필요
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;

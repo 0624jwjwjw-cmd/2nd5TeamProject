@@ -20,8 +20,7 @@ public class KitchenInventory : MonoBehaviour
     }
     private void OnEnable()
     {
-        //InventoryManager.Instance.OnInventoryChanged += RefreshView;
-        StartCoroutine(WaitforMangaer());
+        InventoryManager.Instance.OnInventoryChanged += RefreshView;
     }
     private void OnDisable()
     {
@@ -33,74 +32,58 @@ public class KitchenInventory : MonoBehaviour
     }
     public void SetWhole()
     {
-        currentView = InventoryViewType.Whole;
-        for(int i=0; i<InventoryManager.Instance.SlotCount;i++)
-        {
-            slots[i].SetSlot(InventoryManager.Instance.Slots[i]);
-        }
-        for (int i = InventoryManager.Instance.SlotCount; i < slots.Length; i++)
-        {
-            slots[i].ClearSlot();
-        }
-        wholeButton.color = selectedButtonColor;
-        ingredientButton.color = unSelectedButtonColor;
-        dishButton.color = unSelectedButtonColor;
+        SetData(InventoryViewType.Whole);
     }
     public void SetIngredient()
     {
-        currentView = InventoryViewType.Ingredient;
-        int slotIndex = 0;
-
-        for (int i = 0; i < InventoryManager.Instance.SlotCount; i++)
-        {
-            InventorySlotData slotData = InventoryManager.Instance.Slots[i];
-            if (slotData != null && slotData.ItemType == ItemType.Ingredient)
-            {
-                if (slotIndex < slots.Length)
-                {
-                    slots[slotIndex].SetSlot(InventoryManager.Instance.Slots[i]);
-                    slotIndex++;
-                }
-            }
-        }
-
-        for (int i = slotIndex; i < slots.Length; i++)
-        {
-            slots[i].ClearSlot();
-        }
-        wholeButton.color = unSelectedButtonColor;
-        ingredientButton.color = selectedButtonColor;
-        dishButton.color = unSelectedButtonColor;
+        SetData(InventoryViewType.Ingredient);
     }
     public void SetDish()
     {
-        currentView = InventoryViewType.Dish;
+        SetData(InventoryViewType.Dish);
+    }
+    private void SetData(InventoryViewType viewType)
+    {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
+        currentView = viewType;
         int slotIndex = 0;
-
-        for(int i=0; i<InventoryManager.Instance.SlotCount; i++)
+        for (int i = 0; i < InventoryManager.Instance.SlotCount; i++)
         {
             InventorySlotData slotData = InventoryManager.Instance.Slots[i];
-            if (slotData == null) return;
-            if (slotData.ItemType == ItemType.Dish || slotData.ItemType == ItemType.SpecialDish)
+            if (MatchesView(slotData, viewType))
             {
                 if (slotIndex < slots.Length)
                 {
-                    slots[slotIndex].SetSlot(InventoryManager.Instance.Slots[i]);
+                    slots[slotIndex].SetSlot(slotData);
                     slotIndex++;
                 }
             }
         }
-        for(int i= slotIndex; i<slots.Length; i++)
-        {
+        for (int i = slotIndex; i < slots.Length; i++)
             slots[i].ClearSlot();
+
+        if (viewType == InventoryViewType.Whole)
+        {
+            wholeButton.color = selectedButtonColor;
+            ingredientButton.color = unSelectedButtonColor;
+            dishButton.color = unSelectedButtonColor;
         }
-        wholeButton.color = unSelectedButtonColor;
-        ingredientButton.color = unSelectedButtonColor;
-        dishButton.color = selectedButtonColor;
+        else if (viewType == InventoryViewType.Ingredient)
+        {
+            wholeButton.color = unSelectedButtonColor;
+            ingredientButton.color = selectedButtonColor;
+            dishButton.color = unSelectedButtonColor;
+        }
+        else if (viewType == InventoryViewType.Dish)
+        {
+            wholeButton.color = unSelectedButtonColor;
+            ingredientButton.color = unSelectedButtonColor;
+            dishButton.color = selectedButtonColor;
+        }
     }
     private void RefreshView()
     {
-        switch(currentView)
+        switch (currentView)
         {
             case InventoryViewType.Whole:
                 SetWhole();
@@ -113,13 +96,36 @@ public class KitchenInventory : MonoBehaviour
                 break;
         }
     }
-    ////////////////////////////
-    private IEnumerator WaitforMangaer()
+    private bool MatchesView(InventorySlotData slotData, InventoryViewType viewType)
     {
-        while (InventoryManager.Instance == null)
+        if (slotData == null) return false;
+
+        if (viewType == InventoryViewType.Whole)
         {
-            yield return null;
+            return true;
         }
-        InventoryManager.Instance.OnInventoryChanged += RefreshView;
+        else if(viewType == InventoryViewType.Ingredient)
+        {
+            if(slotData.ItemType == ItemType.Ingredient)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else if(viewType == InventoryViewType.Dish)
+        {
+            if(slotData.ItemType == ItemType.Dish || slotData.ItemType == ItemType.SpecialDish)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
     }
 }

@@ -46,6 +46,7 @@ public class KitchenCookingSlot : MonoBehaviour
     }
     public void RemoveIngredient()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         KitchenCookSlotItem targetSlot = null;
 
         foreach (KitchenCookSlotItem cookSlotItem in manager.slots)
