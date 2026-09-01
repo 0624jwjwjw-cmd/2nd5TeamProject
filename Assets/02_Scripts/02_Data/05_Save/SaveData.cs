@@ -22,9 +22,10 @@ public class SaveData
     public float sfxVolume = 0.5f;
 
     // 업그레이드
-    public int kitchenLevel= 0;
+    public int kitchenLevel = 0;
     public int studioLevel = 0;
-    public int recipeLevel = 0;
+    public int inventoryLevel = 0;
+    public List<string> unlockedRecipeIDs = new();
 
     //인벤토리 안에 음식,재료들
     public List<InventorySlotData> inventory = new();
