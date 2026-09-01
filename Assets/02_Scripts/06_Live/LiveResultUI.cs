@@ -39,14 +39,18 @@ public class LiveResultUI : MonoBehaviour
             panel.SetActive(true);
 
         if (donationText != null)
-            donationText.text = $"후원금 +{liveManager.TotalDonation}";
+            donationText.text =
+                $"후원금 +{liveManager.TotalDonation}";
 
         if (subscriberText != null)
-            subscriberText.text = $"구독자 +{liveManager.TotalSubscribers}";
+            subscriberText.text =
+                $"구독자 +{liveManager.TotalSubscribers}";
     }
 
     private void Close()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
+
         if (panel != null)
             panel.SetActive(false);
     }
