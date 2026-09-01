@@ -1458,6 +1458,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &844003453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8095473622089743350, guid: f3fd1d7c77f444a429a66dfff050d054, type: 3}
+  m_PrefabInstance: {fileID: 1517876353}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: defe4c73c7d4f3841b5fdcb27e6d7b19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
 --- !u!1 &897498606
 GameObject:
   m_ObjectHideFlags: 0
@@ -2946,6 +2957,7 @@ MonoBehaviour:
   - {fileID: 1213764656}
   - {fileID: 830675668}
   - {fileID: 998510522}
+  - {fileID: 844003453}
 --- !u!4 &1213457461
 Transform:
   m_ObjectHideFlags: 0
