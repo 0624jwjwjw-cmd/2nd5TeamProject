@@ -7,7 +7,7 @@ public class ReciepeUnlockManager : MonoBehaviour
 {
     public static ReciepeUnlockManager Instance { get; private set; }
 
-    [SerializeField] private List<DishBase> dishBases;
+    [SerializeField] private List<DishData> dishDatas;
 
     [SerializeField] public HashSet<string> unlockedRecipeIDs = new HashSet<string>();
 
@@ -22,7 +22,6 @@ public class ReciepeUnlockManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        ///////////////////////////////////
         TestAllUnlock();
     }
     public bool IsUnlocked(string foodID)
@@ -31,39 +30,25 @@ public class ReciepeUnlockManager : MonoBehaviour
     }
     public void UnlockRecipe(string foodID)
     {
-        foreach (DishBase dishbase in dishBases)
+        foreach (DishData dishData in dishDatas)
         {
-            if (dishbase.ID == foodID)
+            if (dishData.ID == foodID)
             {
                 unlockedRecipeIDs.Add(foodID);
             }
         }
         OnUnlockChanged?.Invoke();
     }
-    //public void TestUnlockRandomOne()
-    //{
-    //    if (unlockedRecipeIDs.Count >= dishBases.Count)
-    //    {
-    //        return;
-    //    }
-    //    /////////////////
-    //    string id = dishBases[Random.Range(0, dishBases.Count)].ID;
-    //    if(unlockedRecipeIDs.Contains(id))
-    //    {
-    //        TestUnlockRandomOne();
-    //    }
-    //    unlockedRecipeIDs.Add(id);
-    //}
     public void TestAllUnlock()
     {
-        if (unlockedRecipeIDs.Count >= dishBases.Count)
+        if (unlockedRecipeIDs.Count >= dishDatas.Count)
         {
             return;
         }
 
-        for (int i=0; i<dishBases.Count; i++)
+        for (int i=0; i<dishDatas.Count; i++)
         {
-            unlockedRecipeIDs.Add(dishBases[i].ID);
+            unlockedRecipeIDs.Add(dishDatas[i].ID);
         }
     }
 }
