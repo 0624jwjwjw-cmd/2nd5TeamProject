@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class KitchenCookSlotItem
@@ -13,94 +12,42 @@ public class KitchenCookSlotItem
         this.count = count;
     }
 }
+
 public class KitchenCookingSlotManager : MonoBehaviour
 {
     [SerializeField] private int maxSlot = 3;
-    [SerializeField] public KitchenCookingSlot[] solidSlotUIs;
-    [SerializeField] public GameObject[] dashedSlotUIs;
+    [SerializeField] private KitchenCookingSlotUIBinder uiBinder;
     [SerializeField] public List<KitchenCookSlotItem> slots = new List<KitchenCookSlotItem>();
 
     public void AddIngredient(string ingredientID)
     {
-
         foreach (KitchenCookSlotItem slot in slots)
         {
             if (slot.ingredientID == ingredientID)
             {
                 slot.count++;
-
-                KitchenCookingSlot sameSlot = FindSameIngredient(ingredientID);
-                if (sameSlot != null)
-                {
-                    sameSlot.AddIngredient(ingredientID);
-                }
+                uiBinder.RefreshExistingSlot(ingredientID);
                 return;
             }
         }
 
-        if (slots.Count >= maxSlot)
-        {
-            return;
-        }
+        if (slots.Count >= maxSlot) return;
 
         slots.Add(new KitchenCookSlotItem(ingredientID, 1));
-
-        KitchenCookingSlot emptySlot = FindEmptySlot();
-        if (emptySlot == null)
-        {
-            return;
-        }
-
-        emptySlot.gameObject.SetActive(true);
-        emptySlot.SetIngredient(ingredientID);
-
-        int index = -1;
-        for (int i = 0; i < solidSlotUIs.Length; i++)
-        {
-            if (solidSlotUIs[i] == emptySlot)
-            {
-                index = i;
-                break;
-            }
-        }
-        if (index != -1)
-        {
-            dashedSlotUIs[index].SetActive(false);
-        }
+        uiBinder.ShowIngredientInEmptySlot(ingredientID);
     }
 
     public void ClearSlots()
     {
         slots.Clear();
-        for (int i = 0; i < solidSlotUIs.Length; i++)
-        {
-            solidSlotUIs[i].gameObject.SetActive(false);
-            dashedSlotUIs[i].SetActive(true);
-        }
+        uiBinder.ResetAll();
     }
-    public KitchenCookingSlot FindEmptySlot()
+
+    public void ClearSolidSlotUIs()
     {
-        foreach (KitchenCookingSlot slot in solidSlotUIs)
-        {
-            if (slot.gameObject.activeSelf)
-            {
-                continue;
-            }
-            return slot;
-        }
-        return null;
+        uiBinder.ClearAllSolidSlots();
     }
-    public KitchenCookingSlot FindSameIngredient(string ingredientID)
-    {
-        foreach (KitchenCookingSlot slot in solidSlotUIs)
-        {
-            if (slot.ingredientID == ingredientID)
-            {
-                return slot;
-            }
-        }
-        return null;
-    }
+
     public void CookComplete()
     {
         slots.Clear();
