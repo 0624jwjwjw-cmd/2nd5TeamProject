@@ -39,10 +39,10 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
     }
     public void Save(SaveData data)
     {
-        data.unlockedRecipeIDs = unlockedRecipeIDs;
+        data.unlockedRecipeIDs = unlockedRecipeIDs.ToList();
     }
     public void Load(SaveData data)
     {
-        unlockedRecipeIDs = data.unlockedRecipeIDs;
+        unlockedRecipeIDs = new HashSet<string>(data.unlockedRecipeIDs);
     }
 }
