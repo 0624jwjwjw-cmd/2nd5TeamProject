@@ -4,7 +4,9 @@ using UnityEngine;
 public class SubscriberRank : MonoBehaviour
 {
     public static SubscriberRank Instance { get; private set; }
+
     public event Action<int> OnRankChanged;
+
     private int currentRank = 1;
     public int CurrentRank => currentRank;
 
@@ -29,50 +31,52 @@ public class SubscriberRank : MonoBehaviour
 
     private void OnDestroy()
     {
-        CurrencyManager.Instance.OnRevenueChanged -= CheckRank;
+        if (CurrencyManager.Instance != null)
+            CurrencyManager.Instance.OnRevenueChanged -= CheckRank;
     }
 
     private void CheckRank()
     {
         int newRank = CalculateRank();
+
         if (newRank != currentRank)
         {
             currentRank = newRank;
             OnRankChanged?.Invoke(currentRank);
         }
     }
+
     private int CalculateRank()
     {
         int subscriber = CurrencyManager.Instance.Subscriber;
 
-        if (subscriber >= 500000)
-            return 5;
+        int rank = 1;
 
-        if (subscriber >= 150000)
-            return 4;
+        for (int i = 1; i <= GradeDatabase.Instance.GradeCount; i++)
+        {
+            GradeData gradeData = GradeDatabase.Instance.GetGrade(i);
 
-        if (subscriber >= 30000)
-            return 3;
+            if (subscriber >= gradeData.RequiredSubscribers)
+            {
+                rank = i;
+            }
+        }
 
-        if (subscriber >= 5000)
-            return 2;
-
-        return 1;
+        return rank;
     }
+
     public int GetNextRankRequirement()
     {
-        switch (CurrentRank)
-        {
-            case 1:
-                return 5000;
-            case 2:
-                return 30000;
-            case 3:
-                return 150000;
-            case 4:
-                return 500000;
-            default:
-                return -1;
-        }
+        if (currentRank >= GradeDatabase.Instance.GradeCount)
+            return -1;
+
+        return GradeDatabase.Instance
+            .GetGrade(currentRank + 1)
+            .RequiredSubscribers;
+    }
+
+    public GradeData GetCurrentGradeData()
+    {
+        return GradeDatabase.Instance.GetGrade(currentRank);
     }
 }
