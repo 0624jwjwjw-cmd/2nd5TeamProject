@@ -60,15 +60,4 @@ public class KitchenUpgradeManager : MonoBehaviour, ISaveable
         OnKitchenUpgradeChanged?.Invoke();
     }
 
-    // ISaveable ÇÔ¼ö
-    public void Save(SaveData data)
-    {
-        data.kitchenLevel = index;
-    }
-
-    public void Load(SaveData data)
-    {
-        index = data.kitchenLevel;
-        SetData(index);
-    }
 }

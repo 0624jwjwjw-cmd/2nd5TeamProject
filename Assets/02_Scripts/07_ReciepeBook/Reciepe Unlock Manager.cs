@@ -52,21 +52,4 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
         }
     }
 
-    // ISaveable ÇÔ¼ö
-    public void Save(SaveData data)
-    {
-        data.unlockedRecipeIDs = new HashSet<string>(unlockedRecipeIDs);
-    }
-
-    public void Load(SaveData data)
-    {
-        unlockedRecipeIDs.Clear();
-
-        foreach (string id in data.unlockedRecipeIDs)
-        {
-            unlockedRecipeIDs.Add(id);
-        }
-
-        OnUnlockChanged?.Invoke();
-    }
 }

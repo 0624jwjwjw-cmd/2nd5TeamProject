@@ -61,15 +61,5 @@ public class InventoryUpgradeManager : MonoBehaviour, ISaveable
         OnInventoryUpgradeChanged?.Invoke();
     }
 
-    // ISaveable ÇÔ¼ö
-    public void Save(SaveData data)
-    {
-        data.inventoryLevel = index;
-    }
 
-    public void Load(SaveData data)
-    {
-        index = data.inventoryLevel;
-        SetData(index);
-    }
 }

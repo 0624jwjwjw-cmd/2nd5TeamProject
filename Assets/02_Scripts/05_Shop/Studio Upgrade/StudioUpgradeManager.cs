@@ -62,15 +62,4 @@ public class StudioUpgradeManager : MonoBehaviour, ISaveable
         OnStudioUpgradeChanged?.Invoke();
     }
 
-    // ISaveable ÇÔ¼ö
-    public void Save(SaveData data)
-    {
-        data.studioLevel = index;
-    }
-
-    public void Load(SaveData data)
-    {
-        index = data.studioLevel;
-        SetData(index);
-    }
 }
