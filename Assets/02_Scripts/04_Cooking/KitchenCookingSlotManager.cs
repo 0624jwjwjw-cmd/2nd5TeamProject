@@ -36,14 +36,20 @@ public class KitchenCookingSlotManager : MonoBehaviour
         {
             if (slot.ingredientID == ingredientID)
             {
-                if (slot.count >= amount) return;
+                if (slot.count >= amount)
+                {
+                    return;
+                }
                 slot.count++;
                 uiBinder.RefreshExistingSlot(ingredientID);
                 return;
             }
         }
 
-        if (slots.Count >= maxSlot) return;
+        if (slots.Count >= maxSlot)
+        {
+            return;
+        }
 
         slots.Add(new KitchenCookSlotItem(ingredientID, 1));
         uiBinder.ShowIngredientInEmptySlot(ingredientID);

@@ -12,7 +12,10 @@ public class KitchenCookingSystem : MonoBehaviour
     public void StartCook()
     {
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
-        if (IsAllSlotsEmpty()) return;
+        if (IsAllSlotsEmpty())
+        { 
+            return; 
+        }
 
         string resultDishID = dishMatchingService.FindMatchingDish(kitchenCookingSlotManager.slots);
 
@@ -48,7 +51,9 @@ public class KitchenCookingSystem : MonoBehaviour
         foreach (KitchenCookSlotItem item in kitchenCookingSlotManager.slots)
         {
             if (item != null && item.ingredientID != null)
+            {
                 return false;
+            }
         }
         return true;
     }
@@ -57,10 +62,13 @@ public class KitchenCookingSystem : MonoBehaviour
     {
         cookResult.gameObject.SetActive(true);
         if (isSpecial)
+        {
             cookResult.SetResultSpecialDishInfo(dishID);
+        }
         else
+        {
             cookResult.SetResultDishInfo(dishID);
-
+        }
         InventoryManager.Instance.AddItem(dishID, 1, itemType);
     }
 

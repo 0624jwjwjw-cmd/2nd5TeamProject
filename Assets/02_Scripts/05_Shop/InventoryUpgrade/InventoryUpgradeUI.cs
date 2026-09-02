@@ -50,6 +50,5 @@ public class InventoryUpgradeUI : MonoBehaviour
     public void OnclickUpgradeButton()
     {
         InventoryUpgradeManager.Instance.LevelUp();
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
 }

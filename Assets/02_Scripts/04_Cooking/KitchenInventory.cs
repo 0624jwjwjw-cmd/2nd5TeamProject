@@ -60,7 +60,9 @@ public class KitchenInventory : MonoBehaviour
             }
         }
         for (int i = slotIndex; i < slots.Length; i++)
+        {
             slots[i].ClearSlot();
+        }
 
         if (viewType == InventoryViewType.Whole)
         {
@@ -98,7 +100,10 @@ public class KitchenInventory : MonoBehaviour
     }
     private bool MatchesView(InventorySlotData slotData, InventoryViewType viewType)
     {
-        if (slotData == null) return false;
+        if (slotData == null)
+        {
+            return false;
+        }
 
         if (viewType == InventoryViewType.Whole)
         {
