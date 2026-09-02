@@ -24,6 +24,9 @@ public class MainPopupUIController : MonoBehaviour
     //켜고 끄면서 상점 화면을 표시한다
     [SerializeField] private GameObject shopUIRoot;
 
+    //상점 팝업 내부의 닫기 버튼
+    [SerializeField] private Button shopCloseButton;
+
     //*인벤토리 UI*
     //메인 화면의 가방 버튼
     [Header("인벤토리 UI")]
@@ -36,6 +39,9 @@ public class MainPopupUIController : MonoBehaviour
     //인벤토리 UI 전체를 담고 있는 Root
     [SerializeField] private GameObject inventoryUIRoot;
 
+    //인벤토리 팝업 내부의 닫기 버튼
+    [SerializeField] private Button inventoryCloseButton;
+
     //*Sorting 설정*
     //평소 ShopButton / InventoryButton이 사용하는 Sort Order
     //현재 BottomPanel보다 앞에 보이기 위해 1을 사용
@@ -45,15 +51,6 @@ public class MainPopupUIController : MonoBehaviour
     //현재 팝업을 열어둔 버튼의 Sort Order
     //DimOverlay(50), Popup(60)보다 높아야 함
     [SerializeField] private int selectedButtonSortOrder = 100;
-
-    //*현재 열려 있는 팝업 상태*
-    //어떤 팝업이 열려 있는지 구분하기 위한 enum
-    private enum PopupType
-    {
-        None,       //아무 팝업도 열려 있지 않음
-        Shop,       //상점이 열려 있음
-        Inventory   //인벤토리가 열려 있음
-    }
 
     //게임 시작 시 아무것도 열려 있지 않음
     private PopupType currentPopup = PopupType.None;
@@ -66,9 +63,21 @@ public class MainPopupUIController : MonoBehaviour
             shopButton.onClick.AddListener(ToggleShop);
         }
 
+        //상점 팝업 내부 닫기 버튼 이벤트 등록
+        if (shopCloseButton != null)
+        {
+            shopCloseButton.onClick.AddListener(CloseShop);
+        }
+
         if (inventoryButton != null)
         {
             inventoryButton.onClick.AddListener(ToggleInventory);
+        }
+
+        //인벤토리 팝업 내부 닫기 버튼 이벤트 등록
+        if (inventoryCloseButton != null)
+        {
+            inventoryCloseButton.onClick.AddListener(CloseInventory);
         }
 
         //씬이 시작될 때 모든 팝업을 닫힌 상태로 맞춤
@@ -84,9 +93,21 @@ public class MainPopupUIController : MonoBehaviour
             shopButton.onClick.RemoveListener(ToggleShop);
         }
 
+        //상점 닫기 버튼 이벤트 제거
+        if (shopCloseButton != null)
+        {
+            shopCloseButton.onClick.RemoveListener(CloseShop);
+        }
+
         if (inventoryButton != null)
         {
             inventoryButton.onClick.RemoveListener(ToggleInventory);
+        }
+
+        //인벤토리 닫기 버튼 이벤트 제거
+        if (inventoryCloseButton != null)
+        {
+            inventoryCloseButton.onClick.RemoveListener(CloseInventory);
         }
     }
 
@@ -130,17 +151,18 @@ public class MainPopupUIController : MonoBehaviour
     //*상점 버튼*
     private void ToggleShop()
     {
-        //이미 상점이 열려 있는 상태에서
-        //상점 버튼을 다시 누르면 닫음
+        //열린 상점을 다시 누른 경우
         if (currentPopup == PopupType.Shop)
         {
+            PlayButtonClickSfx();
             CloseShop();
             return;
         }
 
-        //아무 팝업도 열려 있지 않을 때만 상점 열기
+        //아무 팝업도 없을 때만 상점을 열고 효과음 재생
         if (currentPopup == PopupType.None)
         {
+            PlayButtonClickSfx();
             OpenShop();
         }
     }
@@ -196,16 +218,18 @@ public class MainPopupUIController : MonoBehaviour
     //*인벤토리 버튼*
     private void ToggleInventory()
     {
-        //이미 인벤토리가 열려 있다면 다시 눌렀을 때 닫음
+        //열린 인벤토리를 다시 누른 경우
         if (currentPopup == PopupType.Inventory)
         {
+            PlayButtonClickSfx();
             CloseInventory();
             return;
         }
 
-        //아무 팝업도 열려 있지 않을 때만 인벤토리 열기
+        //아무 팝업도 없을 때만 인벤토리를 열고 효과음 재생
         if (currentPopup == PopupType.None)
         {
+            PlayButtonClickSfx();
             OpenInventory();
         }
     }
@@ -257,5 +281,13 @@ public class MainPopupUIController : MonoBehaviour
 
         //현재 열린 팝업 없음
         currentPopup = PopupType.None;
+    }
+
+    //*일반 버튼 클릭 효과음 재생*
+    private void PlayButtonClickSfx()
+    {
+        //SoundManager가 있는 경우에만
+        //프로젝트 공통 버튼 효과음을 한 번 재생
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
     }
 }

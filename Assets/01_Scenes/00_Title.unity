@@ -1333,6 +1333,56 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786998250}
   m_CullTransparentMesh: 1
+--- !u!1 &812788013
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 812788015}
+  - component: {fileID: 812788014}
+  m_Layer: 0
+  m_Name: GradeDatabase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &812788014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812788013}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db94bdabe70e2f643b2c6d6cbeeb085c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GradeDatabase
+  grades:
+  - {fileID: 11400000, guid: dad0806508782064088685660afc18b1, type: 2}
+  - {fileID: 11400000, guid: 0421d97cd0da2134db082bc4c2c680c4, type: 2}
+  - {fileID: 11400000, guid: 35dd6faf6e1bf454c99c2ae66c8f9180, type: 2}
+  - {fileID: 11400000, guid: 453ed5e09dc6d3e4f8d74552e1f5af48, type: 2}
+  - {fileID: 11400000, guid: dbbe30bbf205a9e4ca06fc8ec3e933a9, type: 2}
+--- !u!4 &812788015
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812788013}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 158.21901, y: 1089.2418, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &830675667
 GameObject:
   m_ObjectHideFlags: 0
@@ -2754,7 +2804,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7d5bfca43d1f5b245bea6b136b7e9b75, type: 3}
+  m_Sprite: {fileID: 1806684226809527332, guid: 1ef99114bac5e3e4ca7df0f7113aba05, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4848,3 +4898,4 @@ SceneRoots:
   - {fileID: 164178541}
   - {fileID: 2015593633}
   - {fileID: 1999187132}
+  - {fileID: 812788015}
