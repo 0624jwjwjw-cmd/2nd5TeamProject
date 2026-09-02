@@ -17,6 +17,7 @@ public class RankUpCallPanel : MonoBehaviour
     {
         rankPanel.SetActive(true);
         SoundManager.Instance.PlaySFX(SFXType.Win);
+
         if (darkPanel != null)
         {
             darkPanel.SetActive(true);
@@ -56,11 +57,12 @@ public class RankUpCallPanel : MonoBehaviour
     {
         ChangeRankImage(newRank);
 
-        rankText.text = $"축하합니다!\r\n{RankName(newRank)}로 승급하셨습니다!";
+        rankText.text =
+            $"축하합니다!\r\n{RankName(newRank)}로 승급하셨습니다!";
 
         OpenPanel();
     }
-    
+
     // 현재 랭크에 맞는 이미지로 변경
     private void ChangeRankImage(int rank)
     {
@@ -69,16 +71,14 @@ public class RankUpCallPanel : MonoBehaviour
 
         rankImage.sprite = rankSprites[rank - 1];
     }
+
     private string RankName(int newRank)
     {
-        return newRank switch
-        {
-            1 => "브론즈",
-            2 => "실버",
-            3 => "골드",
-            4 => "다이아몬드",
-            5 => "레드",
-            _ => "알 수 없음"
-        };
+        GradeData gradeData = rankManager.GetGradeData(newRank);
+
+        if (gradeData == null)
+            return "알 수 없음";
+
+        return gradeData.GradeName;
     }
 }

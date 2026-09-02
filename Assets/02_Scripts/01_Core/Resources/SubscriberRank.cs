@@ -79,4 +79,18 @@ public class SubscriberRank : MonoBehaviour
     {
         return GradeDatabase.Instance.GetGrade(currentRank);
     }
+
+    public int GetCurrentRankRequirement()
+    {
+        if (currentRank <= 1)
+            return 0;
+
+        return GradeDatabase.Instance
+            .GetGrade(currentRank)
+            .RequiredSubscribers;
+    }
+    public GradeData GetGradeData(int rank)
+    {
+        return GradeDatabase.Instance.GetGrade(rank);
+    }
 }
