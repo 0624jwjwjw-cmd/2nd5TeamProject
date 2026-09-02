@@ -1877,6 +1877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LiveChat
   _liveManager: {fileID: 1656232465}
   _liveChatUI: {fileID: 0}
+  _liveChatAI: {fileID: 0}
   _chatInterval: 2
 --- !u!4 &231957649
 Transform:
@@ -8794,6 +8795,54 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5200839693601414304, guid: 4108a9552d5462d45a7e8a5b91b9254f, type: 3}
   m_PrefabInstance: {fileID: 1181833326}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1198383086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1198383087}
+  - component: {fileID: 1198383088}
+  m_Layer: 0
+  m_Name: LiveChatAI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1198383087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198383086}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2056100935}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1198383088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1198383086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2d9b24b63e52f740b0ab0f3879b4d20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LiveChatAI
+  _ollamaUrl: http://localhost:11434/api/generate
+  _model: qwen3:1.7b
+  _minCharacters: 10
+  _maxCharacters: 25
 --- !u!1 &1212420174
 GameObject:
   m_ObjectHideFlags: 0
@@ -12621,6 +12670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveUI
   _liveManager: {fileID: 1656232465}
+  _foodArea: {fileID: 1424369495}
   _startButton: {fileID: 1949847755}
   _liveStatusText: {fileID: 1878839606}
   _liveTimerText: {fileID: 925807312}
@@ -12677,7 +12727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94e2f8ab081ba843992bca8905b05b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventoryUI
-  inventoryManager: {fileID: 0}
   content: {fileID: 868200671}
   slotPrefab: {fileID: 4925224546646944095, guid: 951085ae6e8df3743b2dce0da5d738b6, type: 3}
   maxSlotCount: 42
@@ -14101,7 +14150,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1198383087}
   m_Father: {fileID: 1470724035}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2056100936
@@ -14118,6 +14168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LiveChat
   _liveManager: {fileID: 1656232465}
   _liveChatUI: {fileID: 1772085469}
+  _liveChatAI: {fileID: 1198383088}
   _chatInterval: 2
 --- !u!1 &2077767058
 GameObject:

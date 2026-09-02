@@ -34,9 +34,13 @@ public class LiveManager : MonoBehaviour
     public event Action OnLiveStarted;
     public event Action OnLiveStopped;
     public event Action OnLiveEnded;
+
     public event Action<float> OnLiveTimeChanged;
     public event Action<int> OnDonationChanged;
     public event Action<int> OnSubscribersChanged;
+
+    // 음식 섭취 시 이름 전달
+    public event Action<string> OnFoodEaten;
 
     private void Awake()
     {
@@ -91,6 +95,7 @@ public class LiveManager : MonoBehaviour
 
         _totalDonation = 0;
         _totalSubscribers = 0;
+
         _baseDonation = 0;
         _baseSubscribers = 0;
 
@@ -160,11 +165,15 @@ public class LiveManager : MonoBehaviour
 
         DishData dishData;
 
-        if (!GameDataRepository.Instance.TryGetDish(itemId, out dishData))
-        {
-            if (!GameDataRepository.Instance.TryGetSpecialDish(
+        // 일반 음식 확인
+        if (!GameDataRepository.Instance.TryGetDish(
                 itemId,
                 out dishData))
+        {
+            // 특별 음식 확인
+            if (!GameDataRepository.Instance.TryGetSpecialDish(
+                    itemId,
+                    out dishData))
             {
                 Debug.LogWarning(
                     $"[LiveManager] 음식을 찾을 수 없습니다. ID: {itemId}"
@@ -177,6 +186,11 @@ public class LiveManager : MonoBehaviour
         // 음식 후원금, 구독자 누적
         _baseDonation += dishData.Donation;
         _baseSubscribers += dishData.Subscribers;
+
+        // 음식 정보를 외부 시스템에 전달
+        // LiveChat아 ㅇ이벤트를 받아 AI 채팅 생성
+
+        OnFoodEaten?.Invoke(dishData.DishName);
 
         Debug.Log(
             $"음식 섭취: {dishData.DishName} / " +
@@ -196,10 +210,12 @@ public class LiveManager : MonoBehaviour
             Debug.LogWarning(
                 "[LiveManager] MiniGameStarter가 연결되지 않았습니다."
             );
+
             return;
         }
 
-        _miniGameCoroutine = StartCoroutine(StartMiniGameAfterDelay());
+        _miniGameCoroutine =
+            StartCoroutine(StartMiniGameAfterDelay());
     }
 
     private void StopMiniGameTimer()
@@ -242,7 +258,10 @@ public class LiveManager : MonoBehaviour
 
         if (StudioUpgradeManager.Instance == null)
         {
-            Debug.LogError("[LiveManager] StudioUpgradeManager가 없습니다.");
+            Debug.LogError(
+                "[LiveManager] StudioUpgradeManager가 없습니다."
+            );
+
             return;
         }
 
@@ -251,17 +270,20 @@ public class LiveManager : MonoBehaviour
             Debug.LogError(
                 "[LiveManager] StudioUpgradeManager의 CurrentData가 없습니다."
             );
+
             return;
         }
 
-        int beforeGold = CurrencyManager.Instance.Gold;
-        int beforeSubscriber = CurrencyManager.Instance.Subscriber;
+        int beforeGold =
+            CurrencyManager.Instance.Gold;
+
+        int beforeSubscriber =
+            CurrencyManager.Instance.Subscriber;
 
 
-        // 후원금 계산
-        // Donation × 유튜브 랭크 배율
 
-        int youtubeGrade = SubscriberRank.Instance.CurrentRank;
+        int youtubeGrade =
+            SubscriberRank.Instance.CurrentRank;
 
         CalculateGold.GetDonation(
             _baseDonation,
@@ -269,17 +291,19 @@ public class LiveManager : MonoBehaviour
         );
 
 
-        // 구독자 계산
-        // Subscribers × 스튜디오 업그레이드 배율
-
         float subscriberBonus =
             StudioUpgradeManager.Instance.CurrentData.SubscriberBonus;
 
-        int finalSubscribers = Mathf.RoundToInt(
-            _baseSubscribers * subscriberBonus
+        int finalSubscribers =
+            Mathf.RoundToInt(
+                _baseSubscribers * subscriberBonus
+            );
+
+        CurrencyManager.Instance.AddSubscriber(
+            finalSubscribers
         );
 
-        CurrencyManager.Instance.AddSubscriber(finalSubscribers);
+        // 실제 획득량 계산
 
         _totalDonation =
             CurrencyManager.Instance.Gold - beforeGold;
