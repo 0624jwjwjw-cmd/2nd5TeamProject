@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class LiveInventoryUI : MonoBehaviour
 {
-    [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private Transform content;
     [SerializeField] private LiveInventorySlotUI slotPrefab;
     [SerializeField] private int maxSlotCount = 30;
@@ -15,11 +14,26 @@ public class LiveInventoryUI : MonoBehaviour
 
     private void Awake()
     {
-        if (inventoryManager == null)
-            inventoryManager = InventoryManager.Instance;
-
         _itemVisualRepository = ItemVisualRepository.Instance;
         _gameDataRepository = GameDataRepository.Instance;
+
+        if (InventoryManager.Instance == null)
+        {
+            Debug.LogError("[LiveInventoryUI] InventoryManager가 없습니다.");
+            return;
+        }
+
+        if (_itemVisualRepository == null)
+        {
+            Debug.LogError("[LiveInventoryUI] ItemVisualRepository가 없습니다.");
+            return;
+        }
+
+        if (_gameDataRepository == null)
+        {
+            Debug.LogError("[LiveInventoryUI] GameDataRepository가 없습니다.");
+            return;
+        }
 
         if (content == null)
         {
@@ -38,14 +52,14 @@ public class LiveInventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (inventoryManager != null)
-            inventoryManager.OnInventoryChanged += Refresh;
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryChanged += Refresh;
     }
 
     private void OnDisable()
     {
-        if (inventoryManager != null)
-            inventoryManager.OnInventoryChanged -= Refresh;
+        if (InventoryManager.Instance != null)
+            InventoryManager.Instance.OnInventoryChanged -= Refresh;
     }
 
     private void Start()
@@ -67,20 +81,20 @@ public class LiveInventoryUI : MonoBehaviour
 
     public void Refresh()
     {
-        if (inventoryManager == null)
+        if (InventoryManager.Instance == null)
             return;
 
-        if (_itemVisualRepository == null)
-            _itemVisualRepository = ItemVisualRepository.Instance;
-
-        if (_gameDataRepository == null)
-            _gameDataRepository = GameDataRepository.Instance;
+        if (_itemVisualRepository == null ||
+            _gameDataRepository == null)
+        {
+            return;
+        }
 
         for (int i = 0; i < slots.Count; i++)
             slots[i].Clear();
 
         IReadOnlyList<InventorySlotData> inventorySlots =
-            inventoryManager.Slots;
+            InventoryManager.Instance.Slots;
 
         int slotIndex = 0;
 
@@ -98,17 +112,19 @@ public class LiveInventoryUI : MonoBehaviour
             if (string.IsNullOrWhiteSpace(itemId))
                 continue;
 
-            if (_gameDataRepository == null)
-                continue;
-
-            if (!_gameDataRepository.TryGetDish(itemId, out DishData dishData) &&
-                !_gameDataRepository.TryGetSpecialDish(itemId, out dishData))
+            if (!_gameDataRepository.TryGetDish(
+                    itemId,
+                    out DishData dishData) &&
+                !_gameDataRepository.TryGetSpecialDish(
+                    itemId,
+                    out dishData))
             {
                 continue;
             }
 
-            if (_itemVisualRepository == null ||
-                !_itemVisualRepository.TryGetIcon(itemId, out Sprite icon))
+            if (!_itemVisualRepository.TryGetIcon(
+                    itemId,
+                    out Sprite icon))
             {
                 continue;
             }

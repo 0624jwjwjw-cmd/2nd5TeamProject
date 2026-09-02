@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class LiveUI : MonoBehaviour
 {
     [SerializeField] private LiveManager _liveManager;
+    [SerializeField] private FoodArea _foodArea;
 
     [SerializeField] private Button _startButton;
 
@@ -65,10 +66,8 @@ public class LiveUI : MonoBehaviour
     {
         _liveStatusText.text = "LIVE OFF";
 
-        FoodArea foodArea = FindFirstObjectByType<FoodArea>();
-
-        if (foodArea != null)
-            foodArea.CheckFoodPlaces();
+        if (_foodArea != null)
+            _foodArea.CheckFoodPlaces();
     }
 
     private void ShowLiveEnded()
@@ -76,10 +75,8 @@ public class LiveUI : MonoBehaviour
         _liveStatusText.text = "LIVE OFF";
         _liveTimerText.text = "00:00";
 
-        FoodArea foodArea = FindFirstObjectByType<FoodArea>();
-
-        if (foodArea != null)
-            foodArea.CheckFoodPlaces();
+        if (_foodArea != null)
+            _foodArea.CheckFoodPlaces();
     }
 
     private void UpdateTimer(float currentSecond)
