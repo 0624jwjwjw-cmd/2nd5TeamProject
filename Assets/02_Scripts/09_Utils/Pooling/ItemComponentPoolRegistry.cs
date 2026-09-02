@@ -23,7 +23,7 @@ using UnityEngine;
 public sealed class ItemComponentPoolRegistry<T> where T : Component
 {
     //ItemId를 이용해 실제 Prefab을 찾기 위한 Repository
-    private readonly IItemVisualRepository itemVisualRepository;
+    private readonly ItemVisualRepository itemVisualRepository;
 
 
     //사용하지 않는 객체들을 보관할 공통 부모
@@ -34,7 +34,7 @@ public sealed class ItemComponentPoolRegistry<T> where T : Component
 
     //*ID 기반 Pool Registry 생성*
     public ItemComponentPoolRegistry(
-        IItemVisualRepository itemVisualRepository,
+        ItemVisualRepository itemVisualRepository,
         Transform poolRoot)
     {
         //Repository가 없다면
