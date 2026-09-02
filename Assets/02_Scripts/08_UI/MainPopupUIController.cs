@@ -160,17 +160,18 @@ public class MainPopupUIController : MonoBehaviour
     //*상점 버튼*
     private void ToggleShop()
     {
-        //이미 상점이 열려 있는 상태에서
-        //상점 버튼을 다시 누르면 닫음
+        //열린 상점을 다시 누른 경우
         if (currentPopup == PopupType.Shop)
         {
+            PlayButtonClickSfx();
             CloseShop();
             return;
         }
 
-        //아무 팝업도 열려 있지 않을 때만 상점 열기
+        //아무 팝업도 없을 때만 상점을 열고 효과음 재생
         if (currentPopup == PopupType.None)
         {
+            PlayButtonClickSfx();
             OpenShop();
         }
     }
@@ -226,16 +227,18 @@ public class MainPopupUIController : MonoBehaviour
     //*인벤토리 버튼*
     private void ToggleInventory()
     {
-        //이미 인벤토리가 열려 있다면 다시 눌렀을 때 닫음
+        //열린 인벤토리를 다시 누른 경우
         if (currentPopup == PopupType.Inventory)
         {
+            PlayButtonClickSfx();
             CloseInventory();
             return;
         }
 
-        //아무 팝업도 열려 있지 않을 때만 인벤토리 열기
+        //아무 팝업도 없을 때만 인벤토리를 열고 효과음 재생
         if (currentPopup == PopupType.None)
         {
+            PlayButtonClickSfx();
             OpenInventory();
         }
     }
@@ -287,5 +290,13 @@ public class MainPopupUIController : MonoBehaviour
 
         //현재 열린 팝업 없음
         currentPopup = PopupType.None;
+    }
+
+    //*일반 버튼 클릭 효과음 재생*
+    private void PlayButtonClickSfx()
+    {
+        //SoundManager가 있는 경우에만
+        //프로젝트 공통 버튼 효과음을 한 번 재생
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
     }
 }
