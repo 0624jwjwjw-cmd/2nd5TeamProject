@@ -25,12 +25,6 @@ public class SaveTest : MonoBehaviour
         HeartManager.Instance.UseHeart();
     }
 
-
-    public void AddSubscriber()
-    {
-        CalculateSubscriber.GetDonation(6700, 3);
-        
-    }
     public void AddDate()
     {
         GameDateManager.Instance.AddDateCount();
