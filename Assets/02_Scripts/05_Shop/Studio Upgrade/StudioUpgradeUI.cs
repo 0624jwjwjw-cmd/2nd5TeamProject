@@ -51,7 +51,6 @@ public class StudioUpgradeUI : MonoBehaviour
     }
     public void OnClickUpgradeButton()
     {
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         StudioUpgradeManager.Instance.LevelUp();
     }
 }

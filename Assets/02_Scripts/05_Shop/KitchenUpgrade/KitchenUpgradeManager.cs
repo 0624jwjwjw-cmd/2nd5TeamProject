@@ -36,6 +36,7 @@ public class KitchenUpgradeManager : MonoBehaviour,ISaveable
         {
             return;
         }
+        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         if (index < kitchenUpgradeDatas.Length - 1)
         {
             index++;

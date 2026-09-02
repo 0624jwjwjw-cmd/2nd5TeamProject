@@ -36,6 +36,7 @@ public class InventoryUpgradeManager : MonoBehaviour,ISaveable
         {
             return;
         }
+        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         if (index < inventoryUpgradeDatas.Length - 1)
         {
             index++;

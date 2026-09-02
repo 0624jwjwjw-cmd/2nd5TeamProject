@@ -37,7 +37,7 @@ public class RecipePurchaseSlot : MonoBehaviour
         {
             return;
         }
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
+        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
         purchaseButtonText.text = completePurchase;

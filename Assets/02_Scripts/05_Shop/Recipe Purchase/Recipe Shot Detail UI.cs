@@ -50,11 +50,11 @@ public class RecipeShotDetailUI : MonoBehaviour
     }
     public void OnclickPurchaseButton()
     {
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
-        if(!CurrencyManager.Instance.SpendGold(reciepePurchaseData.Price))
+        if (!CurrencyManager.Instance.SpendGold(reciepePurchaseData.Price))
         {
             return;
         }
+        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
         purchaseButtonText.text = completePurchase;
