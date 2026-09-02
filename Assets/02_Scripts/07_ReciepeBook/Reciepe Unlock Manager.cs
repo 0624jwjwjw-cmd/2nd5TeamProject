@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ReciepeUnlockManager : MonoBehaviour
+public class ReciepeUnlockManager : MonoBehaviour, ISaveable
 {
     public static ReciepeUnlockManager Instance { get; private set; }
 
@@ -50,5 +50,23 @@ public class ReciepeUnlockManager : MonoBehaviour
         {
             unlockedRecipeIDs.Add(dishDatas[i].ID);
         }
+    }
+
+    // ISaveable ÇÔ¼ö
+    public void Save(SaveData data)
+    {
+        data.unlockedRecipeIDs = new HashSet<string>(unlockedRecipeIDs);
+    }
+
+    public void Load(SaveData data)
+    {
+        unlockedRecipeIDs.Clear();
+
+        foreach (string id in data.unlockedRecipeIDs)
+        {
+            unlockedRecipeIDs.Add(id);
+        }
+
+        OnUnlockChanged?.Invoke();
     }
 }

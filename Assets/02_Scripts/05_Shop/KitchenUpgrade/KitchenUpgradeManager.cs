@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class KitchenUpgradeManager : MonoBehaviour
+public class KitchenUpgradeManager : MonoBehaviour, ISaveable
 {
     public static KitchenUpgradeManager Instance { get; private set; }
 
@@ -58,5 +58,17 @@ public class KitchenUpgradeManager : MonoBehaviour
             nextData = null;
         }
         OnKitchenUpgradeChanged?.Invoke();
+    }
+
+    // ISaveable ÇÔ¼ö
+    public void Save(SaveData data)
+    {
+        data.kitchenLevel = index;
+    }
+
+    public void Load(SaveData data)
+    {
+        index = data.kitchenLevel;
+        SetData(index);
     }
 }

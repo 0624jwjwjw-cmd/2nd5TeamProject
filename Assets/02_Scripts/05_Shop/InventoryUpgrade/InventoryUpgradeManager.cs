@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class InventoryUpgradeManager : MonoBehaviour
+public class InventoryUpgradeManager : MonoBehaviour, ISaveable
 {
     public static InventoryUpgradeManager Instance { get; private set; }
 
@@ -59,5 +59,17 @@ public class InventoryUpgradeManager : MonoBehaviour
         }
         InventoryManager.Instance.MaxStackSize = currentData.Stack;
         OnInventoryUpgradeChanged?.Invoke();
+    }
+
+    // ISaveable ÇÔ¼ö
+    public void Save(SaveData data)
+    {
+        data.inventoryLevel = index;
+    }
+
+    public void Load(SaveData data)
+    {
+        index = data.inventoryLevel;
+        SetData(index);
     }
 }
