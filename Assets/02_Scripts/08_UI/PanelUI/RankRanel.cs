@@ -77,15 +77,15 @@ public class RankRanel : MonoBehaviour
         UpdateRankImages(currentRank);
 
         // 최고 티어
-        if (currentRank == 5)
+        if (currentRank >= GradeDatabase.Instance.GradeCount)
         {
             nextSubscriberText.text = "MAX";
             progressSlider.value = 1f;
             return;
         }
 
-        int currentRequirement = GetNextRankRequirement(currentRank - 1);
-        int nextRequirement = GetNextRankRequirement(currentRank);
+        int currentRequirement = rankManager.GetCurrentRankRequirement();
+        int nextRequirement = rankManager.GetNextRankRequirement();
 
         int remainingSubscriber = Mathf.Max(0, nextRequirement - subscriber);
 
@@ -121,19 +121,6 @@ public class RankRanel : MonoBehaviour
                 panelImages[i].sprite = unaderPanelSprite;
                 starImages[i].gameObject.SetActive(false);
             }
-        }
-    }
-
-    private int GetNextRankRequirement(int currentRank)
-    {
-        switch (currentRank)
-        {
-            case 0: return 0;
-            case 1: return 5000;
-            case 2: return 30000;
-            case 3: return 150000;
-            case 4: return 500000;
-            default: return -1;
         }
     }
 }

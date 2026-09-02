@@ -2,20 +2,15 @@ using UnityEngine;
 
 public static class CalculateGold
 {
-    private static readonly float[] youtubeMultiplier =
-    {
-        0,
-        1f,
-        1.15f,
-        1.3f,
-        1.5f,
-        1.7f
-    };
-
     public static void GetDonation(int foodCost, int youtubeGrade)
     {
+        GradeData gradeData = GradeDatabase.Instance.GetGrade(youtubeGrade);
+
+        if (gradeData == null)
+            return;
+
         int donation = Mathf.RoundToInt(
-            foodCost * youtubeMultiplier[youtubeGrade]);
+            foodCost * gradeData.DonationBonus);
 
         CurrencyManager.Instance.AddGold(donation);
     }
