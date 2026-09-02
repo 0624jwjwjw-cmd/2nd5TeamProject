@@ -25,8 +25,7 @@ public class SaveData
     public int kitchenLevel = 0;
     public int studioLevel = 0;
     public int inventoryLevel = 0;
-    //public List<string> unlockedRecipeIDs = new();
-    public HashSet<string> unlockedRecipeIDs = new();
+    public List<string> unlockedRecipeIDs = new();
 
 
     //인벤토리 안에 음식,재료들
