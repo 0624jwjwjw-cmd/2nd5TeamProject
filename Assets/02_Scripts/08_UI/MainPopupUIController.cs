@@ -49,8 +49,8 @@ public class MainPopupUIController : MonoBehaviour
     [SerializeField] private int normalButtonSortOrder = 1;
 
     //현재 팝업을 열어둔 버튼의 Sort Order
-    //DimOverlay(50), Popup(60)보다 높아야 함
-    [SerializeField] private int selectedButtonSortOrder = 100;
+    //DimOverlay(50)보다 높아야 함
+    [SerializeField] private int selectedButtonSortOrder = 55;
 
     //게임 시작 시 아무것도 열려 있지 않음
     private PopupType currentPopup = PopupType.None;

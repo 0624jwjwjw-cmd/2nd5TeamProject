@@ -21,7 +21,10 @@ public class KitchenCookResult : MonoBehaviour
     }
     private void SetData(string dishID, bool isSpecial)
     {
-        if (!ItemVisualRepository.Instance.TryGetIcon(dishID, out Sprite icon)) return;
+        if (!ItemVisualRepository.Instance.TryGetIcon(dishID, out Sprite icon))
+        {
+            return;
+        }
         image.sprite = icon;
 
         DishData dishData;

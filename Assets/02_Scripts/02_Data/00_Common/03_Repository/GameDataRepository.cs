@@ -6,7 +6,7 @@ using UnityEngine;
 //같은 게임 오브젝트에 해당 스크립트가 여러개 붙는거 방지
 [DisallowMultipleComponent]
 
-public sealed class GameDataRepository : MonoBehaviour, IGameDataRepository
+public sealed class GameDataRepository : MonoBehaviour
 {
     //게임 전체에 하나만 존재해야 하므로 싱글톤 형태로 관리
     public static GameDataRepository Instance { get; private set; }
