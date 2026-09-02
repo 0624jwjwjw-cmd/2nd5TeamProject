@@ -46,7 +46,6 @@ public class StudioUpgradeManager : MonoBehaviour, ISaveable
         {
             return;
         }
-        Debug.Log(currentData.ID);
     }
     private void SetData(int index)
     {
