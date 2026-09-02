@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ReciepeUnlockManager : MonoBehaviour
+public class ReciepeUnlockManager : MonoBehaviour, ISaveable
 {
     public static ReciepeUnlockManager Instance { get; private set; }
 
@@ -21,8 +21,6 @@ public class ReciepeUnlockManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        //TestAllUnlock();
     }
     public bool IsUnlocked(string foodID)
     {
@@ -39,17 +37,12 @@ public class ReciepeUnlockManager : MonoBehaviour
         }
         OnUnlockChanged?.Invoke();
     }
-    public void TestAllUnlock()
+    public void Save(SaveData data)
     {
-        if (unlockedRecipeIDs.Count >= dishDatas.Count)
-        {
-            return;
-        }
-
-        for (int i=0; i<dishDatas.Count; i++)
-        {
-            unlockedRecipeIDs.Add(dishDatas[i].ID);
-        }
+        data.unlockedRecipeIDs = unlockedRecipeIDs;
     }
-
+    public void Load(SaveData data)
+    {
+        unlockedRecipeIDs = data.unlockedRecipeIDs;
+    }
 }

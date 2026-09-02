@@ -58,7 +58,10 @@ public class KitchenCookingSlot : MonoBehaviour
             }
         }
 
-        if (targetSlot == null) return;
+        if (targetSlot == null)
+        {
+            return;
+        }
 
         if (targetSlot.count > 1)
         {

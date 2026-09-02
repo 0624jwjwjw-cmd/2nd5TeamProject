@@ -3,12 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;     //IBeginDragHandler, IEndDragHandler, IScrollHandler 사용
 using UnityEngine.UI;               //ScrollRect 사용
 
-//Scrollbar가 어떤 방향의 ScrollView를 검사할지 결정
-public enum ScrollbarDirection
-{
-    Vertical,       //세로 ScrollView
-    Horizontal      //가로 ScrollView
-}
+
 
 //같은 GameObject에 같은 스크립트가 여러 개 붙는 것을 방지
 [DisallowMultipleComponent]

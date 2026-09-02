@@ -49,7 +49,6 @@ public class KitchenUpgradeUI : MonoBehaviour
     }
     public void OnclickUpgradeButton()
     {
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         KitchenUpgradeManager.Instance.LevelUp();
     }
 }
