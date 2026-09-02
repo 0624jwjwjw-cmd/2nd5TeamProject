@@ -39,8 +39,8 @@ public sealed class InventoryUIController : MonoBehaviour
 
     //Runtime System 참조
     private InventoryManager inventoryManager;              //실제 인벤토리 데이터 관리
-    private IGameDataRepository gameDataRepository;         //ID → IngredientData / DishData 검색용(구현체가 아니라 Interface 타입으로 참조)
-    private IItemVisualRepository itemVisualRepository;     //ID → Sprite 검색용
+    private GameDataRepository gameDataRepository;         //ID → IngredientData / DishData 검색용(구현체가 아니라 Interface 타입으로 참조)
+    private ItemVisualRepository itemVisualRepository;     //ID → Sprite 검색용
 
     //활성화된 Slot 검색 Dictionary
     //ItemId를 이용해 화면에 존재하는 슬롯을 바로 찾기 위한 Dictionary

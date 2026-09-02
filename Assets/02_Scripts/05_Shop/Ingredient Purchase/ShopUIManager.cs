@@ -35,7 +35,7 @@ public class ShopUIManager : MonoBehaviour
     //
     //IngredientData에는 Sprite가 없기 때문에
     //아이콘은 ItemVisualRepository에서 가져옴
-    private IItemVisualRepository itemVisualRepository;
+    private ItemVisualRepository itemVisualRepository;
 
     //ShopUIManager 초기화가 완료되었는지 기록
     private bool isInitialized;
