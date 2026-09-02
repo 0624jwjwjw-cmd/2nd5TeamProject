@@ -1879,6 +1879,27 @@ MonoBehaviour:
   _liveChatUI: {fileID: 0}
   _liveChatAI: {fileID: 0}
   _chatInterval: 2
+  _aiChatNicknames:
+  - "\uB9DB\uC9D1\uD0D0\uBC29\uB7EC"
+  - "\uBA39\uBC29\uB9E4\uB2C8\uC544"
+  - "\uC57C\uC2DD\uD5CC\uD130"
+  - "\uBC30\uACE0\uD508\uC0AC\uB78C"
+  - "\uD55C\uC785\uB9CC\uC694"
+  - "\uC624\uB298\uB3C4\uBA39\uC790"
+  - "\uCE58\uD305\uB370\uC774"
+  - "\uB300\uC2DD\uAC00\uD32C"
+  - "\uBA39\uB294\uAC8C\uCD5C\uACE0"
+  - "\uC704\uB300\uD55C\uBA39\uBC29"
+  - "\uBC25\uCE5C\uAD6C"
+  - "\uBC30\uBD80\uB978\uC2DC\uCCAD\uC790"
+  - "\uC74C\uC2DD\uD3C9\uB860\uAC00"
+  - "\uBA39\uBC29\uAD6C\uACBD\uAFBC"
+  - "\uC624\uB298\uBB50\uBA39\uC9C0"
+  - "\uC57C\uBB34\uC9C4\uD55C\uC785"
+  - "\uC2DD\uC695\uD3ED\uBC1C"
+  - "\uB9DB\uC788\uB294\uAC70\uCD5C\uACE0"
+  - "\uBA39\uBC29\uBCF4\uB294\uC911"
+  - "\uBC30\uACE0\uD30C\uC8FD\uC74C"
 --- !u!4 &231957649
 Transform:
   m_ObjectHideFlags: 0
@@ -10896,6 +10917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCoinCollector
   gameManager: {fileID: 508010011}
+  coinSpawner: {fileID: 0}
   resultTextPrefab: {fileID: 2421575391605890781, guid: c5ce8c11a030b5f46bd6edbe545f25be, type: 3}
   resultTextRoot: {fileID: 508010010}
   resultTextOffset: {x: 0, y: -600}
@@ -10966,6 +10988,7 @@ GameObject:
   - component: {fileID: 1558948766}
   - component: {fileID: 1558948765}
   - component: {fileID: 1558948764}
+  - component: {fileID: 1558948767}
   m_Layer: 5
   m_Name: 'CharacterDisplay '
   m_TagString: Untagged
@@ -11030,6 +11053,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 150}
   m_SizeDelta: {x: -600, y: -1500}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1558948767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558948763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ed05b5f59a66f9409dff09cb24e6bd3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LiveCharacterTween
+  characterImage: {fileID: 1558948764}
+  characterSelectPanel: {fileID: 527129527}
+  eatSprites:
+  - {fileID: 21300000, guid: 18c366e3b654bab4ca539afc8567a363, type: 3}
+  - {fileID: 404712073448352603, guid: 85177a2f7fed15f44b5c50b46f84f1de, type: 3}
+  rotateAngle: 10
+  rotateDuration: 0.5
+  scaleAmount: 1.2
+  scaleDuration: 0.5
 --- !u!1 &1569377813
 GameObject:
   m_ObjectHideFlags: 0
@@ -11379,6 +11423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveManager
   _liveDuration: 20
+  characterTween: {fileID: 1558948767}
   _miniGameStarter: {fileID: 1320289337}
   _miniGameStartDelay: 3
 --- !u!4 &1656232466
@@ -14170,6 +14215,27 @@ MonoBehaviour:
   _liveChatUI: {fileID: 1772085469}
   _liveChatAI: {fileID: 1198383088}
   _chatInterval: 2
+  _aiChatNicknames:
+  - "\uB9DB\uC9D1\uD0D0\uBC29\uB7EC"
+  - "\uBA39\uBC29\uB9E4\uB2C8\uC544"
+  - "\uC57C\uC2DD\uD5CC\uD130"
+  - "\uBC30\uACE0\uD508\uC0AC\uB78C"
+  - "\uD55C\uC785\uB9CC\uC694"
+  - "\uC624\uB298\uB3C4\uBA39\uC790"
+  - "\uCE58\uD305\uB370\uC774"
+  - "\uB300\uC2DD\uAC00\uD32C"
+  - "\uBA39\uB294\uAC8C\uCD5C\uACE0"
+  - "\uC704\uB300\uD55C\uBA39\uBC29"
+  - "\uBC25\uCE5C\uAD6C"
+  - "\uBC30\uBD80\uB978\uC2DC\uCCAD\uC790"
+  - "\uC74C\uC2DD\uD3C9\uB860\uAC00"
+  - "\uBA39\uBC29\uAD6C\uACBD\uAFBC"
+  - "\uC624\uB298\uBB50\uBA39\uC9C0"
+  - "\uC57C\uBB34\uC9C4\uD55C\uC785"
+  - "\uC2DD\uC695\uD3ED\uBC1C"
+  - "\uB9DB\uC788\uB294\uAC70\uCD5C\uACE0"
+  - "\uBA39\uBC29\uBCF4\uB294\uC911"
+  - "\uBC30\uACE0\uD30C\uC8FD\uC74C"
 --- !u!1 &2077767058
 GameObject:
   m_ObjectHideFlags: 0
