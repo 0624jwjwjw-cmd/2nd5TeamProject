@@ -6,7 +6,7 @@ using UnityEngine;
 //같은 게임 오브젝트에 해당 스크립트가 여러개 붙는거 방지
 [DisallowMultipleComponent]
 
-public sealed class ItemVisualRepository : MonoBehaviour, IItemVisualRepository
+public sealed class ItemVisualRepository : MonoBehaviour
 {
     //Singleton
     //다른 시스템에서 ItemVisualRepository에 접근 가능하도록 현재 인스턴스를 저장

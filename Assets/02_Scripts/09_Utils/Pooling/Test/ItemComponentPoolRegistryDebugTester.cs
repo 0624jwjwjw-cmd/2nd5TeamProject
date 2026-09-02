@@ -39,8 +39,7 @@ public sealed class ItemComponentPoolRegistryDebugTester : MonoBehaviour
 
         //ItemId를 실제 Prefab으로 변환해 줄
         //Visual Repository 가져오기
-        IItemVisualRepository visualRepository =
-            ItemVisualRepository.Instance;
+        ItemVisualRepository visualRepository = ItemVisualRepository.Instance;
 
         //Repository가 없거나 아직 초기화되지 않았다면
         //Registry를 정상적으로 사용할 수 없음
