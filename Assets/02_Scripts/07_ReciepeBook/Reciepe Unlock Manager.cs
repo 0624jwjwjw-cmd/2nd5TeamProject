@@ -51,4 +51,5 @@ public class ReciepeUnlockManager : MonoBehaviour
             unlockedRecipeIDs.Add(dishDatas[i].ID);
         }
     }
+
 }

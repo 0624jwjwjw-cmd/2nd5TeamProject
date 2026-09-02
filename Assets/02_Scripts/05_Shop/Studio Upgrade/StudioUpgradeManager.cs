@@ -61,4 +61,5 @@ public class StudioUpgradeManager : MonoBehaviour
         }
         OnStudioUpgradeChanged?.Invoke();
     }
+
 }

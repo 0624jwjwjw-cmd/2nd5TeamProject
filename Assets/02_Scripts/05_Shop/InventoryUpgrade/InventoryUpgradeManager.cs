@@ -60,4 +60,6 @@ public class InventoryUpgradeManager : MonoBehaviour
         InventoryManager.Instance.MaxStackSize = currentData.Stack;
         OnInventoryUpgradeChanged?.Invoke();
     }
+
+
 }

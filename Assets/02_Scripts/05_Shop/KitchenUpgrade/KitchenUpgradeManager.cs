@@ -59,4 +59,5 @@ public class KitchenUpgradeManager : MonoBehaviour
         }
         OnKitchenUpgradeChanged?.Invoke();
     }
+
 }
