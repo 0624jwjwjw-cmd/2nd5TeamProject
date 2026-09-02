@@ -4,7 +4,7 @@ public class PlayerCoinCollector : MonoBehaviour
 {
     [Header("Manager")]
     [SerializeField] private MiniGameManager gameManager;
-
+    [SerializeField] private CoinSpawner coinSpawner;
     [Header("Result Text")]
     [SerializeField] private CoinText resultTextPrefab;
     [SerializeField] private Transform resultTextRoot;
@@ -46,10 +46,10 @@ public class PlayerCoinCollector : MonoBehaviour
             return;
         }
 
-        Coin[] coins = FindObjectsByType<Coin>(FindObjectsSortMode.None);
-
-        foreach (Coin coin in coins)
+        for (int i = coinSpawner.ActiveCoins.Count - 1; i >= 0; i--)
         {
+            Coin coin = coinSpawner.ActiveCoins[i];
+
             if (!coin.gameObject.activeSelf)
             {
                 continue;

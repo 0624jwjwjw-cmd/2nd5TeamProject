@@ -25,7 +25,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private MiniGameManager gameManager;
 
     private List<Coin> activeCoins = new List<Coin>();
-
+    public IReadOnlyList<Coin> ActiveCoins => activeCoins;
     private Coroutine spawnCoroutine;
 
     private void Awake()
