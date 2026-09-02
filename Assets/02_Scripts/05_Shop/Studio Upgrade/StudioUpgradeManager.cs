@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class StudioUpgradeManager : MonoBehaviour
+public class StudioUpgradeManager : MonoBehaviour, ISaveable
 {
     public static StudioUpgradeManager Instance { get; private set; }
 
@@ -60,6 +60,14 @@ public class StudioUpgradeManager : MonoBehaviour
             nextData = null;
         }
         OnStudioUpgradeChanged?.Invoke();
+    }
+    public void Save(SaveData data)
+    {
+        data.studioLevel = index;
+    }
+    public void Load(SaveData data)
+    {
+        index = data.studioLevel;
     }
 
 }
