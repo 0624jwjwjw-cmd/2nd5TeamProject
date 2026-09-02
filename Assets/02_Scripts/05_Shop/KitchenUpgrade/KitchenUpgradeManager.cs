@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class KitchenUpgradeManager : MonoBehaviour, ISaveable
+public class KitchenUpgradeManager : MonoBehaviour
 {
     public static KitchenUpgradeManager Instance { get; private set; }
 

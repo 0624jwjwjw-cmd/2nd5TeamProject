@@ -1,6 +1,6 @@
 using UnityEngine;
 using System;
-public class InventoryUpgradeManager : MonoBehaviour, ISaveable
+public class InventoryUpgradeManager : MonoBehaviour
 {
     public static InventoryUpgradeManager Instance { get; private set; }
 

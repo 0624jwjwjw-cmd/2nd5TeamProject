@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class ReciepeUnlockManager : MonoBehaviour, ISaveable
+public class ReciepeUnlockManager : MonoBehaviour
 {
     public static ReciepeUnlockManager Instance { get; private set; }
 

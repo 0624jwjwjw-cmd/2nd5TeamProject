@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class StudioUpgradeManager : MonoBehaviour, ISaveable
+public class StudioUpgradeManager : MonoBehaviour
 {
     public static StudioUpgradeManager Instance { get; private set; }
 
