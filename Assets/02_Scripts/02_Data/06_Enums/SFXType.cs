@@ -18,6 +18,7 @@ public enum SFXType
     MSink,
     MTimer,
     MRulette,
-    MGlass
+    MGlass,
+    Eat
 
 }

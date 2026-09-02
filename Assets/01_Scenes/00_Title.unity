@@ -2324,6 +2324,9 @@ MonoBehaviour:
   - type: 18
     clip: {fileID: 8300000, guid: d645772e3eb1cae4fbb53b486639fc2d, type: 3}
     volume: 0.229
+  - type: 19
+    clip: {fileID: 8300000, guid: cf997b2fe7df3a242b43da579da09f25, type: 3}
+    volume: 0.521
   bgmVolume: 1
   sfxVolume: 1
 --- !u!4 &998510523
