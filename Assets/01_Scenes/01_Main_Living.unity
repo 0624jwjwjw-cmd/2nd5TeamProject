@@ -11628,7 +11628,7 @@ MonoBehaviour:
   inventoryUIRoot: {fileID: 1611280563}
   inventoryCloseButton: {fileID: 1187854243}
   normalButtonSortOrder: 1
-  selectedButtonSortOrder: 100
+  selectedButtonSortOrder: 55
 --- !u!1 &682483010
 GameObject:
   m_ObjectHideFlags: 0
