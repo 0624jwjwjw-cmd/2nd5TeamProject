@@ -99,6 +99,9 @@ public sealed class ShopPurchaseController : MonoBehaviour
         //장바구니는 그대로 유지
         if (!purchaseSucceeded) return;
 
+        //실제 구매가 성공했을 때만 코인 효과음 재생
+        SoundManager.Instance?.PlaySFX(SFXType.Coin);
+
         //구매 성공한 경우에만
         //장바구니 전체 초기화
         shopCartController.ClearCart();
