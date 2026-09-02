@@ -24,6 +24,9 @@ public class MainPopupUIController : MonoBehaviour
     //켜고 끄면서 상점 화면을 표시한다
     [SerializeField] private GameObject shopUIRoot;
 
+    //상점 팝업 내부의 닫기 버튼
+    [SerializeField] private Button shopCloseButton;
+
     //*인벤토리 UI*
     //메인 화면의 가방 버튼
     [Header("인벤토리 UI")]
@@ -35,6 +38,9 @@ public class MainPopupUIController : MonoBehaviour
 
     //인벤토리 UI 전체를 담고 있는 Root
     [SerializeField] private GameObject inventoryUIRoot;
+
+    //인벤토리 팝업 내부의 닫기 버튼
+    [SerializeField] private Button inventoryCloseButton;
 
     //*Sorting 설정*
     //평소 ShopButton / InventoryButton이 사용하는 Sort Order
@@ -66,9 +72,21 @@ public class MainPopupUIController : MonoBehaviour
             shopButton.onClick.AddListener(ToggleShop);
         }
 
+        //상점 팝업 내부 닫기 버튼 이벤트 등록
+        if (shopCloseButton != null)
+        {
+            shopCloseButton.onClick.AddListener(CloseShop);
+        }
+
         if (inventoryButton != null)
         {
             inventoryButton.onClick.AddListener(ToggleInventory);
+        }
+
+        //인벤토리 팝업 내부 닫기 버튼 이벤트 등록
+        if (inventoryCloseButton != null)
+        {
+            inventoryCloseButton.onClick.AddListener(CloseInventory);
         }
 
         //씬이 시작될 때 모든 팝업을 닫힌 상태로 맞춤
@@ -84,9 +102,21 @@ public class MainPopupUIController : MonoBehaviour
             shopButton.onClick.RemoveListener(ToggleShop);
         }
 
+        //상점 닫기 버튼 이벤트 제거
+        if (shopCloseButton != null)
+        {
+            shopCloseButton.onClick.RemoveListener(CloseShop);
+        }
+
         if (inventoryButton != null)
         {
             inventoryButton.onClick.RemoveListener(ToggleInventory);
+        }
+
+        //인벤토리 닫기 버튼 이벤트 제거
+        if (inventoryCloseButton != null)
+        {
+            inventoryCloseButton.onClick.RemoveListener(CloseInventory);
         }
     }
 
