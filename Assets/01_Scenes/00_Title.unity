@@ -3012,10 +3012,10 @@ MonoBehaviour:
   - {fileID: 998510522}
   - {fileID: 844003453}
   - {fileID: 728625710}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1835877791}
+  - {fileID: 164178542}
+  - {fileID: 2015593634}
+  - {fileID: 1999187133}
 --- !u!4 &1213457461
 Transform:
   m_ObjectHideFlags: 0
@@ -4308,6 +4308,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787084794}
   m_CullTransparentMesh: 1
+--- !u!114 &1835877791 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4069600318915768224, guid: 0198e56843fe6fe4584a6e80a1da49b0, type: 3}
+  m_PrefabInstance: {fileID: 1340257664}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 603dc4a178ca98e4ca27f621cc96d8fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReciepeUnlockManager
 --- !u!1 &1939077341
 GameObject:
   m_ObjectHideFlags: 0
