@@ -41013,6 +41013,7 @@ GameObject:
   - component: {fileID: 5463091749038016749}
   - component: {fileID: 8513153957316809386}
   - component: {fileID: 4007545322705494129}
+  - component: {fileID: 8513153957316809387}
   m_Layer: 5
   m_Name: Recipe Book Panel
   m_TagString: Untagged
@@ -41150,6 +41151,20 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!114 &8513153957316809387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519507374396792611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f965a0f18d0499741878a24a9bde9d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelTween
+  duration: 1
+  overshootScale: 1.1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

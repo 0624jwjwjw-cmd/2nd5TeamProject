@@ -31338,6 +31338,7 @@ GameObject:
   - component: {fileID: 790340216}
   - component: {fileID: 790340215}
   - component: {fileID: 790340214}
+  - component: {fileID: 790340217}
   m_Layer: 5
   m_Name: Recipe Book Panel
   m_TagString: Untagged
@@ -31428,6 +31429,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &790340217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 790340212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f965a0f18d0499741878a24a9bde9d52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelTween
+  duration: 1
+  overshootScale: 1.1
 --- !u!1 &797248215
 GameObject:
   m_ObjectHideFlags: 0
