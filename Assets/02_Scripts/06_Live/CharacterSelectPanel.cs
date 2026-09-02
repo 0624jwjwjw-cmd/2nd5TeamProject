@@ -20,7 +20,7 @@ public class CharacterSelectPanel : MonoBehaviour
     [SerializeField] private string[] _characterDescriptions;
 
     private int _currentIndex;
-
+    public int CurrentIndex => _currentIndex;
     private void OnEnable()
     {
         _currentIndex = 0;

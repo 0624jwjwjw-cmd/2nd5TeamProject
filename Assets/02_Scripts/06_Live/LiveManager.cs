@@ -8,7 +8,8 @@ public class LiveManager : MonoBehaviour
 
     [Header("Live")]
     [SerializeField] private float _liveDuration = 20f;
-
+    [Header("Character")]
+    [SerializeField] private LiveCharacterTween characterTween;
     [Header("Mini Game")]
     [SerializeField] private MiniGameStarter _miniGameStarter;
     [SerializeField] private float _miniGameStartDelay = 3f;
@@ -186,7 +187,8 @@ public class LiveManager : MonoBehaviour
         // 음식 후원금, 구독자 누적
         _baseDonation += dishData.Donation;
         _baseSubscribers += dishData.Subscribers;
-
+        characterTween?.PlayEatReaction();
+        SoundManager.Instance?.PlaySFX(SFXType.Eat);
         // 음식 정보를 외부 시스템에 전달
         // LiveChat아 ㅇ이벤트를 받아 AI 채팅 생성
 
