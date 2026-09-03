@@ -32,11 +32,6 @@ public class InventoryUpgradeManager : MonoBehaviour,ISaveable
     }
     public void LevelUp()
     {
-        if(!CurrencyManager.Instance.SpendGold(nextData.Price))
-        {
-            return;
-        }
-        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         if (index < inventoryUpgradeDatas.Length - 1)
         {
             index++;

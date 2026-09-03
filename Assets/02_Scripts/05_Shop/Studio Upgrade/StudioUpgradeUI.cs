@@ -16,6 +16,8 @@ public class StudioUpgradeUI : MonoBehaviour
 
     [SerializeField] private string unMaxLevel = "업그레이드";
     [SerializeField] private string maxLevel = "최대 레벨";
+
+    [SerializeField] private TMP_Text warningText;
     private void OnEnable()
     {
         StudioUpgradeManager.Instance.OnStudioUpgradeChanged += SetData;
@@ -51,6 +53,17 @@ public class StudioUpgradeUI : MonoBehaviour
     }
     public void OnClickUpgradeButton()
     {
-        StudioUpgradeManager.Instance.LevelUp();
+        if (!CurrencyManager.Instance.SpendGold(StudioUpgradeManager.Instance.NextData.Price))
+        {
+            warningText.text = (StudioUpgradeManager.Instance.NextData.Price - CurrencyManager.Instance.Gold).ToString() + "원 부족합니다.";
+            warningText.gameObject.SetActive(true);
+            SoundManager.Instance?.PlaySFX(SFXType.Lose);
+        }
+        else
+        {
+            warningText.gameObject.SetActive(false);
+            SoundManager.Instance?.PlaySFX(SFXType.Coin);
+            StudioUpgradeManager.Instance.LevelUp();
+        }
     }
 }

@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class InventoryUpgradeUI : MonoBehaviour
@@ -10,6 +11,7 @@ public class InventoryUpgradeUI : MonoBehaviour
     [SerializeField] private TMP_Text currentRateText;
     [SerializeField] private TMP_Text nextRateText;
     [SerializeField] private TMP_Text priceText;
+    [SerializeField] private TMP_Text warningText;
 
     [SerializeField] private string unMaxLevel = "업그레이드";
     [SerializeField] private string maxLevel = "최대 레벨";
@@ -49,6 +51,17 @@ public class InventoryUpgradeUI : MonoBehaviour
     }
     public void OnclickUpgradeButton()
     {
-        InventoryUpgradeManager.Instance.LevelUp();
+        if(!CurrencyManager.Instance.SpendGold(InventoryUpgradeManager.Instance.NextData.Price))
+        {
+            warningText.text = (InventoryUpgradeManager.Instance.NextData.Price - CurrencyManager.Instance.Gold).ToString() + "원 부족합니다.";
+            warningText.gameObject.SetActive(true);
+            SoundManager.Instance?.PlaySFX(SFXType.Lose);
+        }
+        else
+        {
+            warningText.gameObject.SetActive(false);
+            SoundManager.Instance?.PlaySFX(SFXType.Coin);
+            InventoryUpgradeManager.Instance.LevelUp();
+        }
     }
 }
