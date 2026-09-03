@@ -17,7 +17,9 @@ public class MiniGameManager : MonoBehaviour
     private bool isMiniGamePlaying;
     public bool IsMiniGamePlaying => isMiniGamePlaying;
     public event Action<bool> OnMiniGamePlayingChanged;
-
+    private int totalDonation=0;
+    private int totalSubscribers=0;
+    private int gameType;
     private void SetMiniGamePlaying(bool value)
     {
         if (isMiniGamePlaying == value)
@@ -58,8 +60,10 @@ public class MiniGameManager : MonoBehaviour
         UpdateTimeUI();
     }
 
-    public void StartGame()
+    public void StartGame(int gameType)
     {
+
+        this.gameType = gameType;
         totalCoin = 0;
         warningTimer = 0f;
         remainingTime = gameDuration;
@@ -68,11 +72,45 @@ public class MiniGameManager : MonoBehaviour
         SetMiniGamePlaying(true);
         UpdateTimeUI();
     }
+    public void GetReward(int totalDonation, int totalSubscribers)
+    {
+        this.totalDonation += totalDonation;
+        this.totalSubscribers += totalSubscribers;
+    }
     private void UpdateTimeUI()
     {
         timeText.text = $"{Mathf.Max(remainingTime, 0f).ToString("F1")}";
     }
-
+    public void PointReward()
+    {
+        int moneyReward = 0;
+        int subscribersReward = 0;
+        float bonusRate = totalCoin * 0.01f;
+        switch (gameType)
+        {
+            case 0://코인
+                moneyReward = Mathf.RoundToInt(totalDonation * bonusRate);
+                totalPoint.text = $"총 점수: {totalCoin}점 \n추가 후원금 : {moneyReward}원";
+                break;
+            case 1://맥주
+                subscribersReward = Mathf.RoundToInt(totalSubscribers * bonusRate);
+                totalPoint.text = $"총 점수: {totalCoin}점 \n추가 구독자 : {subscribersReward}명";
+                break;
+            case 2://먹방
+                moneyReward = Mathf.RoundToInt(totalDonation * bonusRate);
+                subscribersReward = Mathf.RoundToInt(totalSubscribers * bonusRate);
+                totalPoint.text = $"총 점수: {totalCoin}점 \n추가 후원금 : {moneyReward}원\n추가 구독자 : {subscribersReward}명";
+                break;
+        }
+        if (moneyReward > 0)
+        {
+            CurrencyManager.Instance.AddGold(moneyReward);
+        }
+        if (subscribersReward > 0)
+        {
+            CurrencyManager.Instance.AddSubscriber(subscribersReward);
+        }
+    }
     public void AddCoin(int value)
     {
         if (!isMiniGamePlaying)
@@ -90,8 +128,21 @@ public class MiniGameManager : MonoBehaviour
     private void EndGame()
     {
         SoundManager.Instance.PlaySFX(SFXType.Win);
-        totalPoint.text = $"총 점수: {totalCoin}";
+        PointReward();
         totalPanel.SetActive(true);
+        totalDonation = 0;
+        totalSubscribers = 0;
+        SetMiniGamePlaying(false);
+    }
+    public void StopGame()
+    {
+        if (!isMiniGamePlaying)
+        {
+            return;
+        }
+        totalDonation = 0;
+        totalSubscribers = 0;
+        totalPanel.SetActive(false);
         SetMiniGamePlaying(false);
     }
 }

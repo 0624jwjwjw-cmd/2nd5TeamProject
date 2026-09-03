@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using UnityEngine;
 
 public class LiveManager : MonoBehaviour
@@ -187,6 +188,7 @@ public class LiveManager : MonoBehaviour
         // 음식 후원금, 구독자 누적
         _baseDonation += dishData.Donation;
         _baseSubscribers += dishData.Subscribers;
+        _miniGameStarter.AddPoint(dishData.Donation, dishData.Subscribers); 
         characterTween?.PlayEatReaction();
         SoundManager.Instance?.PlaySFX(SFXType.Eat);
         // 음식 정보를 외부 시스템에 전달
@@ -237,7 +239,6 @@ public class LiveManager : MonoBehaviour
 
         if (!_isLive)
             yield break;
-
         _miniGameStarter.StartMiniGame();
     }
 
