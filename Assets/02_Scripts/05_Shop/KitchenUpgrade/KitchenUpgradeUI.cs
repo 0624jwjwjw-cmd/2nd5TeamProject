@@ -19,6 +19,7 @@ public class KitchenUpgradeUI : MonoBehaviour
     private void OnEnable()
     {
         KitchenUpgradeManager.Instance.OnKitchenUpgradeChanged += SetData;
+        warningText.gameObject.SetActive(false);
     }
     private void OnDisable()
     {
