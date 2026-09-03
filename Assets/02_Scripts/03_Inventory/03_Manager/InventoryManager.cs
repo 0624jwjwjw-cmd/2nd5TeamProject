@@ -19,8 +19,6 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //InventorySlotData를 여러 개 보관하는 실제 인벤토리 목록
     [SerializeField] private List<InventorySlotData> slots = new List<InventorySlotData>();
 
-    [SerializeField] private GameDataCatalog gameDataCatalog;   //모든 아이템 인벤에 넣는 개발자용 코드 사용 용도
-
     //인벤토리 내용이 변경되었을 때 실행되는 이벤트
     //InventoryUIController가 이 이벤트를 구독하면 아이템 추가ㆍ제거 후 UI를 자동으로 갱신 가능
     //팀원이 사용해도 깨지지 않게 기존 이벤트 일단 안지울게요
@@ -33,7 +31,25 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //프로퍼티
     //IReadOnlyList로 제공하기 때문에
     public IReadOnlyList<InventorySlotData> Slots => slots; //slots.Add()나 slots.Remove()직접 호출 불가
-       
+
+    //ItemId로 현재 인벤토리에 있는 슬롯 데이터를 찾음
+    public bool TryGetSlot(
+        string itemId,
+        out InventorySlotData slotData)
+    {
+        //찾기 실패 기본값
+        slotData = null;
+
+        //빈 ID는 찾을 수 없음
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
+        //InventoryManager 내부의 슬롯 검색 기능 사용
+        slotData = FindSlot(itemId);
+
+        //슬롯을 실제로 찾았는지 반환
+        return slotData != null;
+    }
+
     //*외부 시스템에서 최대 스택 수량을 확인하거나 변경*
     public int MaxStackSize
     {
@@ -328,25 +344,6 @@ public class InventoryManager : MonoBehaviour,ISaveable
         return targetSlot.Amount;
     }
 
-    //*특정 아이템을 추가할 수 있는 남은 수량을 반환하는 메서드*
-    public int GetRemainingStackSpace(string itemId)
-    {
-        //아이템 ID가 비어 있다면 공간을 계산할 수 없으므로 0 반환
-        if (string.IsNullOrWhiteSpace(itemId)) return 0;
-
-        //현재 인벤토리에서 같은 아이템 슬롯 찾기
-        InventorySlotData existingSlot = FindSlot(itemId);
-
-        //같은 아이템 슬롯이 없다면 새 슬롯 전체를 사용할 수 있음
-        if (existingSlot == null) return maxStackSize;
-
-        //최대 스택 수량에서 현재 보유 수량을 빼서 남은 공간 계산
-        int remainingSpace = maxStackSize - existingSlot.Amount;
-
-        //음수 방지용으로 0과 더 큰 값을 반환
-        return Mathf.Max(0, remainingSpace);
-    }
-
     //*인벤토리 슬롯을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 공개 메서드*
     public void SortByItemId()
     {
@@ -609,39 +606,6 @@ public class InventoryManager : MonoBehaviour,ISaveable
         //OnInventoryChanged 이벤트를 구독한 대상이 있다면 해당 이벤트 실시
         //?.Invoke를 사용해 구독자가 없어도 오류가 발생하지 않음
         OnInventoryChanged?.Invoke();
-    }
-
-    //**개발 테스트용**
-    //InventoryManager 컴포넌트의 점세개 메뉴에서 실행할 수 있음
-    [ContextMenu("DEBUG/모든 아이템 10개 추가")]
-    public void DebugAddAllItems()
-    {
-        //게임 실행 중에만 사용
-        if (!Application.isPlaying)
-        {
-            Debug.LogWarning("[InventoryManager] Play Mode에서만 사용할 수 있습니다.");
-            return;
-        }
-
-        //모든 재료 추가
-        foreach (IngredientData ingredient in gameDataCatalog.Ingredients)
-        {
-            AddItem(ingredient.ID, 10, ItemType.Ingredient);
-        }
-
-        //모든 일반 요리 추가
-        foreach (DishData dish in gameDataCatalog.Dishes)
-        {
-            AddItem(dish.ID, 10, ItemType.Dish);
-        }
-
-        //모든 특별 요리 추가
-        foreach (DishData specialDish in gameDataCatalog.SpecialDishes)
-        {
-            AddItem(specialDish.ID, 10, ItemType.SpecialDish);
-        }
-
-        Debug.Log("[InventoryManager] 모든 재료/요리를 10개씩 추가했습니다.");
     }
 
     //정재운이 추가 SAVE,LOAD용

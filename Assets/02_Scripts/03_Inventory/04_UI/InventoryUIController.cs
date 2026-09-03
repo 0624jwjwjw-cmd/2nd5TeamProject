@@ -9,7 +9,6 @@
 using System;
 using System.Collections;           //IEnumerator 코루틴 사용
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 //같은 GameObject에 Controller가 중복으로 붙는 것을 방지
@@ -28,14 +27,13 @@ public sealed class InventoryUIController : MonoBehaviour
     [SerializeField] private Transform slotParent;
     [SerializeField] private InventorySlotPool slotPool;    //InventorySlotUI의 생성과 재사용을 담당하는 전용 Pool
 
-    [Header("Category Selected Visual")]
-    [SerializeField] private GameObject allSelectedFrame;          //전체 탭 선택 표시
-    [SerializeField] private GameObject ingredientSelectedFrame;   //재료 탭 선택 표시
-    [SerializeField] private GameObject dishSelectedFrame;         //요리 탭 선택 표시
+    [Header("Category UI")]
+    // 카테고리 선택 테두리 표시를 담당하는 컴포넌트
+    [SerializeField] private InventoryCategoryTabUI categoryTabUI;
 
     [Header("Item Description")]
-    [SerializeField] private TMP_Text dishNameText;                 //선택한 요리 이름
-    [SerializeField] private TMP_Text descriptionText;              //선택한 요리 설명
+    // 선택한 아이템의 이름·설명 표시를 담당하는 컴포넌트
+    [SerializeField] private InventoryItemDescriptionUI itemDescriptionUI;
 
     //Runtime System 참조
     private InventoryManager inventoryManager;              //실제 인벤토리 데이터 관리
@@ -154,31 +152,9 @@ public sealed class InventoryUIController : MonoBehaviour
     //*현재 선택된 카테고리에 맞춰 버튼의 선택 표시 갱신*
     private void UpdateCategoryVisual()
     {
-        //현재 카테고리가 All이면
-        //전체 버튼의 SelectedFrame만 활성화
-        if (allSelectedFrame != null)
+        if (categoryTabUI != null)
         {
-            allSelectedFrame.SetActive(
-                currentCategory == InventoryCategory.All
-            );
-        }
-
-        //현재 카테고리가 Ingredient이면
-        //재료 버튼의 SelectedFrame만 활성화
-        if (ingredientSelectedFrame != null)
-        {
-            ingredientSelectedFrame.SetActive(
-                currentCategory == InventoryCategory.Ingredient
-            );
-        }
-
-        //현재 카테고리가 Dish이면
-        //요리 버튼의 SelectedFrame만 활성화
-        if (dishSelectedFrame != null)
-        {
-            dishSelectedFrame.SetActive(
-                currentCategory == InventoryCategory.Dish
-            );
+            categoryTabUI.ShowSelected(currentCategory);
         }
     }
 
@@ -261,8 +237,6 @@ public sealed class InventoryUIController : MonoBehaviour
             //인벤토리 창이 열려있는 동안만 변경 이벤트 수신
             SubscribeEvents();
         }
-
-        Debug.Log($"[InventoryUIController] 초기화 완료 | " + $"생성 슬롯: {slotLookup.Count}");
     }
 
     //*이벤트 구독*
@@ -314,7 +288,7 @@ public sealed class InventoryUIController : MonoBehaviour
         {
             //새로운 종류의 아이템이 들어온 경우
             case InventoryChangeType.Added:
-                if (TryGetSlotData(change.ItemId, out InventorySlotData addedSlotData))
+                if (inventoryManager.TryGetSlot(change.ItemId, out InventorySlotData addedSlotData))
                 {
                     //ItemType이 포함된 SlotData를 UI에 전달
                     AddSlot(addedSlotData);
@@ -350,42 +324,6 @@ public sealed class InventoryUIController : MonoBehaviour
         }
     }
 
-    //*ItemId를 이용해 현재 InventorySlotData를 찾는 메서드*
-    private bool TryGetSlotData(string itemId, out InventorySlotData result)
-    {
-        //기본값은 찾지 못한 상태
-        result = null;
-
-        //InventoryManager가 없다면 검색할 수 없음
-        if (inventoryManager == null) return false;
-        
-        //ID가 비어있다면 검색할 수 없음
-        if (string.IsNullOrWhiteSpace(itemId)) return false;
-        
-        //현재 인벤토리에 존재하는 모든 슬롯 확인
-        for (int i = 0; i < inventoryManager.Slots.Count; i++)
-        {
-            InventorySlotData slotData = inventoryManager.Slots[i];
-
-            //null 슬롯은 건너뜀
-            if (slotData == null) continue;
-            
-            //찾으려는 ItemId와 현재 Slot의 ItemId가 같다면
-            if (string.Equals(
-                slotData.ItemId,
-                itemId,
-                StringComparison.Ordinal))
-            {
-                //찾은 SlotData 반환
-                result = slotData;
-                return true;
-            }
-        }
-
-        //끝까지 확인했지만 찾지 못함
-        return false;
-    }
-
     //*Slot 추가*
     private void AddSlot(InventorySlotData slotData)
     {
@@ -407,12 +345,15 @@ public sealed class InventoryUIController : MonoBehaviour
             return;
         }
 
-        //아이템 이름과 아이콘 검색
-        if (!TryGetDisplayData(
-            slotData,
-            out string displayName,
-            out Sprite icon,
-            out bool isSpecial))
+        //슬롯의 UI 표시 정보를 요청
+        if (!InventoryItemDisplayDataProvider.TryGet(
+            slotData,                  // 현재 표시할 인벤토리 슬롯 데이터
+            gameDataRepository,        // 이름·설명 조회용 Repository
+            itemVisualRepository,      // 아이콘 조회용 Repository
+            out string displayName,    // 슬롯에 표시할 이름
+            out _,                     // 설명도 받아오지만, 슬롯 생성에서는 아직 사용하지 않음
+            out Sprite icon,           // 슬롯에 표시할 아이콘
+            out bool isSpecial))       // 특별 요리 S 배지 표시 여부
         {
             Debug.LogWarning(
                 $"[InventoryUIController] " +
@@ -462,7 +403,7 @@ public sealed class InventoryUIController : MonoBehaviour
     private void UpdateSlotAmount(string itemId, int amount)
     {
         //현재 선택된 카테고리에서 보여주지 않은 아이템이라면 Slot을 생성하지 않음
-        if (!TryGetSlotData(itemId, out InventorySlotData slotData)) return;
+        if (!inventoryManager.TryGetSlot(itemId, out InventorySlotData slotData)) return;
 
         //현재 선택된 카테고리에서 보이지 않아야 하는 타입이면 UI 갱신하지 않음
         if (!IsVisibleItem(slotData)) return;
@@ -566,93 +507,6 @@ public sealed class InventoryUIController : MonoBehaviour
         }
     }
 
-    //*InventorySlotData → UI 표시 정보 검색*
-    private bool TryGetDisplayData(
-        InventorySlotData slotData,
-        out string displayName,
-        out Sprite icon,
-        out bool isSpecial)
-    {
-        //검색 실패를 대비해 기본값 설정
-        displayName = string.Empty;
-        icon = null;
-        isSpecial = false;
-
-        //슬롯 데이터가 없거나
-        //빈 슬롯이라면 표시 정보를 가져올 수 없음
-        if (slotData == null || slotData.IsEmpty) return false;
-        
-        //슬롯에서 실제 아이템 ID 가져오기
-        string itemId = slotData.ItemId;
-
-        //슬롯에 저장된 ItemType을 이용해서
-        //필요한 Repository 함수 하나만 호출
-        switch (slotData.ItemType)
-        {
-            //재료
-            case ItemType.Ingredient:
-
-                //재료 타입이므로 IngredientData만 검색
-                if (!gameDataRepository.TryGetIngredient(
-                    itemId,
-                    out IngredientData ingredientData))
-                {
-                    return false;
-                }
-
-                //재료 이름을 UI 표시 이름으로 사용
-                displayName = ingredientData.IngredientName;
-
-                break;
-
-            //일반 요리          
-            case ItemType.Dish:
-
-                //일반 요리 타입이므로 DishData만 검색
-                if (!gameDataRepository.TryGetDish(
-                    itemId,
-                    out DishData dishData))
-                {
-                    return false;
-                }
-
-                //요리 이름을 UI 표시 이름으로 사용
-                displayName = dishData.DishName;
-
-                break;
-
-            //특별 요리
-            case ItemType.SpecialDish:
-
-                //특별 요리 타입이므로 SpecialDish 데이터만 검색
-                if (!gameDataRepository.TryGetSpecialDish(
-                    itemId,
-                    out DishData specialDishData))
-                {
-                    return false;
-                }
-
-                //특별 요리 이름 표시
-                displayName = specialDishData.DishName;
-
-                //특별 요리이므로 S 배지 표시
-                isSpecial = true;
-
-                break;
-
-
-            //정의되지 않은 ItemType
-            default:
-                return false;
-        }
-
-        //아이템 종류와 관계없이
-        //아이콘은 ItemVisualRepository에서 ID로 검색
-        itemVisualRepository.TryGetIcon(itemId, out icon);
-
-        return true;
-    }
-
     //*현재 선택된 인벤토리 카테고리에서
     //전달받은 아이템을 보여줘야하는지 확인하는 메서드*
     //
@@ -708,8 +562,6 @@ public sealed class InventoryUIController : MonoBehaviour
 
             ClearDescription();
 
-            Debug.Log("[InventoryUIController] 아이템 선택 취소");
-
             return;
         }
 
@@ -736,84 +588,46 @@ public sealed class InventoryUIController : MonoBehaviour
         }
 
         UpdateDescription(selectedItemId);
-
-        Debug.Log($"[InventoryUIController] 아이템 선택: " + $"{selectedItemId}");
     }
 
     //*선택한 아이템 설명 표시*
     private void UpdateDescription(string itemId)
     {
-        //선택된 ItemId를 이용해서
-        //실제 InventorySlotData를 먼저 찾음
-        if (!TryGetSlotData(itemId, out InventorySlotData slotData))
+        //선택한 아이템 ID로 실제 인벤토리 슬롯 데이터를 찾음
+        if (!inventoryManager.TryGetSlot(itemId, out InventorySlotData slotData))
         {
+            //슬롯을 못 찾으면 설명창을 비움
             ClearDescription();
             return;
         }
 
-        //SlotData에 저장된 ItemType을 이용해서
-        //필요한 Repository 함수 하나만 호출
-        switch (slotData.ItemType)
+        // 새 Provider에게 이름·설명·아이콘·특별요리 여부를 요청
+        if (!InventoryItemDisplayDataProvider.TryGet(
+            slotData,                  //설명을 표시할 슬롯 데이터
+            gameDataRepository,        //이름·설명 조회용 Repository
+            itemVisualRepository,      //Provider가 필요한 아이콘 조회용 Repository
+            out string displayName,    //설명창에 표시할 아이템 이름
+            out string description,    //설명창에 표시할 아이템 설명
+            out _,                     //여기서는 아이콘을 표시하지 않으므로 받지 않음
+            out _))                    //여기서는 특별 요리 여부를 쓰지 않으므로 받지 않음
         {
-            //재료
-            case ItemType.Ingredient:
-
-                if (gameDataRepository.TryGetIngredient(itemId, out IngredientData ingredientData))
-                {
-                    //재료 이름 표시
-                    dishNameText.text = ingredientData.IngredientName;
-
-                    //재료는 별도의 설명을 표시하지 않음
-                    descriptionText.text = string.Empty;
-
-                    return;
-                }
-
-                break;
-
-            //일반 요리
-            case ItemType.Dish:
-
-                if (gameDataRepository.TryGetDish(itemId, out DishData dishData))
-                {
-                    //요리 이름 표시
-                    dishNameText.text = dishData.DishName;
-
-                    //요리 설명 표시
-                    descriptionText.text = dishData.Info;
-
-                    return;
-                }
-
-                break;
-
-            //특별 요리
-            case ItemType.SpecialDish:
-
-                if (gameDataRepository.TryGetSpecialDish(itemId, out DishData specialDishData))
-                {
-                    //특별 요리 이름 표시
-                    dishNameText.text = specialDishData.DishName;
-
-                    //특별 요리 설명 표시
-                    descriptionText.text = specialDishData.Info;
-
-                    return;
-                }
-
-                break;
+            //표시 정보를 만들지 못하면 설명창을 비움
+            ClearDescription();
+            return;
         }
 
-        //데이터를 찾지 못했거나
-        //잘못된 ItemType이 들어온 경우 설명창 초기화
-        ClearDescription();
+        if (itemDescriptionUI != null)
+        {
+            itemDescriptionUI.Show(displayName, description);
+        }
     }
 
     //*설명창 초기화*
     private void ClearDescription()
     {
-        if (dishNameText != null) dishNameText.text = string.Empty;
-
-        if (descriptionText != null) descriptionText.text = string.Empty;
+        if (itemDescriptionUI != null)
+        {
+            itemDescriptionUI.Clear();
+        }
     }
 }

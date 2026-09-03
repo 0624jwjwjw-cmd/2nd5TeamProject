@@ -227,7 +227,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 230030045}
   - {fileID: 2003187096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -953,53 +952,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 193051960}
   m_CullTransparentMesh: 1
---- !u!1 &230030044
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 230030045}
-  - component: {fileID: 230030046}
-  m_Layer: 0
-  m_Name: InvenManagerTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &230030045
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230030044}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 10549956}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &230030046
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 230030044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4642fb123560fa41b50375775a2a1e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InventoryManagerTest
-  breadIngredientId: IG_01
-  eggIngredientId: IG_04
-  whiteBreadDishId: DS_01
 --- !u!1 &373192399
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,51 +3076,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1302057892
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1302057893}
-  - component: {fileID: 1302057894}
-  m_Layer: 0
-  m_Name: TestFoodSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1302057893
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302057892}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1470724035}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1302057894
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1302057892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6eea96be00be924daea762f2b93634d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TestFoodSpawn
-  amount: 1
 --- !u!1 &1360959024
 GameObject:
   m_ObjectHideFlags: 0
@@ -3552,7 +3459,6 @@ Transform:
   - {fileID: 2056100935}
   - {fileID: 1734525540}
   - {fileID: 1807869592}
-  - {fileID: 1302057893}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1492264482
@@ -3896,7 +3802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f94e2f8ab081ba843992bca8905b05b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveInventoryUI
-  inventoryManager: {fileID: 1971880473}
   content: {fileID: 107876286}
   slotPrefab: {fileID: 4925224546646944095, guid: 951085ae6e8df3743b2dce0da5d738b6, type: 3}
   maxSlotCount: 42
@@ -4189,6 +4094,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveManager
   _liveDuration: 20
+  characterTween: {fileID: 0}
+  _miniGameStarter: {fileID: 0}
+  _miniGameStartDelay: 3
 --- !u!4 &1656232466
 Transform:
   m_ObjectHideFlags: 0
@@ -4659,8 +4567,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveUI
   _liveManager: {fileID: 1656232465}
+  _foodArea: {fileID: 0}
   _startButton: {fileID: 1516788163}
-  _startButtonText: {fileID: 794853596}
   _liveStatusText: {fileID: 174729393}
   _liveTimerText: {fileID: 471070937}
 --- !u!1 &1882269002
@@ -4784,7 +4692,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   maxStackSize: 99
   slots: []
-  gameDataCatalog: {fileID: 0}
 --- !u!1 &1990107114
 GameObject:
   m_ObjectHideFlags: 0
@@ -5223,9 +5130,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveChat
   _liveManager: {fileID: 1656232465}
-  _chatText: {fileID: 1360959025}
+  _liveChatUI: {fileID: 0}
+  _liveChatAI: {fileID: 0}
   _chatInterval: 2
-  _maxChatCount: 5
+  _aiChatNicknames:
+  - "\uB9DB\uC9D1\uD0D0\uBC29\uB7EC"
+  - "\uBA39\uBC29\uB9E4\uB2C8\uC544"
+  - "\uC57C\uC2DD\uD5CC\uD130"
+  - "\uBC30\uACE0\uD508\uC0AC\uB78C"
+  - "\uD55C\uC785\uB9CC\uC694"
+  - "\uC624\uB298\uB3C4\uBA39\uC790"
+  - "\uCE58\uD305\uB370\uC774"
+  - "\uB300\uC2DD\uAC00\uD32C"
+  - "\uBA39\uB294\uAC8C\uCD5C\uACE0"
+  - "\uC704\uB300\uD55C\uBA39\uBC29"
+  - "\uBC25\uCE5C\uAD6C"
+  - "\uBC30\uBD80\uB978\uC2DC\uCCAD\uC790"
+  - "\uC74C\uC2DD\uD3C9\uB860\uAC00"
+  - "\uBA39\uBC29\uAD6C\uACBD\uAFBC"
+  - "\uC624\uB298\uBB50\uBA39\uC9C0"
+  - "\uC57C\uBB34\uC9C4\uD55C\uC785"
+  - "\uC2DD\uC695\uD3ED\uBC1C"
+  - "\uB9DB\uC788\uB294\uAC70\uCD5C\uACE0"
+  - "\uBA39\uBC29\uBCF4\uB294\uC911"
+  - "\uBC30\uACE0\uD30C\uC8FD\uC74C"
 --- !u!1 &2061314944
 GameObject:
   m_ObjectHideFlags: 0
