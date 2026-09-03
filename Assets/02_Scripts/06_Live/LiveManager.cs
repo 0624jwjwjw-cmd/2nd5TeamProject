@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Net;
 using UnityEngine;
 
 public class LiveManager : MonoBehaviour
@@ -187,6 +188,7 @@ public class LiveManager : MonoBehaviour
         // 음식 후원금, 구독자 누적
         _baseDonation += dishData.Donation;
         _baseSubscribers += dishData.Subscribers;
+        _miniGameStarter.AddPoint(dishData.Donation, dishData.Subscribers); 
         characterTween?.PlayEatReaction();
         SoundManager.Instance?.PlaySFX(SFXType.Eat);
         // 음식 정보를 외부 시스템에 전달
@@ -237,9 +239,7 @@ public class LiveManager : MonoBehaviour
 
         if (!_isLive)
             yield break;
-        Debug.Log($"돈{_baseDonation}구독자{_baseSubscribers}");
-        _miniGameStarter.StartMiniGame(_totalDonation, _totalSubscribers);
-        //여기에 총 후원금이랑 총 구독자를 넣으면 됨 근데 토탈은 0에서 하나씩 먹을때마다 증가해서 처음부터 총 후원금 구독자가 있어야함
+        _miniGameStarter.StartMiniGame();
     }
 
     private void CalculateLiveReward()

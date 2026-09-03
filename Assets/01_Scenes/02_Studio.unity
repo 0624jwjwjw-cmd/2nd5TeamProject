@@ -2227,7 +2227,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &321597197
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3816,7 +3816,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &488280398
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10917,7 +10917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCoinCollector
   gameManager: {fileID: 508010011}
-  coinSpawner: {fileID: 0}
+  coinSpawner: {fileID: 378378571}
   resultTextPrefab: {fileID: 2421575391605890781, guid: c5ce8c11a030b5f46bd6edbe545f25be, type: 3}
   resultTextRoot: {fileID: 508010010}
   resultTextOffset: {x: 0, y: -600}
@@ -14182,7 +14182,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2056100935
 Transform:
   m_ObjectHideFlags: 0
