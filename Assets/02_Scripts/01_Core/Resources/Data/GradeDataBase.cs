@@ -21,7 +21,6 @@ public class GradeDatabase : MonoBehaviour
     {
         if (grade <= 0 || grade > grades.Length)
         {
-            Debug.LogError($"그 데이터 없음");
             return null;
         }
 

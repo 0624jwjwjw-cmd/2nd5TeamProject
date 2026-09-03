@@ -154,7 +154,6 @@ public class MainPopupUIController : MonoBehaviour
         //열린 상점을 다시 누른 경우
         if (currentPopup == PopupType.Shop)
         {
-            PlayButtonClickSfx();
             CloseShop();
             return;
         }
@@ -193,6 +192,8 @@ public class MainPopupUIController : MonoBehaviour
 
     private void CloseShop()
     {
+        PlayButtonClickSfx();
+
         //상점 UI 숨김
         if (shopUIRoot != null)
         {
@@ -261,6 +262,8 @@ public class MainPopupUIController : MonoBehaviour
 
     private void CloseInventory()
     {
+        PlayButtonClickSfx();
+
         //인벤토리 UI를 숨김
         if (inventoryUIRoot != null)
         {

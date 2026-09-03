@@ -58,12 +58,6 @@ public class SaveLoadManager : MonoBehaviour
             {
                 Register(saveable);
             }
-            else
-            {
-                Debug.LogWarning(
-                    $"{obj.name}은 ISaveable을 구현하지 않았습니다."
-                );
-            }
         }
     }
 
@@ -118,7 +112,6 @@ public class SaveLoadManager : MonoBehaviour
     {
         if (!File.Exists(savePath))
         {
-            Debug.Log("저장 데이터 없음");
             return;
         }
 
@@ -130,7 +123,6 @@ public class SaveLoadManager : MonoBehaviour
             saveable.Load(data);
         }
 
-        Debug.Log("저장 데이터 불러오기 완료");
     }
 
     // 앱 종료 대비

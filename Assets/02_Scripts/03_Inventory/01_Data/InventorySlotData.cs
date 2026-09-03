@@ -111,21 +111,6 @@ public sealed class InventorySlotData
         return true;        //제거에 성공했으므로 true 반환
     }
 
-    //[현재 수량을 지정한 값으로 변경하기 위한 메서드]
-    //저장데이터 불러오거나 디버그 기능 만들 때 사용
-    public void SetAmount(int value)
-    {
-        //수량이 0 이하라면 슬롯 전체를 비움
-        if (value <= 0)
-        {
-            Clear();
-            return;
-        }
-
-        //수량이 1 이상이면 전달받은 값으로 변경
-        amount = value;
-    }
-
     //[아이템 수량이 0이 된 슬롯을 완전히 비우는 메서드]
     //InventoryManager가 빈 슬롯을 정리할 때 사용 가능
     public void Clear()

@@ -1543,7 +1543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f441106aea671ea47ba738c6458b8467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DayQuest
-  targetGold: f4010000e8030000dc050000c4090000a00f0000
+  targetGold: f4010000e8030000dc050000c4090000a00f0000401f0000e02e000050460000a8610000
 --- !u!4 &728625711
 Transform:
   m_ObjectHideFlags: 0
@@ -2579,7 +2579,7 @@ MonoBehaviour:
     volume: 0.519
   - type: 4
     clip: {fileID: 8300000, guid: c22869a558ce1cb488dad2436403c41e, type: 3}
-    volume: 0.595
+    volume: 1
   - type: 5
     clip: {fileID: 8300000, guid: 136ee6bc539c1d643981ca9074590e6c, type: 3}
     volume: 1

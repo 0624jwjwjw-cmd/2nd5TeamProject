@@ -6006,6 +6006,8 @@ GameObject:
   - component: {fileID: 406385598}
   - component: {fileID: 406385597}
   - component: {fileID: 406385599}
+  - component: {fileID: 406385600}
+  - component: {fileID: 406385601}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -6102,11 +6104,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryUIController
   slotParent: {fileID: 908004061}
   slotPool: {fileID: 406385598}
-  allSelectedFrame: {fileID: 1479353757}
-  ingredientSelectedFrame: {fileID: 660069681}
-  dishSelectedFrame: {fileID: 173722943}
-  dishNameText: {fileID: 1471455440}
-  descriptionText: {fileID: 496025111}
+  categoryTabUI: {fileID: 406385601}
+  itemDescriptionUI: {fileID: 406385600}
 --- !u!114 &406385598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6135,6 +6134,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelTween
   duration: 1
   overshootScale: 1.3
+--- !u!114 &406385600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406385592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2780daa5cf29e147968097fb8b24617, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryItemDescriptionUI
+  itemNameText: {fileID: 1471455440}
+  descriptionText: {fileID: 496025111}
+--- !u!114 &406385601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406385592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b387906e0c8762e44a9481967a227418, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryCategoryTabUI
+  allSelectedFrame: {fileID: 1479353757}
+  ingredientSelectedFrame: {fileID: 660069681}
+  dishSelectedFrame: {fileID: 173722943}
 --- !u!1 &409401835
 GameObject:
   m_ObjectHideFlags: 0
@@ -36096,7 +36124,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 60
@@ -36524,6 +36552,8 @@ GameObject:
   - component: {fileID: 1754804457}
   - component: {fileID: 1754804456}
   - component: {fileID: 1754804458}
+  - component: {fileID: 1754804460}
+  - component: {fileID: 1754804459}
   m_Layer: 5
   m_Name: QuestCallPanel
   m_TagString: Untagged
@@ -36605,6 +36635,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PanelTween
   duration: 1
   overshootScale: 1.3
+--- !u!114 &1754804459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754804454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!223 &1754804460
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754804454}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 60
+  m_TargetDisplay: 0
 --- !u!1 &1760680437
 GameObject:
   m_ObjectHideFlags: 0

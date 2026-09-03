@@ -63,7 +63,6 @@ public class ShopCartController : MonoBehaviour
 
     //*프로퍼티*
     public bool IsEmpty => cartItems.Count == 0;    //현재 장바구니가 비어 있는지 확인
-    public int ItemTypeCount => cartItems.Count;    //현재 장바구니에 들어있는 재료 [종류] 개수
     public IEnumerable<ShopCartItemData> CartItems  //외부에서 장바구니 목록을 읽을 수 있도록 제공
         => cartItems.Values;
 
@@ -108,11 +107,6 @@ public class ShopCartController : MonoBehaviour
         //*장바구니가 변경되었다는 이벤트 발생*
         OnCartChanged?.Invoke();
 
-        Debug.Log(
-            $"[ShopCartController] 장바구니 추가 | " +
-            $"{ingredientData.IngredientName} | " +
-            $"수량: {GetQuantity(itemId)}"
-            );
         return true;
     }
 
@@ -140,23 +134,6 @@ public class ShopCartController : MonoBehaviour
         OnCartChanged?.Invoke();    //장바구니 내용이 변경되었다는 이벤트 발생
 
         return true;
-    }
-
-    //*수량 확인*
-    //특정 재료가 현재 장바구니에 몇 개 들어있는지 반환
-    public int GetQuantity(string itemId)
-    {
-        //ID가 비어 있다면 장바구니에서 찾을 수 없음
-        if (string.IsNullOrWhiteSpace(itemId)) return 0;
-
-        //장바구니에서 해당 재료 검색
-        if (cartItems.TryGetValue(itemId, out ShopCartItemData cartItem))
-        {
-            //찾았다면 현재 수량 반환
-            return cartItem.Amount;
-        }
-
-        return 0;   //없다면 0개
     }
 
     //*총 가격*
@@ -192,7 +169,5 @@ public class ShopCartController : MonoBehaviour
         cartItems.Clear();                  //모든 장바구니 데이터 삭제
 
         OnCartChanged?.Invoke();            //장바구니 변경 이벤트 발생
-
-        Debug.Log("[ShopCartController] 장바구니를 비웠습니다.");
     }
 }

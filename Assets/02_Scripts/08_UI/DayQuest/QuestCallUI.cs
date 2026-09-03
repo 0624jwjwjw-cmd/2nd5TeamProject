@@ -39,7 +39,7 @@ public class QuestCallUI : MonoBehaviour
     public void ShowSuccess()
     {
         resultImage.sprite = successSprite;
-        resultText.text = "퀘스트 성공!";
+        resultText.text = "퀘스트 성공! \n구독자20%증가!!";
         SoundManager.Instance.PlaySFX(SFXType.Win);
         OpenPanel();
     }
@@ -47,7 +47,7 @@ public class QuestCallUI : MonoBehaviour
     public void ShowFail()
     {
         resultImage.sprite = failSprite;
-        resultText.text = "퀘스트 실패!";
+        resultText.text = "퀘스트 실패!\n구독자20%감소...";
         SoundManager.Instance.PlaySFX(SFXType.Lose);
         OpenPanel();
     }
