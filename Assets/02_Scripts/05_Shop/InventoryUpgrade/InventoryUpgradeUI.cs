@@ -18,6 +18,7 @@ public class InventoryUpgradeUI : MonoBehaviour
     private void OnEnable()
     {
         InventoryUpgradeManager.Instance.OnInventoryUpgradeChanged += SetData;
+        warningText.gameObject.SetActive(false);
     }
     private void OnDisable()
     {

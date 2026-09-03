@@ -21,6 +21,7 @@ public class StudioUpgradeUI : MonoBehaviour
     private void OnEnable()
     {
         StudioUpgradeManager.Instance.OnStudioUpgradeChanged += SetData;
+        warningText.gameObject.SetActive(false);
     }
     private void OnDisable()
     {
