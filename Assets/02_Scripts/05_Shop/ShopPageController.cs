@@ -123,6 +123,8 @@ public sealed class ShopPageController : MonoBehaviour
     //*재료 구매 페이지 열기*
     private void OpenIngredientPurchasePage()
     {
+        PlayButtonClickSfx();
+
         //상점 메인 페이지 숨김
         if (shopMainPage != null)
         {
@@ -157,6 +159,8 @@ public sealed class ShopPageController : MonoBehaviour
     //*레시피 구매 페이지 열기*
     private void OpenRecipePurchasePage()
     {
+        PlayButtonClickSfx();
+
         //아직 레시피 페이지를 Inspector에 연결하지 않았다면
         //메인 상점 화면을 숨기지 않고 경고만 출력
         if (recipePurchasePage == null)
@@ -196,6 +200,8 @@ public sealed class ShopPageController : MonoBehaviour
     //*업그레이드 구매 페이지 열기*
     private void OpenUpgradePurchasePage()
     {
+        PlayButtonClickSfx();
+
         //Inspector에 페이지 연결이 빠졌다면 빈 화면이 되지 않도록 중단
         if (upgradePurchasePage == null)
         {
@@ -233,6 +239,8 @@ public sealed class ShopPageController : MonoBehaviour
     //*뒤로가기 버튼 클릭*
     private void HandleBackButtonClicked()
     {
+        PlayButtonClickSfx();
+
         //서브 페이지에서 나가므로
         //현재 장바구니 초기화
         ClearCart();
@@ -283,5 +291,11 @@ public sealed class ShopPageController : MonoBehaviour
 
         //장바구니 전체 초기화
         shopCartController.ClearCart();
+    }
+
+    //*일반 버튼 클릭 효과음 재생*
+    private void PlayButtonClickSfx()
+    {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
     }
 }

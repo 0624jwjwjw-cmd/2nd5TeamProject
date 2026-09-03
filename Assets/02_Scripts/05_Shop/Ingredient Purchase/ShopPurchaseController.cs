@@ -163,7 +163,7 @@ public sealed class ShopPurchaseController : MonoBehaviour
 
             int shortage = totalPrice - currentGold;
 
-            SetPurchaseMessage($"Gold가 {shortage} 부족합니다.");
+            SetPurchaseMessage($"{shortage}원 부족합니다.");
 
             return;
         }
