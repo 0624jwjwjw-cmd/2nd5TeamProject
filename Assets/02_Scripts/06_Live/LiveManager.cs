@@ -237,8 +237,9 @@ public class LiveManager : MonoBehaviour
 
         if (!_isLive)
             yield break;
-
-        _miniGameStarter.StartMiniGame();
+        Debug.Log($"돈{_baseDonation}구독자{_baseSubscribers}");
+        _miniGameStarter.StartMiniGame(_totalDonation, _totalSubscribers);
+        //여기에 총 후원금이랑 총 구독자를 넣으면 됨 근데 토탈은 0에서 하나씩 먹을때마다 증가해서 처음부터 총 후원금 구독자가 있어야함
     }
 
     private void CalculateLiveReward()
