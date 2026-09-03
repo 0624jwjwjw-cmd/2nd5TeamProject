@@ -52,9 +52,8 @@ public class HeartManager : MonoBehaviour, ISaveable
         if (elapsed.TotalSeconds >= recoverTime)
         {
             CurrencyManager.Instance.AddHeart(1);
-            
+            SoundManager.Instance.PlaySFX(SFXType.Heart);
             lastHeartRecoverTime = DateTime.UtcNow.Ticks;//하트 먹은 현재 시간 갱신
-            Debug.Log("게임 중 하트 +1");
         }
     }
     private void RecoverOfflineHeart()
@@ -74,7 +73,6 @@ public class HeartManager : MonoBehaviour, ISaveable
 
         lastHeartRecoverTime +=TimeSpan.FromSeconds(recoverCount * recoverTime).Ticks;//하트 회복한 시간만큼 마지막 회복 시간 갱신
 
-        Debug.Log($"오프라인 하트 {recoverCount}개 회복");
     }
     public bool UseHeart()
     {
