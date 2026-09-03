@@ -73,7 +73,6 @@ public class DayQuest : MonoBehaviour, ISaveable
         // 목표 금액이 설정되지 않은 날짜라면 종료
         if (currentDay - 1 >= targetGold.Length)
         {
-            Debug.Log("퀘없음");
             return;
         }
         int currentGold = CurrencyManager.Instance.Gold;
@@ -92,7 +91,6 @@ public class DayQuest : MonoBehaviour, ISaveable
     }
     private void QuestSuccess()
     {
-        Debug.Log("퀘스트 성공!");
 
         int subscriber =Mathf.RoundToInt(CurrencyManager.Instance.Subscriber * 0.2f);
         CurrencyManager.Instance.AddSubscriber(subscriber);
@@ -101,7 +99,6 @@ public class DayQuest : MonoBehaviour, ISaveable
 
     private void QuestFail()
     {
-        Debug.Log("퀘스트 실패!");
 
         int subscriber = Mathf.RoundToInt(CurrencyManager.Instance.Subscriber * 0.2f);
         CurrencyManager.Instance.AddSubscriber(-subscriber);

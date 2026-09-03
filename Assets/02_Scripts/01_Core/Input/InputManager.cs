@@ -85,7 +85,6 @@ public class InputManager : MonoBehaviour
         {
             var touch = Touchscreen.current.primaryTouch;
 
-            // 터치 위치는 눌려있는 동안 갱신
             if (touch.press.isPressed)
             {
                 PointerPosition = touch.position.ReadValue();
