@@ -32,11 +32,6 @@ public class KitchenUpgradeManager : MonoBehaviour,ISaveable
     }
     public void LevelUp()
     {
-        if(!CurrencyManager.Instance.SpendGold(nextData.Price))
-        {
-            return;
-        }
-        SoundManager.Instance?.PlaySFX(SFXType.Coin);
         if (index < kitchenUpgradeDatas.Length - 1)
         {
             index++;

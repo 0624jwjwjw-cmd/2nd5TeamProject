@@ -16,6 +16,8 @@ public class RecipeShotDetailUI : MonoBehaviour
     [SerializeField] private string tryPurchase = "구매하기";
     [SerializeField] private string completePurchase = "구매완료";
 
+    [SerializeField] private TMP_Text warningText;
+
     private ReciepePurchaseData reciepePurchaseData;
     public void OpenDetail(ReciepePurchaseData reciepePurchaseData)
     {
@@ -52,8 +54,12 @@ public class RecipeShotDetailUI : MonoBehaviour
     {
         if (!CurrencyManager.Instance.SpendGold(reciepePurchaseData.Price))
         {
+            warningText.text = (reciepePurchaseData.Price - CurrencyManager.Instance.Gold).ToString() + "원 부족합니다.";
+            warningText.gameObject.SetActive(true);
+            SoundManager.Instance?.PlaySFX(SFXType.Lose);
             return;
         }
+        warningText.gameObject.SetActive(false);
         SoundManager.Instance?.PlaySFX(SFXType.Coin);
         ReciepeUnlockManager.Instance.UnlockRecipe(reciepePurchaseData.FoodID);
         purchaseButton.interactable = false;
