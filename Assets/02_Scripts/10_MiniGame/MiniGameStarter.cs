@@ -17,7 +17,6 @@ public class MiniGameStarter : MonoBehaviour
 
     [Header("Panel Close")]
     [SerializeField] private float closeDelay = 1f;
-
     private GameObject currentMiniGamePanel;
     private Coroutine closeCoroutine;
     private MiniGameRoulette roulette;
@@ -48,9 +47,13 @@ public class MiniGameStarter : MonoBehaviour
             roulette.OnRouletteFinished -= StartSelectedGame;
         }
     }
-
+    public void AddPoint(int Donation, int Subscribers)
+    {
+        miniGameManager.GetReward(Donation, Subscribers);
+    }
     public void StartMiniGame()
     {
+        
         // 이미 미니게임이 진행 중이면 실행하지 않음
         if (miniGameManager.IsMiniGamePlaying)
         {
@@ -82,7 +85,7 @@ public class MiniGameStarter : MonoBehaviour
         currentMiniGamePanel = miniGamePanels[gameIndex];
         currentMiniGamePanel.SetActive(true);
 
-        miniGameManager.StartGame();
+        miniGameManager.StartGame(gameIndex);
     }
     private void HandleMiniGameState(bool isPlaying)
     {
@@ -131,5 +134,20 @@ public class MiniGameStarter : MonoBehaviour
         }
 
         currentMiniGamePanel = null;
+    }
+    public void StopMiniGame()
+    {
+        if (closeCoroutine != null)
+        {
+            StopCoroutine(closeCoroutine);
+            closeCoroutine = null;
+        }
+
+        if (miniGameManager != null)
+        {
+            miniGameManager.StopGame();
+        }
+
+        ResetPanels();
     }
 }
