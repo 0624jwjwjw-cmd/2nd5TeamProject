@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 010748c058bf10f4eba30da3dc60199f
+guid: 9802a28666447d9498123f9ce29dbfca
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3759911207659780875
-    second: Gumiho_Alive_0
+      213: 5559732156639829787
+    second: StudioSelectPanel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Gumiho_Alive_0
+      name: StudioSelectPanel_0
       rect:
         serializedVersion: 2
-        x: 91
-        y: 336
-        width: 885
-        height: 1028
+        x: 35
+        y: 25
+        width: 1012
+        height: 1868
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b0b329f8253ed2430800000000000000
-      internalID: 3759911207659780875
+      spriteID: b1f55d290f2282d40800000000000000
+      internalID: 5559732156639829787
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 1ff6aee15e76852479fdef426344010f
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Gumiho_Alive_0: 3759911207659780875
+      StudioSelectPanel_0: 5559732156639829787
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
