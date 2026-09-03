@@ -47,9 +47,7 @@ public class SettingPenel : MonoBehaviour
     }
     public void ResetGame()
     {
+        ClosePanel();
         SaveLoadManager.Instance.ResetGame();
-        bgmSlider.value = SoundManager.Instance.BGMVolume;
-        sfxSlider.value = SoundManager.Instance.SFXVolume;
-        
     }
 }

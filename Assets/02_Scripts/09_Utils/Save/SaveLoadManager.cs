@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SaveLoadManager : MonoBehaviour
 {
@@ -8,13 +10,17 @@ public class SaveLoadManager : MonoBehaviour
 
     [Header("Saveable Objects")]
     [SerializeField] private MonoBehaviour[] saveableObjects;
-
     private List<ISaveable> saveables = new();
     public bool HasSaveData => File.Exists(savePath);
     private string savePath;
     private bool isDirty;
     private float timer;
     private float saveDelay = 10f;
+    public bool IsGameReset { get; private set; }
+    public void ClearGameResetFlag()
+    {
+        IsGameReset = false;
+    }
 
     private void Awake()
     {
@@ -165,5 +171,8 @@ public class SaveLoadManager : MonoBehaviour
 
         isDirty = false;
         timer = 0f;
+        IsGameReset = true;
+        SceneLoader.Instance.LoadScene(SceneType.Title);
     }
+
 }
