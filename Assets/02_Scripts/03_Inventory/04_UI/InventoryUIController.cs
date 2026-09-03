@@ -407,12 +407,15 @@ public sealed class InventoryUIController : MonoBehaviour
             return;
         }
 
-        //아이템 이름과 아이콘 검색
-        if (!TryGetDisplayData(
-            slotData,
-            out string displayName,
-            out Sprite icon,
-            out bool isSpecial))
+        //슬롯의 UI 표시 정보를 요청
+        if (!InventoryItemDisplayDataProvider.TryGet(
+            slotData,                  // 현재 표시할 인벤토리 슬롯 데이터
+            gameDataRepository,        // 이름·설명 조회용 Repository
+            itemVisualRepository,      // 아이콘 조회용 Repository
+            out string displayName,    // 슬롯에 표시할 이름
+            out _,                     // 설명도 받아오지만, 슬롯 생성에서는 아직 사용하지 않음
+            out Sprite icon,           // 슬롯에 표시할 아이콘
+            out bool isSpecial))       // 특별 요리 S 배지 표시 여부
         {
             Debug.LogWarning(
                 $"[InventoryUIController] " +
@@ -566,93 +569,6 @@ public sealed class InventoryUIController : MonoBehaviour
         }
     }
 
-    //*InventorySlotData → UI 표시 정보 검색*
-    private bool TryGetDisplayData(
-        InventorySlotData slotData,
-        out string displayName,
-        out Sprite icon,
-        out bool isSpecial)
-    {
-        //검색 실패를 대비해 기본값 설정
-        displayName = string.Empty;
-        icon = null;
-        isSpecial = false;
-
-        //슬롯 데이터가 없거나
-        //빈 슬롯이라면 표시 정보를 가져올 수 없음
-        if (slotData == null || slotData.IsEmpty) return false;
-        
-        //슬롯에서 실제 아이템 ID 가져오기
-        string itemId = slotData.ItemId;
-
-        //슬롯에 저장된 ItemType을 이용해서
-        //필요한 Repository 함수 하나만 호출
-        switch (slotData.ItemType)
-        {
-            //재료
-            case ItemType.Ingredient:
-
-                //재료 타입이므로 IngredientData만 검색
-                if (!gameDataRepository.TryGetIngredient(
-                    itemId,
-                    out IngredientData ingredientData))
-                {
-                    return false;
-                }
-
-                //재료 이름을 UI 표시 이름으로 사용
-                displayName = ingredientData.IngredientName;
-
-                break;
-
-            //일반 요리          
-            case ItemType.Dish:
-
-                //일반 요리 타입이므로 DishData만 검색
-                if (!gameDataRepository.TryGetDish(
-                    itemId,
-                    out DishData dishData))
-                {
-                    return false;
-                }
-
-                //요리 이름을 UI 표시 이름으로 사용
-                displayName = dishData.DishName;
-
-                break;
-
-            //특별 요리
-            case ItemType.SpecialDish:
-
-                //특별 요리 타입이므로 SpecialDish 데이터만 검색
-                if (!gameDataRepository.TryGetSpecialDish(
-                    itemId,
-                    out DishData specialDishData))
-                {
-                    return false;
-                }
-
-                //특별 요리 이름 표시
-                displayName = specialDishData.DishName;
-
-                //특별 요리이므로 S 배지 표시
-                isSpecial = true;
-
-                break;
-
-
-            //정의되지 않은 ItemType
-            default:
-                return false;
-        }
-
-        //아이템 종류와 관계없이
-        //아이콘은 ItemVisualRepository에서 ID로 검색
-        itemVisualRepository.TryGetIcon(itemId, out icon);
-
-        return true;
-    }
-
     //*현재 선택된 인벤토리 카테고리에서
     //전달받은 아이템을 보여줘야하는지 확인하는 메서드*
     //
@@ -743,70 +659,41 @@ public sealed class InventoryUIController : MonoBehaviour
     //*선택한 아이템 설명 표시*
     private void UpdateDescription(string itemId)
     {
-        //선택된 ItemId를 이용해서
-        //실제 InventorySlotData를 먼저 찾음
+        //선택한 아이템 ID로 실제 인벤토리 슬롯 데이터를 찾음
         if (!TryGetSlotData(itemId, out InventorySlotData slotData))
         {
+            //슬롯을 못 찾으면 설명창을 비움
             ClearDescription();
             return;
         }
 
-        //SlotData에 저장된 ItemType을 이용해서
-        //필요한 Repository 함수 하나만 호출
-        switch (slotData.ItemType)
+        // 새 Provider에게 이름·설명·아이콘·특별요리 여부를 요청
+        if (!InventoryItemDisplayDataProvider.TryGet(
+            slotData,                  //설명을 표시할 슬롯 데이터
+            gameDataRepository,        //이름·설명 조회용 Repository
+            itemVisualRepository,      //Provider가 필요한 아이콘 조회용 Repository
+            out string displayName,    //설명창에 표시할 아이템 이름
+            out string description,    //설명창에 표시할 아이템 설명
+            out _,                     //여기서는 아이콘을 표시하지 않으므로 받지 않음
+            out _))                    //여기서는 특별 요리 여부를 쓰지 않으므로 받지 않음
         {
-            //재료
-            case ItemType.Ingredient:
-
-                if (gameDataRepository.TryGetIngredient(itemId, out IngredientData ingredientData))
-                {
-                    //재료 이름 표시
-                    dishNameText.text = ingredientData.IngredientName;
-
-                    //재료는 별도의 설명을 표시하지 않음
-                    descriptionText.text = string.Empty;
-
-                    return;
-                }
-
-                break;
-
-            //일반 요리
-            case ItemType.Dish:
-
-                if (gameDataRepository.TryGetDish(itemId, out DishData dishData))
-                {
-                    //요리 이름 표시
-                    dishNameText.text = dishData.DishName;
-
-                    //요리 설명 표시
-                    descriptionText.text = dishData.Info;
-
-                    return;
-                }
-
-                break;
-
-            //특별 요리
-            case ItemType.SpecialDish:
-
-                if (gameDataRepository.TryGetSpecialDish(itemId, out DishData specialDishData))
-                {
-                    //특별 요리 이름 표시
-                    dishNameText.text = specialDishData.DishName;
-
-                    //특별 요리 설명 표시
-                    descriptionText.text = specialDishData.Info;
-
-                    return;
-                }
-
-                break;
+            //표시 정보를 만들지 못하면 설명창을 비움
+            ClearDescription();
+            return;
         }
 
-        //데이터를 찾지 못했거나
-        //잘못된 ItemType이 들어온 경우 설명창 초기화
-        ClearDescription();
+        //이름 Text가 연결되어 있다면 아이템 이름 표시
+        if (dishNameText != null)
+        {
+            dishNameText.text = displayName;
+        }
+
+        //설명 Text가 연결되어 있다면 아이템 설명 표시
+        //재료는 Provider가 빈 문자열을 넘겨주므로 기존 동작과 같음
+        if (descriptionText != null)
+        {
+            descriptionText.text = description;
+        }
     }
 
     //*설명창 초기화*
