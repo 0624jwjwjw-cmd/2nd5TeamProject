@@ -19,6 +19,10 @@ public class RecipeShotDetailUI : MonoBehaviour
     [SerializeField] private TMP_Text warningText;
 
     private ReciepePurchaseData reciepePurchaseData;
+    private void OnEnable()
+    {
+        warningText.gameObject.SetActive(false);
+    }
     public void OpenDetail(ReciepePurchaseData reciepePurchaseData)
     {
         this.reciepePurchaseData = reciepePurchaseData;

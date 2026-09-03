@@ -26,8 +26,9 @@ public class RecipePurchaseSlot : MonoBehaviour
     }
     private void OnEnable()
     {
-        StartCoroutine(WaitManager());
         ReciepeUnlockManager.Instance.OnUnlockChanged += CheckPurchase;
+        CheckPurchase();
+        warningText.gameObject.SetActive(false);
     }
     private void OnDisable()
     {
@@ -61,14 +62,6 @@ public class RecipePurchaseSlot : MonoBehaviour
             purchaseButton.interactable = true;
             purchaseButtonText.text = tryPurchase;
         }
-    }
-    private IEnumerator WaitManager()
-    {
-        while(ReciepeUnlockManager.Instance == null)
-        {
-            yield return null;
-        }
-        CheckPurchase();
     }
     public void OnclickRecipeImage()
     {
