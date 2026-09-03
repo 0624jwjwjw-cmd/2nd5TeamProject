@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 3115c1504fd0f314cad4027dae436c15
+guid: 592da49513faf4144ba694fc808a3608
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6730909011756525701
-    second: LiveInventory_0
+      213: 7373071322943414152
+    second: InfoBackground_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: LiveInventory_0
+      name: InfoBackground_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1952
-        height: 544
+        x: 56
+        y: 49
+        width: 1088
+        height: 897
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b77d6ca6ae10792a0800000000000000
-      internalID: -6730909011756525701
+      spriteID: 88f59a3dd49625660800000000000000
+      internalID: 7373071322943414152
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      LiveInventory_0: -6730909011756525701
+      InfoBackground_0: 7373071322943414152
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
