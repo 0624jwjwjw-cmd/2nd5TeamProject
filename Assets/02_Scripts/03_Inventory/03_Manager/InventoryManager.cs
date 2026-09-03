@@ -31,7 +31,25 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //프로퍼티
     //IReadOnlyList로 제공하기 때문에
     public IReadOnlyList<InventorySlotData> Slots => slots; //slots.Add()나 slots.Remove()직접 호출 불가
-       
+
+    //ItemId로 현재 인벤토리에 있는 슬롯 데이터를 찾음
+    public bool TryGetSlot(
+        string itemId,
+        out InventorySlotData slotData)
+    {
+        //찾기 실패 기본값
+        slotData = null;
+
+        //빈 ID는 찾을 수 없음
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
+        //InventoryManager 내부의 슬롯 검색 기능 사용
+        slotData = FindSlot(itemId);
+
+        //슬롯을 실제로 찾았는지 반환
+        return slotData != null;
+    }
+
     //*외부 시스템에서 최대 스택 수량을 확인하거나 변경*
     public int MaxStackSize
     {

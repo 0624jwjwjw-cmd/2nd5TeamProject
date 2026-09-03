@@ -4,13 +4,6 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour
 {
-    //*재료 구매를 시도하는 메서드*
-    //itemId : 구매하려는 재료의 고유 ID
-    //amount : 구매하려는 수량
-    //
-    //구매 성공 → true
-    //구매 실패 → false
-
     //*장바구니 전체 재료 구매*
     public bool TryBuyCart(IEnumerable<ShopCartItemData> cartItems)
     {
@@ -111,10 +104,7 @@ public class ShopManager : MonoBehaviour
                 //이미 추가된 재료 원상복구
                 foreach (ShopCartItemData addedItem in addedItems)
                 {
-                    InventoryManager.Instance.RemoveItem(
-                        addedItem.Data.ID,
-                        addedItem.Amount
-                        );
+                    InventoryManager.Instance.RemoveItem(addedItem.Data.ID, addedItem.Amount);
                 }
 
                 //사용한 Gold도 환불
@@ -123,14 +113,8 @@ public class ShopManager : MonoBehaviour
                 Debug.LogError("[ShopManager] 구매 실패 → 인벤토리와 Gold를 복구했습니다.");
                 return false;
             }
-
             addedItems.Add(cartItem);
         }
-
-        Debug.Log($"[ShopManager] 장바구니 구매 성공 | " + $"총 가격: {finalPrice} G");
         return true;
     }
 }
-
-//ItemId 검사 → IngredientData 찾기 → 인벤토리에 들어갈 수 있는지 검사 → 돈이 충분한지 검사 → Gold 차감 → Inventory.AddItem()
-//※ 돈 먼저 차감 후 인벤토리 확인했을때 최대라 추가 실패해서 돈만 차감되는 경우 방지

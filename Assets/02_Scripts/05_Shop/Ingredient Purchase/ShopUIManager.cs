@@ -144,13 +144,6 @@ public class ShopUIManager : MonoBehaviour
         //이후 OnEnable이나 Start가 다시 실행돼도
         //ShopItem이 중복 생성되지 않음
         isInitialized = true;
-
-        //정상적으로 몇 개의 재료 데이터를 기준으로
-        //상점 UI를 생성했는지 Console에서 확인
-        Debug.Log(
-            $"[ShopUIManager] 초기화 완료 | " +
-            $"재료 데이터: {gameDataCatalog.Ingredients.Count}개"
-            );
     }
 
     //*ShopItem 생성*

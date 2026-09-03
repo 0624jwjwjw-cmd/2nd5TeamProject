@@ -196,14 +196,5 @@ public class ShopCartItemUI : MonoBehaviour
                 );
             return;
         }
-
-        //감소 후 현재 남아있는 수량 확인
-        int remainingAmount = shopCartController.GetQuantity(itemId);
-
-        Debug.Log(
-            $"[ShopCartItemUI] 장바구니 수량 감소 | " +
-            $"{ingredientName} | " +
-            $"남은 수량: {remainingAmount}"
-            );
     }
 }
