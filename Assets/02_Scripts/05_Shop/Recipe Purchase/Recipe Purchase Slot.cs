@@ -27,6 +27,7 @@ public class RecipePurchaseSlot : MonoBehaviour
     private void OnEnable()
     {
         ReciepeUnlockManager.Instance.OnUnlockChanged += CheckPurchase;
+        CheckPurchase();
         warningText.gameObject.SetActive(false);
     }
     private void OnDisable()
