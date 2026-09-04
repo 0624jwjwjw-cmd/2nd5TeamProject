@@ -37,6 +37,10 @@ public class CurrencyManager : MonoBehaviour, ISaveable
     public void AddGold(int amount)
     {
         gold += amount;
+        if (amount > 0 && DayQuest.Instance != null)
+        {
+            DayQuest.Instance.AddEarnedGold(amount);
+        }
         OnRevenueChanged?.Invoke();
         SaveLoadManager.Instance.SetDirty();
     }
