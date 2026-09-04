@@ -29,14 +29,18 @@ public class LiveChatAI : MonoBehaviour
 
     private void Awake()
     {
-#if UNITY_ANDROID && !UNITY_EDITOR
-
         Debug.Log(
-            "[LiveChatAI] Android에서는 AI를 사용하지 않습니다. 기본 채팅을 사용합니다."
+            $"[LiveChatAI] Awake 실행 / InstanceID: {GetInstanceID()} / Object: {gameObject.name} / Scene: {gameObject.scene.name}"
         );
 
-        _isReady = false;
-        return;
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+    Debug.Log(
+        "[LiveChatAI] Android에서는 AI를 사용하지 않습니다. 기본 채팅을 사용합니다."
+    );
+
+    _isReady = false;
+    return;
 
 #endif
 
@@ -46,6 +50,10 @@ public class LiveChatAI : MonoBehaviour
 
     private IEnumerator InitializeModel()
     {
+        Debug.Log(
+            $"[LiveChatAI] InitializeModel 실행 / InstanceID: {GetInstanceID()}"
+        );
+
         string modelPath = Path.Combine(
             Application.streamingAssetsPath,
             "Models",
