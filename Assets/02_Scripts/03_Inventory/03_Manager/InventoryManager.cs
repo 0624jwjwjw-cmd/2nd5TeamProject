@@ -344,22 +344,6 @@ public class InventoryManager : MonoBehaviour,ISaveable
         return targetSlot.Amount;
     }
 
-    //*인벤토리 슬롯을 아이템 종류와 ItemId 숫자 기준으로 정렬하는 공개 메서드*
-    public void SortByItemId()
-    {
-        //재료 → 일반 요리 → 특별 요리 순서로 정렬하고,
-        //같은 종류 안에서는 ItemId 숫자 순서로 정렬
-        SortSlotsByItemTypeAndId();
-
-        //특정 아이템 한 개가 변경된 것이 아니라
-        //전체 슬롯의 순서만 변경된 것이므로
-        //ItemId와 수량은 기본값으로 전달
-        InventoryChange change = new InventoryChange(InventoryChangeType.Sorted, string.Empty, 0, 0);
-        
-        //정렬 결과 UI 반영하도록 인벤토리 변경 이벤트 발생
-        NotifyInventoryChanged(change);
-    }
-
     //*현재 인벤토리에 들어 있는 모든 아이템을 제거하는 메서드*
     //데이터 초기화 또는 디버그 사용
     public void ClearInventory()
@@ -557,7 +541,6 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //예:
     //IG_01 → 1
     //DS_12 → 12
-    //SD_03 → 3
     private int GetItemIdNumber(string itemId)
     {
         //ItemId가 null, 빈 문자열 또는 공백이라면
@@ -623,12 +606,10 @@ public class InventoryManager : MonoBehaviour,ISaveable
     public void Load(SaveData data)
     {
         slots.Clear();
-        if (data.inventory == null)
-            return;
+        if (data.inventory == null) return;
         foreach (InventorySlotData savedSlot in data.inventory)
         {
-            if (savedSlot == null || savedSlot.IsEmpty)
-                continue;
+            if (savedSlot == null || savedSlot.IsEmpty) continue;
             InventorySlotData slot = new InventorySlotData(
                 savedSlot.ItemId,savedSlot.Amount,savedSlot.ItemType);
             slots.Add(slot);
