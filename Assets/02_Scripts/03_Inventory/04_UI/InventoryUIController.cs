@@ -249,17 +249,17 @@ public sealed class InventoryUIController : MonoBehaviour
 
         //혹시 이전에 같은 이벤트가 등록되어 있었다면 제거
         //중복 호출 방지
-        inventoryManager.OnInventoryChangedDetailed -= HandleInventoryChanged;
+        inventoryManager.OnInventoryChanged -= HandleInventoryChanged;
 
         //상세 변경 이벤트 등록
-        inventoryManager.OnInventoryChangedDetailed += HandleInventoryChanged;
+        inventoryManager.OnInventoryChanged += HandleInventoryChanged;
     }
 
     private void UnsubscribeEvents()
     {
         if (inventoryManager == null) return;
 
-        inventoryManager.OnInventoryChangedDetailed -= HandleInventoryChanged;
+        inventoryManager.OnInventoryChanged -= HandleInventoryChanged;
     }
 
     //*최초 Inventory UI 생성*

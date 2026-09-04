@@ -19,14 +19,8 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //InventorySlotData를 여러 개 보관하는 실제 인벤토리 목록
     [SerializeField] private List<InventorySlotData> slots = new List<InventorySlotData>();
 
-    //인벤토리 내용이 변경되었을 때 실행되는 이벤트
-    //InventoryUIController가 이 이벤트를 구독하면 아이템 추가ㆍ제거 후 UI를 자동으로 갱신 가능
-    //팀원이 사용해도 깨지지 않게 기존 이벤트 일단 안지울게요
-    public event Action OnInventoryChanged;
-
-    //인벤토리가 구체적으로 어떻게 변경됐는지 전달하는 상세 이벤트
-    //InventoryUIController가 변경된 슬롯만 갱신할 때 사용
-    public event Action<InventoryChange> OnInventoryChangedDetailed;
+    //인벤토리가 어떻게 변경됐는지 함께 전달하는 이벤트
+    public event Action<InventoryChange> OnInventoryChanged;
 
     //프로퍼티
     //IReadOnlyList로 제공하기 때문에
@@ -583,12 +577,8 @@ public class InventoryManager : MonoBehaviour,ISaveable
     //*인벤토리가 변경되었음을 외부 스크립트에 알리는 메서드*
     private void NotifyInventoryChanged(InventoryChange change)
     {
-        //상세 변경 정보가 필요한 UI 등에 전달
-        OnInventoryChangedDetailed?.Invoke(change);
-
-        //OnInventoryChanged 이벤트를 구독한 대상이 있다면 해당 이벤트 실시
-        //?.Invoke를 사용해 구독자가 없어도 오류가 발생하지 않음
-        OnInventoryChanged?.Invoke();
+        //변경 종류, 아이템 ID, 이전·현재 수량을 구독자에게 전달
+        OnInventoryChanged?.Invoke(change);
     }
 
     //SAVE
