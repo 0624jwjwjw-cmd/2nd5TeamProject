@@ -134,18 +134,21 @@ public sealed class InventoryUIController : MonoBehaviour
     //*전체 아이템 표시*
     public void ShowAll()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.All);
     }
 
     //*재료만 표시*
     public void ShowIngredients()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.Ingredient);
     }
 
     //*요리만 표시*
     public void ShowDishes()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.Dish);
     }
 
@@ -315,6 +318,13 @@ public sealed class InventoryUIController : MonoBehaviour
             //인벤토리 전체 초기화
             case InventoryChangeType.Cleared:
                 ClearAllSlots();
+                break;
+
+            //저장 데이터를 불러와 인벤토리 전체가 교체된 경우
+            case InventoryChangeType.Loaded:
+                //기존 UI 슬롯을 정리한 뒤
+                //방금 불러온 인벤토리 전체 데이터로 다시 생성
+                BuildInitialSlots();
                 break;
         }
     }

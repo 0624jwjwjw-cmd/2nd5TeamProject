@@ -36,15 +36,6 @@ public sealed class GameDataRepository : MonoBehaviour
     //Repository가 초기화되었는지 기록
     public bool IsInitialized { get; private set; }
 
-    //프로퍼티
-    public int IngredientCount => ingredientLookup.Count;   //재료 개수
-    public int DishCount => dishLookup.Count;               //일반 요리 개수
-    public int SpecialDishCount => specialDishLookup.Count; //특별 요리 개수
-
-    //요리 Dictionary에 등록된 값들만 외부에 읽기 전용으로 제공
-    //public IEnumerable<DishData> Dishes => dishLookup.Values;
-
-
     private void Awake()
     {
         //이미 다른 GameDataRepository가 존재한다면
@@ -105,14 +96,6 @@ public sealed class GameDataRepository : MonoBehaviour
 
         //모든 데이터 등록이 끝났음을 기록
         IsInitialized = true;
-
-        //초기화 결과를 확인할 수 있도록 출력
-        Debug.Log(
-            $"[GameDataRepository] 초기화 완료 | " +
-            $"재료: {IngredientCount}, " +
-            $"일반 요리: {DishCount}, " +
-            $"특별 요리: {SpecialDishCount}"
-            );
     }
 
     //[Catalog에 등록된 재료 데이터를 Dictionary로 변환]
