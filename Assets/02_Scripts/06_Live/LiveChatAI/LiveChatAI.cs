@@ -29,6 +29,7 @@ public class LiveChatAI : MonoBehaviour
 
     private void Awake()
     {
+<<<<<<< Updated upstream
         Debug.Log(
             $"[LiveChatAI] Awake 실행 / InstanceID: {GetInstanceID()} / Object: {gameObject.name} / Scene: {gameObject.scene.name}"
         );
@@ -41,6 +42,12 @@ public class LiveChatAI : MonoBehaviour
 
     _isReady = false;
     return;
+=======
+#if UNITY_ANDROID && !UNITY_EDITOR
+
+        _isReady = false;
+        return;
+>>>>>>> Stashed changes
 
 #endif
 
@@ -60,16 +67,8 @@ public class LiveChatAI : MonoBehaviour
             _modelFileName
         );
 
-        Debug.Log(
-            $"[LiveChatAI] Qwen 모델 경로: {modelPath}"
-        );
-
         if (!File.Exists(modelPath))
         {
-            Debug.LogError(
-                $"[LiveChatAI] Qwen 모델을 찾을 수 없습니다: {modelPath}"
-            );
-
             _isReady = false;
             yield break;
         }
@@ -88,19 +87,11 @@ public class LiveChatAI : MonoBehaviour
             );
 
             _isReady = true;
-
-            Debug.Log(
-                "[LiveChatAI] Qwen 모델 로드 성공"
-            );
         }
-        catch (Exception e)
+        catch (Exception)
         {
             _llama = null;
             _isReady = false;
-
-            Debug.LogError(
-                $"[LiveChatAI] Qwen 모델 로드 실패: {e}"
-            );
         }
     }
 
@@ -117,20 +108,12 @@ public class LiveChatAI : MonoBehaviour
 
         if (!_isReady || _llama == null)
         {
-            Debug.LogWarning(
-                "[LiveChatAI] AI가 준비되지 않았습니다. Fallback 사용."
-            );
-
             onCompleted?.Invoke(null);
             return;
         }
 
         if (_isGenerating)
         {
-            Debug.Log(
-                "[LiveChatAI] 현재 AI 생성 중입니다. 이번 요청은 건너뜁니다."
-            );
-
             onCompleted?.Invoke(null);
             return;
         }
@@ -170,10 +153,6 @@ public class LiveChatAI : MonoBehaviour
             "<|im_end|>\n" +
             "<|im_start|>assistant\n";
 
-        Debug.Log(
-            $"[LiveChatAI] Qwen 요청: {foodName}"
-        );
-
         yield return null;
 
         try
@@ -190,10 +169,6 @@ public class LiveChatAI : MonoBehaviour
 
         if (generationException != null)
         {
-            Debug.LogError(
-                $"[LiveChatAI] AI 생성 실패: {generationException}"
-            );
-
             _isGenerating = false;
 
             onCompleted?.Invoke(null);
@@ -206,17 +181,9 @@ public class LiveChatAI : MonoBehaviour
 
         if (string.IsNullOrWhiteSpace(result))
         {
-            Debug.LogWarning(
-                "[LiveChatAI] AI 결과가 비어 있습니다. Fallback 사용."
-            );
-
             onCompleted?.Invoke(null);
             yield break;
         }
-
-        Debug.Log(
-            $"[LiveChatAI] AI 채팅: {result}"
-        );
 
         onCompleted?.Invoke(result);
     }

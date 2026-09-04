@@ -32,14 +32,12 @@ public class FoodPlace : MonoBehaviour
         //음식을 표시할 Image가 연결되지 않았다면 배치 불가능
         if (_foodImage == null)
         {
-            Debug.LogError($"[FoodPlace] {name}의 Food Image가 연결되지 않았습니다.");
             return false;
         }
 
         //음식 아이콘을 관리하는 Repository가 존재하는지 확인
         if (ItemVisualRepository.Instance == null)
         {
-            Debug.LogError("[FoodPlace] ItemVisualRepository가 존재하지 않습니다.");
             return false;
         }
 
@@ -49,7 +47,6 @@ public class FoodPlace : MonoBehaviour
         //등록된 음식 Sprite를 찾지 못했다면 배치하지 않음
         if (!foundIcon || foodSprite == null)
         {
-            Debug.LogWarning($"[FoodPlace] 음식 아이콘을 찾을 수 없습니다. ID: {itemId}");
             return false;
         }
 
