@@ -19,6 +19,7 @@ public class KitchenInventory : MonoBehaviour
     private ComponentPool<KitchenInventorySlot> slotPool;
     private readonly List<KitchenInventorySlot> activeSlots = new();
 
+    [SerializeField] private KitchenCookingSlotManager kitchenCookingSlotManager;
     private void Awake()
     {
         slotPool = new ComponentPool<KitchenInventorySlot>(slotPrefab, poolRoot);
@@ -62,6 +63,7 @@ public class KitchenInventory : MonoBehaviour
             if (MatchesView(slotData, viewType))
             {
                 KitchenInventorySlot slot = slotPool.Get(slotParent);
+                slot.SetCookingSlotManager(kitchenCookingSlotManager);
                 slot.SetSlot(slotData);
                 activeSlots.Add(slot);
             }
