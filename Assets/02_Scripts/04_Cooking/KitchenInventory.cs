@@ -26,11 +26,11 @@ public class KitchenInventory : MonoBehaviour
     }
     private void OnEnable()
     {
-        InventoryManager.Instance.OnInventoryChanged += RefreshView;
+        InventoryManager.Instance.OnInventoryChanged += HandleInventoryChanged;
     }
     private void OnDisable()
     {
-        InventoryManager.Instance.OnInventoryChanged -= RefreshView;
+        InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
     }
     private void Start()
     {
@@ -149,5 +149,9 @@ public class KitchenInventory : MonoBehaviour
             ingredientButton.color = unSelectedButtonColor;
             dishButton.color = selectedButtonColor;
         }
+    }
+    private void HandleInventoryChanged(InventoryChange _)
+    {
+        RefreshView();
     }
 }
