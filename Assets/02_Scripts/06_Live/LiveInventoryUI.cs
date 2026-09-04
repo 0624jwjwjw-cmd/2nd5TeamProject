@@ -53,13 +53,22 @@ public class LiveInventoryUI : MonoBehaviour
     private void OnEnable()
     {
         if (InventoryManager.Instance != null)
-            InventoryManager.Instance.OnInventoryChanged += Refresh;
+        {
+            InventoryManager.Instance.OnInventoryChanged += HandleInventoryChanged;
+        }
     }
 
     private void OnDisable()
     {
         if (InventoryManager.Instance != null)
-            InventoryManager.Instance.OnInventoryChanged -= Refresh;
+        {
+            InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
+        }
+    }
+
+    private void HandleInventoryChanged(InventoryChange _)
+    {
+        Refresh();
     }
 
     private void Start()
