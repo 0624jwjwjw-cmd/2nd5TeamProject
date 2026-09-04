@@ -1,18 +1,20 @@
 using UnityEngine;
 using System;
+
 public class DayQuest : MonoBehaviour, ISaveable
 {
     public static DayQuest Instance { get; private set; }
+
     public event Action<bool> OnQuestResult;
 
     [Header("Daily Quest Gold")]
     [SerializeField] private int[] targetGold;
 
-    private int startGold;
     private int currentTargetGold;
-    public int TodayEarnedGold => CurrencyManager.Instance.Gold - startGold;
-    public int CurrentTargetGold => currentTargetGold;
+    private int earnedGold;
 
+    public int TodayEarnedGold => earnedGold;
+    public int CurrentTargetGold => currentTargetGold;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class DayQuest : MonoBehaviour, ISaveable
 
         RefreshCurrentQuest();
     }
+
     public void RefreshCurrentQuest()
     {
         int day = GameDateManager.Instance.DateCount
@@ -43,6 +46,16 @@ public class DayQuest : MonoBehaviour, ISaveable
             currentTargetGold = targetGold[day];
         }
     }
+
+    // 골드가 실제로 증가했을 때 호출
+    public void AddEarnedGold(int amount)
+    {
+        if (amount > 0)
+        {
+            earnedGold += amount;
+        }
+    }
+
     private void OnDestroy()
     {
         if (GameDateManager.Instance != null)
@@ -75,9 +88,9 @@ public class DayQuest : MonoBehaviour, ISaveable
         {
             return;
         }
-        int currentGold = CurrencyManager.Instance.Gold;
-        int earnedGold = currentGold - startGold;
+
         int target = targetGold[currentDay - 1];
+
         if (earnedGold >= target)
         {
             QuestSuccess();
@@ -87,39 +100,46 @@ public class DayQuest : MonoBehaviour, ISaveable
             QuestFail();
         }
 
-        startGold = currentGold;
+        // 다음 퀘스트를 위해 초기화
+        earnedGold = 0;
     }
+
     private void QuestSuccess()
     {
+        int subscriber = Mathf.RoundToInt(
+            CurrencyManager.Instance.Subscriber * 0.2f
+        );
 
-        int subscriber =Mathf.RoundToInt(CurrencyManager.Instance.Subscriber * 0.2f);
         CurrencyManager.Instance.AddSubscriber(subscriber);
+
         OnQuestResult?.Invoke(true);
     }
 
     private void QuestFail()
     {
+        int subscriber = Mathf.RoundToInt(
+            CurrencyManager.Instance.Subscriber * 0.2f
+        );
 
-        int subscriber = Mathf.RoundToInt(CurrencyManager.Instance.Subscriber * 0.2f);
         CurrencyManager.Instance.AddSubscriber(-subscriber);
+
         OnQuestResult?.Invoke(false);
     }
 
     public void Save(SaveData data)
     {
-        data.questStartGold = startGold;
+        data.questEarnedGold = earnedGold;
     }
 
-    // 불러오기
     public void Load(SaveData data)
     {
-        startGold = data.questStartGold;
+        earnedGold = data.questEarnedGold;
     }
 
     // 게임 완전 초기화용
     public void ResetQuestProgress()
     {
-        startGold = CurrencyManager.Instance.Gold;
+        earnedGold = 0;
         RefreshCurrentQuest();
     }
 }
