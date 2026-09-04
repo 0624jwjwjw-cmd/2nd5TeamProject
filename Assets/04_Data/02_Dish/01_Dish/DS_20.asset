@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83df46d1c70b88c41b834275a1436821, type: 3}
+  m_Name: DS_20
+  m_EditorClassIdentifier: Assembly-CSharp::DishData
+  id: DS_20
+  dishName: "\uCE58\uC988\uBC84\uAC70"
+  reciepeGrade: "\uACE0\uAE09"
+  cost: 840
+  donation: 2850
+  subscribers: 490
+  materials:
+  - ingredientData: {fileID: 11400000, guid: 7324ab50d08ad2840a862ebf3da234d7, type: 2}
+    amount: 2
+  - ingredientData: {fileID: 11400000, guid: f746449a1a2bdcc4faf51f2714760c9d, type: 2}
+    amount: 2
+  - ingredientData: {fileID: 11400000, guid: 1305bb01beb4cef4ca6b1a14ef54f7d7, type: 2}
+    amount: 2
+  info: "\uC9C4\uD55C \uCE58\uC988\uC640 \uC721\uC999 \uAC00\uB4DD\uD55C \uD328\uD2F0\uAC00
+    \uC5B4\uC6B0\uB7EC\uC9C4 \uC778\uAE30 \uBC84\uAC70"
