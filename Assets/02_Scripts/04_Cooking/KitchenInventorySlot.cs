@@ -80,4 +80,8 @@ public class KitchenInventorySlot : MonoBehaviour
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         kitchenCookingSlotManager.AddIngredient(slotID);
     }
+    public void SetCookingSlotManager(KitchenCookingSlotManager manager)
+    {
+        kitchenCookingSlotManager = manager;
+    }
 }

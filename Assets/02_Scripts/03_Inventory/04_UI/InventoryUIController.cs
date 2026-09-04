@@ -312,11 +312,6 @@ public sealed class InventoryUIController : MonoBehaviour
                 RemoveSlot(change.ItemId);
                 break;
 
-            //정렬 순서만 변경된 경우
-            case InventoryChangeType.Sorted:
-                ReorderSlots();
-                break;
-
             //인벤토리 전체 초기화
             case InventoryChangeType.Cleared:
                 ClearAllSlots();

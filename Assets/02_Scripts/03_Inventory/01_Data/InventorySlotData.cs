@@ -113,7 +113,7 @@ public sealed class InventorySlotData
 
     //[아이템 수량이 0이 된 슬롯을 완전히 비우는 메서드]
     //InventoryManager가 빈 슬롯을 정리할 때 사용 가능
-    public void Clear()
+    private void Clear()
     {
         itemId = string.Empty;  //슬롯에 들어 있던 아이템 ID 제거
         amount = 0;             //슬롯의 아이템 수량을 0으로 변경
