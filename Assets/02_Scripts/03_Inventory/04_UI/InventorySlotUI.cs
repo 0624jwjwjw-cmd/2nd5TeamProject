@@ -30,8 +30,7 @@ public sealed class InventorySlotUI : MonoBehaviour
     private Action<string> onClickCallback;             //슬롯이 클릭됐을 때 실행할 외부 메서드 저장
 
     //프로퍼티
-    public string ItemId => itemId;
-    public bool IsEmpty => string.IsNullOrWhiteSpace(itemId);
+    private bool IsEmpty => string.IsNullOrWhiteSpace(itemId);
 
     private void Awake()
     {
