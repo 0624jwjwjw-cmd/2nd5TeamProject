@@ -4121,7 +4121,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &527129526
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9797,7 +9797,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1362255172
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13921,6 +13921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenLoaderStudio
   liveManager: {fileID: 1656232465}
+  foodArea: {fileID: 1424369495}
 --- !u!1 &2003397733
 GameObject:
   m_ObjectHideFlags: 0
