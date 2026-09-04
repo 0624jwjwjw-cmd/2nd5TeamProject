@@ -163,11 +163,8 @@ public sealed class ShopPageController : MonoBehaviour
 
         //아직 레시피 페이지를 Inspector에 연결하지 않았다면
         //메인 상점 화면을 숨기지 않고 경고만 출력
-        if (recipePurchasePage == null)
-        {
-            Debug.LogWarning("[ShopPageController] Recipe Purchase Page가 연결되지 않았습니다.");
-            return;
-        }
+        if (recipePurchasePage == null) return;
+        
 
         //메인 상점 메뉴 숨김
         if (shopMainPage != null)
@@ -203,12 +200,8 @@ public sealed class ShopPageController : MonoBehaviour
         PlayButtonClickSfx();
 
         //Inspector에 페이지 연결이 빠졌다면 빈 화면이 되지 않도록 중단
-        if (upgradePurchasePage == null)
-        {
-            Debug.LogWarning("[ShopPageController] Upgrade Purchase Page가 연결되지 않았습니다.");
-            return;
-        }
-
+        if (upgradePurchasePage == null) return;
+        
         //상점 메인 페이지 숨김
         if (shopMainPage != null)
         {

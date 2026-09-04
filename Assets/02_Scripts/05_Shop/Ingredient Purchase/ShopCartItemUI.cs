@@ -25,11 +25,7 @@ public class ShopCartItemUI : MonoBehaviour
     private void Awake()
     {
         //장바구니 슬롯 버튼이 Inspector에서 연결되지 않은 경우
-        if (cartItemButton == null)
-        {
-            Debug.LogError("[ShopCartItemUI] CartItemButton이 연결되어 있지 않습니다.");
-            return;
-        }
+        if (cartItemButton == null) return;      
 
         //장바구니 슬롯을 클릭했을 때 OnClickCartItem()이 실행되도록 이벤트 등록
         cartItemButton.onClick.AddListener(OnClickCartItem);
@@ -61,26 +57,14 @@ public class ShopCartItemUI : MonoBehaviour
     public void Initialize(ShopCartItemData data, ShopCartController cartController)
     {
         //전달받은 장바구니 데이터가 없는 경우
-        if (data == null)
-        {
-            Debug.LogError("[ShopCartItemUI] ShopCartItemData가 null입니다.");
-            return;
-        }
-
+        if (data == null) return;
+        
         //ShopCartItemData 안의 IngredientData가 없는 경우
-        if (data.Data == null)
-        {
-            Debug.LogError("[ShopCartItemUI] IngredientData가 null입니다.");
-            return;
-        }
-
+        if (data.Data == null) return;
+        
         //장바구니 Controller가 없는 경우
-        if (cartController == null)
-        {
-            Debug.LogError("[ShopCartItemUI] ShopCartController가 null입니다.");
-            return;
-        }
-
+        if (cartController == null) return;
+        
         //현재 이 UI가 담당할 장바구니 데이터 저장
         cartItemData = data;
 
@@ -126,10 +110,7 @@ public class ShopCartItemUI : MonoBehaviour
             //ItemVisualRepository가 존재하는지 확인
             if (ItemVisualRepository.Instance == null)
             {
-                Debug.LogError("[ShopCartItemUI] ItemVisualRepository가 존재하지 않습니다.");
-
                 itemIconImage.sprite = null;
-
                 return;
             }
 
@@ -148,11 +129,6 @@ public class ShopCartItemUI : MonoBehaviour
             {
                 //잘못된 이전 Sprite가 남지 않도록 비우기
                 itemIconImage.sprite = null;
-
-                Debug.LogWarning(
-                    $"[ShopCartItemUI] 아이콘을 찾을 수 없습니다. " +
-                    $"ID: {cartItemData.Data.ID}"
-                    );
             }
         }
     }
@@ -165,19 +141,11 @@ public class ShopCartItemUI : MonoBehaviour
     private void OnClickCartItem()
     {
         //현재 슬롯이 어떤 재료인지 모르는 경우
-        if (cartItemData == null || cartItemData.Data == null)
-        {
-            Debug.LogWarning("[ShopCartItemUI] 감소시킬 장바구니 데이터가 없습니다.");
-            return;
-        }
-
+        if (cartItemData == null || cartItemData.Data == null) return;
+        
         //장바구니 Controller가 없는 경우
-        if (shopCartController == null)
-        {
-            Debug.LogError("[ShopCartItemUI] ShopCartController가 연결되어 있지 않습니다.");
-            return;
-        }
-
+        if (shopCartController == null) return;
+        
         //현재 재료 ID 저장
         string itemId = cartItemData.Data.ID;
 
@@ -188,13 +156,6 @@ public class ShopCartItemUI : MonoBehaviour
         bool removeSucceeded = shopCartController.RemoveIngredient(itemId);
 
         //수량 감소 실패
-        if (!removeSucceeded)
-        {
-            Debug.LogWarning(
-                $"[ShopCartItemUI] 장바구니 수량 감소 실패 | " +
-                $"{ingredientName}"
-                );
-            return;
-        }
+        if (!removeSucceeded) return;      
     }
 }

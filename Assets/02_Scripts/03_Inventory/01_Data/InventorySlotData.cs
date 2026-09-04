@@ -70,15 +70,8 @@ public sealed class InventorySlotData
     public void AddAmount(int value)
     {
         //추가하려는 수량이 1개 미만인지 검사
-        if (value <= 0)
-        {
-            //잘못된 수량이 전달되면 게임이 멈추지 않도록
-            //경고 메시지만 출력하고 메서드 종료
-            Debug.LogWarning($"[InventorySlotData] 추가 수량은 1 이상이어야 합니다. 입력값: {value}");
-
-            return; //아래의 수량 증가 코드가 실행되지 않도록 메서드 종료
-        }
-
+        if (value <= 0) return;
+        
         //현재 아이템 수량에 전달받은 수량 더하기
         amount += value;
     }
@@ -88,14 +81,8 @@ public sealed class InventorySlotData
     public bool TryRemoveAmount(int value)
     {
         //제거하려는 수량이 1개 미만인지 검사
-        if (value <= 0)
-        {
-            //잘못된 제거 요청이므로 경고 메시지 출력 후
-            Debug.LogWarning($"[InventorySlotData] 제거 수량은 1 이상이어야 합니다. 입력값: {value}");
-            //제거에 실패했으므로 false 반환
-            return false;
-        }
-
+        if (value <= 0) return false;
+        
         //현재 보유 수량보다 제거하려는 수량이 많은지 검사
         if (amount < value)
         {

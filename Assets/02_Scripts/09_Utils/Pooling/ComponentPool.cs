@@ -129,28 +129,12 @@ public sealed class ComponentPool<T> where T : Component
 
         //이 Pool이 직접 생성한 객체가 아니라면
         //잘못된 Pool로 반환하려는 것이므로 반환을 거부
-        if (!ownedObjects.Contains(targetObject))
-        {
-            Debug.LogWarning(
-                $"[ComponentPool<{typeof(T).Name}>] " +
-                $"이 Pool이 생성하지 않은 객체는 반환할 수 없습니다: {targetObject.name}"
-                );
-
-            return;
-        }
-
+        if (!ownedObjects.Contains(targetObject)) return;
+        
         //이미 Pool 안에 들어있는 객체라면
         //같은 객체를 Stack에 두 번 넣지 않도록 반환 중단
-        if (!pooledObjects.Add(targetObject))
-        {
-            Debug.LogWarning(
-                $"[ComponentPool<{typeof(T).Name}>] " +
-                $"이미 Pool에 반환된 객체입니다: {targetObject.name}"
-                );
-
-            return;
-        }
-
+        if (!pooledObjects.Add(targetObject)) return;
+        
         //다음에 다시 꺼내기 전까지 비활성화
         targetObject.gameObject.SetActive(false);
 
