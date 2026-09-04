@@ -110,14 +110,12 @@ public class FoodPlaceDropHandler : MonoBehaviour, IDropHandler, IPointerClickHa
         //현재 Dish의 FoodPlace가 없다면 배치할 수 없음
         if (_foodPlace == null)
         {
-            Debug.LogError($"[FoodPlaceDropHandler] {name}의 FoodPlace가 없습니다.");
             return;
         }
 
         //배치를 처리할 컨트롤러가 없다면 진행할 수 없음
         if (_controller == null)
         {
-            Debug.LogError($"[FoodPlaceDropHandler] {name}의 FoodPlaceController가 연결되지 않았습니다.");
             return;
         }
 

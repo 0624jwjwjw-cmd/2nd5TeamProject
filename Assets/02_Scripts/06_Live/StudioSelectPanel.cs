@@ -4,6 +4,7 @@ using TMPro;
 
 public class StudioSelectPanel : MonoBehaviour
 {
+    [SerializeField] private LiveManager liveManager;
     [SerializeField] private Image _studioImage;
     [SerializeField] private Image _studioBackground;
 
@@ -19,11 +20,12 @@ public class StudioSelectPanel : MonoBehaviour
     [SerializeField] private string[] _studioNames;
     [SerializeField] private string[] _studioDescriptions;
 
+    private const string StudioIndexKey = "SelectedStudioIndex";
     private int _currentIndex;
 
     private void OnEnable()
     {
-        _currentIndex = 0;
+        _currentIndex = PlayerPrefs.GetInt(StudioIndexKey, 0);
         UpdateStudio();
     }
 
@@ -33,6 +35,8 @@ public class StudioSelectPanel : MonoBehaviour
         _nextButton.onClick.AddListener(ShowNext);
         _closeButton.onClick.AddListener(ClosePanel);
         _applyButton.onClick.AddListener(ApplyStudio);
+        ApplySavedBackground();
+        gameObject.SetActive(false);
     }
 
     private void ShowPrevious()
@@ -85,12 +89,25 @@ public class StudioSelectPanel : MonoBehaviour
         if (_studioSprites.Length == 0)
             return;
 
+        PlayerPrefs.SetInt(StudioIndexKey, _currentIndex);
+        PlayerPrefs.Save();
+
         _studioBackground.gameObject.SetActive(true);
         _studioBackground.sprite = _studioSprites[_currentIndex];
 
         ClosePanel();
     }
+    private void ApplySavedBackground()
+    {
+        if (_studioSprites.Length == 0)
+            return;
 
+        if (_currentIndex < 0 || _currentIndex >= _studioSprites.Length)
+            _currentIndex = 0;
+
+        _studioBackground.gameObject.SetActive(true);
+        _studioBackground.sprite = _studioSprites[_currentIndex];
+    }
     private void ClosePanel()
     {
         SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
@@ -100,6 +117,8 @@ public class StudioSelectPanel : MonoBehaviour
 
     public void OpenPanel()
     {
+        if (liveManager.IsLive)
+            return;
         SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(true);
     }

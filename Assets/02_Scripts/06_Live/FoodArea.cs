@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,5 +41,80 @@ public class FoodArea : MonoBehaviour
         }
 
         _startButton.interactable = true;
+    }
+    public void ReturnAllFoodToInventory()
+    {
+        if (_foodPlaces == null)
+            return;
+
+        if (InventoryManager.Instance == null)
+        {
+            return;
+        }
+
+        foreach (FoodPlace foodPlace in _foodPlaces)
+        {
+            if (foodPlace == null)
+                continue;
+
+            if (!foodPlace.IsFilled)
+                continue;
+
+            string itemId = foodPlace.ItemId;
+
+            if (string.IsNullOrWhiteSpace(itemId))
+                continue;
+
+            if (!TryGetItemType(itemId, out ItemType itemType))
+            {
+                continue;
+            }
+
+            bool returned =
+                InventoryManager.Instance.AddItem(
+                    itemId,
+                    1,
+                    itemType
+                );
+
+            if (returned)
+            {
+                foodPlace.RemoveFood();
+            }
+        }
+
+        CheckFoodPlaces();
+    }
+
+    private bool TryGetItemType(
+        string itemId,
+        out ItemType itemType)
+    {
+        itemType = default;
+
+        if (string.IsNullOrWhiteSpace(itemId))
+            return false;
+
+        if (itemId.StartsWith("IG_", StringComparison.Ordinal))
+        {
+            itemType = ItemType.Ingredient;
+            return true;
+        }
+
+        if (itemId.StartsWith("SD_", StringComparison.Ordinal))
+        {
+            itemType = ItemType.SpecialDish;
+            return true;
+        }
+
+        if (itemId.StartsWith("DS_", StringComparison.Ordinal) ||
+            itemId.StartsWith("BD_", StringComparison.Ordinal) ||
+            itemId.StartsWith("TD_", StringComparison.Ordinal))
+        {
+            itemType = ItemType.Dish;
+            return true;
+        }
+
+        return false;
     }
 }

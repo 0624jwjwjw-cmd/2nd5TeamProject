@@ -69,11 +69,8 @@ public sealed class ItemVisualRepository : MonoBehaviour
         if (IsInitialized) return;
 
         //Catalog가 Inspector에서 연결되지 않았다면 Repository를 만들 수 없으므로 중단
-        if (catalog == null)
-        {
-            Debug.LogError("[ItemVisualRepository] ItemVisualCatalog가 연결되지 않았습니다.");
-            return;
-        }
+        if (catalog == null) return;
+        
 
         //이전 검색 데이터 모두 제거
         //현재는 최초 초기화 한 번이지만 혹시 재초기화 구조가 추가되더라도 안전하도록 초기화
@@ -96,22 +93,11 @@ public sealed class ItemVisualRepository : MonoBehaviour
             IngredientBase ingredientPrefab = catalog.IngredientPrefabs[i];
 
             //Prefab 참조가 비어있다면 건너뜀
-            if (ingredientPrefab == null)
-            {
-                Debug.LogWarning($"[ItemVisualRepository] 재료 Prefab {i}번이 비어 있습니다.");
-                continue;
-            }
-
+            if (ingredientPrefab == null) continue;
+            
             //IngredientBase에 IngredientData가 연결되지 않았다면 ID를 알아낼 수 없으므로 등록 불가능
-            if (ingredientPrefab.Data == null)
-            {
-                Debug.LogError(
-                    $"[ItemVisualRepository] " + 
-                    $"{ingredientPrefab.name}에 IngredientData가 연결되지 않았습니다."
-                    );
-                continue;
-            }
-
+            if (ingredientPrefab.Data == null) continue;
+            
             //중요
             //ingredientPrefab.ID가 아닌 ingredientPrefab.Data.ID를 사용
             //IngredientBase.ID는 Awake 이후 초기화되지만
@@ -123,15 +109,8 @@ public sealed class ItemVisualRepository : MonoBehaviour
             SpriteRenderer spriteRenderer = ingredientPrefab.GetComponent<SpriteRenderer>();
 
             //SpriteRenderer가 없다면 인벤토리 아이콘을 가져올 수 없으므로 경고
-            if (spriteRenderer == null)
-            {
-                Debug.LogWarning(
-                    $"[ItemVisualRepository] " + 
-                    $"{ingredientPrefab.name}에 SpriteRenderer가 없습니다."
-                    );
-                continue;
-            }
-
+            if (spriteRenderer == null) continue;
+            
             //아이콘 Dictionary 등록
             RegisterIcon(itemId, spriteRenderer.sprite);
         }
@@ -146,37 +125,19 @@ public sealed class ItemVisualRepository : MonoBehaviour
             DishBase dishPrefab = dishPrefabs[i];
 
             //Prefab이 비어있다면 건너뜀
-            if (dishPrefab == null)
-            {
-                Debug.LogWarning($"[ItemVisualRepository] 음식 Prefab {i}번이 비어 있습니다.");
-                continue;
-            }
+            if (dishPrefab == null) continue;         
 
             //DishData가 연결되어 있어야 해당 음식의 ID를 알아낼 수 있음
-            if (dishPrefab.Data == null)
-            {
-                Debug.LogError(
-                    $"[ItemVisualRepository] " +
-                    $"{dishPrefab.name}에 DishData가 연결되지 않았습니다."
-                    );
-                continue;
-            }
-
+            if (dishPrefab.Data == null) continue;
+            
             //Prefab Asset에서는 DishBase.ID가 아니라 원본 DishData.ID를 사용
             string itemId = dishPrefab.Data.ID;
 
             //음식 Prefab Root의 SpriteRenderer 검색
             SpriteRenderer spriteRenderer = dishPrefab.GetComponent<SpriteRenderer>();
 
-            if (spriteRenderer == null)
-            {
-                Debug.LogWarning(
-                    $"[ItemVisualRepository] " +
-                    $"{dishPrefab.name}에 SpriteRenderer가 없습니다."
-                    );
-                continue;
-            }
-
+            if (spriteRenderer == null) continue;
+            
             //요리 아이콘 Dictionary 등록
             RegisterIcon(itemId, spriteRenderer.sprite);
         }
@@ -185,18 +146,10 @@ public sealed class ItemVisualRepository : MonoBehaviour
     //아이템 ID와 아이콘 Sprite를 Dictionary에 등록
     private void RegisterIcon(string itemId, Sprite icon)
     {
-        if (string.IsNullOrWhiteSpace(itemId))
-        {
-            Debug.LogError("[ItemVisualRepository] ID가 비어 있는 Visual은 등록할 수 없습니다.");
-            return;
-        }
-
-        if (iconLookup.ContainsKey(itemId))
-        {
-            Debug.LogError($"[ItemVisualRepository] 중복 Visual ID 발견: {itemId}");
-            return;
-        }
-
+        if (string.IsNullOrWhiteSpace(itemId)) return;
+        
+        if (iconLookup.ContainsKey(itemId)) return;
+        
         iconLookup.Add(itemId, icon);
     }
 

@@ -131,7 +131,6 @@ public class LiveInventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandle
         //Canvas가 없다면 UI 아이콘을 생성할 수 없음
         if (_rootCanvas == null)
         {
-            Debug.LogError("[LiveInventorySlotUI] 부모 Canvas를 찾을 수 없습니다.");
             return;
         }
 

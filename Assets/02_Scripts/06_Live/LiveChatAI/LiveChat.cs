@@ -77,7 +77,6 @@ public class LiveChat : MonoBehaviour
     {
         if (_liveManager == null)
         {
-            Debug.LogError("[LiveChat] LiveManager가 연결되지 않았습니다.");
             return;
         }
 
@@ -113,8 +112,6 @@ public class LiveChat : MonoBehaviour
         _isProcessingAIChat = false;
 
         _chatCoroutine = StartCoroutine(ChatRoutine());
-
-        Debug.Log("[LiveChat] 채팅 시작");
     }
 
 
@@ -137,8 +134,6 @@ public class LiveChat : MonoBehaviour
 
         if (_liveChatUI != null)
             _liveChatUI.ClearChats();
-
-        Debug.Log("[LiveChat] 채팅 종료");
     }
 
 
@@ -182,19 +177,11 @@ public class LiveChat : MonoBehaviour
 
         if (string.IsNullOrWhiteSpace(foodName))
         {
-            Debug.LogWarning(
-                "[LiveChat] 음식 이름이 비어 있습니다."
-            );
-
             AddBasicChat();
             return;
         }
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-
-        Debug.Log(
-            $"[LiveChat] Android → 기본 채팅 사용: {foodName}"
-        );
 
         AddBasicChat();
 
@@ -204,21 +191,12 @@ public class LiveChat : MonoBehaviour
 
         if (_liveChatAI == null)
         {
-            Debug.LogWarning(
-                "[LiveChat] LiveChatAI가 연결되지 않았습니다. " +
-                "기본 채팅으로 대체합니다."
-            );
-
             AddBasicChat();
 
             return;
         }
 
         _aiFoodQueue.Enqueue(foodName);
-
-        Debug.Log(
-            $"[LiveChat] 음식 섭취 감지 → Qwen AI 요청 대기: {foodName}"
-        );
 
         if (!_isProcessingAIChat)
         {
@@ -337,22 +315,11 @@ public class LiveChat : MonoBehaviour
             return;
 
         if (_liveChatUI == null)
-        {
-            Debug.LogWarning(
-                "[LiveChat] LiveChatUI가 없습니다."
-            );
-
             return;
-        }
 
         if (_aiChatNicknames == null ||
             _aiChatNicknames.Length == 0)
         {
-            Debug.LogWarning(
-                "[LiveChat] AI 채팅 닉네임이 없습니다. " +
-                "기본 채팅으로 대체합니다."
-            );
-
             AddBasicChat();
 
             return;
@@ -401,10 +368,6 @@ public class LiveChat : MonoBehaviour
 
         _liveChatUI.AddChat(
             finalChat
-        );
-
-        Debug.Log(
-            $"[LiveChat] Qwen AI 채팅 출력: {finalChat}"
         );
     }
 }

@@ -19,31 +19,26 @@ public class LiveInventoryUI : MonoBehaviour
 
         if (InventoryManager.Instance == null)
         {
-            Debug.LogError("[LiveInventoryUI] InventoryManager가 없습니다.");
             return;
         }
 
         if (_itemVisualRepository == null)
         {
-            Debug.LogError("[LiveInventoryUI] ItemVisualRepository가 없습니다.");
             return;
         }
 
         if (_gameDataRepository == null)
         {
-            Debug.LogError("[LiveInventoryUI] GameDataRepository가 없습니다.");
             return;
         }
 
         if (content == null)
         {
-            Debug.LogError("[LiveInventoryUI] Content가 연결되지 않았습니다.");
             return;
         }
 
         if (slotPrefab == null)
         {
-            Debug.LogError("[LiveInventoryUI] Slot Prefab이 연결되지 않았습니다.");
             return;
         }
 
@@ -53,13 +48,22 @@ public class LiveInventoryUI : MonoBehaviour
     private void OnEnable()
     {
         if (InventoryManager.Instance != null)
-            InventoryManager.Instance.OnInventoryChanged += Refresh;
+        {
+            InventoryManager.Instance.OnInventoryChanged += HandleInventoryChanged;
+        }
     }
 
     private void OnDisable()
     {
         if (InventoryManager.Instance != null)
-            InventoryManager.Instance.OnInventoryChanged -= Refresh;
+        {
+            InventoryManager.Instance.OnInventoryChanged -= HandleInventoryChanged;
+        }
+    }
+
+    private void HandleInventoryChanged(InventoryChange _)
+    {
+        Refresh();
     }
 
     private void Start()
@@ -73,7 +77,11 @@ public class LiveInventoryUI : MonoBehaviour
 
         for (int i = 0; i < maxSlotCount; i++)
         {
-            LiveInventorySlotUI slot = Instantiate(slotPrefab, content);
+            LiveInventorySlotUI slot = Instantiate(
+                slotPrefab,
+                content
+            );
+
             slot.Clear();
             slots.Add(slot);
         }
@@ -91,7 +99,9 @@ public class LiveInventoryUI : MonoBehaviour
         }
 
         for (int i = 0; i < slots.Count; i++)
+        {
             slots[i].Clear();
+        }
 
         IReadOnlyList<InventorySlotData> inventorySlots =
             InventoryManager.Instance.Slots;

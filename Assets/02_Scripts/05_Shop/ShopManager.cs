@@ -21,7 +21,6 @@ public class ShopManager : MonoBehaviour
             CurrencyManager.Instance == null ||
             GameDataRepository.Instance == null)
         {
-            Debug.LogError("[ShopManager] 구매에 필요한 Manager가 없습니다.");
             return false;
         }
 
@@ -54,35 +53,20 @@ public class ShopManager : MonoBehaviour
             }
 
             //이 재료가 인벤토리에 전부 들어갈 수 있는지 검사
-            if (!InventoryManager.Instance.CanAddItem(itemId, cartItem.Amount))
-            {
-                Debug.LogWarning($"[ShopManager] 인벤토리 공간 부족 | {itemId}");
-                return false;
-            }
-
+            if (!InventoryManager.Instance.CanAddItem(itemId, cartItem.Amount)) return false;
+            
             //전체 가격 누적
             totalPrice += (long)ingredientData.Price * cartItem.Amount;
         }
 
         //int 범위를 벗어나는 비정상 가격 방어
-        if (totalPrice > int.MaxValue)
-        {
-            Debug.LogError("[ShopManager] 총 구매 가격이 너무 큽니다.");
-            return false;
-        }
-
+        if (totalPrice > int.MaxValue) return false;
+        
         int finalPrice = (int)totalPrice;
 
         //Gold 부족
-        if (CurrencyManager.Instance.Gold < finalPrice)
-        {
-            Debug.LogWarning(
-                $"[ShopManager] Gold 부족 | " +
-                $"필요: {finalPrice}, 보유: {CurrencyManager.Instance.Gold}"
-                );
-            return false;
-        }
-
+        if (CurrencyManager.Instance.Gold < finalPrice) return false;
+        
         //모든 검사가 끝난 뒤 Gold 한 번만 차감
         if (!CurrencyManager.Instance.SpendGold(finalPrice)) return false;
 
@@ -110,7 +94,6 @@ public class ShopManager : MonoBehaviour
                 //사용한 Gold도 환불
                 CurrencyManager.Instance.AddGold(finalPrice);
 
-                Debug.LogError("[ShopManager] 구매 실패 → 인벤토리와 Gold를 복구했습니다.");
                 return false;
             }
             addedItems.Add(cartItem);

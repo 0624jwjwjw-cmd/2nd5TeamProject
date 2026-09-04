@@ -4,6 +4,7 @@ using TMPro;
 
 public class CharacterSelectPanel : MonoBehaviour
 {
+    [SerializeField] private LiveManager liveManager;
     [SerializeField] private Image _characterImage;
     [SerializeField] private Image _characterDisplay;
 
@@ -18,12 +19,12 @@ public class CharacterSelectPanel : MonoBehaviour
     [SerializeField] private Sprite[] _characterSprites;
     [SerializeField] private string[] _characterNames;
     [SerializeField] private string[] _characterDescriptions;
-
+    private const string CharacterIndexKey = "SelectedCharacterIndex";
     private int _currentIndex;
     public int CurrentIndex => _currentIndex;
     private void OnEnable()
     {
-        _currentIndex = 0;
+        _currentIndex = PlayerPrefs.GetInt(CharacterIndexKey, 0);
         UpdateCharacter();
     }
 
@@ -33,8 +34,24 @@ public class CharacterSelectPanel : MonoBehaviour
         _nextButton.onClick.AddListener(ShowNext);
         _closeButton.onClick.AddListener(ClosePanel);
         _applyButton.onClick.AddListener(ApplyCharacter);
+        ApplySavedCharacter();
+        gameObject.SetActive(false);
     }
+    private void ApplySavedCharacter()
+    {
+        if (_characterSprites == null || _characterSprites.Length == 0)
+            return;
 
+        int savedIndex = PlayerPrefs.GetInt(CharacterIndexKey, 0);
+
+        if (savedIndex < 0 || savedIndex >= _characterSprites.Length)
+            savedIndex = 0;
+
+        _currentIndex = savedIndex;
+
+        _characterDisplay.gameObject.SetActive(true);
+        _characterDisplay.sprite = _characterSprites[_currentIndex];
+    }
     private void ShowPrevious()
     {
         if (_currentIndex <= 0)
@@ -85,6 +102,11 @@ public class CharacterSelectPanel : MonoBehaviour
         if (_characterSprites.Length == 0)
             return;
 
+        // 선택한 캐릭터 저장
+        PlayerPrefs.SetInt(CharacterIndexKey, _currentIndex);
+        PlayerPrefs.Save();
+
+        // 현재 씬에 적용
         _characterDisplay.gameObject.SetActive(true);
         _characterDisplay.sprite = _characterSprites[_currentIndex];
 
@@ -100,6 +122,8 @@ public class CharacterSelectPanel : MonoBehaviour
 
     public void OpenPanel()
     {
+        if (liveManager.IsLive)
+            return;
         SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(true);
     }
