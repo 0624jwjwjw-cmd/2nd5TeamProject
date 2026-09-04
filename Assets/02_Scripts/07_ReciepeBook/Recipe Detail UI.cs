@@ -23,7 +23,6 @@ public class RecipeDetailUI : MonoBehaviour
     [SerializeField] private TMP_Text lockedRecipeText;
 
     [SerializeField] private Image dotedLine1;
-    //[SerializeField] private Image dotedLine2;
     private void Awake()
     {
         ResetDish();
@@ -108,6 +107,5 @@ public class RecipeDetailUI : MonoBehaviour
         lockedImage.gameObject.SetActive(false);
         lockedRecipeText.gameObject.SetActive(false);
         dotedLine1.gameObject.SetActive(false);
-        //dotedLine2.gameObject.SetActive(false);
     }
 }
