@@ -71,23 +71,15 @@ public class ShopCartController : MonoBehaviour
     public bool AddIngredient(IngredientData ingredientData)
     {
         //IngredientData가 없는 경우
-        if (ingredientData == null)
-        {
-            Debug.LogWarning("[ShopCartController] 추가할 IngredientData가 null입니다.");
-            return false;
-        }
-
+        if (ingredientData == null) return false;
+        
         //재료의 고유 ID 가져오기
         string itemId = ingredientData.ID;
 
         //ID가 비어있는 데이터는
         //장바구니에서 구분할 수 없기 때문에 추가하지 않음
-        if (string.IsNullOrWhiteSpace(itemId))
-        {
-            Debug.LogWarning("[ShopCartController] 재료 ID가 비어 있습니다.");
-            return false;
-        }
-
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
         //이미 장바구니에 같은 재료가 있는지 확인
         if (cartItems.TryGetValue(itemId, out ShopCartItemData cartItem))
         {

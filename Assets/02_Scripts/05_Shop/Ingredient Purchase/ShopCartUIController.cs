@@ -23,12 +23,8 @@ public class ShopCartUIController : MonoBehaviour
     private void OnEnable()
     {
         //ShopCartController가 연결되지 않은 경우
-        if (shopCartController == null)
-        {
-            Debug.LogError("[ShopCartUIController] ShopCartController가 연결되어 있지 않습니다.");
-            return;
-        }
-
+        if (shopCartController == null) return;
+        
         //장바구니 내용이 변경될 때 RefreshCartUI()가 실행되도록 이벤트 구독
         shopCartController.OnCartChanged += RefreshCartUI;
 
@@ -50,24 +46,12 @@ public class ShopCartUIController : MonoBehaviour
     private void RefreshCartUI()
     {
         //필요한 참조가 연결되어 있는지 확인
-        if (shopCartController == null)
-        {
-            Debug.LogError("[ShopCartUIController] ShopCartController가 null입니다.");
-            return;
-        }
+        if (shopCartController == null) return;     
 
-        if (cartContent == null)
-        {
-            Debug.LogError("[ShopCartUIController] CartContent가 연결되어 있지 않습니다.");
-            return;
-        }
-
-        if (cartItemPrefab == null)
-        {
-            Debug.LogError("[ShopCartUIController] CartItemPrefab이 연결되어 있지 않습니다.");
-            return;
-        }
-
+        if (cartContent == null) return;
+        
+        if (cartItemPrefab == null) return;
+        
         //현재 화면에 표시되어 있는 기존 장바구니 슬롯들을 모두 제거
         ClearCartItemUI();
 

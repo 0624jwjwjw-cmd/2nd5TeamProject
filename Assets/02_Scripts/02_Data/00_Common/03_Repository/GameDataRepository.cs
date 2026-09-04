@@ -72,12 +72,8 @@ public sealed class GameDataRepository : MonoBehaviour
     {
         if (IsInitialized) return;  //초기화가 끝났다면 중복 작업 X
         //Catalog가 Inspector에 연결되지 않았다면 종료
-        if (catalog == null)
-        {
-            Debug.LogError("[GameDataRepository] " + "GameDataCatalog가 연결되지 않았습니다.");
-            return;
-        }
-
+        if (catalog == null) return;
+        
         //이전 데이터가 남아 있을 수 있으니
         //모든 검색 Dictionary 먼저 비우기
         ingredientLookup.Clear();
@@ -108,12 +104,8 @@ public sealed class GameDataRepository : MonoBehaviour
             IngredientData data = catalog.Ingredients[i];
 
             //비어 있는 Element라면 등록하지 않고 경고 출력
-            if (data == null)
-            {
-                Debug.LogWarning($"[GameDataRepository]" + $"Ingredients의 Element {i}가 비어 있습니다.");
-                continue;
-            }
-
+            if (data == null) continue;
+            
             //재료의 고유 ID를 가져옴
             string itemId = data.ID;
 
@@ -135,12 +127,8 @@ public sealed class GameDataRepository : MonoBehaviour
             DishData data = catalog.Dishes[i];
 
             //비어 있는 Element라면 등록하지 않고 경고 출력
-            if (data == null)
-            {
-                Debug.LogWarning($"[GameDataRepository]" + $"Dishes의 Element {i}가 비어 있습니다.");
-                continue;
-            }
-
+            if (data == null) continue;
+            
             //일반 요리의 고유 ID를 가져옴
             string itemId = data.ID;
 
@@ -162,12 +150,8 @@ public sealed class GameDataRepository : MonoBehaviour
             DishData data = catalog.SpecialDishes[i];
 
             //비어 있는 Element라면 등록하지 않고 경고 출력
-            if (data == null)
-            {
-                Debug.LogWarning($"[GameDataRepository]" + $"Special Dishes의 Element {i}가 비어 있습니다.");
-                continue;
-            }
-
+            if (data == null) continue;
+            
             //특별 요리의 고유 ID를 가져옴
             string itemId = data.ID;
 
@@ -183,19 +167,11 @@ public sealed class GameDataRepository : MonoBehaviour
     private bool TryReserveItemId(string itemId, string dataTypeName)
     {
         //ID가 null이거나 공백이라면 등록할 수 없음
-        if (string.IsNullOrWhiteSpace(itemId))
-        {
-            Debug.LogError($"[GameDataRepository] " + $"{dataTypeName} 데이터에 ID가 없습니다.");
-            return false;
-        }
-
+        if (string.IsNullOrWhiteSpace(itemId)) return false;
+        
         //HashSet.Add는 새로운 값이면 true, 이미 같은 값이면 false 반환
-        if (!registeredItemIds.Add(itemId))
-        {
-            Debug.LogError($"[GameDataRepository] " + $"중복 ID가 발견되었습니다: {itemId}");
-            return false;
-        }
-
+        if (!registeredItemIds.Add(itemId)) return false;
+        
         return true; //정상적인 ID면 등록 허용
     }
 
