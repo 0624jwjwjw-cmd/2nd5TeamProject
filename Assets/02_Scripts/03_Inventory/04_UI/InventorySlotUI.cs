@@ -67,8 +67,6 @@ public sealed class InventorySlotUI : MonoBehaviour
         //아이템 ID가 비어 있다면 정상적인 아이템 슬롯이 아니므로 슬롯을 비우고 메서드 종료
         if (string.IsNullOrWhiteSpace(targetItemId))
         {
-            Debug.LogWarning("[InventorySlotUI] 아이템 ID가 비어 있어 슬롯을 표시할 수 없습니다.");
-
             ClearSlot();
             return;
         }
@@ -114,12 +112,8 @@ public sealed class InventorySlotUI : MonoBehaviour
         //여기서 ClearSlot()을 해버리면
         //Controller의 slotLookup에는 Slot이 남아 있는데
         //UI만 비어버리는 상태가 될 수 있음
-        if (amount <= 0)
-        {
-            Debug.LogWarning($"[InventorySlotUI] UpdateAmount에는 1 이상의 수량이 필요합니다. 전달값: {amount}");
-            return;
-        }
-
+        if (amount <= 0) return;
+        
         //아이템 종류는 그대로 유지하고 화면에 표시되는 수량만 변경
         if (amountText != null)
         {

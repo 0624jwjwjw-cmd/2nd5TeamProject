@@ -112,30 +112,14 @@ public class ShopUIManager : MonoBehaviour
         if (!IsRequiredSystemReady()) return;
 
         //Inspector 연결 검사
-        if (content == null)
-        {
-            Debug.LogError("[ShopUIManager] Content가 연결되지 않았습니다.");
-            return;
-        }
-
-        if (shopItemPrefab == null)
-        {
-            Debug.LogError("[ShopUIManager] ShopItem Prefab이 연결되지 않았습니다.");
-            return;
-        }
-
-        if (gameDataCatalog == null)
-        {
-            Debug.LogError("[ShopUIManager] GameDataCatalog가 연결되지 않았습니다.");
-            return;
-        }
-
-        if (shopCartController == null)
-        {
-            Debug.LogError("[ShopUIManager] ShopCartController가 연결되지 않았습니다.");
-            return;
-        }
-
+        if (content == null) return;
+        
+        if (shopItemPrefab == null) return;
+        
+        if (gameDataCatalog == null) return;
+        
+        if (shopCartController == null) return;
+        
         //모든 준비가 끝났으므로
         //상점의 전체 재료 ShopItem 생성
         BuildShopItems();
@@ -158,29 +142,11 @@ public class ShopUIManager : MonoBehaviour
 
             //배열 안에 null 데이터가 있다면
             //해당 데이터는 ShopItem으로 만들 수 없으므로 건너뜀
-            if (ingredientData == null)
-            {
-                Debug.LogWarning(
-                    $"[ShopUIManager] " +
-                    $"Ingredient {i}번 데이터가 비어 있습니다."
-                    );
-                continue;
-            }
-
+            if (ingredientData == null) continue;
+           
             //현재 IngredientData의 ID를 사용해서
             //ItemVisualRepository에서 해당 재료 아이콘 검색
             bool iconFound = itemVisualRepository.TryGetIcon(ingredientData.ID, out Sprite icon);
-
-            //아이콘을 찾지 못했더라도
-            //나머지 이름과 가격은 표시할 수 있으므로
-            //ShopItem 생성 자체는 계속 진행
-            if (!iconFound)
-            {
-                Debug.LogWarning(
-                    $"[ShopUIManager] " +
-                    $"아이콘을 찾지 못했습니다. ID: {ingredientData.ID}"
-                    );
-            }
 
             //ShopItem Prefab을 복제해서
             //Content의 자식으로 생성
