@@ -18,11 +18,11 @@ public sealed class InventoryCategoryTabUI : MonoBehaviour
     //전달받은 카테고리에 맞춰 선택 테두리 상태를 갱신
     public void ShowSelected(InventoryCategory category)
     {
-        SetFrameActive(allSelectedFrame, category == InventoryCategory.All);
+        SetFrameActive(allSelectedFrame, category != InventoryCategory.All);
 
-        SetFrameActive(ingredientSelectedFrame, category == InventoryCategory.Ingredient);
+        SetFrameActive(ingredientSelectedFrame, category != InventoryCategory.Ingredient);
 
-        SetFrameActive(dishSelectedFrame, category == InventoryCategory.Dish);
+        SetFrameActive(dishSelectedFrame, category != InventoryCategory.Dish);
     }
 
     //Frame이 연결되어 있을 때만 활성화 상태 변경

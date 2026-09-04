@@ -45,7 +45,7 @@ public sealed class InventorySlotUI : MonoBehaviour
         slotButton.onClick.AddListener(HandleSlotClicked);
 
         //처음에는 선택 표시 끄기
-        SetSelected(false);
+        SetDimmed(false);
     }
 
     //오브젝트 제거 시 호출
@@ -55,7 +55,7 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (slotButton != null) slotButton.onClick.RemoveListener(HandleSlotClicked);
     }
 
-    //[슬롯에 표시할 아이템 정보를 설정하는 메서드]
+    //*슬롯에 표시할 아이템 정보를 설정하는 메서드*
     public void Setup(
         string targetItemId,
         Sprite icon,
@@ -100,10 +100,10 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (slotButton != null) slotButton.interactable = true;
 
         //새 아이템을 설정할 때는 선택 표시 초기화
-        SetSelected(false);
+        SetDimmed(false);
     }
 
-    //[아이템 종류는 그대로이고 수량만 바꼈을 때 사용하는 메서드]
+    //*아이템 종류는 그대로이고 수량만 바꼈을 때 사용하는 메서드*
     public void UpdateAmount(int amount)
     {
         //0 이하의 수량은 이 메서드에서 처리하지 않음
@@ -117,7 +117,6 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (amount <= 0)
         {
             Debug.LogWarning($"[InventorySlotUI] UpdateAmount에는 1 이상의 수량이 필요합니다. 전달값: {amount}");
-
             return;
         }
 
@@ -128,14 +127,18 @@ public sealed class InventorySlotUI : MonoBehaviour
         }
     }
 
-    //[현재 슬롯의 선택 여부를 표시하는 메서드]
-    public void SetSelected(bool isSelected)
+    //*선택되지 않은 슬롯을 어둡게 표시하는 메서드*
+    //기존 SelectedFrame 오브젝트를 검은색 오버레이로 그대로 재사용
+    public void SetDimmed(bool isDimmed)
     {
-        //선택 테두리 오브젝트가 연결되어있는지 확인(true: 테두리 표시, false: 테두리 숨김)
-        if (selectedFrame != null) selectedFrame.SetActive(isSelected);
+        //어두운 오버레이가 연결되어 있을 때만 표시 상태 변경
+        if (selectedFrame != null)
+        {
+            selectedFrame.SetActive(isDimmed);
+        }
     }
 
-    //[특별 요리 여부에 따라 S 배지 표시를 변경]
+    //*특별 요리 여부에 따라 S 배지 표시를 변경*
     public void SetSpecialBadge(bool isSpecial)
     {
         //Inspector에서 SpecialBadge가 연결되지 않은 경우 NullReferenceException을 방지하고 종료
@@ -145,7 +148,7 @@ public sealed class InventorySlotUI : MonoBehaviour
         specialBadge.SetActive(isSpecial);
     }
 
-    //[슬롯에 연결된 아이템 정보를 모두 제거하는 메서드]
+    //*슬롯에 연결된 아이템 정보를 모두 제거하는 메서드*
     public void ClearSlot()
     {
         itemId = string.Empty;  //저장된 아이템 ID를 비움
@@ -168,13 +171,13 @@ public sealed class InventorySlotUI : MonoBehaviour
         if (slotButton != null) slotButton.interactable = false;
 
         //선택 표시도 제거
-        SetSelected(false);
+        SetDimmed(false);
 
         //특별 요리 배지도 초기 상태로 복구
         SetSpecialBadge(false);
     }
 
-    //[실제로 슬롯 버튼을 클릭했을 때 실행되는 메서드]
+    //*실제로 슬롯 버튼을 클릭했을 때 실행되는 메서드*
     private void HandleSlotClicked()
     {
         if (IsEmpty) return;                    //빈 슬롯을 클릭하면 아무 작업도 하지 않음
