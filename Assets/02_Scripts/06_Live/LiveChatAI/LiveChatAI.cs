@@ -13,13 +13,13 @@ public class LiveChatAI : MonoBehaviour
 
     [Header("Generation")]
     [SerializeField]
-    private int _maxTokens = 32;
+    private int _maxTokens = 20;
 
     [SerializeField]
-    private int _minCharacters = 5;
+    private int _minCharacters = 2;
 
     [SerializeField]
-    private int _maxCharacters = 25;
+    private int _maxCharacters = 20;
 
     private Llama _llama;
 
@@ -29,25 +29,10 @@ public class LiveChatAI : MonoBehaviour
 
     private void Awake()
     {
-<<<<<<< Updated upstream
-        Debug.Log(
-            $"[LiveChatAI] Awake 실행 / InstanceID: {GetInstanceID()} / Object: {gameObject.name} / Scene: {gameObject.scene.name}"
-        );
-
-#if UNITY_ANDROID && !UNITY_EDITOR
-
-    Debug.Log(
-        "[LiveChatAI] Android에서는 AI를 사용하지 않습니다. 기본 채팅을 사용합니다."
-    );
-
-    _isReady = false;
-    return;
-=======
 #if UNITY_ANDROID && !UNITY_EDITOR
 
         _isReady = false;
         return;
->>>>>>> Stashed changes
 
 #endif
 
@@ -57,10 +42,6 @@ public class LiveChatAI : MonoBehaviour
 
     private IEnumerator InitializeModel()
     {
-        Debug.Log(
-            $"[LiveChatAI] InitializeModel 실행 / InstanceID: {GetInstanceID()}"
-        );
-
         string modelPath = Path.Combine(
             Application.streamingAssetsPath,
             "Models",
@@ -136,22 +117,31 @@ public class LiveChatAI : MonoBehaviour
         string result = null;
         Exception generationException = null;
 
+        /*
+         * Qwen 0.5B가 이해하기 쉽도록 단순한 프롬프트 사용
+         */
         string prompt =
-            "<|im_start|>system\n" +
-            "너는 한국 인터넷 먹방 방송의 시청자다.\n" +
-            "방송 채팅창에 남길 짧은 반응만 작성한다.\n" +
-            "반드시 자연스러운 한국어로 작성한다.\n" +
-            "닉네임은 작성하지 않는다.\n" +
-            "설명하지 않는다.\n" +
-            "한 줄만 작성한다.\n" +
-            "이모지와 이모티콘은 사용하지 않는다.\n" +
-            $"5~{_maxCharacters}자 정도로 짧게 작성한다.\n" +
-            "<|im_end|>\n" +
-            "<|im_start|>user\n" +
-            $"스트리머가 방금 {foodName}을(를) 먹었다. " +
-            "시청자가 순간적으로 남길 법한 채팅 반응을 작성해라.\n" +
-            "<|im_end|>\n" +
-            "<|im_start|>assistant\n";
+            "너는 먹방 방송 시청자야.\n" +
+            "스트리머가 음식을 먹는 것을 보고 채팅을 쓴다.\n" +
+            "짧은 채팅 한마디만 써.\n" +
+            "자연스러운 한국 인터넷 방송 말투를 써.\n" +
+            "음식 설명은 하지 마.\n" +
+            "상황 설명은 하지 마.\n" +
+            "닉네임은 쓰지 마.\n" +
+            "질문하지 마.\n" +
+            "한 줄만 써.\n" +
+            "\n" +
+            "예시:\n" +
+            "와 개맛있겠다\n" +
+            "한입만\n" +
+            "와 진짜 잘먹네\n" +
+            "저것도 먹네ㅋㅋ\n" +
+            "맛있겠다\n" +
+            "개맛있어보임\n" +
+            "오늘 제대로 먹네\n" +
+            "\n" +
+            "음식: " + foodName + "\n" +
+            "채팅:";
 
         yield return null;
 
@@ -162,9 +152,9 @@ public class LiveChatAI : MonoBehaviour
                 maxTokens: (uint)_maxTokens
             );
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            generationException = e;
+            generationException = new Exception();
         }
 
         if (generationException != null)
@@ -196,6 +186,7 @@ public class LiveChatAI : MonoBehaviour
 
         text = text.Trim();
 
+        // Qwen 특수 토큰 제거
         text = text.Replace(
             "<|im_start|>",
             ""
@@ -213,6 +204,7 @@ public class LiveChatAI : MonoBehaviour
 
         text = text.Trim();
 
+        // 첫 번째 줄만 사용
         string[] lines =
             text.Split(
                 new[] { '\r', '\n' },
@@ -224,35 +216,93 @@ public class LiveChatAI : MonoBehaviour
 
         text = lines[0].Trim();
 
+        // AI가 채팅: 을 붙인 경우
+        if (text.StartsWith("채팅:"))
+        {
+            text = text.Substring(3).Trim();
+        }
+
+        // AI가 답변: 을 붙인 경우
         if (text.StartsWith("답변:"))
         {
             text = text.Substring(3).Trim();
         }
 
-        if (text.StartsWith("Thinking", StringComparison.OrdinalIgnoreCase))
-            return null;
+        // AI가 Chat: 을 붙인 경우
+        if (text.StartsWith("Chat:"))
+        {
+            text = text.Substring(5).Trim();
+        }
 
-        if (text.StartsWith("생각"))
-            return null;
+        // AI가 닉네임을 만들어버린 경우
+        int colonIndex = text.IndexOf(':');
 
+        if (colonIndex > 0 && colonIndex <= 15)
+        {
+            text = text.Substring(
+                colonIndex + 1
+            ).Trim();
+        }
+
+        // 따옴표 제거
         if (text.StartsWith("\"") &&
             text.EndsWith("\"") &&
             text.Length >= 2)
         {
-            text =
-                text.Substring(
-                    1,
-                    text.Length - 2
-                ).Trim();
+            text = text.Substring(
+                1,
+                text.Length - 2
+            ).Trim();
+        }
+
+        // 불필요한 접두어 제거
+        if (text.StartsWith("시청자:"))
+        {
+            text = text.Substring(4).Trim();
+        }
+
+        if (text.StartsWith("시청자"))
+        {
+            text = text.Substring(3).Trim();
         }
 
         if (string.IsNullOrWhiteSpace(text))
             return null;
 
-        if (text.Length < _minCharacters)
+        // 모델이 생각/설명문을 생성한 경우
+        if (text.StartsWith(
+                "Thinking",
+                StringComparison.OrdinalIgnoreCase))
+        {
             return null;
+        }
 
+        if (text.StartsWith("생각"))
+        {
+            return null;
+        }
+
+        if (text.StartsWith("스트리머"))
+        {
+            return null;
+        }
+
+        if (text.StartsWith("시청자는"))
+        {
+            return null;
+        }
+
+        // 최대 길이 제한
         if (text.Length > _maxCharacters)
+        {
+            text = text.Substring(
+                0,
+                _maxCharacters
+            ).Trim();
+        }
+
+        // 최소 길이 제한
+        if (text.Length < _minCharacters)
             return null;
 
         return text;
