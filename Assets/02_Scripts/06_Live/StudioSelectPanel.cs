@@ -4,6 +4,7 @@ using TMPro;
 
 public class StudioSelectPanel : MonoBehaviour
 {
+    [SerializeField] private LiveManager liveManager;
     [SerializeField] private Image _studioImage;
     [SerializeField] private Image _studioBackground;
 
@@ -100,6 +101,8 @@ public class StudioSelectPanel : MonoBehaviour
 
     public void OpenPanel()
     {
+        if (liveManager.IsLive)
+            return;
         SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(true);
     }

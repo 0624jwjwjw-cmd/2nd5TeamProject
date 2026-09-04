@@ -4,6 +4,7 @@ using TMPro;
 
 public class CharacterSelectPanel : MonoBehaviour
 {
+    [SerializeField] private LiveManager liveManager;
     [SerializeField] private Image _characterImage;
     [SerializeField] private Image _characterDisplay;
 
@@ -100,6 +101,8 @@ public class CharacterSelectPanel : MonoBehaviour
 
     public void OpenPanel()
     {
+        if (liveManager.IsLive)
+            return;
         SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(true);
     }

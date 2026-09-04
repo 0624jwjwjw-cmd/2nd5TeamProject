@@ -4161,6 +4161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907cfdf8e1c86784987434cf7be6d752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectPanel
+  liveManager: {fileID: 1656232465}
   _characterImage: {fileID: 704653460}
   _characterDisplay: {fileID: 1558948764}
   _prevButton: {fileID: 555264430}
@@ -9314,8 +9315,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2003187095}
-        m_TargetAssemblyTypeName: SceneLoaderButton, Assembly-CSharp
+      - m_Target: {fileID: 2003187097}
+        m_TargetAssemblyTypeName: ScenLoaderStudio, Assembly-CSharp
         m_MethodName: LoadMain
         m_Mode: 1
         m_Arguments:
@@ -9836,6 +9837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e23942c8e083d4d8714fe5b4d0d8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::StudioSelectPopup
+  liveManager: {fileID: 1656232465}
   _studioImage: {fileID: 1080308484}
   _studioBackground: {fileID: 1376932838}
   _prevButton: {fileID: 357985286}
@@ -13883,7 +13885,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2003187096}
-  - component: {fileID: 2003187095}
+  - component: {fileID: 2003187097}
   m_Layer: 0
   m_Name: SceneLoaderButton(JangAdd)
   m_TagString: Untagged
@@ -13891,18 +13893,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2003187095
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003187094}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97ee4368a1a21cd4f9c57819be8265ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneLoaderButton
 --- !u!4 &2003187096
 Transform:
   m_ObjectHideFlags: 0
@@ -13918,6 +13908,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 10549956}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2003187097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003187094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 298f6ebf37eb6e8439d79c35231c5b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScenLoaderStudio
+  liveManager: {fileID: 1656232465}
 --- !u!1 &2003397733
 GameObject:
   m_ObjectHideFlags: 0
