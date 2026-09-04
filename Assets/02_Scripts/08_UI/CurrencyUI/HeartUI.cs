@@ -13,7 +13,6 @@ public class HeartUI : MonoBehaviour
     {
         if (CurrencyManager.Instance == null)
         {
-            Debug.LogError("CurrencyManager ¾ø¾û");
             return;
         }
         CurrencyManager.Instance.OnHeartChanged += RefreshUI;

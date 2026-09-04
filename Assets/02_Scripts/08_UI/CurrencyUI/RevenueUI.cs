@@ -11,7 +11,6 @@ public class RevenueUI : MonoBehaviour
     {
         if (CurrencyManager.Instance == null)
         {
-            Debug.LogError("CurrencyManager¾ø¾û");
             return;
         }
         CurrencyManager.Instance.OnRevenueChanged += RefreshUI;
