@@ -19,8 +19,6 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        UnlockRecipe("TD_01");
-        UnlockRecipe("BD_01");
     }
     public bool IsUnlocked(string foodID)
     {
