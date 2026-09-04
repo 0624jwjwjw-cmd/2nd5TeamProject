@@ -12,7 +12,7 @@ public class SaveData
     public long lastHeartRecoverTime = 0;
 
     //퀘스트 데이터
-    public int questStartGold = 5000;
+    public int questEarnedGold = 0;
 
     //날짜
     public int dateCount = 0;
