@@ -134,18 +134,21 @@ public sealed class InventoryUIController : MonoBehaviour
     //*전체 아이템 표시*
     public void ShowAll()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.All);
     }
 
     //*재료만 표시*
     public void ShowIngredients()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.Ingredient);
     }
 
     //*요리만 표시*
     public void ShowDishes()
     {
+        SoundManager.Instance?.PlaySFX(SFXType.ButtonClick);
         SetCategory(InventoryCategory.Dish);
     }
 
@@ -316,6 +319,13 @@ public sealed class InventoryUIController : MonoBehaviour
             case InventoryChangeType.Cleared:
                 ClearAllSlots();
                 break;
+
+            //저장 데이터를 불러와 인벤토리 전체가 교체된 경우
+            case InventoryChangeType.Loaded:
+                //기존 UI 슬롯을 정리한 뒤
+                //방금 불러온 인벤토리 전체 데이터로 다시 생성
+                BuildInitialSlots();
+                break;
         }
     }
 
@@ -383,15 +393,9 @@ public sealed class InventoryUIController : MonoBehaviour
         //ID → UI Slot 연결
         slotLookup.Add(itemId, newSlot);
 
-        //현재 선택된 아이템과 같은 ID라면
-        //선택 테두리 복구
-        newSlot.SetSelected(
-            string.Equals(
-                selectedItemId,
-                itemId,
-                StringComparison.Ordinal
-                )
-            );
+        //선택 중인 아이템이 있을 때 새 슬롯이 추가되면
+        //새 슬롯도 선택 상태에 맞춰 밝기 갱신
+        UpdateSlotDimming();
     }
 
     //*수량만 갱신*
@@ -445,6 +449,7 @@ public sealed class InventoryUIController : MonoBehaviour
         //반환된 Slot은 비활성화 상태로 보관되며
         //다음 Slot 생성 요청 때 다시 재사용됨
         slotPool.ReleaseSlot(slot);
+        UpdateSlotDimming();
     }
 
     //*전체 Slot 정리*
@@ -537,51 +542,65 @@ public sealed class InventoryUIController : MonoBehaviour
         }
     }
 
+    //*현재 선택 상태에 맞춰 모든 슬롯의 어두운 표시 갱신*
+    private void UpdateSlotDimming()
+    {
+        //현재 선택된 아이템이 있는지 확인
+        bool hasSelectedItem = !string.IsNullOrWhiteSpace(selectedItemId);
+
+        //현재 화면에 표시 중인 모든 슬롯을 순서대로 확인
+        foreach (KeyValuePair<string, InventorySlotUI> pair in slotLookup)
+        {
+            //Pool 반환 등으로 슬롯 참조가 없다면 건너뜀
+            if (pair.Value == null) continue;
+
+            //현재 확인 중인 슬롯이 선택된 슬롯인지 확인
+            bool isSelectedSlot =
+                hasSelectedItem &&
+                string.Equals(
+                    pair.Key,
+                    selectedItemId,
+                    StringComparison.Ordinal
+                    );
+
+            //선택된 슬롯은 밝게(false),
+            //선택되지 않은 나머지 슬롯은 어둡게(true)
+            pair.Value.SetDimmed(hasSelectedItem && !isSelectedSlot);
+        }
+    }
+
     //*Slot 클릭*
     private void HandleSlotClicked(string itemId)
     {
-        //이미 선택된 슬롯을 다시 터치한 경우
-        //현재 선택된 아이템과 방금 터치한 아이템이 같은지 확인
-        bool isSameSelectedItem = string.Equals(selectedItemId, itemId, StringComparison.Ordinal);
+        //이미 선택된 슬롯을 다시 터치했는지 확인
+        bool isSameSelectedItem =
+            string.Equals(
+                selectedItemId,
+                itemId,
+                StringComparison.Ordinal
+                );
 
+        //같은 슬롯을 다시 클릭했다면 선택 해제
         if (isSameSelectedItem)
         {
-            //현재 선택된 슬롯 검색
-            if (slotLookup.TryGetValue(itemId, out InventorySlotUI sameSlot))
-            {
-                sameSlot.SetSelected(false);    //선택 테두리 OFF
-            }
-
-            //선택된 아이템이 없는 상태로 변경
             selectedItemId = string.Empty;
 
+            //선택된 아이템이 없으므로 모든 슬롯을 원래 밝기로 복구
+            UpdateSlotDimming();
+
+            //설명창 비우기
             ClearDescription();
 
             return;
         }
 
-        //다른 슬롯을 새로 터치한 경우
-        //이전에 선택했던 Slot이 존재한다면
-        //선택 테두리 제거
-        if (!string.IsNullOrWhiteSpace(selectedItemId) &&
-            slotLookup.TryGetValue(
-                selectedItemId,
-                out InventorySlotUI previousSlot))
-        {
-            previousSlot.SetSelected(false);
-        }
-
-        //새롭게 선택한 아이템 ID 저장
+        //새 슬롯을 선택한 것으로 저장
         selectedItemId = itemId;
 
-        //새 Slot 선택 테두리 표시
-        if (slotLookup.TryGetValue(
-            selectedItemId,
-            out InventorySlotUI selectedSlot))
-        {
-            selectedSlot.SetSelected(true);
-        }
+        //선택한 슬롯만 밝게, 나머지 슬롯은 어둡게 갱신
+        UpdateSlotDimming();
 
+        //새로 선택한 아이템 설명 표시
         UpdateDescription(selectedItemId);
     }
 

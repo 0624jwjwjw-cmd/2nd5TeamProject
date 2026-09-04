@@ -1,4 +1,4 @@
-//**아이템 ID를 이용해 Sprite와 Prefab을 빠르게 검색하는 Repository**
+//**게임 실행 중 ID를 이용해 아이템 아이콘 Sprite를 검색하는 Repository**
 using System;                       //StringComparer 사용
 using System.Collections.Generic;   //Dictionary<TKey, TValue> 사용
 using UnityEngine;
@@ -17,43 +17,13 @@ public sealed class ItemVisualRepository : MonoBehaviour
     [Header("아이템 Visual Catalog")]
     [SerializeField] private ItemVisualCatalog catalog;
 
-    //런타임 검색 Dictionary
-    //아이템 ID를 Key로 사용해서 해당 아이템의 Sprite와 Prefab 정보를 저장
-    //예)
-    //
-    //"IG_01"
-    //   ↓
-    //ItemVisualInfo
-    //├── Icon = 빵 Sprite
-    //└── Prefab = IG_01_빵 Prefab
-    //
-    //StringComparer.Ordinal은
-    //ID 문자열을 정확하게 비교하도록 함
-    private readonly Dictionary<string, ItemVisualInfo> visualLookup = new Dictionary<string, ItemVisualInfo>(StringComparer.Ordinal);
+    //아이템 ID와 UI 아이콘 Sprite를 연결하는 검색용 Dictionary
+    private readonly Dictionary<string, Sprite>
+        iconLookup = new Dictionary<string, Sprite>(StringComparer.Ordinal);
 
     //초기화 상태
     //Repository 초기화가 끝났는지 외부에서 확인 가능
     public bool IsInitialized { get; private set; }
-
-    //내부 Visual 데이터
-    //하나의 아이템 ID에 필요한 Visual 정보를 묶어서 보관
-    //Dictionary를
-    //Dictionary<string, Sprite>
-    //Dictionary<string, GameObject>
-    //두 개 만드는 대신
-    //
-    //Dictionary<string, ItemVisualInfo>
-    //하나만 사용하기 위한 구조
-    private readonly struct ItemVisualInfo
-    {
-        public Sprite Icon { get; }                             //인벤토리 / 상점 / 도감 UI에 사용할 Sprite
-        public GameObject Prefab { get; }                       //실제 월드에 생성할 때 사용할 Prefab
-        public ItemVisualInfo(Sprite icon, GameObject prefab)   //Visual 정보 생성
-        {
-            Icon = icon;
-            Prefab = prefab;
-        }
-    }
 
     private void Awake()
     {
@@ -68,7 +38,7 @@ public sealed class ItemVisualRepository : MonoBehaviour
         //현재 컴포넌트를 Singleton Instance로 등록
         Instance = this;
 
-        //ItemVisualCatalog에 등록된 아이콘과 프리팹을
+        //ItemVisualCatalog에 등록된 Prefab에서 아이콘을 가져와
         //ID 검색용 Dictionary로 변환
         InitializeRepository();
 
@@ -107,7 +77,7 @@ public sealed class ItemVisualRepository : MonoBehaviour
 
         //이전 검색 데이터 모두 제거
         //현재는 최초 초기화 한 번이지만 혹시 재초기화 구조가 추가되더라도 안전하도록 초기화
-        visualLookup.Clear();
+        iconLookup.Clear();
 
         RegisterIngredientPrefabs();                        //재료 Prefab 등록
         RegisterDishPrefabs(catalog.DishPrefabs);           //일반 요리 Prefab 등록
@@ -115,8 +85,6 @@ public sealed class ItemVisualRepository : MonoBehaviour
 
         //모든 등록 과정이 끝났으므로 Repository 사용 가능 상태로 변경
         IsInitialized = true;
-
-        Debug.Log($"[ItemVisualRepository] 초기화 완료 | 등록 Visual: {visualLookup.Count}");
     }
 
     //재료 Prefab 등록
@@ -145,7 +113,7 @@ public sealed class ItemVisualRepository : MonoBehaviour
             }
 
             //중요
-            //ingredientPrefab.ID가 아닌 ingredintPrefab.Data.ID를 사용
+            //ingredientPrefab.ID가 아닌 ingredientPrefab.Data.ID를 사용
             //IngredientBase.ID는 Awake 이후 초기화되지만
             //지금 Catalog가 가지고 있는 것은 Prefab Asset이기 때문
             string itemId = ingredientPrefab.Data.ID;
@@ -164,8 +132,8 @@ public sealed class ItemVisualRepository : MonoBehaviour
                 continue;
             }
 
-            //Dictionary 등록
-            RegisterVisual(itemId, spriteRenderer.sprite, ingredientPrefab.gameObject);
+            //아이콘 Dictionary 등록
+            RegisterIcon(itemId, spriteRenderer.sprite);
         }
     }
 
@@ -209,72 +177,39 @@ public sealed class ItemVisualRepository : MonoBehaviour
                 continue;
             }
 
-            //Dictionary 등록
-            RegisterVisual(itemId, spriteRenderer.sprite, dishPrefab.gameObject);
+            //요리 아이콘 Dictionary 등록
+            RegisterIcon(itemId, spriteRenderer.sprite);
         }
     }
 
-    //Dictionary 등록
-    private void RegisterVisual(string itemId, Sprite icon, GameObject prefab)
+    //아이템 ID와 아이콘 Sprite를 Dictionary에 등록
+    private void RegisterIcon(string itemId, Sprite icon)
     {
-        //ID가 비어있으면 Dictionary Key로 사용할 수 없으므로 방어
         if (string.IsNullOrWhiteSpace(itemId))
         {
             Debug.LogError("[ItemVisualRepository] ID가 비어 있는 Visual은 등록할 수 없습니다.");
             return;
         }
 
-        //같은 ID가 이미 등록되어 있다면
-        //어떤 Prefab을 사용해야 할지 애매해지므로 등록하지 않음
-        if (visualLookup.ContainsKey(itemId))
+        if (iconLookup.ContainsKey(itemId))
         {
             Debug.LogError($"[ItemVisualRepository] 중복 Visual ID 발견: {itemId}");
             return;
         }
 
-        //하나의 ID에 Sprite와 Prefab을 함께 묶어서 등록
-        visualLookup.Add(itemId, new ItemVisualInfo(icon, prefab));
+        iconLookup.Add(itemId, icon);
     }
 
     //아이콘 검색
     public bool TryGetIcon(string itemId, out Sprite icon)
     {
-        //기본 반환값 null로 설정
         icon = null;
 
-        //초기화가 끝나지 않았다면 검색하지 않음
-        if (!IsInitialized) return false;
+        if (!IsInitialized || string.IsNullOrWhiteSpace(itemId))
+        {
+            return false;
+        }
 
-        //잘못된 ID 방어
-        if (string.IsNullOrWhiteSpace(itemId)) return false;
-
-        //Dictionary에서 ID 검색
-        if (!visualLookup.TryGetValue(itemId, out ItemVisualInfo visualInfo)) return false;
-
-        //검색된 Visual 정보에서 Sprite 반환
-        icon = visualInfo.Icon;
-
-        return icon != null;
-    }
-
-    //프리팹 검색
-    public bool TryGetPrefab(string itemId, out GameObject prefab)
-    {
-        //기본 반환값 null로 설정
-        prefab = null;
-
-        //초기화 전 사용 방지
-        if (!IsInitialized) return false;
-
-        //잘못된 ID 방어
-        if (string.IsNullOrWhiteSpace(itemId)) return false;
-
-        //Dictionary 검색
-        if (!visualLookup.TryGetValue(itemId, out ItemVisualInfo visualInfo)) return false;
-
-        //해당 아이템의 Prefab 반환
-        prefab = visualInfo.Prefab;
-
-        return prefab != null;
+        return iconLookup.TryGetValue(itemId, out icon) && icon != null;
     }
 }

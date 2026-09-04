@@ -591,7 +591,7 @@ public class InventoryManager : MonoBehaviour,ISaveable
         OnInventoryChanged?.Invoke();
     }
 
-    //정재운이 추가 SAVE,LOAD용
+    //SAVE
     public void Save(SaveData data)
     {
         data.inventory.Clear();
@@ -603,18 +603,47 @@ public class InventoryManager : MonoBehaviour,ISaveable
             }
         }
     }
+
+    //LOAD
     public void Load(SaveData data)
     {
+        //기존 인벤토리 데이터를 먼저 전부 비움
         slots.Clear();
-        if (data.inventory == null) return;
-        foreach (InventorySlotData savedSlot in data.inventory)
+
+        //저장 데이터와 인벤토리 목록이 있을 때만 복원
+        if (data != null && data.inventory != null)
         {
-            if (savedSlot == null || savedSlot.IsEmpty) continue;
-            InventorySlotData slot = new InventorySlotData(
-                savedSlot.ItemId,savedSlot.Amount,savedSlot.ItemType);
-            slots.Add(slot);
+            //저장된 모든 인벤토리 슬롯을 순서대로 복원
+            foreach (InventorySlotData savedSlot in data.inventory)
+            {
+                //비어 있거나 잘못된 슬롯은 복원하지 않음
+                if (savedSlot == null || savedSlot.IsEmpty) continue;
+
+                //저장 데이터 참조를 그대로 쓰지 않고
+                //새로운 슬롯 데이터로 복사해서 추가
+                InventorySlotData slot = new InventorySlotData(
+                    savedSlot.ItemId,
+                    savedSlot.Amount,
+                    savedSlot.ItemType
+                    );
+
+                slots.Add(slot);
+            }
         }
+
+        //복원된 데이터도 평소 인벤토리 정렬 순서로 정리
         SortSlotsByItemTypeAndId();
-        OnInventoryChanged?.Invoke();
+
+        //이번 변경은 특정 아이템 하나가 아니라
+        //인벤토리 전체가 저장 데이터로 교체된 경우
+        InventoryChange change = new InventoryChange(
+            InventoryChangeType.Loaded,
+            string.Empty,
+            0,
+            0
+            );
+
+        //기존 두 이벤트 모두에 알림을 보내는 공용 메서드 호출
+        NotifyInventoryChanged(change);
     }
 }
