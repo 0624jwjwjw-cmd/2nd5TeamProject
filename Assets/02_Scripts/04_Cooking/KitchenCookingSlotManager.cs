@@ -19,8 +19,14 @@ public class KitchenCookingSlotManager : MonoBehaviour
     [SerializeField] private KitchenCookingSlotUIBinder uiBinder;
     [SerializeField] public List<KitchenCookSlotItem> slots = new List<KitchenCookSlotItem>();
 
+    [SerializeField] private string burnedDishID = "BD_01";
+    [SerializeField] private string trashDishID = "TD_01";
     public void AddIngredient(string ingredientID)
     {
+        if(ingredientID == burnedDishID || ingredientID == trashDishID)
+        {
+            return;
+        }
         int amount = 0;
 
         foreach(InventorySlotData slotData in InventoryManager.Instance.Slots)
