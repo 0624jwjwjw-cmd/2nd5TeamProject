@@ -18,6 +18,7 @@ public class RecipeBookUIManager : MonoBehaviour
     private readonly List<RecipeBookSlotUI> activeSlots = new();
     private bool hasPopulated = false;
 
+    [SerializeField] private string[] hiddenDishIDs = { "BD_01", "TD_01" };
     public void OnClickRecipeBookButton()
     {
         SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
@@ -49,6 +50,7 @@ public class RecipeBookUIManager : MonoBehaviour
 
         foreach (DishData dishData in GameDataRepository.Instance.dishLookup.Values)
         {
+            if (System.Array.IndexOf(hiddenDishIDs, dishData.ID) >= 0) continue;
             RecipeBookSlotUI slot = slotPool.Get(slotParent);
             slot.Setup(dishData, recipeDetailUI);
             activeSlots.Add(slot);
