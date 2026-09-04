@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LiveChat : MonoBehaviour
@@ -15,29 +16,35 @@ public class LiveChat : MonoBehaviour
     [SerializeField]
     private string[] _aiChatNicknames =
     {
-        "맛집탐방러",
-        "먹방매니아",
-        "야식헌터",
-        "배고픈사람",
-        "한입만요",
-        "오늘도먹자",
-        "치팅데이",
-        "대식가팬",
-        "먹는게최고",
-        "위대한먹방",
+        "맛집탐험대",
+        "qwen12234",
+        "식신로드",
+        "배고픔청년",
+        "한입만",
+        "winnerChicken7799",
+        "얼음꿀차",
+        "전우애시간",
+        "와라비모찌",
+        "whitefox0815",
         "밥친구",
-        "배부른시청자",
+        "스윗중붕",
         "음식평론가",
-        "먹방구경꾼",
+        "응애에요345",
         "오늘뭐먹지",
-        "야무진한입",
-        "식욕폭발",
-        "맛있는거최고",
-        "먹방보는중",
-        "배고파죽음"
+        "dwwodujoj5007",
+        "privatecorotine",
+        "약과에소주",
+        "레몬청과",
+        "건더기99"
     };
 
     private Coroutine _chatCoroutine;
+    private Coroutine _aiChatCoroutine;
+
+    private readonly Queue<string> _aiFoodQueue =
+        new Queue<string>();
+
+    private bool _isProcessingAIChat;
 
     private readonly string[] _chatMessages =
     {
@@ -65,10 +72,14 @@ public class LiveChat : MonoBehaviour
         "매니저봇: 타인 비하, 욕설, 과도한 스포일러는 매니저에 의해 차단될 수 있습니다."
     };
 
+
     private void OnEnable()
     {
         if (_liveManager == null)
+        {
+            Debug.LogError("[LiveChat] LiveManager가 연결되지 않았습니다.");
             return;
+        }
 
         _liveManager.OnLiveStarted += StartChat;
         _liveManager.OnLiveStopped += StopChat;
@@ -76,6 +87,7 @@ public class LiveChat : MonoBehaviour
 
         _liveManager.OnFoodEaten += GenerateAIChat;
     }
+
 
     private void OnDisable()
     {
@@ -89,6 +101,7 @@ public class LiveChat : MonoBehaviour
         _liveManager.OnFoodEaten -= GenerateAIChat;
     }
 
+
     private void StartChat()
     {
         StopChat();
@@ -96,8 +109,14 @@ public class LiveChat : MonoBehaviour
         if (_liveChatUI != null)
             _liveChatUI.ClearChats();
 
+        _aiFoodQueue.Clear();
+        _isProcessingAIChat = false;
+
         _chatCoroutine = StartCoroutine(ChatRoutine());
+
+        Debug.Log("[LiveChat] 채팅 시작");
     }
+
 
     private void StopChat()
     {
@@ -107,9 +126,21 @@ public class LiveChat : MonoBehaviour
             _chatCoroutine = null;
         }
 
+        if (_aiChatCoroutine != null)
+        {
+            StopCoroutine(_aiChatCoroutine);
+            _aiChatCoroutine = null;
+        }
+
+        _aiFoodQueue.Clear();
+        _isProcessingAIChat = false;
+
         if (_liveChatUI != null)
             _liveChatUI.ClearChats();
+
+        Debug.Log("[LiveChat] 채팅 종료");
     }
+
 
     private IEnumerator ChatRoutine()
     {
@@ -121,85 +152,259 @@ public class LiveChat : MonoBehaviour
         }
     }
 
+
     private void AddBasicChat()
     {
         if (_liveChatUI == null)
             return;
 
-        if (_chatMessages.Length == 0)
+        if (_chatMessages == null ||
+            _chatMessages.Length == 0)
             return;
 
         int randomIndex =
-            Random.Range(0, _chatMessages.Length);
+            Random.Range(
+                0,
+                _chatMessages.Length
+            );
 
         _liveChatUI.AddChat(
             _chatMessages[randomIndex]
         );
     }
 
+
     private void GenerateAIChat(string foodName)
     {
-        if (_liveManager == null || !_liveManager.IsLive)
+        if (_liveManager == null ||
+            !_liveManager.IsLive)
             return;
-
-        if (_liveChatAI == null)
-        {
-            Debug.LogWarning(
-                "[LiveChat] LiveChatAI가 연결되지 않았습니다."
-            );
-            return;
-        }
 
         if (string.IsNullOrWhiteSpace(foodName))
         {
             Debug.LogWarning(
                 "[LiveChat] 음식 이름이 비어 있습니다."
             );
+
+            AddBasicChat();
             return;
         }
 
+#if UNITY_ANDROID && !UNITY_EDITOR
+
         Debug.Log(
-            $"[LiveChat] 음식 섭취 감지 → AI 채팅 요청: {foodName}"
+            $"[LiveChat] Android → 기본 채팅 사용: {foodName}"
         );
 
-        _liveChatAI.GenerateChat(
-            foodName,
-            OnAIChatGenerated
+        AddBasicChat();
+
+        return;
+
+#endif
+
+        if (_liveChatAI == null)
+        {
+            Debug.LogWarning(
+                "[LiveChat] LiveChatAI가 연결되지 않았습니다. " +
+                "기본 채팅으로 대체합니다."
+            );
+
+            AddBasicChat();
+
+            return;
+        }
+
+        _aiFoodQueue.Enqueue(foodName);
+
+        Debug.Log(
+            $"[LiveChat] 음식 섭취 감지 → Qwen AI 요청 대기: {foodName}"
         );
+
+        if (!_isProcessingAIChat)
+        {
+            _aiChatCoroutine =
+                StartCoroutine(
+                    ProcessAIChatQueue()
+                );
+        }
     }
 
-    private void OnAIChatGenerated(string chat)
-    {
-        if (_liveManager == null || !_liveManager.IsLive)
-            return;
 
-        if (string.IsNullOrWhiteSpace(chat))
+    private IEnumerator ProcessAIChatQueue()
+    {
+        _isProcessingAIChat = true;
+
+        while (_aiFoodQueue.Count > 0)
+        {
+            if (_liveManager == null ||
+                !_liveManager.IsLive)
+            {
+                _aiFoodQueue.Clear();
+                break;
+            }
+
+            string foodName =
+                _aiFoodQueue.Dequeue();
+
+            yield return StartCoroutine(
+                GenerateMultipleAIChats(
+                    foodName
+                )
+            );
+
+            if (_aiFoodQueue.Count > 0)
+            {
+                yield return new WaitForSeconds(
+                    Random.Range(
+                        0.3f,
+                        0.7f
+                    )
+                );
+            }
+        }
+
+        _isProcessingAIChat = false;
+        _aiChatCoroutine = null;
+    }
+
+
+    private IEnumerator GenerateMultipleAIChats(
+        string foodName)
+    {
+        int chatCount = 3;
+
+        List<string> usedNicknames =
+            new List<string>();
+
+        for (int i = 0; i < chatCount; i++)
+        {
+            if (_liveManager == null ||
+                !_liveManager.IsLive)
+                yield break;
+
+            bool completed = false;
+            string generatedChat = null;
+
+            _liveChatAI.GenerateChat(
+                foodName,
+                chat =>
+                {
+                    generatedChat = chat;
+                    completed = true;
+                }
+            );
+
+            while (!completed)
+            {
+                if (_liveManager == null ||
+                    !_liveManager.IsLive)
+                    yield break;
+
+                yield return null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(generatedChat))
+            {
+                AddAIChat(
+                    generatedChat,
+                    usedNicknames
+                );
+            }
+            else
+            {
+                AddBasicChat();
+            }
+
+            if (i < chatCount - 1)
+            {
+                yield return new WaitForSeconds(
+                    Random.Range(
+                        0.6f,
+                        1.2f
+                    )
+                );
+            }
+        }
+    }
+
+
+    private void AddAIChat(
+        string chat,
+        List<string> usedNicknames)
+    {
+        if (_liveManager == null ||
+            !_liveManager.IsLive)
             return;
 
         if (_liveChatUI == null)
+        {
+            Debug.LogWarning(
+                "[LiveChat] LiveChatUI가 없습니다."
+            );
+
             return;
+        }
 
         if (_aiChatNicknames == null ||
             _aiChatNicknames.Length == 0)
         {
             Debug.LogWarning(
-                "[LiveChat] AI 채팅 닉네임이 없습니다."
+                "[LiveChat] AI 채팅 닉네임이 없습니다. " +
+                "기본 채팅으로 대체합니다."
             );
+
+            AddBasicChat();
+
             return;
         }
 
+        List<string> availableNicknames =
+            new List<string>();
+
+        for (int i = 0;
+             i < _aiChatNicknames.Length;
+             i++)
+        {
+            string nickname =
+                _aiChatNicknames[i];
+
+            if (!usedNicknames.Contains(nickname))
+            {
+                availableNicknames.Add(nickname);
+            }
+        }
+
+        if (availableNicknames.Count == 0)
+        {
+            availableNicknames.AddRange(
+                _aiChatNicknames
+            );
+        }
+
         int nicknameIndex =
-            Random.Range(0, _aiChatNicknames.Length);
+            Random.Range(
+                0,
+                availableNicknames.Count
+            );
+
+        string selectedNickname =
+            availableNicknames[nicknameIndex];
+
+        usedNicknames.Add(
+            selectedNickname
+        );
 
         string finalChat =
-            _aiChatNicknames[nicknameIndex] +
+            selectedNickname +
             ": " +
             chat;
 
-        _liveChatUI.AddChat(finalChat);
+        _liveChatUI.AddChat(
+            finalChat
+        );
 
         Debug.Log(
-            $"[LiveChat] AI 채팅 출력: {finalChat}"
+            $"[LiveChat] Qwen AI 채팅 출력: {finalChat}"
         );
     }
 }

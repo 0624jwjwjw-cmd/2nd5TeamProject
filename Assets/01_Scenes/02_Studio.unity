@@ -1095,14 +1095,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5882353, g: 0.39215687, b: 0.23529412, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 181d5daedd13145a885e033d7bbd75da, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1922,75 +1922,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227611719}
   m_CullTransparentMesh: 1
---- !u!1 &231957647
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 231957649}
-  - component: {fileID: 231957648}
-  m_Layer: 0
-  m_Name: LiveChat
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &231957648
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231957647}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c351d93a0c872f7419a12ba810bc8466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LiveChat
-  _liveManager: {fileID: 1656232465}
-  _liveChatUI: {fileID: 0}
-  _liveChatAI: {fileID: 0}
-  _chatInterval: 2
-  _aiChatNicknames:
-  - "\uB9DB\uC9D1\uD0D0\uBC29\uB7EC"
-  - "\uBA39\uBC29\uB9E4\uB2C8\uC544"
-  - "\uC57C\uC2DD\uD5CC\uD130"
-  - "\uBC30\uACE0\uD508\uC0AC\uB78C"
-  - "\uD55C\uC785\uB9CC\uC694"
-  - "\uC624\uB298\uB3C4\uBA39\uC790"
-  - "\uCE58\uD305\uB370\uC774"
-  - "\uB300\uC2DD\uAC00\uD32C"
-  - "\uBA39\uB294\uAC8C\uCD5C\uACE0"
-  - "\uC704\uB300\uD55C\uBA39\uBC29"
-  - "\uBC25\uCE5C\uAD6C"
-  - "\uBC30\uBD80\uB978\uC2DC\uCCAD\uC790"
-  - "\uC74C\uC2DD\uD3C9\uB860\uAC00"
-  - "\uBA39\uBC29\uAD6C\uACBD\uAFBC"
-  - "\uC624\uB298\uBB50\uBA39\uC9C0"
-  - "\uC57C\uBB34\uC9C4\uD55C\uC785"
-  - "\uC2DD\uC695\uD3ED\uBC1C"
-  - "\uB9DB\uC788\uB294\uAC70\uCD5C\uACE0"
-  - "\uBA39\uBC29\uBCF4\uB294\uC911"
-  - "\uBC30\uACE0\uD30C\uC8FD\uC74C"
---- !u!4 &231957649
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 231957647}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 119.47696, y: 213.91592, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &254352985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,6 +3418,7 @@ GameObject:
   - component: {fileID: 461293394}
   - component: {fileID: 461293393}
   - component: {fileID: 461293392}
+  - component: {fileID: 461293395}
   m_Layer: 5
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
@@ -3576,7 +3508,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3601,6 +3533,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461293390}
   m_CullTransparentMesh: 1
+--- !u!225 &461293395
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 461293390}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &466121101
 GameObject:
   m_ObjectHideFlags: 0
@@ -9012,8 +8956,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d9b24b63e52f740b0ab0f3879b4d20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LiveChatAI
-  _ollamaUrl: http://localhost:11434/api/generate
-  _model: qwen3:1.7b
+  _modelFileName: qwen2.5-0.5b-instruct-q4_k_m.gguf
+  _maxTokens: 32
   _minCharacters: 10
   _maxCharacters: 25
 --- !u!1 &1212420174
@@ -10861,50 +10805,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1474056271}
   m_CullTransparentMesh: 1
---- !u!1 &1484294310
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1484294312}
-  - component: {fileID: 1484294311}
-  m_Layer: 0
-  m_Name: LlamaTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1484294311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484294310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e9d529834dcd79419cfa172783b937c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LlamaTest
---- !u!4 &1484294312
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484294310}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 152.02783, y: 258.35876, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1485535909
 GameObject:
   m_ObjectHideFlags: 0
@@ -12881,6 +12781,7 @@ GameObject:
   - component: {fileID: 1844216826}
   - component: {fileID: 1844216824}
   - component: {fileID: 1844216823}
+  - component: {fileID: 1844216827}
   m_Layer: 5
   m_Name: ===LiveInventoryUI===
   m_TagString: Untagged
@@ -12963,6 +12864,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1844216821}
   m_CullTransparentMesh: 1
+--- !u!114 &1844216827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844216821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6974587045d93d4ebf8f8f29b0f769e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScrollbarAutoHideUI
+  scrollRect: {fileID: 1844216824}
+  scrollbarCanvasGroup: {fileID: 461293395}
+  scrollDirection: 1
+  hideDelay: 0.1
+  fadeSpeed: 7
 --- !u!1 &1878839604
 GameObject:
   m_ObjectHideFlags: 0
@@ -14332,7 +14250,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2056100935
 Transform:
   m_ObjectHideFlags: 0
@@ -14749,7 +14667,5 @@ SceneRoots:
   - {fileID: 618827482}
   - {fileID: 6742647}
   - {fileID: 858380645}
-  - {fileID: 231957649}
   - {fileID: 1997875867}
   - {fileID: 546710798}
-  - {fileID: 1484294312}
