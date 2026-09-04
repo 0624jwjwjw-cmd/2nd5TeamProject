@@ -7,8 +7,6 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
 {
     public static ReciepeUnlockManager Instance { get; private set; }
 
-    [SerializeField] private List<DishData> dishDatas;
-
     [SerializeField] public HashSet<string> unlockedRecipeIDs = new HashSet<string>();
 
     public event Action OnUnlockChanged;
@@ -21,6 +19,8 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        UnlockRecipe("TD_01");
+        UnlockRecipe("BD_01");
     }
     public bool IsUnlocked(string foodID)
     {
@@ -28,13 +28,8 @@ public class ReciepeUnlockManager : MonoBehaviour, ISaveable
     }
     public void UnlockRecipe(string foodID)
     {
-        foreach (DishData dishData in dishDatas)
-        {
-            if (dishData.ID == foodID)
-            {
-                unlockedRecipeIDs.Add(foodID);
-            }
-        }
+        if (!GameDataRepository.Instance.TryGetDish(foodID, out _)) return;
+        unlockedRecipeIDs.Add(foodID);
         OnUnlockChanged?.Invoke();
     }
     public void Save(SaveData data)

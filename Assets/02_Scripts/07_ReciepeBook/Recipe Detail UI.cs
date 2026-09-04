@@ -32,54 +32,44 @@ public class RecipeDetailUI : MonoBehaviour
     {
         ResetDish();
     }
-    public void LockedDish(DishBase dishBase)
+    public void LockedDish(DishData dishData)
     {
         dotedLine1.gameObject.SetActive(false);
-        //dotedLine2.gameObject.SetActive(false);
-        image.sprite = dishBase.spriteRenderer.sprite;
+        if (ItemVisualRepository.Instance.TryGetIcon(dishData.ID, out Sprite icon))
+        {
+            image.sprite = icon;
+        }
         image.color = lockedColor;
         lockedImage.gameObject.SetActive(true);
         foodNameText.text = questionMark;
         recipeTitleText.gameObject.SetActive(false);
-        for (int i = 0; i < materialName.Length; i++)
-        {
-            materialName[i].text = "";
-        }
-        for (int i = 0; i < materialCount.Length; i++)
-        {
-            materialCount[i].text = "";
-        }
+        for (int i = 0; i < materialName.Length; i++) materialName[i].text = "";
+        for (int i = 0; i < materialCount.Length; i++) materialCount[i].text = "";
         plus1.gameObject.SetActive(false);
         plus2.gameObject.SetActive(false);
         infoTitleText.gameObject.SetActive(false);
         infoText.text = "";
         lockedRecipeText.gameObject.SetActive(true);
-
     }
-    public void UnlockedDish(DishBase dishBase)
+    public void UnlockedDish(DishData dishData)
     {
         dotedLine1.gameObject.SetActive(true);
-        //dotedLine2.gameObject.SetActive(true);
-        for (int i = 0; i < materialName.Length; i++)
-        {
-            materialName[i].text = "";
-        }
-        for (int i = 0; i < materialCount.Length; i++)
-        {
-            materialCount[i].text = "";
-        }
+        for (int i = 0; i < materialName.Length; i++) materialName[i].text = "";
+        for (int i = 0; i < materialCount.Length; i++) materialCount[i].text = "";
         lockedImage.gameObject.SetActive(false);
         lockedRecipeText.gameObject.SetActive(false);
-        image.sprite = dishBase.spriteRenderer.sprite;
-        image.color = originColor;
-        foodNameText.text = dishBase.DishName;
-        recipeTitleText.gameObject.SetActive(true);
-        for (int i = 0; i < dishBase.Materials.Length; i++)
+        if (ItemVisualRepository.Instance.TryGetIcon(dishData.ID, out Sprite icon))
         {
-            materialName[i].text = dishBase.Materials[i].IngredientData.IngredientName;
-            materialCount[i].text = dishBase.Materials[i].Amount.ToString();
+            image.sprite = icon;
         }
-
+        image.color = originColor;
+        foodNameText.text = dishData.DishName;
+        recipeTitleText.gameObject.SetActive(true);
+        for (int i = 0; i < dishData.Materials.Length; i++)
+        {
+            materialName[i].text = dishData.Materials[i].IngredientData.IngredientName;
+            materialCount[i].text = dishData.Materials[i].Amount.ToString();
+        }
         if (string.IsNullOrEmpty(materialName[1].text))
         {
             plus1.gameObject.SetActive(false);
@@ -96,7 +86,7 @@ public class RecipeDetailUI : MonoBehaviour
             plus2.gameObject.SetActive(true);
         }
         infoTitleText.gameObject.SetActive(true);
-        infoText.text = dishBase.Info;
+        infoText.text = dishData.Info;
     }
     public void ResetDish()
     {
