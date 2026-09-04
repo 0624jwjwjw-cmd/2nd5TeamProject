@@ -33,8 +33,6 @@ public class LiveResultUI : MonoBehaviour
 
     private void ShowResult()
     {
-        Debug.Log("[LiveResultUI] 방송 종료 결과 팝업 표시");
-
         if (panel != null)
             panel.SetActive(true);
 
