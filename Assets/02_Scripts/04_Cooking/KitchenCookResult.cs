@@ -45,6 +45,7 @@ public class KitchenCookResult : MonoBehaviour
     }
     public void OnClickExitButton()
     {
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         gameObject.SetActive(false);
     }
 }
