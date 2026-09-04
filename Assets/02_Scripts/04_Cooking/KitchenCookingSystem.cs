@@ -11,9 +11,9 @@ public class KitchenCookingSystem : MonoBehaviour
 
     public void StartCook()
     {
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         if (IsAllSlotsEmpty())
-        { 
+        {
+            SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
             return; 
         }
 

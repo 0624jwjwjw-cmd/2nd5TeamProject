@@ -33,18 +33,20 @@ public class KitchenInventory : MonoBehaviour
     public void SetWhole()
     {
         SetData(InventoryViewType.Whole);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void SetIngredient()
     {
         SetData(InventoryViewType.Ingredient);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     public void SetDish()
     {
         SetData(InventoryViewType.Dish);
+        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
     }
     private void SetData(InventoryViewType viewType)
     {
-        SoundManager.Instance.PlaySFX(SFXType.ButtonClick);
         currentView = viewType;
         int slotIndex = 0;
         for (int i = 0; i < InventoryManager.Instance.SlotCount; i++)
@@ -88,13 +90,13 @@ public class KitchenInventory : MonoBehaviour
         switch (currentView)
         {
             case InventoryViewType.Whole:
-                SetWhole();
+                SetData(InventoryViewType.Whole);
                 break;
             case InventoryViewType.Ingredient:
-                SetIngredient();
+                SetData(InventoryViewType.Ingredient);
                 break;
             case InventoryViewType.Dish:
-                SetDish();
+                SetData(InventoryViewType.Dish);
                 break;
         }
     }
