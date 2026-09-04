@@ -129,7 +129,6 @@ public class SoundManager : MonoBehaviour, ISaveable
 
         if (data == null || data.clip == null)
         {
-            Debug.LogWarning($"등록되지 않은 SFX : {type}");
             return;
         }
 
